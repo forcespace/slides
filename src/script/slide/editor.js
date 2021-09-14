@@ -21,8 +21,8 @@ const presentation = {
                     image: 'ссылка на картинку',
                     last: 'Приоритет картинки'
                 },
-                texts: [{
-                    text: {
+                texts: [
+                    {
                         content: 'Текст',
                         fontsize: 18,
                         font: 'Times New Roman',
@@ -38,7 +38,7 @@ const presentation = {
                             z: 0
                         }
                     },
-                    text: {
+                    {
                         content: 'Текст',
                         fontsize: 18,
                         font: 'Times New Roman',
@@ -54,9 +54,19 @@ const presentation = {
                             z: 0
                         }
                     }
-                }],
-                images: [{
-                    image: {
+                ],
+                images: [
+                    {
+                        src: 'ссылка',
+                        width: 100,
+                        height: 100,
+                        position: {
+                            x: 100,
+                            y: 100,
+                            z: 0
+                        }
+                    },
+                    {
                         src: 'ссылка',
                         width: 100,
                         height: 100,
@@ -66,11 +76,10 @@ const presentation = {
                             z: 0
                         }
                     }
-                }],
-                figures: [{
-                    figure: {
+                ],
+                figures: [
+                    {
                         type: 'треугольник',
-
                         width: 100,
                         height: 100,
                         position: {
@@ -79,7 +88,8 @@ const presentation = {
                             z: 0
                         }
                     }
-                }]
+                ]
             }
-        }],
+        }
+    ],
 }
