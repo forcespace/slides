@@ -8,7 +8,7 @@ const editor = {
 }
 
 const presentation = {
-    title: 'Заголовок',
+    title: 'Заголовок презентации',
     slides: [
         {
             active: 'Индекс слайда',
