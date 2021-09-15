@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function ()
 
 const editor = {
     mode: 'view',
+    activeSlide: 5,
     palette:
         {
             colorSquare: [
@@ -42,8 +43,6 @@ const editor = {
                 active: 'Индекс слайда',
                 slide: {
                     title: 'Заголовок слада 1',
-                    index: 'Индекс слайда 1',
-                    active: true,
                     background: {
                         color: 'код цвета',
                         image: 'ссылка на картинку',
@@ -86,6 +85,7 @@ const editor = {
                     images: [
                         {
                             src: 'ссылка',
+                            active: true,
                             width: 100,
                             height: 100,
                             position: {
@@ -96,6 +96,7 @@ const editor = {
                         },
                         {
                             src: 'ссылка',
+                            active: false,
                             width: 100,
                             height: 100,
                             position: {
@@ -108,6 +109,7 @@ const editor = {
                     figures: [
                         {
                             type: 'треугольник',
+                            active: true,
                             fill: '#ddd',
                             border: '#eee',
                             transform: 'rotate, scale',
