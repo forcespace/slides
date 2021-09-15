@@ -5,6 +5,35 @@ document.addEventListener('DOMContentLoaded', function ()
 
 const editor = {
     mode: 'view',
+    palette:
+        {
+            colorSquare: [
+                {
+                    width: '20px',
+                    height: '20px',
+                    color: '#fff',
+                    active: true
+                },
+                {
+                    width: '20px',
+                    height: '20px',
+                    color: '#000',
+                    active: false
+                },
+                {
+                    width: '20px',
+                    height: '20px',
+                    color: '#eee',
+                    active: false
+                },
+                {
+                    width: '20px',
+                    height: '20px',
+                    color: '#ddd',
+                    active: false
+                }
+            ],
+        },
     history: 'history log',
     presentation: {
         title: 'Заголовок презентации',
@@ -79,6 +108,9 @@ const editor = {
                     figures: [
                         {
                             type: 'треугольник',
+                            fill: '#ddd',
+                            border: '#eee',
+                            transform: 'rotate, scale',
                             width: 100,
                             height: 100,
                             position: {
