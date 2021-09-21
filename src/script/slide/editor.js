@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function ()
 
 const editor = {
     mode: 'view',
-    activeSlide: 5,
     palette:
         {
             colorSquare: [
@@ -46,7 +45,7 @@ const editor = {
                     background: {
                         color: 'код цвета',
                         image: 'ссылка на картинку',
-                        last: 'Приоритет картинки'
+                        priority: 'Приоритет картинки'
                     },
                     texts: [
                         {
