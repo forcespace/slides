@@ -115,4 +115,6 @@ export type {
     Image,
     Figures,
     Figure,
+    Background,
+    Position
 };

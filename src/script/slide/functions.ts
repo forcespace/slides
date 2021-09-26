@@ -8,7 +8,9 @@ import {
     Images,
     Image,
     Figures,
-    Figure
+    Figure,
+    Background,
+    Position,
 } from "./slide";
 
 //editor
@@ -69,6 +71,15 @@ function importProject(filePath: string): Editor {
 //  */
 // function publicProject(presentation) {}
 
+/**
+ * autosave - не факт что нужно добавлять функцию
+ * @param {Presentation} presentation
+ * @return {Presentation}
+ */
+function autoSavePresentation(presentation: Presentation): Presentation{
+    return presentation
+}
+
 //title
 /**
  * set title
@@ -128,7 +139,8 @@ function copySlide(slides: Slides, index: string): Slides {
  * @param {string} index
  * @return {Slides} return new collection
  */
-function cutSlide(slides, index) {
+function cutSlide(slides: Slides, index: string): Slides {
+    return slides
 }
 
 /**
@@ -137,7 +149,8 @@ function cutSlide(slides, index) {
  * @param {string} index
  * @return {Slides} return new collection
  */
-function pasteSlide(slides, index) {
+function pasteSlide(slides: Slides, index: string): Slides{
+    return slides
 }
 
 /**
@@ -146,7 +159,8 @@ function pasteSlide(slides, index) {
  * @param {string} index
  * @return {Slides} return new collection
  */
-function duplicateSlide(slides, index) {
+function duplicateSlide(slides: Slides, index: string): Slides {
+    return slides
 }
 
 /**
@@ -155,7 +169,8 @@ function duplicateSlide(slides, index) {
  * @param {string} index
  * @return {Slide} return slide
  */
-function getSlide(slides, index) {
+function getSlide(slides: Slides, index: string): Slides {
+    return slides
 }
 
 //slide
@@ -165,7 +180,8 @@ function getSlide(slides, index) {
  * @param {Background} background
  * @return {Slide}
  */
-function setBackground(slide, background) {
+function setBackground(slide: Slide, background: Background): Slide {
+    return slide
 }
 
 /**
@@ -173,7 +189,8 @@ function setBackground(slide, background) {
  * @param {Slide} slide
  * @return {Slide}
  */
-function activateSlide(slide) {
+function activateSlide(slide: Slide): Slide {
+    return slide
 }
 
 //content
@@ -184,7 +201,8 @@ function activateSlide(slide) {
  * @param {Text} text
  * @return {Slide} return Slide
  */
-function addText(slide, text) {
+function addText(slide: Slide, text: Text): Slide {
+    return slide
 }
 
 /**
@@ -193,7 +211,8 @@ function addText(slide, text) {
  * @param {string} textIndex
  * @return {Slide} return new Slide
  */
-function deleteText(slide, textIndex) {
+function deleteText(slide:Slide, textIndex: string): Slide {
+    return slide
 }
 
 /**
@@ -203,7 +222,8 @@ function deleteText(slide, textIndex) {
  * @param {Position} position
  * @return {Text}
  */
-function setPositionText(slide, text, position) {
+function setPositionText(slide: Slide, text: Text, position: Position): Text {
+    return text
 }
 
 /**
@@ -212,7 +232,8 @@ function setPositionText(slide, text, position) {
  * @param {Image} image
  * @return {Slide} return new Slide
  */
-function addImage(slide, image) {
+function addImage(slide: Slide, image: Image): Slide {
+    return slide
 }
 
 /**
@@ -221,7 +242,8 @@ function addImage(slide, image) {
  * @param {string} imageIndex
  * @return {Slide} return new Slide
  */
-function deleteImage(slide, imageIndex) {
+function deleteImage(slide: Slide, imageIndex: string): Slide {
+    return slide
 }
 
 /**
@@ -231,7 +253,8 @@ function deleteImage(slide, imageIndex) {
  * @param {Position} position
  * @return {Image}
  */
-function setPositionImage(slide, image, position) {
+function setPositionImage(slide: Slide, image: Image, position: Position): Image {
+    return image
 }
 
 /**
@@ -240,7 +263,8 @@ function setPositionImage(slide, image, position) {
  * @param {Figure} figure
  * @return {Slide} return new Slide
  */
-function addFigure(slide, figure) {
+function addFigure(slide: Slide, figure: Figure): Slide {
+    return slide
 }
 
 /**
@@ -249,7 +273,8 @@ function addFigure(slide, figure) {
  * @param {string} figureIndex
  * @return {Slide} return new Slide
  */
-function deleteFigure(slide, images) {
+function deleteFigure(slide: Slide, figureIndex: string): Slide {
+    return slide
 }
 
 /**
@@ -259,6 +284,7 @@ function deleteFigure(slide, images) {
  * @param {Position} position
  * @return {Figure}
  */
-function setPositionFigure(slide, figure, position) {
+function setPositionFigure(slide: Slide, figure: Figure, position: Position): Figure {
+    return figure
 }
 
