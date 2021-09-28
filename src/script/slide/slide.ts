@@ -99,11 +99,6 @@ type Transform = {
     scale: number,
 }
 
-
-export {
-    Priority
-};
-
 export type {
     Editor,
     Presentation,
@@ -116,5 +111,8 @@ export type {
     Figures,
     Figure,
     Background,
-    Position
+    Position,
+    ColorSquares,
+    ColorSquare,
+    Transform
 };

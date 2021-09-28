@@ -11,7 +11,145 @@ import {
     Figure,
     Background,
     Position,
+    ColorSquares,
+    ColorSquare,
+    Transform
 } from "./slide";
+
+//presentation
+/**
+ * create new
+ * @return {Editor} //или возвращаем Presentation, у нас Editor включает в себя объект Presentation?
+ */
+//function createEditor(): Editor {
+//    const editor: Editor = {mode = ''}
+//    return editor
+//}
+
+//presentation
+/**
+ * create new
+ * @param {Editor} editor
+ * @return {Editor} //или возвращаем Presentation, у нас Editor включает в себя объект Presentation?
+ */
+function createProject(): Editor {
+
+    const newColorSquareBlack : ColorSquare = {
+        width: 20,
+        height: 20,
+        color: '#000',
+        active: false
+    }
+
+    const newColorSquareWhite : ColorSquare = {
+        width: 20,
+        height: 20,
+        color: '#fff',
+        active: false
+    }
+
+    const colorSquares : Array<ColorSquare> = [newColorSquareBlack, newColorSquareWhite]
+
+    const newColorSquares : ColorSquares = {
+        colorSquares : colorSquares
+    }
+
+    const newPosition : Position = {
+        x : 0,
+        y : 0,
+        z : 0
+    }
+
+    const newTextSlide : TextSlide = {
+        content: '',
+        fontsize: 14,
+        font: 'Times New Roman',
+        bold: false,
+        italic: false,
+        underline: false,
+        color: '#000',
+        active: false,
+        width: 100,
+        position: newPosition,
+    }
+
+    const newBackground : Background = {
+        color: '#fff',
+        image: '',
+        priority: 'Color'
+    }
+
+    const texts: Array<TextSlide> = [newTextSlide]
+
+    const newTexts = {
+        texts : texts
+    }
+
+    const newImage : Image = {
+        src: '',
+        active: false,
+        width: 0,
+        height: 0,
+        position: newPosition,
+    }
+
+    const images: Array<Image> = [newImage]
+
+    const newImages : Images = {
+        images : images
+    }
+
+    const newTransform : Transform = {
+        rotate: 0,
+        scale: 0,
+    }
+
+    const newFigure : Figure = {
+        type: 'Ellipse',
+        active: false,
+        fill: '',
+        border: '',
+        transform: newTransform,
+        width: 0,
+        height: 0,
+        position: newPosition,
+    }
+
+    const figures: Array<Figure> = [newFigure]
+
+    const newFigures : Figures = {
+        figures : figures
+    }
+
+    const newSlide: Slide = {
+        title: '',
+        background: newBackground,
+        texts: newTexts,
+        images: newImages,
+        figures: newFigures
+    }
+
+    const slides: Array<Slide> = [newSlide];
+
+    const newSlides : Slides = {
+        active : 0,
+        slides: slides
+    }
+
+    const newPresentation : Presentation = {
+        title : '',
+        slides : newSlides
+    }
+
+    const newEditor : Editor = {
+        mode : 'View',
+        presentation : newPresentation,
+        palette : newColorSquares,
+        history : ''
+    }
+
+    return newEditor
+}
 
 //editor
 /**
@@ -21,28 +159,11 @@ import {
  * @return {Editor}
  */
 function choiceMode(mode: string, editor: Editor): Editor {
-    return editor
-}
-
-//presentation
-/**
- * create new
- * @return {Editor} //или возвращаем Presentation, у нас Editor включает в себя объект Presentation?
- */
-function createEditor(): Editor {
-    const editor: Editor = {mode = ''}
-
-    return editor
-}
-
-//presentation
-/**
- * create new
- * @param {Editor} editor
- * @return {Editor} //или возвращаем Presentation, у нас Editor включает в себя объект Presentation?
- */
-function createProject(editor: Editor): Editor {
-    return editor
+    const newEditor : Editor = {
+        ...editor,
+        mode: mode
+    }
+    return newEditor
 }
 
 /**
@@ -51,6 +172,7 @@ function createProject(editor: Editor): Editor {
  * @return {File}
  */
 function exportProject(presentation: Presentation): string {
+    //Какая-то реализация экспорта
     return ''
 }
 
@@ -59,10 +181,10 @@ function exportProject(presentation: Presentation): string {
  * @param {string} filePath
  * @return {Editor} //или возвращаем Presentation, у нас Editor включает в себя объект Presentation?
  */
-function importProject(filePath: string): Editor {
-    const editor: Editor = createEditor()
-    return editor
-}
+// function importProject(filePath: string): Editor {
+//
+// }
+
 
 // /**
 //  * public presentation
@@ -84,22 +206,39 @@ function autoSavePresentation(presentation: Presentation): Presentation{
 /**
  * set title
  * @param {string} title
- * @param {Presentation} presentation
- * @return {Presentation}
+ * @param {Editor} editor
+ * @return {Editor}
  */
-function setTitle(title: string, presentation: Presentation): Presentation {
-    return presentation
+function setTitle(title: string, editor: Editor): Editor {
+    const newEditor : Editor = {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            title: title
+        }
+    }
+    return newEditor
 }
 
 //slides
 /**
  * add slide
- * @param {Slides} slides
+ * @param {Editor} editor
  * @param {string} index  //у нас индекс в модели данных - это строка?
  * @return {Slides} return new collection
  */
-function addSlide(slides: Slides, index: string): Slides {
-    return slides
+function addSlide(slide: Slide, editor: Editor): Editor {
+    const newSlides = editor.presentation.slides
+
+    const newEditor : Editor = {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+
+    return newEditor
 }
 
 /**
