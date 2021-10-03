@@ -1,118 +1,74 @@
-const Priority: 'Image' | 'Color' = 'Color';
-const SetFigure: 'Triangle' | 'Rectangle' | 'Ellipse' = 'Ellipse';
-const Mode: 'View' | 'Editor' = 'Editor';
-
-type Editor = {
-    mode: string,
-    palette: ColorSquares,
-    history: string,
-    presentation: Presentation,
+export type Editor = {
+    history: History,
+    presentation: Presentation
 }
 
-type ColorSquares = {
-    colorSquares: ColorSquare[],
+export type History = {
+    undo: Array<Presentation>
+    redo: Array<Presentation>
 }
 
-type ColorSquare = {
+export type Presentation = {
+    title: string,
+    slides: Array<Slide>
+}
+
+export type Slide = {
+    background: SlideBackground,
+    object: Object[],
+    active: boolean
+};
+
+export type Object = {
+    leftTopPoint: Position,
+    background: string,
+    border: Border,
     width: number,
     height: number,
-    color: string,
     active: boolean,
+    priority: number
 }
 
-type Presentation = {
-    title: string,
-    slides: Slides,
-}
-
-type Slides = {
-    active: number,
-    slides: Slide[],
-}
-
-type Slide = {
-    title: string,
-    background: Background,
-    texts: Texts,
-    images: Images,
-    figures: Figures,
-};
-
-type Texts = {
-    texts: TextSlide[],
-}
-
-type Images = {
-    images: Image[],
-}
-
-type Figures = {
-    figures: Figure[],
-}
-
-type Background = {
-    color: string,
-    image: string,
-    priority: string,
-};
-
-type TextSlide = {
+export type Text = Object & {
     content: string,
-    fontsize: number,
+    type: 'Text',
+    color: string
+    size: number,
     font: string,
-    bold: boolean,
-    italic: boolean,
-    underline: boolean,
+    fontStyle: Array<FontStyle>
+}
+
+export type FontStyle = 'italic' | 'bold' | 'underline' | 'none'
+
+export type Border = {
+    borderSize: string,
+    borderColor: string,
+    borderStyle: 'Dashed' | 'Solid'
+}
+
+export type Image = Object & {
+    type: 'Image',
+    src: string
+}
+
+export type Triangle = Object & {
+    type: 'Triangle'
+}
+
+export type Circle = Object & {
+    type: 'Circle'
+}
+
+export type Square = Object & {
+    type: 'Square'
+}
+
+export type SlideBackground = {
     color: string,
-    active: boolean,
-    width: number,
-    position: Position,
-}
-
-type Position = {
-    x: number,
-    y: number,
-    z: number,
-}
-
-type Image = {
-    src: string,
-    active: boolean,
-    width: number,
-    height: number,
-    position: Position,
-}
-
-type Figure = {
-    type: string,
-    active: boolean,
-    fill: string,
-    border: string,
-    transform: Transform,
-    width: number,
-    height: number,
-    position: Position,
-}
-
-type Transform = {
-    rotate: number,
-    scale: number,
-}
-
-export type {
-    Editor,
-    Presentation,
-    Slides,
-    Slide,
-    Texts,
-    TextSlide,
-    Images,
-    Image,
-    Figures,
-    Figure,
-    Background,
-    Position,
-    ColorSquares,
-    ColorSquare,
-    Transform
+    image: string
 };
+
+export type Position = {
+    x: number,
+    y: number
+}
