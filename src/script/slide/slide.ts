@@ -15,8 +15,9 @@ export type Presentation = {
 
 export type Slide = {
     background: SlideBackground,
-    object: Object[],
-    active: boolean
+    object: Array<Object>,
+    active: boolean,
+    //visible: boolean - для (не)видимости при копировании?
 };
 
 export type Object = {

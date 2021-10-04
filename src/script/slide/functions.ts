@@ -1,4 +1,4 @@
-import {Editor, Presentation, Slide} from './slide';
+import {Editor, Presentation, Slide, SlideBackground} from './slide';
 
 function createEditor(): Editor {
     return {
@@ -23,106 +23,164 @@ function importProject(filePath: string): Editor {
     // return editor
 }
 
-function setTitle(title: string, presentation: Presentation): Presentation {
-    return presentation
+function setTitle(newTitle: string, presentation: Presentation): Presentation {
+    return {
+        title: newTitle,
+        slides: presentation.slides
+    }
 }
 
-function addSlide(slides: Slides, index: string): Slides {
-    return slides
+//!!Основной вопрос: везде ли должен возвращаться Editor?
+//На этот случай продублировала функции с <name>EditorVersion
+//Начала расписывать реализацию
+//если через Editor
+function setTitleEditorVersion(newTitle: string, editor: Editor): Editor {
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            title: newTitle,
+        }
+    }
 }
 
-/**
- * delete slide
- * @param {Slides} slides
- * @param {string} index  //у нас индекс в модели данных - это строка?
- * @return {Slides} return new collection
- */
-function deleteSlide(slides: Slides, index: string): Slides {
-    return slides
+//Добавление слайда в конец коллекции
+function addSlideToEnd(slide: Slide, presentation: Presentation): Presentation {
+    const newSlides : Array<Slide> = presentation.slides
+    newSlides.push(slide)
+
+    return {
+        ...presentation,
+        slides: newSlides
+    }
 }
 
-/**
- * move slide
- * @param {Slides} slides
- * @param {string} indexOut
- * @param {string} indexIn
- * @return {Slides} return new collection
- */
-function moveSlide(slides: Slides, indexOut: string, indexIn: string): Slides {
-    return slides
+//Добавление слайда в конец коллекции через Editor
+function addSlideToEndEditorVersion(slide: Slide, editor: Editor): Editor {
+    const newSlides : Array<Slide> = editor.presentation.slides
+    newSlides.push(slide)
+
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
 }
 
-/**
- * copy slide, пометить слайд, как добавленный в буфер - добавить в конец слайдов еще один, невидимый с типом буфер?
- * @param {Slides} slides
- * @param {string} index
- * @return {Slides} return new collection
- */
-function copySlide(slides: Slides, index: string): Slides {
-    return slides
+//Добавление слайда
+function addSlideByIndex(slide: Slide, index: number, presentation: Presentation): Presentation {
+    const newSlides : Array<Slide> = presentation.slides
+
+    return {
+        ...presentation,
+        slides: newSlides.splice(index,0, slide)
+    }
 }
 
-/**
- * cut slide, пометить слайд, как добавленный в буфер, уменьшить видимую коллекцию на 1 слайд
- * @param {Slides} slides
- * @param {string} index
- * @return {Slides} return new collection
- */
-function cutSlide(slides: Slides, index: string): Slides {
-    return slides
+//Добавление слайда через Editor
+function addSlideEditorVersion(slide: Slide, index: number, editor: Editor): Editor {
+    const newSlides : Array<Slide> = editor.presentation.slides
+
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides.splice(index,0, slide)
+        }
+    }
 }
 
-/**
- * paste slide, поместить слайд из буффера в видимую коллекцию
- * @param {Slides} slides
- * @param {string} index
- * @return {Slides} return new collection
- */
-function pasteSlide(slides: Slides, index: string): Slides{
-    return slides
+//Удаление слайда из презентации
+function deleteSlide(index: number, presentation: Presentation): Presentation {
+    const newSlides : Array<Slide> = presentation.slides
+    return {
+        ...presentation,
+        slides: newSlides.splice(index,1)
+    }
 }
 
-/**
- * duplicate slide, поместить копию слайда следом
- * @param {Slides} slides
- * @param {string} index
- * @return {Slides} return new collection
- */
-function duplicateSlide(slides: Slides, index: string): Slides {
-    return slides
+//Удаление слайда через Editor
+function deleteSlideEditorVersion(index: number, editor: Editor): Editor {
+    const newSlides : Array<Slide> = editor.presentation.slides
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides.splice(index,1)
+        }
+    }
 }
 
-/**
- * get slide
- * @param {Slides} slides
- * @param {string} index
- * @return {Slide} return slide
- */
-function getSlide(slides: Slides, index: string): Slides {
-    return slides
+//Перемещение слайда в презентации
+function moveSlide(slideIndex: number, finalIndex: number, presentation: Presentation): Presentation {
+    return newPresentation
 }
 
-//slide
-/**
- * set background
- * @param {Slide} slide
- * @param {Background} background
- * @return {Slide}
- */
-function setBackground(slide: Slide, background: Background): Slide {
-    return slide
+//Перемещение слайда в презентации
+function moveSlideEditorVersion(slideIndex: number, finalIndex: number, editor: Editor): Editor {
+    return newEditor
 }
 
-/**
- * activate slide
- * @param {Slide} slide
- * @return {Slide}
- */
+//Копирование слайда
+function copySlide(index: number, presentation: Presentation): Presentation {
+    return newPresentation
+}
+
+function copySlideEditorVersion(index: number, editor: Editor): Editor {
+    return newEditor
+}
+
+function cutSlide(index: number, presentation: Presentation): Presentation {
+    return newPresentation
+}
+
+function cutSlideEditorVersion(index: number, editor: Editor): Editor {
+    return newEditor
+}
+
+function pasteSlide(index: number, presentation: Presentation): Presentation{
+    return newPresentation
+}
+
+function pasteSlideEditorVersion(index: number, editor: Editor): Editor {
+    return newEditor
+}
+
+function duplicateSlide(index: number, presentation: Presentation): Presentation{
+    return newPresentation
+}
+
+function duplicateSlideEditorVersion(index: number, editor: Editor): Editor {
+    return newEditor
+}
+
+//Устанавливает Слайду active?
+function getSlide(index: number, presentation: Presentation): Presentation {
+    return newPresentation
+}
+
+function getSlideEditorVersion(index: number, editor: Editor): Editor {
+    return newEditor
+}
+
+function setBackground(presentation: Presentation, background: SlideBackground): Presentation {
+    return newPresentation
+}
+function setBackgroundEditorVersion(editor: Editor, background: SlideBackground): Editor {
+    return newEditor
+}
+
 function activateSlide(slide: Slide): Slide {
-    return slide
+    return newSlide
+}
+function activateSlideEditorVersion(index: number, editor: Editor): Editor {
+    return newEditor
 }
 
 //content
+//Относительно новой структуры не понимаю как элементы будут позиционироваться по z оси
 
 /**
  * add content: Text
@@ -132,6 +190,10 @@ function activateSlide(slide: Slide): Slide {
  */
 function addText(slide: Slide, text: Text): Slide {
     return slide
+}
+
+function addTextEditorVersion(editor: Editor, text: Text): Editor {
+    return newEditor
 }
 
 /**
@@ -216,4 +278,3 @@ function deleteFigure(slide: Slide, figureIndex: string): Slide {
 function setPositionFigure(slide: Slide, figure: Figure, position: Position): Figure {
     return figure
 }
-
