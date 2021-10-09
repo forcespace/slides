@@ -14,12 +14,10 @@ export type Presentation = {
 }
 
 export type Slide = {
-    background: SlideBackground,
-    //object: Array<Object>,
+    background: Background,
     objects: [Array<Text>, Array<Image>, Array<Figure>]
-    active: boolean,
-    //visible: boolean - для (не)видимости при копировании?
-};
+    active: boolean
+}
 
 export type Object = {
     leftTopPoint: Position,
@@ -60,16 +58,16 @@ export type Figure = Object & {
 export type shapeType = 'Triangle' | 'Circle' | 'Square'
 
 export type Background = {
-
-}
-
-export type SlideBackground = {
     color: string,
     image: string,
-    //что используется
+    priority: number
 };
 
 export type Position = {
     x: number,
     y: number
+}
+
+export type Buffer = {
+    object: [Slide, Text, Image, Figure]
 }

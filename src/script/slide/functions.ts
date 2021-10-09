@@ -1,4 +1,4 @@
-import {Editor, Presentation, Slide, SlideBackground} from './slide';
+import {Editor, Presentation, Slide, Background, Buffer} from './slide';
 
 function createEditor(): Editor {
     return {
@@ -7,11 +7,11 @@ function createEditor(): Editor {
     }
 }
 
-function exportProjectToPdf(presentation: Presentation): void {
+function exportProjectToPdf(presentation: Editor): void {
     // как генерить в пдф и сохранить
 }
 
-function saveProjectLocal(presentation: Presentation): void {
+function saveProjectLocal(presentation: Editor): void {
     // как сохранить в формате json
 }
 
@@ -23,18 +23,11 @@ function importProject(filePath: string): Editor {
     // return editor
 }
 
-function setTitle(newTitle: string, presentation: Presentation): Presentation {
-    return {
-        title: newTitle,
-        slides: presentation.slides
-    }
-}
-
 //!!Основной вопрос: везде ли должен возвращаться Editor?
 //На этот случай продублировала функции с <name>EditorVersion
 //Начала расписывать реализацию
 //если через Editor
-function setTitleEditorVersion(newTitle: string, editor: Editor): Editor {
+function setTitle(newTitle: string, editor: Editor): Editor {
     return {
         ...editor,
         presentation: {
@@ -44,43 +37,8 @@ function setTitleEditorVersion(newTitle: string, editor: Editor): Editor {
     }
 }
 
-//Добавление слайда в конец коллекции
-function addSlideToEnd(slide: Slide, presentation: Presentation): Presentation {
-    const newSlides : Array<Slide> = presentation.slides
-    newSlides.push(slide)
-
-    return {
-        ...presentation,
-        slides: newSlides
-    }
-}
-
-//Добавление слайда в конец коллекции через Editor
-function addSlideToEndEditorVersion(slide: Slide, editor: Editor): Editor {
-    const newSlides : Array<Slide> = editor.presentation.slides
-    newSlides.push(slide)
-
-    return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: newSlides
-        }
-    }
-}
-
-//Добавление слайда
-function addSlideByIndex(slide: Slide, index: number, presentation: Presentation): Presentation {
-    const newSlides : Array<Slide> = presentation.slides
-
-    return {
-        ...presentation,
-        slides: newSlides.splice(index,0, slide)
-    }
-}
-
 //Добавление слайда через Editor
-function addSlideEditorVersion(slide: Slide, index: number, editor: Editor): Editor {
+function addSlide(slide: Slide, index: number, editor: Editor): Editor {
     const newSlides : Array<Slide> = editor.presentation.slides
 
     return {
@@ -92,17 +50,8 @@ function addSlideEditorVersion(slide: Slide, index: number, editor: Editor): Edi
     }
 }
 
-//Удаление слайда из презентации
-function deleteSlide(index: number, presentation: Presentation): Presentation {
-    const newSlides : Array<Slide> = presentation.slides
-    return {
-        ...presentation,
-        slides: newSlides.splice(index,1)
-    }
-}
-
 //Удаление слайда через Editor
-function deleteSlideEditorVersion(index: number, editor: Editor): Editor {
+function deleteSlide(index: number, editor: Editor): Editor {
     const newSlides : Array<Slide> = editor.presentation.slides
     return {
         ...editor,
@@ -114,68 +63,32 @@ function deleteSlideEditorVersion(index: number, editor: Editor): Editor {
 }
 
 //Перемещение слайда в презентации
-function moveSlide(slideIndex: number, finalIndex: number, presentation: Presentation): Presentation {
-    return newPresentation
-}
-
-//Перемещение слайда в презентации
-function moveSlideEditorVersion(slideIndex: number, finalIndex: number, editor: Editor): Editor {
+function moveSlide(slideIndex: number, finalIndex: number, editor: Editor): Editor {
     return newEditor
 }
 
-//Копирование слайда
-function copySlide(index: number, presentation: Presentation): Presentation {
-    return newPresentation
-}
-
-function copySlideEditorVersion(index: number, editor: Editor): Editor {
+function copySlide(index: number, editor: Editor): Editor {
     return newEditor
 }
 
-function cutSlide(index: number, presentation: Presentation): Presentation {
-    return newPresentation
-}
-
-function cutSlideEditorVersion(index: number, editor: Editor): Editor {
+function cutSlide(index: number, editor: Editor): Editor {
     return newEditor
 }
 
-function pasteSlide(index: number, presentation: Presentation): Presentation{
-    return newPresentation
-}
-
-function pasteSlideEditorVersion(index: number, editor: Editor): Editor {
+function pasteSlide(index: number, editor: Editor): Editor {
     return newEditor
 }
 
-function duplicateSlide(index: number, presentation: Presentation): Presentation{
-    return newPresentation
-}
-
-function duplicateSlideEditorVersion(index: number, editor: Editor): Editor {
+function duplicateSlide(index: number, editor: Editor): Editor {
     return newEditor
 }
 
-//Устанавливает Слайду active?
-function getSlide(index: number, presentation: Presentation): Presentation {
-    return newPresentation
-}
-
-function getSlideEditorVersion(index: number, editor: Editor): Editor {
+// можно ли исп общую функцию? Что передавать?
+function getActiveEl(index: number, editor: Editor): Editor {
     return newEditor
 }
 
-function setBackground(presentation: Presentation, background: SlideBackground): Presentation {
-    return newPresentation
-}
-function setBackgroundEditorVersion(editor: Editor, background: SlideBackground): Editor {
-    return newEditor
-}
-
-function activateSlide(slide: Slide): Slide {
-    return newSlide
-}
-function activateSlideEditorVersion(index: number, editor: Editor): Editor {
+function setBackground(editor: Editor, background: SlideBackground): Editor {
     return newEditor
 }
 
