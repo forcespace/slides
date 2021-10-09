@@ -3,7 +3,8 @@ import {Editor, Presentation, Slide, Background, Buffer} from './slide';
 function createEditor(): Editor {
     return {
         history: {undo: [], redo: []},
-        presentation: {title: '', slides: []}
+        presentation: {title: '', slides: []},
+        active: 0
     }
 }
 
@@ -38,8 +39,9 @@ function setTitle(newTitle: string, editor: Editor): Editor {
 }
 
 //Добавление слайда через Editor
-function addSlide(slide: Slide, index: number, editor: Editor): Editor {
+function addSlide(slide: Slide, editor: Editor): Editor {
     const newSlides : Array<Slide> = editor.presentation.slides
+    const index: number = editor.active
 
     return {
         ...editor,
@@ -51,20 +53,42 @@ function addSlide(slide: Slide, index: number, editor: Editor): Editor {
 }
 
 //Удаление слайда через Editor
-function deleteSlide(index: number, editor: Editor): Editor {
+function deleteSlide(editor: Editor): Editor {
     const newSlides : Array<Slide> = editor.presentation.slides
+    const index: number = editor.active
+
+    let newIndex: number = 0;
+
+    if (editor.active !== 0)
+    {
+        newIndex = editor.active - 1
+    }
+
     return {
         ...editor,
         presentation: {
             ...editor.presentation,
             slides: newSlides.splice(index,1)
-        }
+        },
+        active: newIndex
     }
 }
 
 //Перемещение слайда в презентации
-function moveSlide(slideIndex: number, finalIndex: number, editor: Editor): Editor {
-    return newEditor
+function moveSlideTopByStep(editor: Editor): Editor {
+    // const newSlides : Array<Slide> = editor.presentation.slides
+    let newEditor: Editor = editor
+    deleteSlide(newEditor);
+    const index: number = editor.active - 1
+
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newEditor.presentation.slides.splice(index,0, editor.presentation.slides[editor.active])
+        },
+        active: index
+    }
 }
 
 function copySlide(index: number, editor: Editor): Editor {
