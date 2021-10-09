@@ -15,14 +15,15 @@ export type Presentation = {
 
 export type Slide = {
     background: SlideBackground,
-    object: Array<Object>,
+    //object: Array<Object>,
+    objects: [Array<Text>, Array<Image>, Array<Figure>]
     active: boolean,
     //visible: boolean - для (не)видимости при копировании?
 };
 
 export type Object = {
     leftTopPoint: Position,
-    background: string,
+    background: Background,
     border: Border,
     width: number,
     height: number,
@@ -52,21 +53,20 @@ export type Image = Object & {
     src: string
 }
 
-export type Triangle = Object & {
-    type: 'Triangle'
+export type Figure = Object & {
+    type: shapeType,
 }
 
-export type Circle = Object & {
-    type: 'Circle'
-}
+export type shapeType = 'Triangle' | 'Circle' | 'Square'
 
-export type Square = Object & {
-    type: 'Square'
+export type Background = {
+
 }
 
 export type SlideBackground = {
     color: string,
-    image: string
+    image: string,
+    //что используется
 };
 
 export type Position = {
