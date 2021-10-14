@@ -67,7 +67,7 @@ function addSlide(editor: Editor): Editor {
     let newSlides : Array<Slide> = editor.presentation.slides
     const slide: Slide = createSlide()
     const index: number = editor.active
-    newSlides.splice(index,0, slide)
+    newSlides.splice(index + 1,0, slide)
 
     return {
         ...editor,
@@ -246,45 +246,93 @@ function moveSlideTopByStep(editor: Editor): Editor {
 
 //Вот тут все console.log
 
-function createEditorForTest(): Editor {
+function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } } {
     let text1 :Text = {
-        leftTopPoint: Position,
-        background: Background,
-        border: Border,
-        width: number,
-        height: number,
-        active: boolean,
-        priority: number,
-
+        leftTopPoint: {x:1, y:1},
+        background: {color: "#111", priority: 1, image:''},
+        border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
+        width: 1,
+        height: 1,
+        active: false,
+        priority: 2,
+        content: "string",
+        type: 'Text',
+        color:  "#111",
+        size: 3,
+        font: '',
+        fontStyle: ['italic']
     }
     let text2 :Text = {
-        content: "2"
+        leftTopPoint: {x:2, y:2},
+        background: {color: "#222", priority: 1, image:''},
+        border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
+        width: 2,
+        height: 2,
+        active: false,
+        priority: 2,
+        content: "string",
+        type: 'Text',
+        color:  "#222",
+        size: 3,
+        font: '',
+        fontStyle: ['italic']
     }
 
     let slide : Slide  = {
-        background: #fff,
-        objects: [[],[],[]]
-
+        background: {color: "#ac00dd", priority: 1, image:''},
+        objects: [[text1,text2],[],[]]
     }
 
+    let slide2 :Slide = {
+        background: {color: "#ac0eed", priority: 2, image:''},
+        objects: [[text1],[],[]]
+    }
+
+    let slide3 :Slide = {
+        background: {color: "#a3effd", priority: 3, image:''},
+        objects: [[],[],[]]
+    }
+
+    let slide4 :Slide = {
+        background: {color: "#000", priority: 4, image:''},
+        objects: [[text2],[],[]]
+    }
+
+    let slide5 :Slide = {
+        background: {color: "#fff", priority: 5, image:''},
+        objects: [[text2,text1],[],[]]
+    }
+
+    let slides: Array<Slide> = [slide2,slide,slide3,slide4,slide5]
 
     return {
         history: {undo: [], redo: []},
-        presentation: {title: 'test', slides: slide},
-        active: 5
+        presentation: {title: 'test', slides: slides},
+        active: 2
     }
 }
 
-let editor: Editor = createEditor()
+let editorToTest: any = createEditorForTest()
 let editorToPrint: Editor = createEditor()
+console.log(editorToTest)
+// console.log(editorToPrint)
 
-console.log(setTitle("Hello", editor))
-editorToPrint = addSlide(editor)
+//console.log(setTitle("Hello", editorToPrint))
+
+//editorToPrint = addSlide(editorToTest)
+//console.log(editorToPrint)
+//console.log(editorToPrint.presentation.slides[3])
+
 console.log(editorToPrint)
-editor = deleteSlide(editorToPrint)
-console.log(editor)
-editor = deleteSlide(editorToPrint)
-console.log(editor)
+editorToPrint = deleteSlide(editorToTest)
+console.log(editorToPrint)
+
+console.log(editorToPrint.presentation.slides[2])
+
+//editor = deleteSlide(editorToPrint)
+//console.log(editor)
+//editor = deleteSlide(editorToPrint)
+//console.log(editor)
 
 
 

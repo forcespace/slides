@@ -32,7 +32,7 @@ export type Object = {
 export type Text = Object & {
     content: string,
     type: 'Text',
-    color: string
+    color: string,
     size: number,
     font: string,
     fontStyle: Array<FontStyle>
