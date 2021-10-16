@@ -45,25 +45,8 @@ function setTitle(newTitle: string, editor: Editor): Editor {
     }
 }
 
-//Добавление слайда через Editor
-//Функция добавления какого-то заполненного слайда и она не работает
-/*
-    function addSlide(slide: Slide, editor: Editor): Editor {
-    const newSlides : Array<Slide> = editor.presentation.slides
-    const index: number = editor.active
-
-    return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: newSlides.splice(index,0, slide)
-        },
-        active: index + 1
-    }
-}*/
-
 //Добавление пустого слайда в коллекцию после активного
-function addSlide(editor: Editor): Editor {
+function addEmptySlide(editor: Editor): Editor {
     let newSlides : Array<Slide> = editor.presentation.slides
     const slide: Slide = createSlide()
     const index: number = editor.active
@@ -98,6 +81,24 @@ function deleteSlide(editor: Editor): Editor {
             slides: newSlides
         },
         active: newIndex
+    }
+}
+
+//Добавление слайда через Editor
+// Функция добавления какого-то заполненного слайда и она работает
+function addSlide(slide: Slide, editor: Editor): Editor
+{
+    const newSlides : Array<Slide> = editor.presentation.slides
+    const index: number = editor.active
+    newSlides.splice(index,0, slide)
+
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        },
+        active: index + 1
     }
 }
 
@@ -312,14 +313,32 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     }
 }
 
+let textNotEmptySlide :Text = {
+    leftTopPoint: {x:1, y:1},
+    background: {color: "#111", priority: 1, image:''},
+    border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
+    width: 1,
+    height: 1,
+    active: false,
+    priority: 2,
+    content: "string",
+    type: 'Text',
+    color:  "#111",
+    size: 3,
+    font: '',
+    fontStyle: ['italic']
+}
+
+let slideNotEmpty :Slide = {
+    background: {color: "#ac0eed", priority: 2, image:''},
+    objects: [[textNotEmptySlide],[],[]]
+}
+
 let editorToTest: any = createEditorForTest()
 let editorToPrint: Editor = createEditor()
+
 // console.log(editorToTest)
-// console.log(editorToPrint)
-
 //console.log(setTitle("Hello", editorToPrint))
-
-//editorToPrint = addSlide(editorToTest)
-//console.log(editorToPrint.presentation.slides[3])
-
-editorToPrint = deleteSlide(editorToTest)
+//editorToPrint = addEmptySlide(editorToTest)
+//editorToPrint = deleteSlide(editorToTest)
+//console.log(addSlide(slideNotEmpty,editorToPrint))
