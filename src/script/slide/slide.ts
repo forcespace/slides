@@ -1,6 +1,7 @@
 export type Editor = {
     history: History,
-    presentation: Presentation
+    presentation: Presentation,
+    active: number
 }
 
 export type History = {
@@ -14,15 +15,13 @@ export type Presentation = {
 }
 
 export type Slide = {
-    background: SlideBackground,
-    object: Array<Object>,
-    active: boolean,
-    //visible: boolean - для (не)видимости при копировании?
-};
+    background: Background,
+    objects: [Array<Text>, Array<Image>, Array<Figure>]
+}
 
 export type Object = {
     leftTopPoint: Position,
-    background: string,
+    background: Background,
     border: Border,
     width: number,
     height: number,
@@ -33,7 +32,7 @@ export type Object = {
 export type Text = Object & {
     content: string,
     type: 'Text',
-    color: string
+    color: string,
     size: number,
     font: string,
     fontStyle: Array<FontStyle>
@@ -52,24 +51,23 @@ export type Image = Object & {
     src: string
 }
 
-export type Triangle = Object & {
-    type: 'Triangle'
+export type Figure = Object & {
+    type: shapeType,
 }
 
-export type Circle = Object & {
-    type: 'Circle'
-}
+export type shapeType = 'Triangle' | 'Circle' | 'Square'
 
-export type Square = Object & {
-    type: 'Square'
-}
-
-export type SlideBackground = {
+export type Background = {
     color: string,
-    image: string
+    image: string,
+    priority: number
 };
 
 export type Position = {
     x: number,
     y: number
+}
+
+export type Buffer = {
+    object: [Slide, Text, Image, Figure]
 }
