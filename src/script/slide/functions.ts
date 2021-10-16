@@ -88,7 +88,7 @@ function deleteSlide(editor: Editor): Editor {
     if (editor.active !== 0)
     {
         newIndex = editor.active - 1
-        newSlides = newSlides.splice(index,1)
+        newSlides.splice(index - 1,1)
     }
 
     return {
@@ -303,7 +303,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
         objects: [[text2,text1],[],[]]
     }
 
-    let slides: Array<Slide> = [slide2,slide,slide3,slide4,slide5]
+    let slides: Array<Slide> = [slide,slide2,slide3,slide4,slide5]
 
     return {
         history: {undo: [], redo: []},
@@ -314,25 +314,12 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
 
 let editorToTest: any = createEditorForTest()
 let editorToPrint: Editor = createEditor()
-console.log(editorToTest)
+// console.log(editorToTest)
 // console.log(editorToPrint)
 
 //console.log(setTitle("Hello", editorToPrint))
 
 //editorToPrint = addSlide(editorToTest)
-//console.log(editorToPrint)
 //console.log(editorToPrint.presentation.slides[3])
 
-console.log(editorToPrint)
 editorToPrint = deleteSlide(editorToTest)
-console.log(editorToPrint)
-
-console.log(editorToPrint.presentation.slides[2])
-
-//editor = deleteSlide(editorToPrint)
-//console.log(editor)
-//editor = deleteSlide(editorToPrint)
-//console.log(editor)
-
-
-
