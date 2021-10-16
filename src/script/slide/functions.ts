@@ -71,8 +71,8 @@ function deleteSlide(editor: Editor): Editor {
     if (editor.active !== 0)
     {
         newIndex = editor.active - 1
-        newSlides.splice(index - 1,1)
     }
+    newSlides.splice(index,1)
 
     return {
         ...editor,
@@ -104,19 +104,15 @@ function addSlide(slide: Slide, editor: Editor): Editor
 
 //Перемещение слайда в презентации
 function moveSlideTopByStep(editor: Editor): Editor {
-    // const newSlides : Array<Slide> = editor.presentation.slides
-    let newEditor: Editor = editor
-    deleteSlide(newEditor);
-    const index: number = editor.active - 1
-
-    return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: newEditor.presentation.slides.splice(index,0, editor.presentation.slides[editor.active])
-        },
-        active: index
+    const newEditor: Editor = editor
+    const slide : Slide = editor.presentation.slides[editor.active]
+    if (editor.active !== 0)
+    {
+        deleteSlide(newEditor)
+        newEditor.active = newEditor.active - 1
+        addSlide(slide, newEditor)
     }
+    return newEditor
 }
 
 // function copySlide(index: number, editor: Editor): Editor {
@@ -280,27 +276,27 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     }
 
     let slide : Slide  = {
-        background: {color: "#ac00dd", priority: 1, image:''},
+        background: {color: "#ac00dd", priority: 0, image:''},
         objects: [[text1,text2],[],[]]
     }
 
     let slide2 :Slide = {
-        background: {color: "#ac0eed", priority: 2, image:''},
+        background: {color: "#ac0eed", priority: 1, image:''},
         objects: [[text1],[],[]]
     }
 
     let slide3 :Slide = {
-        background: {color: "#a3effd", priority: 3, image:''},
+        background: {color: "#a3effd", priority: 2, image:''},
         objects: [[],[],[]]
     }
 
     let slide4 :Slide = {
-        background: {color: "#000", priority: 4, image:''},
+        background: {color: "#000", priority: 3, image:''},
         objects: [[text2],[],[]]
     }
 
     let slide5 :Slide = {
-        background: {color: "#fff", priority: 5, image:''},
+        background: {color: "#fff", priority: 4, image:''},
         objects: [[text2,text1],[],[]]
     }
 
@@ -337,7 +333,13 @@ let slideNotEmpty :Slide = {
 let editorToTest: any = createEditorForTest()
 let editorToPrint: Editor = createEditor()
 
-// console.log(editorToTest)
+//addEmptySlide(editorToPrint)
+
+//moveSlideTopByStep(editorToTest)
+// console.log(editorToTest.presentation.slides)
+console.log(moveSlideTopByStep(editorToTest))
+// console.log(editorToTest.presentation.slides)
+
 //console.log(setTitle("Hello", editorToPrint))
 //editorToPrint = addEmptySlide(editorToTest)
 //editorToPrint = deleteSlide(editorToTest)
