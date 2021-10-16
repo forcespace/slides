@@ -37,92 +37,108 @@ const editor = {
     history: 'history log',
     presentation: {
         title: 'Заголовок презентации',
-        slides: [
-            {
-                active: 'Индекс слайда',
-                slide: {
-                    title: 'Заголовок слада 1',
-                    background: {
-                        color: 'код цвета',
-                        image: 'ссылка на картинку',
-                        priority: 'Приоритет картинки'
+        slides: {
+            active: 0,
+            slide: [{
+                title: 'Заголовок слада 1',
+                background: {
+                    color: 'код цвета',
+                    image: 'ссылка на картинку',
+                    priority: 'Приоритет картинки'
+                },
+                texts: [
+                    {
+                        content: 'Текст dssd',
+                        fontsize: 18,
+                        font: 'Times New Roman',
+                        bold: true,
+                        italic: false,
+                        underline: true,
+                        color: '#000',
+                        active: true,
+                        width: 250,
+                        position: {
+                            x: 100,
+                            y: 100,
+                            z: 0
+                        }
                     },
-                    texts: [
-                        {
-                            content: 'Текст',
-                            fontsize: 18,
-                            font: 'Times New Roman',
-                            bold: true,
-                            italic: false,
-                            underline: true,
-                            color: 'код цвета',
-                            active: true,
-                            width: 250,
-                            position: {
-                                x: 100,
-                                y: 100,
-                                z: 0
-                            }
-                        },
-                        {
-                            content: 'Текст',
-                            fontsize: 18,
-                            font: 'Times New Roman',
-                            bold: true,
-                            italic: false,
-                            underline: true,
-                            color: 'код цвета',
-                            active: true,
-                            width: 250,
-                            position: {
-                                x: 100,
-                                y: 100,
-                                z: 0
-                            }
+                    {
+                        content: 'Текст',
+                        fontsize: 18,
+                        font: 'Times New Roman',
+                        bold: true,
+                        italic: false,
+                        underline: true,
+                        color: '#414',
+                        active: true,
+                        width: 250,
+                        position: {
+                            x: 0,
+                            y: 100,
+                            z: 0
                         }
-                    ],
-                    images: [
-                        {
-                            src: 'ссылка',
-                            active: true,
-                            width: 100,
-                            height: 100,
-                            position: {
-                                x: 100,
-                                y: 100,
-                                z: 0
-                            }
-                        },
-                        {
-                            src: 'ссылка',
-                            active: false,
-                            width: 100,
-                            height: 100,
-                            position: {
-                                x: 100,
-                                y: 100,
-                                z: 0
-                            }
+                    }
+                ],
+                images: [
+                    {
+                        src: 'ссылка',
+                        active: true,
+                        width: 100,
+                        height: 100,
+                        position: {
+                            x: 100,
+                            y: 100,
+                            z: 0
                         }
-                    ],
-                    figures: [
-                        {
-                            type: 'треугольник',
-                            active: true,
-                            fill: '#ddd',
-                            border: '#eee',
-                            transform: 'rotate, scale',
-                            width: 100,
-                            height: 100,
-                            position: {
-                                x: 100,
-                                y: 100,
-                                z: 0
-                            }
+                    },
+                    {
+                        src: 'ссылка',
+                        active: false,
+                        width: 100,
+                        height: 100,
+                        position: {
+                            x: 100,
+                            y: 100,
+                            z: 0
                         }
-                    ]
-                }
-            }
-        ],
+                    }
+                ],
+                figures: [
+                    {
+                        type: 'треугольник',
+                        active: true,
+                        fill: '#ddd',
+                        border: '#eee',
+                        transform: 'rotate, scale',
+                        width: 100,
+                        height: 100,
+                        position: {
+                            x: 100,
+                            y: 100,
+                            z: 0
+                        }
+                    },
+                    {
+                        type: 'прямоугольник',
+                        active: true,
+                        fill: '#ddd',
+                        border: '#eee',
+                        transform: 'rotate, scale',
+                        width: 100,
+                        height: 100,
+                        position: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        }
+                    }
+                ]
+            }]
+        },
     }
+}
+
+export {
+    editor,
 }

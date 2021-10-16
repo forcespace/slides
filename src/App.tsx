@@ -1,40 +1,37 @@
 import React from 'react';
-import {presentation} from './../src/script/slide/editor'
+import {editor} from './script/slide/editor'
 import './App.css';
-
-type presentationTest = {
-    title: string;
-}
-
-
-function title(props: presentationTest) {
-    return <span>{props.title}</span>
-}
+import {CanvasContainer} from './CanvasContainer'
 
 function App() {
-  return (
+    return (
     <div className="App">
-      <header className="header">
-        <title>{presentation.title}</title>
-      </header>
-      <div id="toolbars" className="toolbar">
-          <button className="btn"></button>
-      </div>
-      <div id="docs-editor" className="companion-enabled">
-        <div id="two-panel-layout" className="two-panel-layout">
-            <div id="sidebar" className="filmstrip">
-                <div id="slide" className="slide"></div>
+        <header>
+            <div>
+                <input className="title" value={editor.presentation.title}/>
             </div>
-              <div id="workspace-container" className="workspace-container">
-                <div id="slide-view" className="slide-view">
-
-                </div>
-              </div>
+        </header>
+        <div id="toolbars" className="toolbar">
+            <button className="btn">Кнопка</button>
         </div>
-      </div>
-
+        <div id="docs-editor" className="companion-enabled">
+            <div id="two-panel-layout" className="two-panel-layout">
+                <div id="sidebar" className="filmstrip">
+                    <div id="slide" className="slide">
+                        <CanvasContainer />
+                    </div>
+                </div>
+                <div id="workspace-container" className="workspace-container">
+                    <div id="slide-view" className="slide-view">
+                        <CanvasContainer />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   );
 }
 
-export default App;
+export {
+    App
+}
