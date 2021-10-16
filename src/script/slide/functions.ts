@@ -102,14 +102,26 @@ function addSlide(slide: Slide, editor: Editor): Editor
     }
 }
 
-//Перемещение слайда в презентации
-function moveSlideTopByStep(editor: Editor): Editor {
+//Перемещение слайда вверх в презентации
+function moveSlideDownByStep(editor: Editor): Editor {
     const newEditor: Editor = editor
     const slide : Slide = editor.presentation.slides[editor.active]
     if (editor.active !== 0)
     {
         deleteSlide(newEditor)
         newEditor.active = newEditor.active - 1
+        addSlide(slide, newEditor)
+    }
+    return newEditor
+}
+
+function moveSlideTopByStep(editor: Editor): Editor {
+    const newEditor : Editor = editor
+    const slide : Slide = editor.presentation.slides[editor.active]
+    if (editor.active !== newEditor.presentation.slides.length - 1)
+    {
+        deleteSlide(newEditor)
+        newEditor.active = newEditor.active + 1
         addSlide(slide, newEditor)
     }
     return newEditor
@@ -333,14 +345,10 @@ let slideNotEmpty :Slide = {
 let editorToTest: any = createEditorForTest()
 let editorToPrint: Editor = createEditor()
 
-//addEmptySlide(editorToPrint)
-
-//moveSlideTopByStep(editorToTest)
-// console.log(editorToTest.presentation.slides)
-console.log(moveSlideTopByStep(editorToTest))
-// console.log(editorToTest.presentation.slides)
-
 //console.log(setTitle("Hello", editorToPrint))
 //editorToPrint = addEmptySlide(editorToTest)
 //editorToPrint = deleteSlide(editorToTest)
 //console.log(addSlide(slideNotEmpty,editorToPrint))
+console.log(moveSlideTopByStep(editorToTest))
+//addEmptySlide(editorToPrint)
+//console.log(moveSlideDownByStep(editorToTest))
