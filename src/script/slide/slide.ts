@@ -16,13 +16,13 @@ export type Presentation = {
 
 export type Slide = {
     background: Background,
-    objects: [Array<Text>, Array<Image>, Array<Figure>]
+    objects: Array<Text | Image | Figure>
 }
 
 export type Object = {
     leftTopPoint: Position,
-    background: Background,
-    border: Border,
+    background?: Background,
+    border?: Border,
     width: number,
     height: number,
     active: boolean,
@@ -32,10 +32,10 @@ export type Object = {
 export type Text = Object & {
     content: string,
     type: 'Text',
-    color: string,
+    color?: string,
     size: number,
-    font: string,
-    fontStyle: Array<FontStyle>
+    font?: string,
+    fontStyle?: Array<FontStyle>
 }
 
 export type FontStyle = 'italic' | 'bold' | 'underline' | 'none'

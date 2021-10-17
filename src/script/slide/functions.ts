@@ -10,8 +10,8 @@ function createEditor(): Editor {
 
 function createSlide(): Slide {
     return {
-        background: {color: '', image:'', priority: 0},
-        objects: [[],[],[]]
+        background: {color: '', image: '', priority: 0},
+        objects: []
     }
 }
 
@@ -47,10 +47,10 @@ function setTitle(newTitle: string, editor: Editor): Editor {
 
 //Добавление пустого слайда в коллекцию после активного
 function addEmptySlide(editor: Editor): Editor {
-    let newSlides : Array<Slide> = editor.presentation.slides
+    let newSlides: Array<Slide> = editor.presentation.slides
     const slide: Slide = createSlide()
     const index: number = editor.active
-    newSlides.splice(index + 1,0, slide)
+    newSlides.splice(index + 1, 0, slide)
 
     return {
         ...editor,
@@ -64,15 +64,14 @@ function addEmptySlide(editor: Editor): Editor {
 
 //Удаление активного слайда из коллекции
 function deleteSlide(editor: Editor): Editor {
-    let newSlides : Array<Slide> = editor.presentation.slides
+    let newSlides: Array<Slide> = editor.presentation.slides
     const index: number = editor.active
 
     let newIndex: number = 0;
-    if (editor.active !== 0)
-    {
+    if (editor.active !== 0) {
         newIndex = editor.active - 1
     }
-    newSlides.splice(index,1)
+    newSlides.splice(index, 1)
 
     return {
         ...editor,
@@ -86,11 +85,10 @@ function deleteSlide(editor: Editor): Editor {
 
 //Добавление слайда через Editor
 // Функция добавления какого-то заполненного слайда и она работает
-function addSlide(slide: Slide, editor: Editor): Editor
-{
-    const newSlides : Array<Slide> = editor.presentation.slides
+function addSlide(slide: Slide, editor: Editor): Editor {
+    const newSlides: Array<Slide> = editor.presentation.slides
     const index: number = editor.active
-    newSlides.splice(index,0, slide)
+    newSlides.splice(index, 0, slide)
 
     return {
         ...editor,
@@ -105,9 +103,8 @@ function addSlide(slide: Slide, editor: Editor): Editor
 //Перемещение слайда вверх в презентации
 function moveSlideDownByStep(editor: Editor): Editor {
     const newEditor: Editor = editor
-    const slide : Slide = editor.presentation.slides[editor.active]
-    if (editor.active !== 0)
-    {
+    const slide: Slide = editor.presentation.slides[editor.active]
+    if (editor.active !== 0) {
         deleteSlide(newEditor)
         newEditor.active = newEditor.active - 1
         addSlide(slide, newEditor)
@@ -116,10 +113,9 @@ function moveSlideDownByStep(editor: Editor): Editor {
 }
 
 function moveSlideTopByStep(editor: Editor): Editor {
-    const newEditor : Editor = editor
-    const slide : Slide = editor.presentation.slides[editor.active]
-    if (editor.active !== newEditor.presentation.slides.length - 1)
-    {
+    const newEditor: Editor = editor
+    const slide: Slide = editor.presentation.slides[editor.active]
+    if (editor.active !== newEditor.presentation.slides.length - 1) {
         deleteSlide(newEditor)
         newEditor.active = newEditor.active + 1
         addSlide(slide, newEditor)
@@ -161,9 +157,17 @@ function moveSlideTopByStep(editor: Editor): Editor {
 //  * @param {Text} text
 //  * @return {Slide} return Slide
 //  *!/
-// function addText(slide: Slide, text: Text): Slide {
-//     return slide
-// }
+function addText(slide: Slide, text: Text): Slide {
+    const newSlide: Slide = {
+        ...slide,
+        objects: [
+            ...slide.objects,
+            text
+        ]
+    }
+    return newSlide
+}
+
 //
 // function addTextEditorVersion(editor: Editor, text: Text): Editor {
 //     return newEditor
@@ -175,9 +179,23 @@ function moveSlideTopByStep(editor: Editor): Editor {
 //  * @param {string} textIndex
 //  * @return {Slide} return new Slide
 //  *!/
-// function deleteText(slide:Slide, textIndex: string): Slide {
-//     return slide
-// }
+function deleteText(slide: Slide, textIndex: number): Slide {
+    if (slide.objects.length > textIndex) {
+        const newObjects = [
+            ...slide.objects
+        ]
+
+        newObjects.splice(textIndex, 1)
+
+        const newSlide: Slide = {
+            ...slide,
+            objects: newObjects
+        }
+        return newSlide
+    }
+    return slide
+}
+
 //
 // /!**
 //  * set Position Text
@@ -186,9 +204,22 @@ function moveSlideTopByStep(editor: Editor): Editor {
 //  * @param {Position} position
 //  * @return {Text}
 //  *!/
-// function setPositionText(slide: Slide, text: Text, position: Position): Text {
-//     return text
-// }
+function setPositionText(slide: Slide, activeIndex: number, position: Position): Slide {
+    const activeElement = {
+        ...slide.objects[activeIndex],
+        leftTopPoint: position
+    }
+    const newObjects = [
+        ...slide.objects
+    ]
+    newObjects.splice(activeIndex, 1, activeElement)
+
+    const newSlide: Slide = {
+        ...slide,
+        objects: newObjects
+    }
+    return newSlide
+}
 //
 // /!**
 //  * add content: Image
@@ -253,12 +284,13 @@ function moveSlideTopByStep(editor: Editor): Editor {
 // }
 
 
+
 //Вот тут все console.log
 
 function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } } {
-    let text1 :Text = {
-        leftTopPoint: {x:1, y:1},
-        background: {color: "#111", priority: 1, image:''},
+    let text1: Text = {
+        leftTopPoint: {x: 1, y: 1},
+        background: {color: "#111", priority: 1, image: ''},
         border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
         width: 1,
         height: 1,
@@ -266,14 +298,14 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
         priority: 2,
         content: "string",
         type: 'Text',
-        color:  "#111",
+        color: "#111",
         size: 3,
         font: '',
         fontStyle: ['italic']
     }
-    let text2 :Text = {
-        leftTopPoint: {x:2, y:2},
-        background: {color: "#222", priority: 1, image:''},
+    let text2: Text = {
+        leftTopPoint: {x: 2, y: 2},
+        background: {color: "#222", priority: 1, image: ''},
         border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
         width: 2,
         height: 2,
@@ -281,38 +313,38 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
         priority: 2,
         content: "string",
         type: 'Text',
-        color:  "#222",
+        color: "#222",
         size: 3,
         font: '',
         fontStyle: ['italic']
     }
 
-    let slide : Slide  = {
-        background: {color: "#ac00dd", priority: 0, image:''},
-        objects: [[text1,text2],[],[]]
+    let slide: Slide = {
+        background: {color: "#ac00dd", priority: 0, image: ''},
+        objects: [text1, text2]
     }
 
-    let slide2 :Slide = {
-        background: {color: "#ac0eed", priority: 1, image:''},
-        objects: [[text1],[],[]]
+    let slide2: Slide = {
+        background: {color: "#ac0eed", priority: 1, image: ''},
+        objects: [text1]
     }
 
-    let slide3 :Slide = {
-        background: {color: "#a3effd", priority: 2, image:''},
-        objects: [[],[],[]]
+    let slide3: Slide = {
+        background: {color: "#a3effd", priority: 2, image: ''},
+        objects: []
     }
 
-    let slide4 :Slide = {
-        background: {color: "#000", priority: 3, image:''},
-        objects: [[text2],[],[]]
+    let slide4: Slide = {
+        background: {color: "#000", priority: 3, image: ''},
+        objects: [text2]
     }
 
-    let slide5 :Slide = {
-        background: {color: "#fff", priority: 4, image:''},
-        objects: [[text2,text1],[],[]]
+    let slide5: Slide = {
+        background: {color: "#fff", priority: 4, image: ''},
+        objects: [text2, text1]
     }
 
-    let slides: Array<Slide> = [slide,slide2,slide3,slide4,slide5]
+    let slides: Array<Slide> = [slide, slide2, slide3, slide4, slide5]
 
     return {
         history: {undo: [], redo: []},
@@ -321,9 +353,9 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     }
 }
 
-let textNotEmptySlide :Text = {
-    leftTopPoint: {x:1, y:1},
-    background: {color: "#111", priority: 1, image:''},
+let textNotEmptySlide: Text = {
+    leftTopPoint: {x: 1, y: 1},
+    background: {color: "#111", priority: 1, image: ''},
     border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
     width: 1,
     height: 1,
@@ -331,15 +363,15 @@ let textNotEmptySlide :Text = {
     priority: 2,
     content: "string",
     type: 'Text',
-    color:  "#111",
+    color: "#111",
     size: 3,
     font: '',
     fontStyle: ['italic']
 }
 
-let slideNotEmpty :Slide = {
-    background: {color: "#ac0eed", priority: 2, image:''},
-    objects: [[textNotEmptySlide],[],[]]
+let slideNotEmpty: Slide = {
+    background: {color: "#ac0eed", priority: 2, image: ''},
+    objects: [textNotEmptySlide]
 }
 
 let editorToTest: any = createEditorForTest()
@@ -349,6 +381,8 @@ let editorToPrint: Editor = createEditor()
 //editorToPrint = addEmptySlide(editorToTest)
 //editorToPrint = deleteSlide(editorToTest)
 //console.log(addSlide(slideNotEmpty,editorToPrint))
-console.log(moveSlideTopByStep(editorToTest))
+// console.log(moveSlideTopByStep(editorToTest))
 //addEmptySlide(editorToPrint)
 //console.log(moveSlideDownByStep(editorToTest))
+let result = moveSlideTopByStep(editorToTest);
+console.log(result);
