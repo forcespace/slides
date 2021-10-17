@@ -58,9 +58,9 @@ export type Figure = Object & {
 export type shapeType = 'Triangle' | 'Circle' | 'Square'
 
 export type Background = {
-    color: string,
-    image: string,
-    priority: number
+    color?: string,
+    image?: string,
+    priority?: number
 };
 
 export type Position = {

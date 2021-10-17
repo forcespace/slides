@@ -1,4 +1,4 @@
-import {Editor, Presentation, Slide, Background, Buffer, Text, FontStyle, Position, Border, Object} from './slide';
+import {Editor, Presentation, Slide, Background, Buffer, Text, FontStyle, Position, Border, Object, Figure, Image} from './slide';
 
 function createEditor(): Editor {
     return {
@@ -151,41 +151,32 @@ function moveSlideTopByStep(editor: Editor): Editor {
 // //content
 // //Относительно новой структуры не понимаю как элементы будут позиционироваться по z оси
 //
-// /!**
-//  * add content: Text
-//  * @param {Slide} slide
-//  * @param {Text} text
-//  * @return {Slide} return Slide
-//  *!/
-function addText(slide: Slide, text: Text): Slide {
-    const newSlide: Slide = {
-        ...slide,
-        objects: [
-            ...slide.objects,
-            text
-        ]
-    }
-    return newSlide
-}
 
 //
 // function addTextEditorVersion(editor: Editor, text: Text): Editor {
 //     return newEditor
 // }
-//
-// /!**
-//  * delete content: Text
-//  * @param {Slide} slide
-//  * @param {string} textIndex
-//  * @return {Slide} return new Slide
-//  *!/
-function deleteText(slide: Slide, textIndex: number): Slide {
-    if (slide.objects.length > textIndex) {
+
+function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
+{
+    const newSlide: Slide = {
+        ...slide,
+        objects: [
+            ...slide.objects,
+            object
+        ]
+    }
+    return newSlide
+}
+
+function deleteObject(slide: Slide, index: number): Slide
+{
+    if (slide.objects.length > index) {
         const newObjects = [
             ...slide.objects
         ]
 
-        newObjects.splice(textIndex, 1)
+        newObjects.splice(index, 1)
 
         const newSlide: Slide = {
             ...slide,
@@ -196,93 +187,57 @@ function deleteText(slide: Slide, textIndex: number): Slide {
     return slide
 }
 
-//
-// /!**
-//  * set Position Text
-//  * @param {Slide} slide
-//  * @param {Text} text
-//  * @param {Position} position
-//  * @return {Text}
-//  *!/
-function setPositionText(slide: Slide, activeIndex: number, position: Position): Slide {
-    const activeElement = {
-        ...slide.objects[activeIndex],
-        leftTopPoint: position
-    }
+function replaceSlideObject<ObjectType extends Text | Image | Figure>(slide: Slide, index: number, object: ObjectType): Slide
+{
     const newObjects = [
         ...slide.objects
     ]
-    newObjects.splice(activeIndex, 1, activeElement)
+
+    newObjects.splice(index, 1, object)
 
     const newSlide: Slide = {
         ...slide,
         objects: newObjects
     }
+
     return newSlide
 }
-//
-// /!**
-//  * add content: Image
-//  * @param {Slide} slide
-//  * @param {Image} image
-//  * @return {Slide} return new Slide
-//  *!/
-// function addImage(slide: Slide, image: Image): Slide {
-//     return slide
-// }
-//
-// /!**
-//  * delete content: Image
-//  * @param {Slide} slide
-//  * @param {string} imageIndex
-//  * @return {Slide} return new Slide
-//  *!/
-// function deleteImage(slide: Slide, imageIndex: string): Slide {
-//     return slide
-// }
-//
-// /!**
-//  * set Position Image
-//  * @param {Slide} slide
-//  * @param {Image} image
-//  * @param {Position} position
-//  * @return {Image}
-//  *!/
-// function setPositionImage(slide: Slide, image: Image, position: Position): Image {
-//     return image
-// }
-//
-// /!**
-//  * add content: Figure
-//  * @param {Slide} slide
-//  * @param {Figure} figure
-//  * @return {Slide} return new Slide
-//  *!/
-// function addFigure(slide: Slide, figure: Figure): Slide {
-//     return slide
-// }
-//
-// /!**
-//  * delete content: Figure
-//  * @param {Slide} slide
-//  * @param {string} figureIndex
-//  * @return {Slide} return new Slide
-//  *!/
-// function deleteFigure(slide: Slide, figureIndex: string): Slide {
-//     return slide
-// }
-//
-// /!**
-//  * set Position Figure
-//  * @param {Slide} slide
-//  * @param {Figure} figure
-//  * @param {Position} position
-//  * @return {Figure}
-//  *!/
-// function setPositionFigure(slide: Slide, figure: Figure, position: Position): Figure {
-//     return figure
-// }
 
+function getSlideObject<ObjectType extends Text | Image | Figure>(slide: Slide, index: number): ObjectType
+{
+    return slide.objects[index] as ObjectType
+}
+
+function setObjectPosition<ObjectType>(object: ObjectType, position: Position): ObjectType
+{
+    const newObject = {
+        ...object,
+        leftTopPoint: position
+    }
+    return newObject
+}
+
+function setObjectBackground<ObjectType>(object: ObjectType, background: Background): ObjectType
+{
+    const newObject = {
+        ...object,
+        background: background
+    }
+    return newObject
+}
+
+// function makeObjectPropertyChanger(propertyName: keyof Object) {
+//     return function<ObjectType extends Text | Image | Figure>(object: ObjectType, value: Pick<ObjectType, typeof propertyName>) {
+//         return {
+//             ...object,
+//             [propertyName]: value
+//         };
+//     }
+// }
+//
+// const setObjectPosition = makeObjectPropertyChanger("leftTopPoint");
+// const setObjectBackground = makeObjectPropertyChanger("background");
+// const setObjectBorder = makeObjectPropertyChanger("border");
 
 
 //Вот тут все console.log
@@ -296,13 +251,14 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
         height: 1,
         active: false,
         priority: 2,
-        content: "string",
+        content: "text target",
         type: 'Text',
         color: "#111",
         size: 3,
         font: '',
         fontStyle: ['italic']
     }
+
     let text2: Text = {
         leftTopPoint: {x: 2, y: 2},
         background: {color: "#222", priority: 1, image: ''},
@@ -343,6 +299,19 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
         background: {color: "#fff", priority: 4, image: ''},
         objects: [text2, text1]
     }
+
+    const slide31 = addObject<Text>(slide3, text2);
+    const slide32 = addObject<Text>(slide31, text2);
+    const slide33 = addObject<Text>(slide32, text1);
+    const slide34 = addObject<Text>(slide33, text2);
+    const slide35 = addObject<Text>(slide34, text2);
+
+    const slide37 = deleteObject(slide35, 1);
+
+    const currentObject = getSlideObject(slide37, 0);
+    const newObject = setObjectPosition(currentObject, {x: 10, y: 10});
+    const newObjectBack = setObjectBackground(currentObject, { color: 'fff'});
+    const slide38 = replaceSlideObject(slide37, 0, newObjectBack);
 
     let slides: Array<Slide> = [slide, slide2, slide3, slide4, slide5]
 
