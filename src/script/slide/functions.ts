@@ -1,6 +1,7 @@
 import {Editor, Presentation, Slide, Background, Buffer, Text, FontStyle, Position, Border, Object, Figure, Image} from './slide';
 
-function createEditor(): Editor {
+function createEditor(): Editor
+{
     return {
         history: {undo: [], redo: []},
         presentation: {title: '', slides: []},
@@ -8,18 +9,21 @@ function createEditor(): Editor {
     }
 }
 
-function createSlide(): Slide {
+function createSlide(): Slide
+{
     return {
         background: {color: '', image: '', priority: 0},
         objects: []
     }
 }
 
-function exportProjectToPdf(presentation: Editor): void {
+function exportProjectToPdf(presentation: Editor): void
+{
     // как генерить в пдф и сохранить
 }
 
-function saveProjectLocal(presentation: Editor): void {
+function saveProjectLocal(presentation: Editor): void
+{
     // как сохранить в формате json
 }
 
@@ -35,7 +39,8 @@ function saveProjectLocal(presentation: Editor): void {
 //На этот случай продублировала функции с <name>EditorVersion
 //Начала расписывать реализацию
 //если через Editor
-function setTitle(newTitle: string, editor: Editor): Editor {
+function setTitle(newTitle: string, editor: Editor): Editor
+{
     return {
         ...editor,
         presentation: {
@@ -46,7 +51,8 @@ function setTitle(newTitle: string, editor: Editor): Editor {
 }
 
 //Добавление пустого слайда в коллекцию после активного
-function addEmptySlide(editor: Editor): Editor {
+function addEmptySlide(editor: Editor): Editor
+{
     let newSlides: Array<Slide> = editor.presentation.slides
     const slide: Slide = createSlide()
     const index: number = editor.active
@@ -63,12 +69,14 @@ function addEmptySlide(editor: Editor): Editor {
 }
 
 //Удаление активного слайда из коллекции
-function deleteSlide(editor: Editor): Editor {
+function deleteSlide(editor: Editor): Editor
+{
     let newSlides: Array<Slide> = editor.presentation.slides
     const index: number = editor.active
 
     let newIndex: number = 0;
-    if (editor.active !== 0) {
+    if (editor.active !== 0)
+    {
         newIndex = editor.active - 1
     }
     newSlides.splice(index, 1)
@@ -85,7 +93,8 @@ function deleteSlide(editor: Editor): Editor {
 
 //Добавление слайда через Editor
 // Функция добавления какого-то заполненного слайда и она работает
-function addSlide(slide: Slide, editor: Editor): Editor {
+function addSlide(slide: Slide, editor: Editor): Editor
+{
     const newSlides: Array<Slide> = editor.presentation.slides
     const index: number = editor.active
     newSlides.splice(index, 0, slide)
@@ -101,10 +110,12 @@ function addSlide(slide: Slide, editor: Editor): Editor {
 }
 
 //Перемещение слайда вверх в презентации
-function moveSlideDownByStep(editor: Editor): Editor {
+function moveSlideDownByStep(editor: Editor): Editor
+{
     const newEditor: Editor = editor
     const slide: Slide = editor.presentation.slides[editor.active]
-    if (editor.active !== 0) {
+    if (editor.active !== 0)
+    {
         deleteSlide(newEditor)
         newEditor.active = newEditor.active - 1
         addSlide(slide, newEditor)
@@ -112,10 +123,12 @@ function moveSlideDownByStep(editor: Editor): Editor {
     return newEditor
 }
 
-function moveSlideTopByStep(editor: Editor): Editor {
+function moveSlideTopByStep(editor: Editor): Editor
+{
     const newEditor: Editor = editor
     const slide: Slide = editor.presentation.slides[editor.active]
-    if (editor.active !== newEditor.presentation.slides.length - 1) {
+    if (editor.active !== newEditor.presentation.slides.length - 1)
+    {
         deleteSlide(newEditor)
         newEditor.active = newEditor.active + 1
         addSlide(slide, newEditor)
@@ -171,7 +184,8 @@ function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, objec
 
 function deleteObject(slide: Slide, index: number): Slide
 {
-    if (slide.objects.length > index) {
+    if (slide.objects.length > index)
+    {
         const newObjects = [
             ...slide.objects
         ]
@@ -242,7 +256,8 @@ function setObjectBackground<ObjectType>(object: ObjectType, background: Backgro
 
 //Вот тут все console.log
 
-function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } } {
+function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } }
+{
     let text1: Text = {
         leftTopPoint: {x: 1, y: 1},
         background: {color: "#111", priority: 1, image: ''},
@@ -310,7 +325,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
 
     const currentObject = getSlideObject(slide37, 0);
     const newObject = setObjectPosition(currentObject, {x: 10, y: 10});
-    const newObjectBack = setObjectBackground(currentObject, { color: 'fff'});
+    const newObjectBack = setObjectBackground(currentObject, {color: 'fff'});
     const slide38 = replaceSlideObject(slide37, 0, newObjectBack);
 
     let slides: Array<Slide> = [slide, slide2, slide3, slide4, slide5]
