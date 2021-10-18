@@ -53,7 +53,7 @@ function setTitle(newTitle: string, editor: Editor): Editor
 //Добавление пустого слайда в коллекцию после активного
 function addEmptySlide(editor: Editor): Editor
 {
-    let newSlides: Array<Slide> = editor.presentation.slides
+    const newSlides: Array<Slide> = editor.presentation.slides
     const slide: Slide = createSlide()
     const index: number = editor.active
     newSlides.splice(index + 1, 0, slide)
@@ -168,6 +168,18 @@ function moveSlideTopByStep(editor: Editor): Editor
 //
 // function addTextEditorVersion(editor: Editor, text: Text): Editor {
 //     return newEditor
+// }
+
+// function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
+// {
+//     const newSlide: Slide = {
+//         ...slide,
+//         objects: [
+//             ...slide.objects,
+//             object
+//         ]
+//     }
+//     return newSlide
 // }
 
 function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
