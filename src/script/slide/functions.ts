@@ -151,36 +151,9 @@ function moveSlideTopByStep(editor: Editor): Editor
 // function duplicateSlide(index: number, editor: Editor): Editor {
 //     return newEditor
 // }
-//
-// // можно ли исп общую функцию? Что передавать?
-// function getActiveEl(index: number, editor: Editor): Editor {
-//     return newEditor
-// }
-//
-// function setBackground(editor: Editor, background: SlideBackground): Editor {
-//     return newEditor
-// }
-//
+
 // //content
 // //Относительно новой структуры не понимаю как элементы будут позиционироваться по z оси
-//
-
-//
-// function addTextEditorVersion(editor: Editor, text: Text): Editor {
-//     return newEditor
-// }
-
-// function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
-// {
-//     const newSlide: Slide = {
-//         ...slide,
-//         objects: [
-//             ...slide.objects,
-//             object
-//         ]
-//     }
-//     return newSlide
-// }
 
 function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
 {
@@ -265,6 +238,34 @@ function setObjectBackground<ObjectType>(object: ObjectType, background: Backgro
 // const setObjectBackground = makeObjectPropertyChanger("background");
 // const setObjectBorder = makeObjectPropertyChanger("border");
 
+//Editor version
+//переделала функции под Editor, нужна проверка на всякий случай.
+function addObjectEditorVersion<ObjectType extends Text | Image | Figure>(editor: Editor, object: ObjectType): Editor
+{
+    const newSlide: Slide = {
+        ...editor.presentation.slides[editor.active],
+        objects: [
+            ...editor.presentation.slides[editor.active].objects,
+            object
+        ]
+    }
+
+    let newSlides: Array<Slide> = {
+            ...editor.presentation.slides
+    }
+
+    newSlides[editor.active] = newSlide
+
+    const newEditor: Editor = {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+
+    return newEditor
+}
 
 //Вот тут все console.log
 
@@ -373,6 +374,7 @@ let slideNotEmpty: Slide = {
 let editorToTest: any = createEditorForTest()
 let editorToPrint: Editor = createEditor()
 
+//addObjectEditorVersion<Text>(editorToTest,textNotEmptySlide)
 //console.log(setTitle("Hello", editorToPrint))
 //editorToPrint = addEmptySlide(editorToTest)
 //editorToPrint = deleteSlide(editorToTest)
@@ -380,5 +382,5 @@ let editorToPrint: Editor = createEditor()
 // console.log(moveSlideTopByStep(editorToTest))
 //addEmptySlide(editorToPrint)
 //console.log(moveSlideDownByStep(editorToTest))
-let result = moveSlideTopByStep(editorToTest);
-console.log(result);
+let result = deleteObjectEditorVersion(editorToTest,1);
+console.log(result.presentation.slides[result.active].objects);
