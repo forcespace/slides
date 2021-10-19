@@ -300,6 +300,7 @@ function deleteObjectEditorVersion(editor: Editor, index: number): Editor
 
 //Вот тут все console.log
 
+/*
 function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } }
 {
     let text1: Text = {
@@ -413,6 +414,5 @@ let editorToPrint: Editor = createEditor()
 // console.log(moveSlideTopByStep(editorToTest))
 //addEmptySlide(editorToPrint)
 //console.log(moveSlideDownByStep(editorToTest))
-console.log(editorToTest.presentation.slides[editorToTest.active].objects);
 let result = deleteObjectEditorVersion(editorToTest,1);
-console.log(result.presentation.slides[result.active].objects);
+console.log(result.presentation.slides[result.active].objects);*/

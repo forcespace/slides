@@ -1,7 +1,8 @@
 import React, {useRef, useEffect, useLayoutEffect} from 'react'
 import {paint} from './CanvasPainter'
+import './App.css';
 
-const CanvasContainer = () => {
+const CanvasContainer = (props: { width: number; height: number }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
@@ -9,15 +10,15 @@ const CanvasContainer = () => {
             const canvas = canvasRef.current
             resizeCanvasToDisplaySize(canvas)
             const context = canvas.getContext('2d')
-            canvas.width = 500
-            canvas.height = 300
+            canvas.width = props.width
+            canvas.height = props.height
             if (null !== context) {
                 paint(context)
             }
         }
     }, [paint])
 
-    return <canvas ref={canvasRef}/>;
+    return <canvas className = "canvas" ref={canvasRef}/>;
 }
 
 function resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {

@@ -11,19 +11,14 @@ function App() {
                 <input className="title" value={editor.presentation.title}/>
             </div>
         </header>
-        <div id="toolbars" className="toolbar">
-            <button className="btn">Кнопка</button>
-        </div>
         <div id="docs-editor" className="companion-enabled">
             <div id="two-panel-layout" className="two-panel-layout">
                 <div id="sidebar" className="filmstrip">
-                    <div id="slide" className="slide">
-                        <CanvasContainer />
-                    </div>
+                    <CanvasContainer  width={200} height={200} />
                 </div>
                 <div id="workspace-container" className="workspace-container">
                     <div id="slide-view" className="slide-view">
-                        <CanvasContainer />
+                        <CanvasContainer width={500} height={300}/>
                     </div>
                 </div>
             </div>
