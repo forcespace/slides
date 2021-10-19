@@ -267,6 +267,37 @@ function addObjectEditorVersion<ObjectType extends Text | Image | Figure>(editor
     return newEditor
 }
 
+function deleteObjectEditorVersion(editor: Editor, index: number): Editor
+{
+    if (editor.presentation.slides[editor.active].objects.length > index)
+    {
+        const newObjects = [
+            ...editor.presentation.slides[editor.active].objects
+        ]
+
+        newObjects.splice(index, 1)
+
+        const newSlide: Slide = {
+            ...editor.presentation.slides[editor.active],
+            objects: newObjects
+        }
+
+        let newSlides: Array<Slide> = {
+            ...editor.presentation.slides
+        }
+
+        newSlides[editor.active] = newSlide
+        return {
+            ...editor,
+            presentation: {
+                ...editor.presentation,
+                slides: newSlides
+            }
+        }
+    }
+    return editor
+}
+
 //Вот тут все console.log
 
 function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } }
@@ -346,7 +377,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     return {
         history: {undo: [], redo: []},
         presentation: {title: 'test', slides: slides},
-        active: 2
+        active: 4
     }
 }
 
@@ -382,5 +413,6 @@ let editorToPrint: Editor = createEditor()
 // console.log(moveSlideTopByStep(editorToTest))
 //addEmptySlide(editorToPrint)
 //console.log(moveSlideDownByStep(editorToTest))
+console.log(editorToTest.presentation.slides[editorToTest.active].objects);
 let result = deleteObjectEditorVersion(editorToTest,1);
 console.log(result.presentation.slides[result.active].objects);
