@@ -1,9 +1,4 @@
-document.addEventListener('DOMContentLoaded', function ()
-{
-
-});
-
-const editor = {
+export const editor = {
     mode: 'view',
     palette:
         {
@@ -36,11 +31,12 @@ const editor = {
         },
     history: 'history log',
     presentation: {
-        title: 'Заголовок презентации',
+        title: 'Microsoft PowerPoint',
         slides: {
             active: 0,
             slide: [{
-                title: 'Заголовок слада 1',
+                id: 1,
+                title: 'Слайд 1',
                 background: {
                     color: 'код цвета',
                     image: 'ссылка на картинку',
@@ -134,11 +130,11 @@ const editor = {
                         }
                     }
                 ]
-            }]
+            },
+                {
+                    id: 2,
+                    title: "Слайд 2"
+                }]
         },
     }
-}
-
-export {
-    editor,
 }

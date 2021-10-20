@@ -1,0 +1,21 @@
+@import '../../block/config/_const';
+
+.b-slide-list
+{
+    width: 100%;
+
+    &__wrapper
+    {
+        width: 100%;
+        height: 10vh;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
+        border-radius: 8px;
+        border: 1px solid #ccc;
+
+        &:not(:last-child)
+        {
+            margin-bottom: 25px;
+        }
+    }
+}
