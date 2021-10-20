@@ -48,7 +48,7 @@ const editor = {
                 },
                 texts: [
                     {
-                        content: 'Текст Тестовый;',
+                        content: 'Текст gyfuytfuytfuyt;',
                         fontsize: 18,
                         font: 'Times New Roman',
                         bold: true,
