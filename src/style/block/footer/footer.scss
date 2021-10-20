@@ -1,0 +1,21 @@
+@import '../../block/config/_const';
+
+.b-footer
+{
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #a2a2a2;
+    background: #dcdcdc;
+    padding: 5px 50px;
+
+    &__text
+    {
+        &_count
+        {
+            font: 300 12px/1 $euclidCircularLight;
+            color: $actualColorText;
+        }
+    }
+}
