@@ -298,6 +298,9 @@ function deleteObjectEditorVersion(editor: Editor, index: number): Editor
     return editor
 }
 
+export {
+    createEditor
+}
 //Вот тут все console.log
 
 /*

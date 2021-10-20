@@ -1,0 +1,56 @@
+@font-face
+{
+    font-family: 'Euclid Circular B Bold';
+    src: local('Euclid Circular B Bold'), local('EuclidCircularB-Bold'),
+    url('/src/style/font/euclid/EuclidCircularB-Bold.woff2') format('woff2'),
+    url('/src/style/font/euclid/EuclidCircularB-Bold.woff') format('woff'),
+    url('/src/style/font/euclid/EuclidCircularB-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Euclid Circular B Medium';
+    src: local('Euclid Circular B Medium'), local('EuclidCircularB-Medium'),
+    url('/src/style/font/euclid/EuclidCircularB-Medium.woff2') format('woff2'),
+    url('/src/style/font/euclid/EuclidCircularB-Medium.woff') format('woff'),
+    url('/src/style/font/euclid/EuclidCircularB-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Euclid Circular B SemiBold';
+    src: local('Euclid Circular B SemiBold'), local('EuclidCircularB-SemiBold'),
+    url('/src/style/font/euclid/EuclidCircularB-SemiBold.woff2') format('woff2'),
+    url('/src/style/font/euclid/EuclidCircularB-SemiBold.woff') format('woff'),
+    url('/src/style/font/euclid/EuclidCircularB-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Euclid Circular B Light';
+    src: local('Euclid Circular B Light'), local('EuclidCircularB-Light'),
+    url('/src/style/font/euclid/EuclidCircularB-Light.woff2') format('woff2'),
+    url('/src/style/font/euclid/EuclidCircularB-Light.woff') format('woff'),
+    url('/src/style/font/euclid/EuclidCircularB-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Euclid Circular B Regular';
+    src: url('/src/style/font/euclid/EuclidCircularB-Regular.eot');
+    src: local('Euclid Circular B Regular'), local('EuclidCircularB-Regular'),
+    url('/src/style/font/euclid/EuclidCircularB-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/src/style/font/euclid/EuclidCircularB-Regular.woff2') format('woff2'),
+    url('/src/style/font/euclid/EuclidCircularB-Regular.woff') format('woff'),
+    url('/src/style/font/euclid/EuclidCircularB-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
