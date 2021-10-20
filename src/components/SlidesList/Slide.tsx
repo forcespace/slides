@@ -9,7 +9,7 @@ export function Slide(props: Props) {
 
     return (
         <>
-            <h1>{content.title}</h1>
+            <span className={'b-slide-list__slide_count'}>{content.title}</span>
         </>
     );
-};
+}

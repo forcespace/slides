@@ -10,9 +10,9 @@ export function App() {
     const presentation = editor.presentation;
 
     return (
-        <>
+        <div className={'b-presentation'}>
             <Header title={presentation.title}/>
             <Workspace slides={presentation.slides}/>
-        </>
+        </div>
     );
 }

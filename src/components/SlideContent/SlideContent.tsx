@@ -11,4 +11,4 @@ export function SlideContent(props: Props) {
             <Slide content={props.slide}/>
         </div>
     );
-};
+}
