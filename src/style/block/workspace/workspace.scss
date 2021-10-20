@@ -11,8 +11,11 @@
 
         &_primary
         {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100vw;
-            padding: 15px;
+            padding: 15px 15px 100px 15px;
             border-left: 1px solid rgba(61, 62, 71, 0.16);
             background: #ececec;
         }
