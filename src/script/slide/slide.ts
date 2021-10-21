@@ -5,8 +5,8 @@ export type Editor = {
 }
 
 export type History = {
-    undo: Array<Presentation>
-    redo: Array<Presentation>
+    undo?: Array<Presentation>
+    redo?: Array<Presentation>
 }
 
 export type Presentation = {
@@ -15,6 +15,7 @@ export type Presentation = {
 }
 
 export type Slide = {
+    title: string,
     background: Background,
     objects: Array<Text | Image | Figure>
 }

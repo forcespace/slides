@@ -5,19 +5,19 @@ import {SlideList} from "../SlidesList";
 import {SlideContent} from "../SlideContent";
 
 export function Workspace(props: any) {
-    const {slides} = props;
+    const {editor} = props;
 
-    const [activeSlide, setActiveSlide] = React.useState(slides.active || 0);
+    const [activeSlide, setActiveSlide] = React.useState(editor.active || 0);
 
-    const slidesCount = slides.slide.length;
+    const slidesCount = editor.presentation.slides.length;
 
     return (
         <section className={'b-presentation__workspace'}>
             <div className={'b-presentation__workspace_primary'}>
-                <SlideContent slide={slides.slide[activeSlide]} />
+                <SlideContent {...editor.presentation.slides[editor.active]} />
             </div>
             <div className={'b-presentation__workspace_secondary'}>
-                <SlideList slides={slides.slide} onSlideClick={setActiveSlide} />
+                <SlideList {...editor.presentation.slides}/>
                 {activeSlide + 1} of {slidesCount}
             </div>
         </section>

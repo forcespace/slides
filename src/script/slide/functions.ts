@@ -12,6 +12,7 @@ function createEditor(): Editor
 function createSlide(): Slide
 {
     return {
+        title: '',
         background: {color: '', image: '', priority: 0},
         objects: []
     }
@@ -156,7 +157,7 @@ function moveSlideTopByStep(editor: Editor): Editor
 // //Относительно новой структуры не понимаю как элементы будут позиционироваться по z оси
 
 //Вынести типы в коллекцию и избавиться от extends
-function addObject<ObjectType extends `Text | Image | Figure`>(slide: Slide, object: ObjectType): Slide
+function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
 {
     const newSlide: Slide = {
         ...slide,

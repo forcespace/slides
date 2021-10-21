@@ -1,16 +1,13 @@
 import * as React from 'react';
-import {Slide} from "../SlidesList/Slide";
+import {SlideView} from "../SlidesList/Slide";
 import '../../style/block/slide/slide.css';
 import '../../style/main.css';
+import {Slide} from '../../script/slide/slide'
 
-type Props = {
-    slide: any;
-};
-
-export function SlideContent(props: Props) {
+export function SlideContent(props: Slide) {
     return (
         <div className={'b-slide'}>
-            <Slide content={props.slide}/>
+            <SlideView {...props}/>
         </div>
     );
 }

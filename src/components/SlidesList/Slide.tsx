@@ -1,16 +1,12 @@
 import * as React from 'react';
 // import '../../style/block/slide/slide.css'
+    import {Slide} from '../../script/slide/slide'
 
-type Props = {
-    content: any;
-};
-
-export function Slide(props: Props) {
-    const {content} = props
+export function SlideView(props: Slide) {
 
     return (
         <>
-            <span className={'b-slide-list__slide_count'}>{content.title}</span>
+            <span className={'b-slide-list__slide_count'}>{props.title}</span>
         </>
     );
 }
