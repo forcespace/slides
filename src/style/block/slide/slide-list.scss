@@ -11,12 +11,41 @@
     &__wrapper
     {
         display: flex;
-        align-items: center;
         justify-content: space-between;
 
         &:not(:last-child)
         {
             margin-bottom: 25px;
+        }
+
+        &:last-child
+        {
+            position: relative;
+
+            &::after
+            {
+                position: absolute;
+                right: -12px;
+                bottom: -10px;
+                left: 0;
+                height: 2px;
+                margin: auto;
+                content: '';
+                background: #b7472a;
+                animation: glowing 1.5s linear infinite;
+
+                @keyframes glowing
+                {
+                    0%
+                    {
+                        width: 10%;
+                    }
+                    100%
+                    {
+                        width: 90%;
+                    }
+                }
+            }
         }
     }
 

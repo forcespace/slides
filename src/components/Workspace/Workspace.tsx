@@ -22,4 +22,4 @@ export function Workspace(props: any) {
             </div>
         </section>
     );
-};
+}
