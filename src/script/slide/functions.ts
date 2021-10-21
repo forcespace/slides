@@ -155,7 +155,8 @@ function moveSlideTopByStep(editor: Editor): Editor
 // //content
 // //Относительно новой структуры не понимаю как элементы будут позиционироваться по z оси
 
-function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
+//Вынести типы в коллекцию и избавиться от extends
+function addObject<ObjectType extends `Text | Image | Figure`>(slide: Slide, object: ObjectType): Slide
 {
     const newSlide: Slide = {
         ...slide,
@@ -295,6 +296,13 @@ function deleteObjectEditorVersion(editor: Editor, index: number): Editor
             }
         }
     }
+    return editor
+}
+
+function replaceSlideObjectEditorVersion<ObjectType extends Text | Image | Figure>(editor: Editor, index: number, object: ObjectType): Editor
+{
+    deleteObjectEditorVersion(editor,index);
+    addObjectEditorVersion(editor,object);
     return editor
 }
 
