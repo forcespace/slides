@@ -1,13 +1,20 @@
 import React from 'react';
+import {Header} from "./components/Header";
+import {Workspace} from "./components/Workspace";
+
 import './App.css';
+import {editor} from "./script/slide/editor";
+import {Footer} from "./components/Footer";
 
 
-function App() {
+export function App() {
+    const presentation = editor.presentation;
+
     return (
-        <div></div>
+        <div className={'b-presentation'}>
+            <Header title={presentation.title}/>
+            <Workspace slides={presentation.slides}/>
+            <Footer/>
+        </div>
     );
-}
-
-export {
-    App
 }

@@ -1,0 +1,43 @@
+@import '../../block/config/_const';
+
+.b-slide-list
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 50px;
+
+    &__wrapper
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &:not(:last-child)
+        {
+            margin-bottom: 25px;
+        }
+    }
+
+    &__content
+    {
+        width: 160px;
+        height: 100px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
+    }
+
+    &__slide
+    {
+        &_count
+        {
+            font: 400 14px/1 $euclidCircularRegular;
+            display: block;
+            margin-right: 5px;
+            color: $actualColorTitle;
+        }
+    }
+}

@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import {App} from "./App";
+
 import './index.css';
-import {Header} from "./header";
-import {Workspace} from "./workspace";
 
 ReactDOM.render(
     <React.StrictMode>
-        <Header/>
-        <Workspace/>
+        <App />
     </React.StrictMode>,
     document.getElementById('root')
 );
