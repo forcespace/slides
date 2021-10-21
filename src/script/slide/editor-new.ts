@@ -1,4 +1,4 @@
-import {Background, Border, Editor, Position} from '../slide/slide'
+import {Editor} from './slide'
 
 const editor: Editor = {
     history: {
@@ -7,38 +7,161 @@ const editor: Editor = {
         title: 'Microsoft PowerPoint',
         slides: [
             {
-                title: "kdjfoidsgqwkhfepo",
+                title: "Test Title",
                 background: {
-                    color: '#fff'
+                    color: '#fff',
+                    priority: 1
                 },
                 objects: [
                     {
-                        leftTopPoint: {x:10, y:14},
-                        width: 100,
+                        leftTopPoint: {x:100, y:14},
+                        width: 200,
                         height: 10,
                         active: true,
                         priority: 1,
-                        content: 'Текст',
+                        content: 'Текст1',
                         size: 18,
                         type: 'Text'
+                    },
+                    {
+                        leftTopPoint:{x:0 , y:100},
+                        width: 250,
+                        height: 20,
+                        active: false,
+                        priority: 2,
+                        content: 'Текст2',
+                        type: 'Text',
+                        color: "#112dea",
+                        size: 20,
+                        font: 'Times New Roman',
+                        fontStyle: ['italic','bold']
+                    },
+                    {
+                        leftTopPoint: {x:100 , y:100},
+                        border:
+                            {
+                                borderSize: '',
+                                borderColor: '#00ff00',
+                                borderStyle: 'Dashed'
+                            },
+                        width: 100,
+                        height: 100,
+                        active: false,
+                        priority: 3,
+                        type: 'Image',
+                        src: ''
+                    },
+                    {
+                        leftTopPoint: {x:200 , y:200},
+                        background: {
+                            color: '#ddd',
+                            priority: 1
+                        },
+                        border: {
+                            borderSize: '2',
+                            borderColor: '#eee',
+                            borderStyle: 'Dashed'
+                        },
+                        width: 100,
+                        height: 100,
+                        active: false,
+                        priority: 4,
+                        type: 'Triangle'
                     }
                 ]
             },
             {
-                title: "asda",
+                title: "Test Second Title",
                 background: {
-                    color: '#fff'
+                    color: '#fff',
+                    priority: 1
                 },
                 objects: [
                     {
-                        leftTopPoint: {x:10, y:14},
+                        leftTopPoint: {x:25, y:164},
+                        width: 160,
+                        height: 20,
+                        active: false,
+                        priority: 1,
+                        content: 'Текст со второго слайда',
+                        size: 22,
+                        type: 'Text'
+                    },
+                    {
+                        leftTopPoint: {x:41 , y:45},
+                        border:
+                            {
+                                borderSize: '',
+                                borderColor: '#ff0000',
+                                borderStyle: 'Solid'
+                            },
+                        width: 80,
+                        height: 90,
+                        active: true,
+                        priority: 2,
+                        type: 'Image',
+                        src: ''
+                    },
+                    {
+                        leftTopPoint: {x:230 , y:180},
+                        background: {
+                            color: '#dd00dd',
+                            priority: 1
+                        },
+                        border: {
+                            borderSize: '5',
+                            borderColor: '#eee',
+                            borderStyle: 'Solid'
+                        },
+                        width: 100,
+                        height: 100,
+                        active: false,
+                        priority: 3,
+                        type: 'Circle'
+                    },
+                    {
+                        leftTopPoint: {x:342 , y:324},
+                        background: {
+                            color: '#ddd',
+                            priority: 1
+                        },
+                        border: {
+                            borderSize: '2',
+                            borderColor: '#ccaddc',
+                            borderStyle: 'Dashed'
+                        },
+                        width: 100,
+                        height: 100,
+                        active: false,
+                        priority: 4,
+                        type: 'Square'
+                    },
+                    {
+                        leftTopPoint: {x:10, y:140},
                         width: 100,
                         height: 10,
                         active: true,
-                        priority: 1,
-                        content: 'Текст',
+                        priority: 5,
+                        content: 'Текст второго слайда 2',
                         size: 18,
                         type: 'Text'
+                    },
+                    {
+                        leftTopPoint: {x:200 , y:200},
+                        background: {
+                            color: '#ddd',
+                            priority: 1
+                        },
+                        border: {
+                            borderSize: '2',
+                            borderColor: '#eee',
+                            borderStyle: 'Dashed'
+                        },
+                        width: 100,
+                        height: 100,
+                        active: false,
+                        priority: 6,
+                        type: 'Triangle'
                     }
                 ]
             }

@@ -17,7 +17,7 @@ export type Presentation = {
 export type Slide = {
     title: string,
     background: Background,
-    objects: Array<Text | Image | Figure>
+    objects: Array<ObjectType>
 }
 
 export type Object = {
@@ -61,7 +61,7 @@ export type shapeType = 'Triangle' | 'Circle' | 'Square'
 export type Background = {
     color?: string,
     image?: string,
-    priority?: number
+    priority: number
 };
 
 export type Position = {
@@ -69,6 +69,4 @@ export type Position = {
     y: number
 }
 
-export type Buffer = {
-    object: [Slide, Text, Image, Figure]
-}
+export type ObjectType = Text | Image | Figure
