@@ -8,12 +8,11 @@ import {Footer} from "./components/Footer";
 
 
 export function App() {
-    const presentation = editor.presentation;
 
     return (
         <div className={'b-presentation'}>
             <Header {...editor}/>
-            <Workspace editor={editor}/>
+            <Workspace {...editor}/>
             <Footer/>
         </div>
     );

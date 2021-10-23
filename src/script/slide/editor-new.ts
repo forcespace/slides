@@ -134,7 +134,7 @@ const editor: Editor = {
                         height: 100,
                         active: false,
                         priority: 4,
-                        type: 'Square'
+                        type: 'Rect'
                     },
                     {
                         leftTopPoint: {x:10, y:140},

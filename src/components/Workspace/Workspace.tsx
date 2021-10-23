@@ -3,21 +3,20 @@ import '../../style/block/workspace/workspace.css';
 import '../../style/main.css';
 import {SlideList} from "../SlidesList";
 import {SlideContent} from "../SlideContent";
+import {Editor} from "../../script/slide/slide";
 
-export function Workspace(props: any) {
-    const {editor} = props;
+export function Workspace(props: Editor) {
+    const [activeSlide, setActiveSlide] = React.useState(props.active || 0);
 
-    const [activeSlide, setActiveSlide] = React.useState(editor.active || 0);
-
-    const slidesCount = editor.presentation.slides.length;
+    const slidesCount = props.presentation.slides.length;
 
     return (
         <section className={'b-presentation__workspace'}>
             <div className={'b-presentation__workspace_primary'}>
-                <SlideContent {...editor.presentation.slides[editor.active]} />
+                <SlideContent {...props.presentation.slides[props.active]} />
             </div>
             <div className={'b-presentation__workspace_secondary'}>
-                <SlideList {...editor}/>
+                <SlideList {...props}/>
                 {activeSlide + 1} of {slidesCount}
             </div>
         </section>
