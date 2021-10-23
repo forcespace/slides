@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SlideView} from "../SlidesList/Slide";
+import {SlideView} from "../SlidesList/SlideView";
 import '../../style/block/slide/slide.css';
 import '../../style/main.css';
 import {Slide} from '../../script/slide/slide'

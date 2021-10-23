@@ -17,7 +17,7 @@ export function Workspace(props: any) {
                 <SlideContent {...editor.presentation.slides[editor.active]} />
             </div>
             <div className={'b-presentation__workspace_secondary'}>
-                <SlideList {...editor.presentation.slides}/>
+                <SlideList {...editor}/>
                 {activeSlide + 1} of {slidesCount}
             </div>
         </section>

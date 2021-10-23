@@ -1,4 +1,4 @@
-import {Editor, Presentation, Slide, Background, Buffer, Text, FontStyle, Position, Border, Object, Figure, Image} from './slide';
+import {Editor, Presentation, Slide, Background, Text, FontStyle, Position, Border, Object, Figure, Image} from './slide';
 
 function createEditor(): Editor
 {

@@ -56,7 +56,7 @@ export type Figure = Object & {
     type: shapeType,
 }
 
-export type shapeType = 'Triangle' | 'Circle' | 'Square'
+export type shapeType = 'Triangle' | 'Circle' | 'Rect'
 
 export type Background = {
     color?: string,

@@ -7,7 +7,7 @@ const editor: Editor = {
         title: 'Microsoft PowerPoint',
         slides: [
             {
-                title: "Test Title",
+                title: 'Test Title',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -31,7 +31,7 @@ const editor: Editor = {
                         priority: 2,
                         content: 'Текст2',
                         type: 'Text',
-                        color: "#112dea",
+                        color: '#112dea',
                         size: 20,
                         font: 'Times New Roman',
                         fontStyle: ['italic','bold']
@@ -66,12 +66,12 @@ const editor: Editor = {
                         height: 100,
                         active: false,
                         priority: 4,
-                        type: 'Triangle'
+                        type: 'Rect'
                     }
                 ]
             },
             {
-                title: "Test Second Title",
+                title: 'Test Second Title',
                 background: {
                     color: '#fff',
                     priority: 1

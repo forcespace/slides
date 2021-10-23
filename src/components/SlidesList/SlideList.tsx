@@ -1,21 +1,20 @@
 import * as React from 'react';
-import {SlideView} from "./Slide";
+import {SlideView} from "./SlideView";
 import '../../style/block/slide/slide-list.css';
 import '../../style/main.css';
-import {Slide} from '../../script/slide/slide'
+import {Editor, Slide} from '../../script/slide/slide'
 
-// type Props = {
-//     slide: Array<Slide>;
-//     onSlideClick: (index: number) => void;
-// };
-
-export function SlideList(props: Slide[]) {
+export function SlideList(props: Editor) {
+    const temp: Array<Slide> = []
+    props.presentation.slides.forEach((slide) => {
+        temp.push(slide)
+    })
     return (
         <div className={'b-slide-list'}>
-            {props.map((item: Slide, index: number) =>
+            {temp.map((item: Slide) =>
                 <div className={'b-slide-list__wrapper'}>
                     <SlideView {...item}/>
-                    <div className={'b-slide-list__content'} key={index}>
+                    <div className={'b-slide-list__content'}>
                         <SlideView {...item}/>
                     </div>
                 </div>
