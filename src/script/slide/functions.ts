@@ -1,4 +1,4 @@
-import {Editor, Presentation, Slide, Background, Text, FontStyle, Position, Border, Object, Figure, Image} from './slide';
+import {Editor, Presentation, Slide, Background, Text, FontStyle, Position, ObjectType, Border, Object, Figure, Image} from './slide';
 
 function createEditor(): Editor
 {
@@ -36,10 +36,6 @@ function saveProjectLocal(presentation: Editor): void
     // return editor
 }*/
 
-//!!Основной вопрос: везде ли должен возвращаться Editor?
-//На этот случай продублировала функции с <name>EditorVersion
-//Начала расписывать реализацию
-//если через Editor
 function setTitle(newTitle: string, editor: Editor): Editor
 {
     return {
@@ -137,6 +133,7 @@ function moveSlideTopByStep(editor: Editor): Editor
     return newEditor
 }
 
+// Функции пока можно не реализовывать, т.к. реализация связана с Буфером Браузера
 // function copySlide(index: number, editor: Editor): Editor {
 //     return newEditor
 // }
@@ -153,20 +150,17 @@ function moveSlideTopByStep(editor: Editor): Editor
 //     return newEditor
 // }
 
-// //content
-// //Относительно новой структуры не понимаю как элементы будут позиционироваться по z оси
-
-//Вынести типы в коллекцию и избавиться от extends
-function addObject<ObjectType extends Text | Image | Figure>(slide: Slide, object: ObjectType): Slide
+//Пока не удаляю функции, который возвращают не Editor, на всякий случай.
+//Вынесла типы в коллекцию и избавилась от extends в функциях
+function addObject(slide: Slide, object: ObjectType): Slide
 {
-    const newSlide: Slide = {
+    return {
         ...slide,
         objects: [
             ...slide.objects,
             object
         ]
     }
-    return newSlide
 }
 
 function deleteObject(slide: Slide, index: number): Slide
@@ -179,16 +173,15 @@ function deleteObject(slide: Slide, index: number): Slide
 
         newObjects.splice(index, 1)
 
-        const newSlide: Slide = {
+        return {
             ...slide,
             objects: newObjects
         }
-        return newSlide
     }
     return slide
 }
 
-function replaceSlideObject<ObjectType extends Text | Image | Figure>(slide: Slide, index: number, object: ObjectType): Slide
+function replaceSlideObject(slide: Slide, index: number, object: ObjectType): Slide
 {
     const newObjects = [
         ...slide.objects
@@ -196,39 +189,35 @@ function replaceSlideObject<ObjectType extends Text | Image | Figure>(slide: Sli
 
     newObjects.splice(index, 1, object)
 
-    const newSlide: Slide = {
+    return {
         ...slide,
         objects: newObjects
     }
-
-    return newSlide
 }
 
-function getSlideObject<ObjectType extends Text | Image | Figure>(slide: Slide, index: number): ObjectType
+function getSlideObject(slide: Slide, index: number): ObjectType
 {
     return slide.objects[index] as ObjectType
 }
 
-function setObjectPosition<ObjectType>(object: ObjectType, position: Position): ObjectType
+function setObjectPosition(object: ObjectType, position: Position): ObjectType
 {
-    const newObject = {
+    return {
         ...object,
         leftTopPoint: position
     }
-    return newObject
 }
 
-function setObjectBackground<ObjectType>(object: ObjectType, background: Background): ObjectType
+function setObjectBackground(object: ObjectType, background: Background): ObjectType
 {
-    const newObject = {
+    return {
         ...object,
         background: background
     }
-    return newObject
 }
 
 // function makeObjectPropertyChanger(propertyName: keyof Object) {
-//     return function<ObjectType extends Text | Image | Figure>(object: ObjectType, value: Pick<ObjectType, typeof propertyName>) {
+//     return function(object: ObjectType, value: Pick<ObjectType, typeof propertyName>) {
 //         return {
 //             ...object,
 //             [propertyName]: value
@@ -240,9 +229,26 @@ function setObjectBackground<ObjectType>(object: ObjectType, background: Backgro
 // const setObjectBackground = makeObjectPropertyChanger("background");
 // const setObjectBorder = makeObjectPropertyChanger("border");
 
+function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor
+{
+    let newSlides: Array<Slide> = {
+        ...editor.presentation.slides
+    }
+
+    newSlides[editor.active] = newSlide
+
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
 //Editor version
 //переделала функции под Editor, нужна проверка на всякий случай.
-function addObjectEditorVersion<ObjectType extends Text | Image | Figure>(editor: Editor, object: ObjectType): Editor
+function addObjectEditorVersion(editor: Editor, object: ObjectType): Editor
 {
     const newSlide: Slide = {
         ...editor.presentation.slides[editor.active],
@@ -252,21 +258,7 @@ function addObjectEditorVersion<ObjectType extends Text | Image | Figure>(editor
         ]
     }
 
-    let newSlides: Array<Slide> = {
-            ...editor.presentation.slides
-    }
-
-    newSlides[editor.active] = newSlide
-
-    const newEditor: Editor = {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: newSlides
-        }
-    }
-
-    return newEditor
+    return replaceActiveSlide(editor, newSlide)
 }
 
 function deleteObjectEditorVersion(editor: Editor, index: number): Editor
@@ -284,35 +276,64 @@ function deleteObjectEditorVersion(editor: Editor, index: number): Editor
             objects: newObjects
         }
 
-        let newSlides: Array<Slide> = {
-            ...editor.presentation.slides
-        }
-
-        newSlides[editor.active] = newSlide
-        return {
-            ...editor,
-            presentation: {
-                ...editor.presentation,
-                slides: newSlides
-            }
-        }
+        return replaceActiveSlide(editor,newSlide)
     }
     return editor
 }
 
-function replaceSlideObjectEditorVersion<ObjectType extends Text | Image | Figure>(editor: Editor, index: number, object: ObjectType): Editor
+function replaceSlideObjectEditorVersion(editor: Editor, index: number, object: ObjectType): Editor
 {
     deleteObjectEditorVersion(editor,index);
     addObjectEditorVersion(editor,object);
     return editor
 }
 
+function replaceObjects(editor: Editor, indexActiveObject: number, newObject: ObjectType)
+{
+    const newObjects: Array<ObjectType> = {
+        ...editor.presentation.slides[editor.active].objects
+    }
+
+    newObjects[indexActiveObject] = newObject
+
+    const newSlide: Slide = {
+        ...editor.presentation.slides[editor.active],
+        objects: newObjects
+    }
+
+    return replaceActiveSlide(editor, newSlide)
+}
+
+//Здесь добавила index, т.к. пока непонятно какой элемент внутри слайда активный
+function setObjectPositionEditorVersion(editor: Editor, indexActiveObject: number, position: Position): Editor
+{
+    const newObject: ObjectType = {
+        ...editor.presentation.slides[editor.active].objects[indexActiveObject],
+        leftTopPoint: position
+    };
+
+    return replaceObjects(editor, indexActiveObject, newObject)
+}
+
+function setObjectBackgroundEditorVersion(editor: Editor, indexActiveObject: number, background: Background): Editor
+{
+    const newObject: ObjectType = {
+        ...editor.presentation.slides[editor.active].objects[indexActiveObject],
+        background: background
+    }
+
+    return replaceObjects(editor, indexActiveObject, newObject)
+}
+
+//Непонятно как getSlideObject переделать в Editor Version, есть предположение, что функция должна менять,
+//Список активных элементов. Хочется для активного объекта, куда-то вынести active, так же как это сделано для
+//слайда
+
 export {
     createEditor
 }
 //Вот тут все console.log
 
-/*
 function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } }
 {
     let text1: Text = {
@@ -348,42 +369,45 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     }
 
     let slide: Slide = {
+        title: 'First',
         background: {color: "#ac00dd", priority: 0, image: ''},
         objects: [text1, text2]
     }
 
     let slide2: Slide = {
+        title: 'Second',
         background: {color: "#ac0eed", priority: 1, image: ''},
         objects: [text1]
     }
 
     let slide3: Slide = {
+        title: 'Third',
         background: {color: "#a3effd", priority: 2, image: ''},
         objects: []
     }
 
     let slide4: Slide = {
+        title: 'Fourth',
         background: {color: "#000", priority: 3, image: ''},
         objects: [text2]
     }
 
     let slide5: Slide = {
+        title: 'Fifth',
         background: {color: "#fff", priority: 4, image: ''},
         objects: [text2, text1]
     }
 
-    const slide31 = addObject<Text>(slide3, text2);
-    const slide32 = addObject<Text>(slide31, text2);
-    const slide33 = addObject<Text>(slide32, text1);
-    const slide34 = addObject<Text>(slide33, text2);
-    const slide35 = addObject<Text>(slide34, text2);
-
-    const slide37 = deleteObject(slide35, 1);
-
-    const currentObject = getSlideObject(slide37, 0);
-    const newObject = setObjectPosition(currentObject, {x: 10, y: 10});
-    const newObjectBack = setObjectBackground(currentObject, {color: 'fff'});
-    const slide38 = replaceSlideObject(slide37, 0, newObjectBack);
+    // const slide31 = addObject(slide3, text2);
+    // const slide32 = addObject(slide31, text2);
+    // const slide33 = addObject(slide32, text1);
+    // const slide34 = addObject(slide33, text2);
+    // const slide35 = addObject(slide34, text2);
+    // const slide37 = deleteObject(slide35, 1);
+    // const currentObject = getSlideObject(slide37, 0);
+    //const newObject = setObjectPosition(currentObject, {x: 10, y: 10});
+    // setObjectBackground(currentObject, {color: 'fff', priority:1});
+    //const slide38 = replaceSlideObject(slide37, 0, newObjectBack);
 
     let slides: Array<Slide> = [slide, slide2, slide3, slide4, slide5]
 
@@ -411,6 +435,7 @@ let textNotEmptySlide: Text = {
 }
 
 let slideNotEmpty: Slide = {
+    title:'Not Empty Title',
     background: {color: "#ac0eed", priority: 2, image: ''},
     objects: [textNotEmptySlide]
 }
@@ -427,4 +452,4 @@ let editorToPrint: Editor = createEditor()
 //addEmptySlide(editorToPrint)
 //console.log(moveSlideDownByStep(editorToTest))
 let result = deleteObjectEditorVersion(editorToTest,1);
-console.log(result.presentation.slides[result.active].objects);*/
+console.log(result.presentation.slides[result.active].objects);
