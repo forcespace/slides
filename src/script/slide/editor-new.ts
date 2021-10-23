@@ -51,7 +51,7 @@ const editor: Editor = {
                         src: ''
                     },
                     {
-                        leftTopPoint: {x:30 , y:30},
+                        leftTopPoint: {x:300 , y:30},
                         background: {
                             color: '#ddd',
                             priority: 1
@@ -101,18 +101,18 @@ const editor: Editor = {
                         src: ''
                     },
                     {
-                        leftTopPoint: {x:230 , y:180},
+                        leftTopPoint: {x:20 , y:10},
                         background: {
                             color: '#dd00dd',
                             priority: 1
                         },
                         border: {
                             borderSize: '5',
-                            borderColor: '#eee',
+                            borderColor: '#ff0000',
                             borderStyle: 'Solid'
                         },
-                        width: 100,
-                        height: 100,
+                        width: 400,
+                        height: 400,
                         active: false,
                         priority: 3,
                         type: 'Circle'
@@ -145,7 +145,7 @@ const editor: Editor = {
                         type: 'Text'
                     },
                     {
-                        leftTopPoint: {x:200 , y:200},
+                        leftTopPoint: {x:2 , y:2},
                         background: {
                             color: '#ddd',
                             priority: 1

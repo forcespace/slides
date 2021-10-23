@@ -6,18 +6,19 @@ type Props = {
     isScale: boolean
 }
 
-export function Rect(props: Props) {
+export function Circle(props: Props) {
     const scaleIndex = props.isScale ? 0.17 : 1
     const widthSvg = props.figure.width * scaleIndex
     const heightSvg = props.figure.height * scaleIndex
-    const xRect = props.figure.leftTopPoint.x * scaleIndex
-    const yRect = props.figure.leftTopPoint.y * scaleIndex
-    const widthRect = props.figure.width * scaleIndex
-    const heightRect = props.figure.height * scaleIndex
+    const xCircle = props.figure.leftTopPoint.x * scaleIndex
+    const yCircle = props.figure.leftTopPoint.y * scaleIndex
+    const widthCircle = props.figure.width * scaleIndex * 0.5
+    const heightCircle = props.figure.height * scaleIndex * 0.5
+    const radiusCircle = props.figure.height * scaleIndex * 0.5
 
     return (
         <svg width={widthSvg} height={heightSvg} xmlns="http://www.w3.org/2000/svg">
-            <rect width={widthRect} height={heightRect} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
+            <circle cx={widthCircle} cy={heightCircle} r={radiusCircle}/>
         </svg>
     )
 }
