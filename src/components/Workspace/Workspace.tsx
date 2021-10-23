@@ -13,7 +13,7 @@ export function Workspace(props: Editor) {
     return (
         <section className={'b-presentation__workspace'}>
             <div className={'b-presentation__workspace_primary'}>
-                <SlideContent {...props.presentation.slides[props.active]} />
+                <SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>
             </div>
             <div className={'b-presentation__workspace_secondary'}>
                 <SlideList {...props}/>

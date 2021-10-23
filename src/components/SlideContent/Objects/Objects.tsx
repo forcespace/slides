@@ -2,10 +2,15 @@ import * as React from 'react';
 import {ObjectType} from '../../../script/slide/slide'
 import {Rect} from "./Figures/Rect";
 
-export function Objects(props: ObjectType) {
-    if(props.type === 'Rect') {
+type Props = {
+    figure: ObjectType,
+    isScale: boolean
+}
+
+export function Objects(props: Props) {
+    if(props.figure.type === 'Rect') {
         return (
-            <Rect {...props} />)
+            <Rect figure={props.figure} isScale={props.isScale}/>)
     }
     else {
         return (

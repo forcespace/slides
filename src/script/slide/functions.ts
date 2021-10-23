@@ -12,7 +12,6 @@ function createEditor(): Editor
 function createSlide(): Slide
 {
     return {
-        title: '',
         background: {color: '', image: '', priority: 0},
         objects: []
     }
@@ -369,31 +368,26 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     }
 
     let slide: Slide = {
-        title: 'First',
         background: {color: "#ac00dd", priority: 0, image: ''},
         objects: [text1, text2]
     }
 
     let slide2: Slide = {
-        title: 'Second',
         background: {color: "#ac0eed", priority: 1, image: ''},
         objects: [text1]
     }
 
     let slide3: Slide = {
-        title: 'Third',
         background: {color: "#a3effd", priority: 2, image: ''},
         objects: []
     }
 
     let slide4: Slide = {
-        title: 'Fourth',
         background: {color: "#000", priority: 3, image: ''},
         objects: [text2]
     }
 
     let slide5: Slide = {
-        title: 'Fifth',
         background: {color: "#fff", priority: 4, image: ''},
         objects: [text2, text1]
     }
@@ -435,7 +429,6 @@ let textNotEmptySlide: Text = {
 }
 
 let slideNotEmpty: Slide = {
-    title:'Not Empty Title',
     background: {color: "#ac0eed", priority: 2, image: ''},
     objects: [textNotEmptySlide]
 }

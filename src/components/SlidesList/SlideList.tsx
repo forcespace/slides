@@ -5,17 +5,16 @@ import '../../style/main.css';
 import {Editor, Slide} from '../../script/slide/slide'
 
 export function SlideList(props: Editor) {
-    const temp: Array<Slide> = []
+    const slideList: Array<Slide> = []
     props.presentation.slides.forEach((slide) => {
-        temp.push(slide)
+        slideList.push(slide)
     })
     return (
         <div className={'b-slide-list'}>
-            {temp.map((item: Slide) =>
+            {slideList.map((slide: Slide) =>
                 <div className={'b-slide-list__wrapper'}>
-                    <SlideView {...item}/>
                     <div className={'b-slide-list__content'}>
-                        <SlideView {...item}/>
+                        <SlideView slide={slide} isScale={true}/>
                     </div>
                 </div>
             )}

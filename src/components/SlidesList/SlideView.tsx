@@ -2,16 +2,20 @@ import * as React from 'react';
 import {ObjectType, Slide} from '../../script/slide/slide'
 import {Objects} from "../SlideContent/Objects/Objects";
 
-export function SlideView(props: Slide) {
+type Props = {
+    slide: Slide,
+    isScale: boolean
+}
+
+export function SlideView(props: Props) {
     const objectsList: Array <ObjectType> = []
-    props.objects.forEach((object) => {
+    props.slide.objects.forEach((object) => {
         objectsList.push(object)
     })
     return (
         <>
-            <span className={'b-slide-list__slide_count'}>{props.title}</span>
             {objectsList.map((object: ObjectType) =>
-                <Objects {...object} />
+                <Objects figure={object} isScale={props.isScale}/>
             )}
         </>
     );

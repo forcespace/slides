@@ -7,7 +7,6 @@ const editor: Editor = {
         title: 'Microsoft PowerPoint',
         slides: [
             {
-                title: 'Test Title',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -52,14 +51,14 @@ const editor: Editor = {
                         src: ''
                     },
                     {
-                        leftTopPoint: {x:200 , y:200},
+                        leftTopPoint: {x:30 , y:30},
                         background: {
                             color: '#ddd',
                             priority: 1
                         },
                         border: {
                             borderSize: '2',
-                            borderColor: '#eee',
+                            borderColor: '#fff',
                             borderStyle: 'Dashed'
                         },
                         width: 100,
@@ -71,7 +70,6 @@ const editor: Editor = {
                 ]
             },
             {
-                title: 'Test Second Title',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -167,7 +165,7 @@ const editor: Editor = {
             }
         ]
     },
-    active: 1
+    active: 0
 }
 
 export {
