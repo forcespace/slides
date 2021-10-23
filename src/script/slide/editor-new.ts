@@ -120,7 +120,7 @@ const editor: Editor = {
                         type: 'Circle'
                     },
                     {
-                        leftTopPoint: {x:342 , y:324},
+                        leftTopPoint: {x:10 , y:10},
                         background: {
                             color: '#ddd',
                             priority: 1
