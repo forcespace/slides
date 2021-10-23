@@ -9,10 +9,11 @@ export function SlideView(props: Slide) {
     })
     return (
         <>
-            <span className={'b-slide-list__slide_count'}>{props.title}</span>
-            {objectsList.map((object: ObjectType) =>
-                <Objects {...object} />
-            )}
+            <div className={'b-slide__content'}>
+                {objectsList.map((object: ObjectType) =>
+                    <Objects {...object} />
+                )}
+            </div>
         </>
     );
 }

@@ -3,6 +3,7 @@ import {SlideView} from "./SlideView";
 import '../../style/block/slide/slide-list.css';
 import '../../style/main.css';
 import {Editor, Slide} from '../../script/slide/slide'
+import {SlideNumber} from "./SlideNumber";
 
 export function SlideList(props: Editor) {
     const temp: Array<Slide> = []
@@ -13,7 +14,6 @@ export function SlideList(props: Editor) {
         <div className={'b-slide-list'}>
             {temp.map((item: Slide) =>
                 <div className={'b-slide-list__wrapper'}>
-                    <SlideView {...item}/>
                     <div className={'b-slide-list__content'}>
                         <SlideView {...item}/>
                     </div>
