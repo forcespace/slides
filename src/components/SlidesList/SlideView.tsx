@@ -14,9 +14,11 @@ export function SlideView(props: Props) {
     })
     return (
         <>
-            {objectsList.map((object: ObjectType) =>
-                <Objects figure={object} isScale={props.isScale}/>
-            )}
+            <div className={'b-slide__content'}>
+                {objectsList.map((object: ObjectType) =>
+                    <Objects figure={object} isScale={props.isScale}/>
+                )}
+            </div>
         </>
     );
 }
