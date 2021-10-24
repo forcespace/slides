@@ -9,17 +9,22 @@ type Props = {
     isScale: boolean
 }
 
-export function Objects(props: Props) {
-    if(props.figure.type === 'Rect') {
+export function Objects(props: Props)
+{
+    if (props.figure.type === 'Rect')
+    {
         return (
             <Rect figure={props.figure} isScale={props.isScale}/>
         )
-    } else if (props.figure.type === 'Circle')
+    }
+    else if (props.figure.type === 'Circle')
     {
         return (
             <Circle figure={props.figure} isScale={props.isScale}/>
         )
-    } else {
+    }
+    else
+    {
         return (
             <Triangle figure={props.figure} isScale={props.isScale}/>
         )

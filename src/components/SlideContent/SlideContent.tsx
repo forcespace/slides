@@ -9,7 +9,8 @@ type Props = {
     isScale: boolean
 }
 
-export function SlideContent(props: Props) {
+export function SlideContent(props: Props)
+{
     return (
         <div className={'b-slide'}>
             <SlideView slide={props.slide} isScale={false}/>

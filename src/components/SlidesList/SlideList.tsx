@@ -5,18 +5,29 @@ import '../../style/main.css'
 import {Editor, Slide} from '../../script/slide/slide'
 // import {SlideNumber} from "./SlideNumber";
 
-export function SlideList(props: Editor) {
-    const slideList: Array<Slide> = []
-    props.presentation.slides.forEach((slide) => {
-        slideList.push(slide)
-    })
+type SlideListProps = Editor & {
+    onSlideSelect(index: number): void;
+}
+
+export function SlideList(props: SlideListProps)
+{
+    // const slideList: Array<Slide> = []
+    // props.presentation.slides.forEach((slide) => {
+    //     slideList.push(slide)
+    // })
+
+    const {slides} = props.presentation;
+
     return (
         <div className={'b-slide-list'}>
-            {slideList.map((slide: Slide) =>
+            {slides.map((slide: Slide, index: number) =>
                 <div className={'b-slide-list__wrapper'}>
-                    <div className={'b-slide-list__content'}>
+                    <div className={'b-slide-list__content'} onClick={() => props.onSlideSelect(index)}>
                         <SlideView slide={slide} isScale={true}/>
                     </div>
+                    <span className={'b-slide-list__slide_count'}>
+                        {index + 1}
+                    </span>
                 </div>
             )}
         </div>

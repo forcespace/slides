@@ -6,7 +6,8 @@ type Props = {
     isScale: boolean
 }
 
-export function Circle(props: Props) {
+export function Circle(props: Props)
+{
     const scaleIndex = props.isScale ? 0.17 : 1
     const widthSvg = props.figure.width * scaleIndex
     const heightSvg = props.figure.height * scaleIndex

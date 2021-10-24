@@ -1,8 +1,7 @@
 import {Editor} from './slide'
 
 const editor: Editor = {
-    history: {
-    },
+    history: {},
     presentation: {
         title: 'Microsoft PowerPoint',
         slides: [
@@ -13,7 +12,7 @@ const editor: Editor = {
                 },
                 objects: [
                     {
-                        leftTopPoint: {x:100, y:14},
+                        leftTopPoint: {x: 100, y: 14},
                         width: 200,
                         height: 10,
                         active: true,
@@ -23,7 +22,7 @@ const editor: Editor = {
                         type: 'Text'
                     },
                     {
-                        leftTopPoint:{x:0 , y:100},
+                        leftTopPoint: {x: 0, y: 100},
                         width: 250,
                         height: 20,
                         active: false,
@@ -33,10 +32,10 @@ const editor: Editor = {
                         color: '#112dea',
                         size: 20,
                         font: 'Times New Roman',
-                        fontStyle: ['italic','bold']
+                        fontStyle: ['italic', 'bold']
                     },
                     {
-                        leftTopPoint: {x:100 , y:100},
+                        leftTopPoint: {x: 100, y: 100},
                         border:
                             {
                                 borderSize: '',
@@ -51,7 +50,7 @@ const editor: Editor = {
                         src: ''
                     },
                     {
-                        leftTopPoint: {x:300 , y:30},
+                        leftTopPoint: {x: 300, y: 30},
                         background: {
                             color: '#ddd',
                             priority: 1
@@ -76,7 +75,7 @@ const editor: Editor = {
                 },
                 objects: [
                     {
-                        leftTopPoint: {x:25, y:164},
+                        leftTopPoint: {x: 25, y: 164},
                         width: 160,
                         height: 20,
                         active: false,
@@ -86,7 +85,7 @@ const editor: Editor = {
                         type: 'Text'
                     },
                     {
-                        leftTopPoint: {x:41 , y:45},
+                        leftTopPoint: {x: 41, y: 45},
                         border:
                             {
                                 borderSize: '',
@@ -101,7 +100,7 @@ const editor: Editor = {
                         src: ''
                     },
                     {
-                        leftTopPoint: {x:20 , y:10},
+                        leftTopPoint: {x: 20, y: 10},
                         background: {
                             color: '#dd00dd',
                             priority: 1
@@ -118,7 +117,7 @@ const editor: Editor = {
                         type: 'Circle'
                     },
                     {
-                        leftTopPoint: {x:10 , y:10},
+                        leftTopPoint: {x: 10, y: 10},
                         background: {
                             color: '#ddd',
                             priority: 1
@@ -135,7 +134,7 @@ const editor: Editor = {
                         type: 'Rect'
                     },
                     {
-                        leftTopPoint: {x:10, y:140},
+                        leftTopPoint: {x: 10, y: 140},
                         width: 100,
                         height: 10,
                         active: true,
@@ -145,7 +144,7 @@ const editor: Editor = {
                         type: 'Text'
                     },
                     {
-                        leftTopPoint: {x:2 , y:2},
+                        leftTopPoint: {x: 2, y: 2},
                         background: {
                             color: '#ddd',
                             priority: 1
@@ -165,7 +164,7 @@ const editor: Editor = {
             }
         ]
     },
-    active: 0
+    active: 1
 }
 
 export {

@@ -5,9 +5,12 @@ import {SlideList} from "../SlidesList";
 import {SlideContent} from "../SlideContent";
 import {Editor} from "../../script/slide/slide";
 
-export function Workspace(props: Editor) {
-    const [activeSlide, setActiveSlide] = React.useState(props.active || 0);
+type WorkspaceProps = Editor & {
+    onSlideSelect(index: number): void;
+}
 
+export function Workspace(props: WorkspaceProps)
+{
     const slidesCount = props.presentation.slides.length;
 
     return (
@@ -17,7 +20,6 @@ export function Workspace(props: Editor) {
             </div>
             <div className={'b-presentation__workspace_secondary'}>
                 <SlideList {...props}/>
-                {activeSlide + 1} of {slidesCount}
             </div>
         </section>
     );

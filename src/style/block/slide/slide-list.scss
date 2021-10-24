@@ -10,8 +10,7 @@
 
     &__wrapper
     {
-        display: flex;
-        justify-content: space-between;
+        position: relative;
 
         &:not(:last-child)
         {
@@ -25,24 +24,24 @@
             &::after
             {
                 position: absolute;
-                right: -12px;
+                right: 0;
                 bottom: -10px;
                 left: 0;
                 height: 2px;
                 margin: auto;
                 content: '';
-                background: #b7472a;
                 animation: glowing 1.5s linear infinite;
+                background: #b7472a;
 
                 @keyframes glowing
                 {
                     0%
                     {
-                        width: 10%;
+                        width: 0;
                     }
                     100%
                     {
-                        width: 90%;
+                        width: 100%;
                     }
                 }
             }
@@ -64,6 +63,9 @@
         &_count
         {
             font: 400 14px/1 $euclidCircularRegular;
+            position: absolute;
+            top: 5px;
+            left: -15px;
             display: block;
             margin-right: 5px;
             color: $actualColorTitle;

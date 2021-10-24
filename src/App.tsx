@@ -8,12 +8,13 @@ import {Footer} from "./components/Footer";
 
 
 export function App() {
+    const [activeIndex, setActiveIndex] = React.useState(editor.active || 0);
 
     return (
         <div className={'b-presentation'}>
             <Header {...editor}/>
-            <Workspace {...editor}/>
-            <Footer/>
+            <Workspace {...editor} active={activeIndex} onSlideSelect={setActiveIndex}/>
+            <Footer activeIndex={activeIndex + 1} slidesCount={editor.presentation.slides.length} />
         </div>
     );
 }
