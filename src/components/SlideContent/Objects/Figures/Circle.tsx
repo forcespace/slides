@@ -13,12 +13,12 @@ export function Circle(props: Props)
     const heightSvg = props.figure.height * scaleIndex
     const xCircle = props.figure.leftTopPoint.x * scaleIndex
     const yCircle = props.figure.leftTopPoint.y * scaleIndex
-    const widthCircle = props.figure.width * scaleIndex * 0.5
-    const heightCircle = props.figure.height * scaleIndex * 0.5
+    const widthCircle = props.figure.width * scaleIndex * 0.5 + xCircle
+    const heightCircle = props.figure.height * scaleIndex * 0.5 + yCircle
     const radiusCircle = props.figure.height * scaleIndex * 0.5
 
     return (
-        <svg width={widthSvg} height={heightSvg} xmlns="http://www.w3.org/2000/svg">
+        <svg className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
             <circle cx={widthCircle} cy={heightCircle} r={radiusCircle}/>
         </svg>
     )

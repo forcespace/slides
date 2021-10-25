@@ -17,7 +17,7 @@ export function Rect(props: Props)
     const heightRect = heightSvg
 
     return (
-        <svg className={'b-slide__content-item'} width={widthSvg} height={heightSvg} xmlns="http://www.w3.org/2000/svg">
+        <svg className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
             <rect x={xRect} y={yRect} width={widthRect} height={heightRect} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
         </svg>
     )
