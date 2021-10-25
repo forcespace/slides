@@ -13,12 +13,12 @@ export function Rect(props: Props)
     const heightSvg = props.figure.height * scaleIndex
     const xRect = props.figure.leftTopPoint.x * scaleIndex
     const yRect = props.figure.leftTopPoint.y * scaleIndex
-    const widthRect = props.figure.width * scaleIndex
-    const heightRect = props.figure.height * scaleIndex
+    const widthRect = widthSvg
+    const heightRect = heightSvg
 
     return (
-        <svg width={widthSvg} height={heightSvg} xmlns="http://www.w3.org/2000/svg">
-            <rect width={widthRect} height={heightRect} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
+        <svg className={'b-slide__content-item'} width={widthSvg} height={heightSvg} xmlns="http://www.w3.org/2000/svg">
+            <rect x={xRect} y={yRect} width={widthRect} height={heightRect} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
         </svg>
     )
 }
