@@ -1,6 +1,6 @@
 import {Editor} from './slide'
 
-const editor: Editor = {
+let editor: Editor = {
     history: {},
     presentation: {
         title: 'Microsoft PowerPoint',
@@ -543,6 +543,17 @@ const editor: Editor = {
     active: 1
 }
 
+function getEditor()
+{
+    return editor
+}
+
+function setEditor(newEditor)
+{
+    editor = newEditor
+}
+
 export {
-    editor
+    setEditor,
+    getEditor
 }

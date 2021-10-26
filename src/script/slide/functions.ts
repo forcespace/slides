@@ -35,7 +35,7 @@ function saveProjectLocal(presentation: Editor): void
     // return editor
 }*/
 
-function setTitle(newTitle: string, editor: Editor): Editor
+export function setTitle(editor: Editor, newTitle: string): Editor
 {
     return {
         ...editor,
@@ -446,3 +446,7 @@ let editorToPrint: Editor = createEditor()
 //console.log(moveSlideDownByStep(editorToTest))
 let result = deleteObjectEditorVersion(editorToTest,1);
 console.log(result.presentation.slides[result.active].objects);
+
+
+//todo
+// собрать все параметры в один объект

@@ -7,7 +7,7 @@ import {editor} from "./script/slide/editor-new";
 import {Footer} from "./components/Footer";
 
 
-export function App() {
+export function App(props: {editor : Editor}) {
     const [activeIndex, setActiveIndex] = React.useState(editor.active || 0);
 
     return (
