@@ -12,7 +12,7 @@ const editor: Editor = {
                 },
                 objects: [
                     {
-                        leftTopPoint: {x: 100, y: 14},
+                        leftTopPoint: {x: 100, y: 114},
                         width: 200,
                         height: 10,
                         active: true,
@@ -22,7 +22,7 @@ const editor: Editor = {
                         type: 'Text'
                     },
                     {
-                        leftTopPoint: {x: 0, y: 100},
+                        leftTopPoint: {x: 200, y: 100},
                         width: 250,
                         height: 20,
                         active: false,

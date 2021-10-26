@@ -18,7 +18,7 @@ export function SlideView(props: Props)
     return (
         <>
             {slideObjects.map((object: ObjectType) =>
-                <Objects  figure={object} isScale={props.isScale}/>
+                <Objects figure={object} isScale={props.isScale}/>
             )}
         </>
     );
