@@ -238,9 +238,9 @@ const editor: Editor = {
                         type: 'Text'
                     },
                     {
-                        leftTopPoint: {x: 2, y: 2},
+                        leftTopPoint: {x: 100, y: 50},
                         background: {
-                            color: '#ddd',
+                            color: 'green',
                             priority: 1
                         },
                         border: {

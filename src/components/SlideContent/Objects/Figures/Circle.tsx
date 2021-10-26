@@ -8,6 +8,7 @@ type Props = {
 
 export function Circle(props: Props)
 {
+    const styleSvg = {top: `'${props.figure.leftTopPoint.x}px'`, left: `'${props.figure.leftTopPoint.y}px'`}
     const scaleIndex = props.isScale ? 0.17 : 1
     const widthSvg = props.figure.width * scaleIndex
     const heightSvg = props.figure.height * scaleIndex
@@ -18,7 +19,7 @@ export function Circle(props: Props)
     const radiusCircle = props.figure.height * scaleIndex * 0.5
 
     return (
-        <svg className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
+        <svg style={styleSvg} className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
             <circle cx={widthCircle} cy={heightCircle} r={radiusCircle}/>
         </svg>
     )

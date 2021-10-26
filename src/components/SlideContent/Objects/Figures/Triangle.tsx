@@ -8,6 +8,7 @@ type Props = {
 
 export function Triangle(props: Props)
 {
+    const styleSvg = {top: `'${props.figure.leftTopPoint.x}px'`, left: `'${props.figure.leftTopPoint.y}px'`}
     const scaleIndex = props.isScale ? 0.17 : 1
     const widthSvg = props.figure.width * scaleIndex
     const heightSvg = props.figure.height * scaleIndex
@@ -29,7 +30,7 @@ export function Triangle(props: Props)
     const trianglePath = `M ${v1.x} ${v1.y} L ${v2.x} ${v2.y} L ${v3.x} ${v3.y} Z`
 
     return (
-        <svg className={'b-slide__content-item'} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
+        <svg style={styleSvg} className={'b-slide__content-item'} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
             <path d={trianglePath} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
         </svg>
     )
