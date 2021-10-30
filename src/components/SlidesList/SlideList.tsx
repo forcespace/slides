@@ -3,26 +3,38 @@ import {SlideView} from "./SlideView"
 import '../../style/block/slide/slide-list.css'
 import '../../style/main.css'
 import {Editor, Slide} from '../../script/slide/slide'
+import {dispatch} from "../../dispatch";
+import {setActive} from "../../script/slide/functions";
 // import {SlideNumber} from "./SlideNumber";
 
-type SlideListProps = Editor & {
-    onSlideSelect(index: number): void;
-}
 
-export function SlideList(props: SlideListProps)
+export function SlideList(props: Editor)
 {
     // const slideList: Array<Slide> = []
     // props.presentation.slides.forEach((slide) => {
     //     slideList.push(slide)
     // })
 
+
+    const {active} = props;
     const {slides} = props.presentation;
+
+    function isActive(index: number)
+    {
+        return index === active
+    }
+
+    function setActiveSlide(index: number)
+    {
+        dispatch(setActive, index)
+    }
+
 
     return (
         <div className={'b-slide-list'}>
             {slides.map((slide: Slide, index: number) =>
                 <div className={'b-slide-list__wrapper'}>
-                    <div className={'b-slide-list__content'} onClick={() => props.onSlideSelect(index)}>
+                    <div className={`b-slide-list__content${isActive(index) ? " b-slide-list__content_active" : ""}`} onClick={() => setActiveSlide(index)}>
                         <SlideView slide={slide} isScale={true}/>
                     </div>
                     <span className={'b-slide-list__slide_count'}>
