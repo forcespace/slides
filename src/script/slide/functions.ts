@@ -1,10 +1,10 @@
-import {Editor, Slide} from './slide';
+import {Editor, ObjectType, Slide} from './slide';
 
-function createEditor(): Editor
+export function createEditor(): Editor
 {
     return {
         history: {undo: [], redo: []},
-        presentation: {title: '', slides: []},
+        presentation: {title: 'Default Title', slides: [createSlide()]},
         active: 0
     }
 }
@@ -47,7 +47,7 @@ export function addEmptySlide(editor: Editor): Editor
 }
 
 //Удаление активного слайда из коллекции
-function deleteSlide(editor: Editor): Editor
+export function deleteSlide(editor: Editor): Editor
 {
     let newSlides: Array<Slide> = editor.presentation.slides
     const index: number = editor.active
@@ -96,7 +96,7 @@ export function setActive(editor: Editor, index: number): Editor
 }
 
 //Перемещение слайда вверх в презентации
-function moveSlideDownByStep(editor: Editor): Editor
+export function moveSlideDownByStep(editor: Editor): Editor
 {
     const newEditor: Editor = editor
     const slide: Slide = editor.presentation.slides[editor.active]
@@ -109,7 +109,7 @@ function moveSlideDownByStep(editor: Editor): Editor
     return newEditor
 }
 
-function moveSlideTopByStep(editor: Editor): Editor
+export function moveSlideTopByStep(editor: Editor): Editor
 {
     const newEditor: Editor = editor
     const slide: Slide = editor.presentation.slides[editor.active]
@@ -120,4 +120,15 @@ function moveSlideTopByStep(editor: Editor): Editor
         addSlide(newEditor, slide)
     }
     return newEditor
+}
+
+export function addObject(slide: Slide, object: ObjectType): Slide
+{
+    return {
+        ...slide,
+        objects: [
+            ...slide.objects,
+            object
+        ]
+    }
 }

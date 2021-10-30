@@ -16,3 +16,16 @@ export function dispatch(modifyFn: Function, payload: Object)
         document.getElementById('root')
     );
 }
+
+export function dispatchWithoutParam(modifyFn: Function)
+{
+    const newState: Editor = modifyFn(getEditor());
+    setEditor(newState);
+
+    ReactDOM.render(
+        <React.StrictMode>
+            <App editor={newState}/>
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+}

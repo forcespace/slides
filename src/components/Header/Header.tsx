@@ -2,8 +2,8 @@ import React from 'react';
 import '../../style/block/header/header.css';
 import '../../style/main.css';
 import {Editor} from "../../script/slide/slide";
-import {dispatch} from "../../dispatch";
-import {setTitle} from "../../script/slide/functions";
+import {dispatch, dispatchWithoutParam} from "../../dispatch";
+import {setTitle, createEditor, addEmptySlide, deleteSlide} from "../../script/slide/functions";
 
 export function Header(props: Editor)
 {
@@ -19,9 +19,20 @@ export function Header(props: Editor)
         }
     }
 
-    function handleAddNewSlideClick()
-    {
-        dispatch(addEmptySlide, {})
+    function handleAddNewSlideClick() {
+        dispatchWithoutParam(addEmptySlide)
+    }
+
+    function handleRemoveSlideClick() {
+        dispatchWithoutParam(deleteSlide)
+    }
+
+    function handleNewPresentationClick() {
+        dispatchWithoutParam(createEditor)
+    }
+
+    function handleAddRectClick() {
+        dispatchWithoutParam(createEditor)
     }
 
     return (
@@ -30,8 +41,17 @@ export function Header(props: Editor)
                 {title}
             </h1>
             <nav>
+                <button onClick={handleNewPresentationClick}>
+                    New Presentation
+                </button>
                 <button onClick={handleAddNewSlideClick}>
                     +1 slide
+                </button>
+                <button onClick={handleRemoveSlideClick}>
+                    -1 slide
+                </button>
+                <button onClick={handleAddRectClick}>
+                    add Rect
                 </button>
             </nav>
         </header>
