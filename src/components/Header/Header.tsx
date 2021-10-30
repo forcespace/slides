@@ -14,7 +14,7 @@ export function Header(props: Editor)
 
     return (
         <header className={'b-header'}>
-            <h1 className={'b-header__title'} onClick={() => }>
+            <h1 className={'b-header__title'} onClick={onClick}>
                 {props.presentation.title}
             </h1>
         </header>

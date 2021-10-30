@@ -1,11 +1,14 @@
 import React from 'react';
 import {Header} from "./components/Header";
 import {Workspace} from "./components/Workspace";
-
-import './App.css';
-import {editor} from "./script/slide/editor-new";
 import {Footer} from "./components/Footer";
 
+import './App.css';
+
+import {getEditor} from "./script/slide/editor-new";
+import {Editor} from "./script/slide/slide";
+
+const editor = getEditor()
 
 export function App(props: {editor : Editor}) {
     const [activeIndex, setActiveIndex] = React.useState(editor.active || 0);
