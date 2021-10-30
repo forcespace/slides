@@ -5,18 +5,16 @@ import {SlideList} from "../SlidesList";
 import {SlideContent} from "../SlideContent";
 import {Editor} from "../../script/slide/slide";
 
-type WorkspaceProps = Editor & {
-    onSlideSelect(index: number): void;
-}
-
-export function Workspace(props: WorkspaceProps)
+export function Workspace(props: Editor)
 {
     const slidesCount = props.presentation.slides.length;
 
     return (
         <section className={'b-presentation__workspace'}>
             <div className={'b-presentation__workspace_primary'}>
-                <SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>
+                {slidesCount ? (
+                    <SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>
+                ) : null}
             </div>
             <div className={'b-presentation__workspace_secondary'}>
                 <SlideList {...props}/>

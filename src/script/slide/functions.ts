@@ -47,7 +47,7 @@ export function setTitle(editor: Editor, newTitle: string): Editor
 }
 
 //Добавление пустого слайда в коллекцию после активного
-function addEmptySlide(editor: Editor): Editor
+export function addEmptySlide(editor: Editor): Editor
 {
     const newSlides: Array<Slide> = editor.presentation.slides
     const slide: Slide = createSlide()
@@ -102,6 +102,14 @@ function addSlide(slide: Slide, editor: Editor): Editor
             slides: newSlides
         },
         active: index + 1
+    }
+}
+
+export function setActive(editor: Editor, index: number): Editor
+{
+    return {
+        ...editor,
+        active: index
     }
 }
 
