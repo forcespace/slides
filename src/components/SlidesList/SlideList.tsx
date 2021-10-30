@@ -3,19 +3,11 @@ import {SlideView} from "./SlideView"
 import '../../style/block/slide/slide-list.css'
 import '../../style/main.css'
 import {Editor, Slide} from '../../script/slide/slide'
-import {dispatch} from "../../dispatch";
-import {setActive} from "../../script/slide/functions";
-// import {SlideNumber} from "./SlideNumber";
+import {dispatch} from "../../dispatch"
+import {setActive} from "../../script/slide/functions"
 
 
-export function SlideList(props: Editor)
-{
-    // const slideList: Array<Slide> = []
-    // props.presentation.slides.forEach((slide) => {
-    //     slideList.push(slide)
-    // })
-
-
+export function SlideList(props: Editor) {
     const {active} = props;
     const {slides} = props.presentation;
 
@@ -28,7 +20,6 @@ export function SlideList(props: Editor)
     {
         dispatch(setActive, index)
     }
-
 
     return (
         <div className={'b-slide-list'}>
@@ -43,5 +34,5 @@ export function SlideList(props: Editor)
                 </div>
             )}
         </div>
-    );
+    )
 }
