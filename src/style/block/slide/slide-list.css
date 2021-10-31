@@ -1,0 +1,61 @@
+@import '/src/style/font/euclid.css';
+.b-slide-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 50px;
+}
+.b-slide-list__wrapper {
+  position: relative;
+}
+.b-slide-list__wrapper:not(:last-child) {
+  margin-bottom: 25px;
+}
+.b-slide-list__wrapper:last-child {
+  position: relative;
+}
+.b-slide-list__wrapper:last-child::after {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  left: 0;
+  height: 2px;
+  margin: auto;
+  content: "";
+  animation: glowing 1.5s linear infinite;
+  background: #b7472a;
+}
+@keyframes glowing {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.b-slide-list__content {
+  width: 160px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
+  transition: 0.3s;
+}
+.b-slide-list__content_active {
+  border: 2px solid #b7472a;
+  box-shadow: 0 20px 30px rgba(163, 172, 192, 0.26);
+  transition: 0.3s;
+}
+.b-slide-list__slide_count {
+  font: 400 14px/1 "Euclid Circular B Regular", sans-serif;
+  position: absolute;
+  top: 5px;
+  left: -15px;
+  display: block;
+  margin-right: 5px;
+  color: #151824;
+}
+
+/*# sourceMappingURL=slide-list.css.map */

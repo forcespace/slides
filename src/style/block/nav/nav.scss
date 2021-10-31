@@ -1,0 +1,39 @@
+@import '../../block/config/_const';
+
+.nav
+{
+    padding: 10px 30px 50px;
+    border-bottom: 1px solid rgba(61, 62, 71, 0.16);
+    background: #ececec;
+    box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
+
+    &__list
+    {
+        display: flex;
+        padding: 0;
+    }
+
+    &__list-item
+    {
+        font: 400 16px/1 $euclidCircularRegular;
+        color: $actualColorTitle;
+        list-style-type: none;
+        margin: 0;
+
+        &:not(:first-child),
+        &:not(:last-child),
+        {
+            padding: 0 25px;
+        }
+
+        &:first-child
+        {
+            padding: 0 25px 0 0;
+        }
+
+        &:last-child
+        {
+            padding: 0 0 0 25px;
+        }
+    }
+}

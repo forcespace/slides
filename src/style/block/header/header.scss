@@ -3,7 +3,7 @@
 .b-header
 {
     padding: 10px 0 15px;
-    background: #c44728;
+    background: $actualAppColorTheme;
 
     &__title
     {
@@ -12,5 +12,7 @@
         line-height: 1;
         text-align: center;
         color: #fff;
+        width: max-content;
+        margin: 0 auto;
     }
 }
