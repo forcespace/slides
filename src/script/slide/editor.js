@@ -133,7 +133,7 @@ export const editor = {
             },
                 {
                     id: 2,
-                    text: '2'
+                    title: '2'
                 },
                 {
                     id: 3,

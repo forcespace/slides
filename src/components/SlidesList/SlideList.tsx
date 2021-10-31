@@ -1,24 +1,38 @@
-import * as React from 'react';
-import {SlideView} from "./SlideView";
-import '../../style/block/slide/slide-list.css';
-import '../../style/main.css';
+import * as React from 'react'
+import {SlideView} from "./SlideView"
+import '../../style/block/slide/slide-list.css'
+import '../../style/main.css'
 import {Editor, Slide} from '../../script/slide/slide'
+import {dispatch} from "../../dispatch"
+import {setActive} from "../../script/slide/functions"
+
 
 export function SlideList(props: Editor) {
-    const temp: Array<Slide> = []
-    props.presentation.slides.forEach((slide) => {
-        temp.push(slide)
-    })
+    const {active} = props;
+    const {slides} = props.presentation;
+
+    function isActive(index: number)
+    {
+        return index === active
+    }
+
+    function setActiveSlide(index: number)
+    {
+        dispatch(setActive, index)
+    }
+
     return (
         <div className={'b-slide-list'}>
-            {temp.map((item: Slide) =>
+            {slides.map((slide: Slide, index: number) =>
                 <div className={'b-slide-list__wrapper'}>
-                    <SlideView {...item}/>
-                    <div className={'b-slide-list__content'}>
-                        <SlideView {...item}/>
+                    <div className={`b-slide-list__content${isActive(index) ? " b-slide-list__content_active" : ""}`} onClick={() => setActiveSlide(index)}>
+                        <SlideView slide={slide} isScale={true}/>
                     </div>
+                    <span className={'b-slide-list__slide_count'}>
+                        {index + 1}
+                    </span>
                 </div>
             )}
         </div>
-    );
+    )
 }

@@ -4,10 +4,16 @@ import '../../style/block/slide/slide.css';
 import '../../style/main.css';
 import {Slide} from '../../script/slide/slide'
 
-export function SlideContent(props: Slide) {
+type Props = {
+    slide: Slide,
+    isScale: boolean
+}
+
+export function SlideContent(props: Props)
+{
     return (
         <div className={'b-slide'}>
-            <SlideView {...props}/>
+            <SlideView slide={props.slide} isScale={false}/>
         </div>
     );
 }

@@ -1,25 +1,23 @@
 import * as React from 'react';
-import {ObjectType} from '../../../../script/slide/slide'
+import {Image} from '../../../../script/slide/slide'
 
 type Props = {
-    figure: ObjectType,
+    figure: Image,
     isScale: boolean
 }
 
-export function Rect(props: Props)
+export function ImageSvg(props: Props)
 {
     const styleSvg = {top: `'${props.figure.leftTopPoint.x}px'`, left: `'${props.figure.leftTopPoint.y}px'`}
     const scaleIndex = props.isScale ? 0.17 : 1
     const widthSvg = props.figure.width * scaleIndex
     const heightSvg = props.figure.height * scaleIndex
-    const xRect = props.figure.leftTopPoint.x * scaleIndex
-    const yRect = props.figure.leftTopPoint.y * scaleIndex
-    const widthRect = widthSvg
-    const heightRect = heightSvg
+    const xText = props.figure.leftTopPoint.x * scaleIndex
+    const yText = props.figure.leftTopPoint.y * scaleIndex
 
     return (
         <svg style={styleSvg} className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
-            <rect x={xRect} y={yRect} width={widthRect} height={heightRect} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
+            <image xlinkHref={props.figure.src}  x={xText} y={yText} height={heightSvg} width={widthSvg}/>
         </svg>
     )
 }

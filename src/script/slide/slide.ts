@@ -15,7 +15,6 @@ export type Presentation = {
 }
 
 export type Slide = {
-    title: string,
     background: Background,
     objects: Array<ObjectType>
 }
