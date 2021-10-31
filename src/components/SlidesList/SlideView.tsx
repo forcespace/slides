@@ -9,10 +9,6 @@ type Props = {
 
 export function SlideView(props: Props)
 {
-    // const objectsList: Array <ObjectType> = []
-    // props.slide.objects.forEach((object) => {
-    //     objectsList.push(object)
-    // })
     const slideObjects = props.slide.objects;
 
     return (

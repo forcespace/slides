@@ -1,9 +1,10 @@
 import React from 'react';
+import {Editor} from "../../script/slide/slide";
+import {dispatch} from "../../dispatch";
+import {setTitle} from "../../script/slide/functions";
+import {Nav} from "../nav";
 import '../../style/block/header/header.css';
 import '../../style/main.css';
-import {Editor} from "../../script/slide/slide";
-import {dispatch, dispatchWithoutParam} from "../../dispatch";
-import {setTitle, createEditor, addEmptySlide, deleteSlide} from "../../script/slide/functions";
 
 export function Header(props: Editor)
 {
@@ -11,28 +12,12 @@ export function Header(props: Editor)
 
     function handleTitleClick()
     {
-        const newTitle = window.prompt('new title', title);
+        const newTitle = window.prompt('Заголовок презентации', title);
 
-        if(newTitle)
+        if (newTitle)
         {
             dispatch(setTitle, newTitle)
         }
-    }
-
-    function handleAddNewSlideClick() {
-        dispatchWithoutParam(addEmptySlide)
-    }
-
-    function handleRemoveSlideClick() {
-        dispatchWithoutParam(deleteSlide)
-    }
-
-    function handleNewPresentationClick() {
-        dispatchWithoutParam(createEditor)
-    }
-
-    function handleAddRectClick() {
-        dispatchWithoutParam(createEditor)
     }
 
     return (
@@ -40,20 +25,6 @@ export function Header(props: Editor)
             <h1 className={'b-header__title'} onClick={handleTitleClick}>
                 {title}
             </h1>
-            <nav>
-                <button onClick={handleNewPresentationClick}>
-                    New Presentation
-                </button>
-                <button onClick={handleAddNewSlideClick}>
-                    +1 slide
-                </button>
-                <button onClick={handleRemoveSlideClick}>
-                    -1 slide
-                </button>
-                <button onClick={handleAddRectClick}>
-                    add Rect
-                </button>
-            </nav>
         </header>
     );
 }
