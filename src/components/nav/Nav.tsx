@@ -1,7 +1,7 @@
 import React from 'react';
 import {Editor} from "../../script/slide/slide";
-import {dispatchWithoutParam} from "../../dispatch";
-import {createEditor, addEmptySlide, deleteSlide} from "../../script/slide/functions";
+import {dispatch, dispatchWithoutParam} from "../../dispatch";
+import {createEditor, addEmptySlide, deleteSlide, addObject} from "../../script/slide/functions";
 import '../../style/block/nav/nav.css';
 import '../../style/main.css';
 
@@ -25,7 +25,7 @@ export function Nav(props: Editor)
 
     function handleAddRectClick()
     {
-        dispatchWithoutParam(createEditor)
+        dispatch(addObject, {objectType: 'Rect'})
     }
 
     return (

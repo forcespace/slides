@@ -1,4 +1,4 @@
-import {Background, Border, Editor, FontStyle, ObjectType, Position, Slide} from './slide';
+import {Background, Border, Editor, FontStyle, ObjectType, Position, shapeType, Slide} from './slide';
 
 export function createEditor(): Editor {
     return {
@@ -56,9 +56,6 @@ export function deleteSlide(editor: Editor): Editor {
     } else if (editor.presentation.slides.length === 0) {
         newIndex = -1
     }
-
-    console.log(editor.presentation.slides.length)
-    console.log("newIndex", newIndex)
 
     if (editor.presentation.slides.length !== 0) {
         newSlides.splice(index, 1)
@@ -121,12 +118,51 @@ export function moveSlideTopByStep(editor: Editor): Editor {
     return newEditor
 }
 
-export function addObject(slide: Slide, object: ObjectType): Slide {
+export function addObject(editor: Editor, object: {objectType: string}): Editor {
+    const newObjectArray = editor.presentation.slides[editor.active].objects
+    newObjectArray.push(createObject(object.objectType, editor.presentation.slides[editor.active].objects.length))
+
+    const newSlides = editor.presentation.slides
+    newSlides[editor.active].objects = newObjectArray
+
     return {
-        ...slide,
-        objects: [
-            ...slide.objects,
-            object
-        ]
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
     }
 }
+
+function createObject(objectType: string, priority: number): ObjectType {
+    switch (objectType) {
+        case 'Rect': {
+            return createRect(priority)
+        }
+        default: {
+            return createRect(priority)
+        }
+    }
+}
+
+function createRect(priority: number): ObjectType {
+    return {
+        type: 'Rect',
+        leftTopPoint: {
+            x: 100,
+            y: 100},
+        border: {
+            borderSize: '2',
+            borderColor: '#000000',
+            borderStyle: 'Solid'
+        },
+        background: {
+            color: '#ffffff',
+            priority: 1},
+        width: 100,
+        height: 70,
+        active: true,
+        priority: priority
+    }
+}
+

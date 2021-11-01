@@ -16,10 +16,12 @@ export function Rect(props: Props)
     const yRect = props.figure.leftTopPoint.y * scaleIndex
     const widthRect = widthSvg
     const heightRect = heightSvg
+    const rectStroke = props.figure.border ? props.figure.border.borderColor : ''
+    const rectFill = props.figure.background ? props.figure.background.color : ''
 
     return (
         <svg style={styleSvg} className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
-            <rect x={xRect} y={yRect} width={widthRect} height={heightRect} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
+            <rect x={xRect} y={yRect} width={widthRect} height={heightRect} stroke={rectStroke} fill={rectFill}/>
         </svg>
     )
 }

@@ -8,8 +8,8 @@ import {setActive} from "../../script/slide/functions"
 
 
 export function SlideList(props: Editor) {
-    const {active} = props;
-    const {slides} = props.presentation;
+    const active = props.active;
+    const slides: Slide[] = props.presentation.slides;
 
     function isActive(index: number)
     {
