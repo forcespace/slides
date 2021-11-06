@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {SlideView} from "../SlidesList/SlideView";
+import {Slide} from '../../script/slide/slide';
 import '../../style/block/slide/slide.css';
 import '../../style/main.css';
-import {Slide} from '../../script/slide/slide'
 
 type Props = {
     slide: Slide,
@@ -11,8 +11,35 @@ type Props = {
 
 export function SlideContent(props: Props)
 {
+    const [width, setWidth] = React.useState(0);
+
+    React.useLayoutEffect(() => {
+        const getWidth = (): number => {
+            const el = document.getElementById('test');
+            if(el)
+            {
+                const test = window.getComputedStyle(el);
+                return test ? parseFloat(test.width) : 0;
+            }
+
+            return 0;
+        }
+
+        const handleWindowResize = () => {
+            setWidth(getWidth());
+        };
+
+        handleWindowResize();
+
+        window.addEventListener("resize", handleWindowResize);
+
+        return () => {
+            window.removeEventListener("resize", handleWindowResize);
+        }
+    }, []);
+
     return (
-        <div className={'b-slide'}>
+        <div className={'b-slide'} style={{height: width / 1.7}} id={"test"}>
             <SlideView slide={props.slide} isScale={false}/>
         </div>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Editor} from "../../script/slide/slide";
 import {dispatch, dispatchWithoutParam} from "../../dispatch";
 import {createEditor, addEmptySlide, deleteSlide, addObject} from "../../script/slide/functions";
 import '../../style/block/nav/nav.css';

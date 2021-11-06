@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../style/block/workspace/workspace.css';
-import '../../style/main.css';
 import {SlideList} from "../SlidesList";
 import {SlideContent} from "../SlideContent";
 import {Editor} from "../../script/slide/slide";
+import '../../style/block/workspace/workspace.css';
+import '../../style/main.css';
 
 export function Workspace(props: Editor)
 {
@@ -11,14 +11,12 @@ export function Workspace(props: Editor)
 
     return (
         <section className={'b-presentation__workspace'}>
-            <div className={'b-presentation__workspace_primary'}>
-                {slidesCount
-                    ? (<SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>)
-                    : null}
-            </div>
-            <div className={'b-presentation__workspace_secondary'}>
+            <>
                 <SlideList {...props}/>
-            </div>
+            </>
+            <>
+                {slidesCount ? (<SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>) : null}
+            </>
         </section>
     );
 }

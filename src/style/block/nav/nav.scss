@@ -5,7 +5,6 @@
     padding: 10px 30px 50px;
     border-bottom: 1px solid rgba(61, 62, 71, 0.16);
     background: #ececec;
-    box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
 
     &__list
     {
@@ -36,4 +35,14 @@
             padding: 0 0 0 25px;
         }
     }
+}
+
+.hidden
+{
+    display: none;
+}
+
+.active {
+    font-size: 100px;
+    color: red;
 }
