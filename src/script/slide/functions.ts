@@ -96,7 +96,7 @@ export function setActive(editor: Editor, index: number): Editor {
 }
 
 //Перемещение слайда вверх в презентации
-export function moveSlideDownByStep(editor: Editor): Editor {
+export function moveSlideTopByStep(editor: Editor): Editor {
     const newEditor: Editor = editor
     const slide: Slide = editor.presentation.slides[editor.active]
     if (editor.active !== 0) {
@@ -107,7 +107,7 @@ export function moveSlideDownByStep(editor: Editor): Editor {
     return newEditor
 }
 
-export function moveSlideTopByStep(editor: Editor): Editor {
+export function moveSlideDownByStep(editor: Editor): Editor {
     const newEditor: Editor = editor
     const slide: Slide = editor.presentation.slides[editor.active]
     if (editor.active !== newEditor.presentation.slides.length - 1) {

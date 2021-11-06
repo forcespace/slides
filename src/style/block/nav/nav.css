@@ -1,6 +1,6 @@
 @import '/src/style/font/euclid.css';
 .nav {
-  padding: 10px 30px 50px;
+  padding: 15px 30px 45px;
   border-bottom: 1px solid rgba(61, 62, 71, 0.16);
   background: #ececec;
 }
@@ -10,27 +10,110 @@
 }
 .nav__list-item {
   font: 400 16px/1 "Euclid Circular B Regular", sans-serif;
-  color: #151824;
-  list-style-type: none;
   margin: 0;
+  list-style-type: none;
+  cursor: pointer;
+  color: #151824;
 }
 .nav__list-item:not(:first-child), .nav__list-item:not(:last-child) {
-  padding: 0 25px;
+  margin: 0 25px;
 }
 .nav__list-item:first-child {
-  padding: 0 25px 0 0;
+  margin: 0 25px 0 0;
 }
 .nav__list-item:last-child {
-  padding: 0 0 0 25px;
+  margin: 0 0 0 25px;
 }
-
-.hidden {
+.nav__list-item_active {
+  font-family: "Euclid Circular B Medium", sans-serif;
+  position: relative;
+}
+.nav__list-item_active::before {
+  position: absolute;
+  right: 0;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  margin: auto;
+  content: "";
+  background: #b8195b;
+}
+.nav__tabs {
+  margin-top: 40px;
+}
+.nav__tabs_hidden {
   display: none;
 }
-
-.active {
-  font-size: 100px;
-  color: red;
+.nav__button {
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.nav__button:not(:first-child), .nav__button:not(:last-child) {
+  margin: 0 50px;
+}
+.nav__button:first-child {
+  margin: 0 50px 0 0;
+}
+.nav__button:last-child {
+  margin: 0 0 0 50px;
+}
+.nav__button::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 64px;
+  height: 64px;
+  margin: auto;
+  content: "";
+  opacity: 0.35;
+  transition: 0.3s;
+}
+.nav__button:hover::before {
+  opacity: 1;
+  transition: 0.3s;
+}
+.nav__button_new-presentation::before {
+  background: url("/src/upload/icon/new.png") no-repeat center center;
+  background-size: cover;
+}
+.nav__button_add-slide::before {
+  top: 5px;
+  background: url("/src/upload/icon/add.png") no-repeat center center;
+  background-size: cover;
+}
+.nav__button_delete-slide::before {
+  background: url("/src/upload/icon/delete.png") no-repeat center center;
+  background-size: cover;
+}
+.nav__button_slide-up::before {
+  background: url("/src/upload/icon/move.png") no-repeat center center;
+  transform: rotateX(180deg);
+  background-size: cover;
+}
+.nav__button_slide-down::before {
+  background: url("/src/upload/icon/move.png") no-repeat center center;
+  background-size: cover;
+}
+.nav__button_add-img::before {
+  background: url("/src/upload/icon/img.png") no-repeat center center;
+  background-size: cover;
+}
+.nav__button_add-rect::before {
+  background: url("/src/upload/icon/rect.png") no-repeat center center;
+  background-size: cover;
+}
+.nav__button_add-triangle::before {
+  background: url("/src/upload/icon/triangle.png") no-repeat center center;
+  background-size: cover;
+}
+.nav__button_add-circle::before {
+  background: url("/src/upload/icon/circle.png") no-repeat center center;
+  background-size: cover;
 }
 
 /*# sourceMappingURL=nav.css.map */
