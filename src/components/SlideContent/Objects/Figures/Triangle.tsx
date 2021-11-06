@@ -8,23 +8,32 @@ type Props = {
 
 export function Triangle(props: Props)
 {
-    const styleSvg = {top: `'${props.figure.leftTopPoint.x}px'`, left: `'${props.figure.leftTopPoint.y}px'`}
     const scaleIndex = props.isScale ? 0.17 : 1
-    const widthSvg = props.figure.width * scaleIndex
-    const heightSvg = props.figure.height * scaleIndex
+    const widthSvg = Math.round(props.figure.width * scaleIndex)
+    const heightSvg = Math.round(props.figure.height * scaleIndex)
+    const xSvg = Math.round(props.figure.leftTopPoint.x * scaleIndex)
+    const ySvg = Math.round(props.figure.leftTopPoint.y * scaleIndex)
+
+    const styleSvg = {
+        top: `${xSvg}px`,
+        left: `${ySvg}px`,
+        width: widthSvg,
+        height: heightSvg
+    }
+
     const v1: Position = {
-        x: (props.figure.leftTopPoint.x + props.figure.width / 2) * scaleIndex,
-        y: props.figure.leftTopPoint.y * scaleIndex
+        x: Math.round(widthSvg / 2),
+        y: 0
     }
 
     const v2: Position = {
-        x: props.figure.leftTopPoint.x * scaleIndex,
-        y: (props.figure.leftTopPoint.y + props.figure.height) * scaleIndex
+        x: 0,
+        y: heightSvg
     }
 
     const v3: Position = {
-        x: (props.figure.leftTopPoint.x + props.figure.width) * scaleIndex,
-        y: (props.figure.leftTopPoint.y + props.figure.height) * scaleIndex
+        x: widthSvg,
+        y: heightSvg
     }
 
     const trianglePath = `M ${v1.x} ${v1.y} L ${v2.x} ${v2.y} L ${v3.x} ${v3.y} Z`

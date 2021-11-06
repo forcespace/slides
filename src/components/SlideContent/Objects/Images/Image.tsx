@@ -17,6 +17,6 @@ export function Img(props: Props)
     const imgHeight = props.imgObject.height * scaleIndex
 
     return (
-        <img src={imgSrc} style={{width: `${imgWidth}px`, height: `${imgHeight}px`, top: `${imgX}px`, left: `${imgY}px`}}/>
+        <img className={'b-slide__content-item'} src={imgSrc} style={{width: `${imgWidth}px`, height: `${imgHeight}px`, top: `${imgX}px`, left: `${imgY}px`}}/>
     )
 }
