@@ -41,7 +41,7 @@ export type Text = Object & {
 export type FontStyle = 'italic' | 'bold' | 'underline' | 'none'
 
 export type Border = {
-    borderSize: string,
+    borderSize: number,
     borderColor: string,
     borderStyle: 'Dashed' | 'Solid'
 }

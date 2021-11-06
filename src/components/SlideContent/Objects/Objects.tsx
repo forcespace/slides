@@ -4,7 +4,7 @@ import {Rect} from "./Figures/Rect";
 import {Circle} from "./Figures/Circle";
 import {Triangle} from "./Figures/Triangle";
 import {TextSvg} from "./Texts/Text";
-import {ImageSvg} from "./Images/Image";
+import {Img} from "./Images/Image";
 
 type Props = {
     figure: ObjectType,
@@ -28,13 +28,13 @@ export function Objects(props: Props)
     else if (props.figure.type === 'Image')
     {
         return (
-            <ImageSvg figure={props.figure} isScale={props.isScale}/>
+            <Img imgObject={props.figure} isScale={props.isScale}/>
         )
     }
     else if (props.figure.type === 'Text')
     {
         return (
-            <TextSvg figure={props.figure} isScale={props.isScale}/>
+            <TextSvg text={props.figure} isScale={props.isScale}/>
         )
     }
     else

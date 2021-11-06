@@ -1,4 +1,4 @@
-import {Background, Border, Editor, FontStyle, ObjectType, Position, shapeType, Slide} from './slide';
+import {Background, Border, Editor, FontStyle, Object, ObjectType, Position, shapeType, Slide} from './slide';
 
 export function createEditor(): Editor {
     return {
@@ -48,16 +48,16 @@ export function deleteSlide(editor: Editor): Editor {
     let newSlides: Array<Slide> = editor.presentation.slides
     const index: number = editor.active
 
-    let newIndex: number = 0;
-    if ((editor.presentation.slides.length !== 1 && editor.active > 0) || editor.presentation.slides.length === 1) {
-        newIndex = editor.active - 1
-    } else if (editor.presentation.slides.length !== 1 && editor.active === 0) {
+    let newIndex: number
+    if (editor.presentation.slides.length > 0 && editor.active === 0) {
         newIndex = editor.active
     } else if (editor.presentation.slides.length === 0) {
         newIndex = -1
+    } else {
+        newIndex = editor.active - 1
     }
 
-    if (editor.presentation.slides.length !== 0) {
+    if (editor.presentation.slides.length > 0) {
         newSlides.splice(index, 1)
     }
 
@@ -119,7 +119,8 @@ export function moveSlideTopByStep(editor: Editor): Editor {
 }
 
 export function addObject(editor: Editor, object: {objectType: string}): Editor {
-    const newObjectArray = editor.presentation.slides[editor.active].objects
+    const newObjectArray = setNonActiveObject(editor.presentation.slides[editor.active].objects)
+
     newObjectArray.push(createObject(object.objectType, editor.presentation.slides[editor.active].objects.length))
 
     const newSlides = editor.presentation.slides
@@ -134,10 +135,24 @@ export function addObject(editor: Editor, object: {objectType: string}): Editor 
     }
 }
 
+function setNonActiveObject(objectArray: Array<ObjectType>): Array<ObjectType> {
+    const newObjectArray = objectArray
+    newObjectArray.forEach(object => {
+        object.active = false
+    })
+    return newObjectArray
+}
+
 function createObject(objectType: string, priority: number): ObjectType {
     switch (objectType) {
         case 'Rect': {
             return createRect(priority)
+        }
+        case 'Triangle': {
+            return createTriangle(priority)
+        }
+        case 'Circle': {
+            return createCircle(priority)
         }
         default: {
             return createRect(priority)
@@ -152,15 +167,60 @@ function createRect(priority: number): ObjectType {
             x: 100,
             y: 100},
         border: {
-            borderSize: '2',
+            borderSize: 2,
             borderColor: '#000000',
             borderStyle: 'Solid'
         },
         background: {
             color: '#ffffff',
-            priority: 1},
+            priority: 1
+        },
         width: 100,
         height: 70,
+        active: true,
+        priority: priority
+    }
+}
+
+function createTriangle(priority: number): ObjectType {
+    return {
+        type: 'Triangle',
+        leftTopPoint: {
+            x: 100,
+            y: 100},
+        border: {
+            borderSize: 2,
+            borderColor: '#000000',
+            borderStyle: 'Solid'
+        },
+        background: {
+            color: '#ffffff',
+            priority: 1
+        },
+        width: 100,
+        height: 100,
+        active: true,
+        priority: priority
+    }
+}
+
+function createCircle(priority: number): ObjectType {
+    return {
+        type: 'Circle',
+        leftTopPoint: {
+            x: 100,
+            y: 100},
+        border: {
+            borderSize: 2,
+            borderColor: '#ffffff',
+            borderStyle: 'Solid'
+        },
+        background: {
+            color: '#0000ff',
+            priority: 1
+        },
+        width: 100,
+        height: 100,
         active: true,
         priority: priority
     }

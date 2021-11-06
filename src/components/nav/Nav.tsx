@@ -28,6 +28,16 @@ export function Nav(props: Editor)
         dispatch(addObject, {objectType: 'Rect'})
     }
 
+    function handleAddTriangleClick()
+    {
+        dispatch(addObject, {objectType: 'Triangle'})
+    }
+
+    function handleAddCircleClick()
+    {
+        dispatch(addObject, {objectType: 'Circle'})
+    }
+
     return (
         <nav className={'nav'}>
             <ul className={'nav__list'}>
@@ -52,6 +62,12 @@ export function Nav(props: Editor)
             </button>
             <button className={'nav__button nav__button_new-presentation'} onClick={handleAddRectClick}>
                 add Rect
+            </button>
+            <button className={'nav__button nav__button_new-presentation'} onClick={handleAddTriangleClick}>
+                add Triangle
+            </button>
+            <button className={'nav__button nav__button_new-presentation'} onClick={handleAddCircleClick}>
+                add Circle
             </button>
         </nav>
     );
