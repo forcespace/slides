@@ -32,6 +32,16 @@ export function Nav()
         dispatch(addObject, {objectType: 'Rect'})
     }
 
+    function handleAddTriangleClick()
+    {
+        dispatch(addObject, {objectType: 'Triangle'})
+    }
+
+    function handleAddCircleClick()
+    {
+        dispatch(addObject, {objectType: 'Circle'})
+    }
+
     const [active, setActive] = React.useState(TABS.MAIN);
 
     return (
@@ -63,6 +73,16 @@ export function Nav()
                         <li className={'nav__list-item_hidden'}>
                             <button className={'nav__button nav__button_add'} onClick={handleAddRectClick}>
                                 add Rect
+                            </button>
+                        </li>
+                        <li className={'nav__list-item_hidden'}>
+                            <button className={'nav__button nav__button_new-presentation'} onClick={handleAddTriangleClick}>
+                                add Triangle
+                            </button>
+                        </li>
+                        <li className={'nav__list-item_hidden'}>
+                            <button className={'nav__button nav__button_new-presentation'} onClick={handleAddCircleClick}>
+                                add Circle
                             </button>
                         </li>
                     </ul>
