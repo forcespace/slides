@@ -2,7 +2,7 @@
 
 .nav
 {
-    padding: 10px 30px 50px;
+    padding: 15px 30px 45px;
     border-bottom: 1px solid rgba(61, 62, 71, 0.16);
     background: #ececec;
 
@@ -15,34 +15,185 @@
     &__list-item
     {
         font: 400 16px/1 $euclidCircularRegular;
-        color: $actualColorTitle;
-        list-style-type: none;
         margin: 0;
+        list-style-type: none;
+        cursor: pointer;
+        color: $actualColorTitle;
 
         &:not(:first-child),
         &:not(:last-child),
         {
-            padding: 0 25px;
+            margin: 0 25px;
         }
 
         &:first-child
         {
-            padding: 0 25px 0 0;
+            margin: 0 25px 0 0;
         }
 
         &:last-child
         {
-            padding: 0 0 0 25px;
+            margin: 0 0 0 25px;
+        }
+
+        &_active
+        {
+            font-family: $euclidCircularMedium;
+            position: relative;
+
+            &::before
+            {
+                position: absolute;
+                right: 0;
+                bottom: -5px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                margin: auto;
+                content: '';
+                background: $actualAppColorTheme;
+            }
         }
     }
-}
 
-.hidden
-{
-    display: none;
-}
+    &__tabs
+    {
+        margin-top: 40px;
 
-.active {
-    font-size: 100px;
-    color: red;
+        &_hidden
+        {
+            display: none;
+        }
+    }
+
+    &__button
+    {
+        position: relative;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+
+        &:not(:first-child),
+        &:not(:last-child),
+        {
+            margin: 0 50px;
+        }
+
+        &:first-child
+        {
+            margin: 0 50px 0 0;
+        }
+
+        &:last-child
+        {
+            margin: 0 0 0 50px;
+        }
+
+        &::before
+        {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 64px;
+            height: 64px;
+            margin: auto;
+            content: '';
+            opacity: .35;
+            transition: .3s;
+        }
+
+        &:hover
+        {
+            &::before
+            {
+                opacity: 1;
+                transition: .3s;
+            }
+        }
+
+        &_new-presentation
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/new.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+
+        &_add-slide
+        {
+            &::before
+            {
+                top: 5px;
+                background: url('/src/upload/icon/add.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+
+        &_delete-slide
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/delete.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+
+        &_slide-up
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/move.png') no-repeat center center;
+                transform: rotateX(180deg);
+                background-size: cover;
+            }
+        }
+
+        &_slide-down
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/move.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+
+        &_add-img
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/img.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+
+        &_add-rect
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/rect.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+
+        &_add-triangle
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/triangle.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+
+        &_add-circle
+        {
+            &::before
+            {
+                background: url('/src/upload/icon/circle.png') no-repeat center center;
+                background-size: cover;
+            }
+        }
+    }
 }
