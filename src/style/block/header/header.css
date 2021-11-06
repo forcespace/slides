@@ -1,6 +1,6 @@
 @import '/src/style/font/euclid.css';
 .b-header {
-  padding: 15px 0;
+  padding: 10px 0 15px;
   background: #c43e1c;
 }
 .b-header__title {

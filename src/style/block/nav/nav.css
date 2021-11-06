@@ -1,0 +1,36 @@
+@import '/src/style/font/euclid.css';
+.nav {
+  padding: 10px 30px 50px;
+  border-bottom: 1px solid rgba(61, 62, 71, 0.16);
+  background: #ececec;
+}
+.nav__list {
+  display: flex;
+  padding: 0;
+}
+.nav__list-item {
+  font: 400 16px/1 "Euclid Circular B Regular", sans-serif;
+  color: #151824;
+  list-style-type: none;
+  margin: 0;
+}
+.nav__list-item:not(:first-child), .nav__list-item:not(:last-child) {
+  padding: 0 25px;
+}
+.nav__list-item:first-child {
+  padding: 0 25px 0 0;
+}
+.nav__list-item:last-child {
+  padding: 0 0 0 25px;
+}
+
+.hidden {
+  display: none;
+}
+
+.active {
+  font-size: 100px;
+  color: red;
+}
+
+/*# sourceMappingURL=nav.css.map */

@@ -2,7 +2,6 @@ import React from 'react';
 import {Editor} from "../../script/slide/slide";
 import {dispatch} from "../../dispatch";
 import {setTitle} from "../../script/slide/functions";
-import {Nav} from "../nav";
 import '../../style/block/header/header.css';
 import '../../style/main.css';
 
