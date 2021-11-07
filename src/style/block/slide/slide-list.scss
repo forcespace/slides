@@ -8,9 +8,9 @@
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    width: 240px;
+    width: 270px;
     margin-right: 15px;
-    padding: 15px;
+    padding: 15px 0 0 15px;
     border-right: 2px solid $actualBorderSlideListColor;
     background: $actualBaseSlideListBackground;
     box-shadow: $actualBoxShadowBackground;
@@ -90,7 +90,7 @@
     {
         &_count
         {
-            font: 400 14px/1 $euclidCircularRegular;
+            font: 300 14px/1 $euclidCircularLight;
             position: absolute;
             top: 5px;
             left: -25px;
