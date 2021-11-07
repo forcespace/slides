@@ -15,11 +15,11 @@ export function SlideContent(props: Props)
 
     React.useLayoutEffect(() => {
         const getWidth = (): number => {
-            const el = document.getElementById('test');
+            const el = document.getElementById('slide');
             if(el)
             {
-                const test = window.getComputedStyle(el);
-                return test ? parseFloat(test.width) : 0;
+                const slide = window.getComputedStyle(el);
+                return slide ? parseFloat(slide.width) : 0;
             }
 
             return 0;
@@ -39,7 +39,7 @@ export function SlideContent(props: Props)
     }, []);
 
     return (
-        <div className={'b-slide'} style={{height: width / 1.7}} id={"test"}>
+        <div className={'b-slide'} style={{height: width / 1.7}} id={"slide"}>
             <SlideView slide={props.slide} isScale={false}/>
         </div>
     );
