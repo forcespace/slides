@@ -1,12 +1,30 @@
 @import '/src/style/font/euclid.css';
 
-// color
-$actualColorTitle: #151824;
-$actualColorText: #3d3e47;
-$actualColorTextNav: #fff;
-//$actualAppColorTheme: #c43e1c;
-$actualAppColorTheme: #b8195b;
+// theme
+$actualThemePowerPoint: #c43e1c;
+$actualThemeSuite: #b8195b;
+$actualThemeLearn: #14b855;
 
+// background
+$actualBaseBackground: #ececec;
+$actualBaseSlideBackground: #fff;
+$actualBaseSlideListBackground: #e9e9e9;
+$actualBaseFooterBackground: #dcdcdc;
+
+// border
+$actualBorderNavColor: rgba(61, 62, 71, 0.16);
+$actualBorderSlideColor: #ccc;
+$actualBorderSlideListColor: #fff;
+$actualBorderFooterColor: #a2a2a2;
+
+// box shadow
+$actualBoxShadowBackground: 0 20px 30px rgba(163, 172, 192, 0.26);
+
+// color
+$actualTitleColor: #151824;
+$actualTextColor: #3d3e47;
+$actualTextNavColor: #fff;
+$actualAppThemeColor: $actualThemeLearn;
 
 // fonts
 $euclidCircularBold: 'Euclid Circular B Bold', sans-serif;

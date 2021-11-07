@@ -2,14 +2,12 @@
 
 .b-header
 {
-    padding: 10px 0 15px;
-    background: $actualAppColorTheme;
+    padding: 15px 0;
+    background: $actualAppThemeColor;
 
     &__title
     {
-        font-family: $euclidCircularLight;
-        font-size: 14px;
-        line-height: 1;
+        font: 400 16px/1 $euclidCircularRegular;
         text-align: center;
         color: #fff;
         width: max-content;

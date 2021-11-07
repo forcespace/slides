@@ -7,10 +7,10 @@
     max-width: 1700px;
     max-height: 1000px;
     margin: 15px auto;
-    border: 1px solid #ccc;
+    border: 1px solid $actualBorderSlideColor;
     border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
+    background: $actualBaseSlideBackground;
+    box-shadow: $actualBoxShadowBackground;
 
     &__content-item
     {
