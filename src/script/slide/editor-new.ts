@@ -3,7 +3,7 @@ import {Editor} from './slide'
 let editor: Editor = {
     history: {},
     presentation: {
-        title: 'Microsoft PowerPoint',
+        title: 'Презентация онлайн',
         slides: [
             {
                 background: {

@@ -1,3 +1,5 @@
+@import 'block/config/_const';
+
 *
 {
     margin: 0;
@@ -11,5 +13,5 @@ body
 
 .presentation
 {
-    background: #ececec;
+    background: $actualBaseBackground;
 }
