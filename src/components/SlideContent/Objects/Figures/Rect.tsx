@@ -3,16 +3,15 @@ import {ObjectType} from '../../../../script/slide/slide'
 
 type Props = {
     figure: ObjectType,
-    isScale: boolean
+    scaleIndex: number
 }
 
 export function Rect(props: Props)
 {
-    const scaleIndex = props.isScale ? 0.17 : 1
-    const widthSvg = Math.round(props.figure.width * scaleIndex)
-    const heightSvg = Math.round(props.figure.height * scaleIndex)
-    const xSvg = Math.round(props.figure.leftTopPoint.x * scaleIndex)
-    const ySvg = Math.round(props.figure.leftTopPoint.y * scaleIndex)
+    const widthSvg = Math.round(props.figure.width * props.scaleIndex)
+    const heightSvg = Math.round(props.figure.height * props.scaleIndex)
+    const xSvg = Math.round(props.figure.leftTopPoint.x * props.scaleIndex)
+    const ySvg = Math.round(props.figure.leftTopPoint.y * props.scaleIndex)
 
     const styleSvg = {
         top: `${xSvg}px`,

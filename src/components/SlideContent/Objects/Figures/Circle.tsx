@@ -3,27 +3,27 @@ import {ObjectType} from '../../../../script/slide/slide'
 
 type Props = {
     figure: ObjectType,
-    isScale: boolean
+    scaleIndex: number
 }
 
 export function Circle(props: Props)
 {
-    const scaleIndex = props.isScale ? 0.17 : 1
-
+    
+    console.log('scaleIndex = ', props.scaleIndex)
     const borderWidth = props.figure.border ? props.figure.border.borderSize : 0
 
-    const widthSvg = Math.round((props.figure.width + 2 * borderWidth) * scaleIndex)
-    const heightSvg = Math.round((props.figure.height + 2 * borderWidth) * scaleIndex)
-    const xSvg = Math.round(props.figure.leftTopPoint.x * scaleIndex)
-    const ySvg = Math.round(props.figure.leftTopPoint.y * scaleIndex)
+    const widthSvg = Math.round((props.figure.width + borderWidth + 2) * props.scaleIndex)
+    const heightSvg = Math.round((props.figure.height + borderWidth + 2) * props.scaleIndex)
+    const xSvg = Math.round(props.figure.leftTopPoint.x * props.scaleIndex)
+    const ySvg = Math.round(props.figure.leftTopPoint.y * props.scaleIndex)
 
     const widthCircle = Math.round(widthSvg * 0.5)
     const heightCircle = Math.round(heightSvg * 0.5)
-    const radiusCircle = Math.round((props.figure.height + borderWidth) * scaleIndex * 0.5)
+    const radiusCircle = Math.round((props.figure.height) * props.scaleIndex * 0.5)
 
     const fillColorSvg = props.figure.background ? props.figure.background.color : ''
     const strokeColorSvg = props.figure.border ? props.figure.border.borderColor : ''
-    const strokeSizeSvg = props.figure.border ? (props.figure.border.borderSize * scaleIndex) : 0
+    const strokeSizeSvg = props.figure.border ? (props.figure.border.borderSize * props.scaleIndex) : 0
 
     const styleSvg = {
         top: `${xSvg}px`,
