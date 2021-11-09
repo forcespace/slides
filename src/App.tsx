@@ -2,15 +2,15 @@ import React from 'react';
 import {Header} from "./components/Header";
 import {Workspace} from "./components/Workspace";
 import {Footer} from "./components/Footer";
-import {Editor} from "./script/slide/slide"
-import {Nav} from "./components/nav";
+import {Editor} from "./script/slide/slide";
+import {Nav} from "./components/Navigation";
 
 export function App(props: {editor: Editor})
 {
     return (
-        <div className={'b-presentation'}>
+        <div className={'presentation'}>
             <Header {...props.editor} />
-            <Nav {...props.editor}/>
+            <Nav />
             <Workspace {...props.editor} />
             <Footer {...props.editor} />
         </div>

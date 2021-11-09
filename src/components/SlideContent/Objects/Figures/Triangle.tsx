@@ -3,28 +3,36 @@ import {ObjectType, Position} from '../../../../script/slide/slide'
 
 type Props = {
     figure: ObjectType,
-    isScale: boolean
+    scaleIndex: number
 }
 
 export function Triangle(props: Props)
 {
-    const styleSvg = {top: `'${props.figure.leftTopPoint.x}px'`, left: `'${props.figure.leftTopPoint.y}px'`}
-    const scaleIndex = props.isScale ? 0.17 : 1
-    const widthSvg = props.figure.width * scaleIndex
-    const heightSvg = props.figure.height * scaleIndex
+    const widthSvg = Math.ceil(props.figure.width * props.scaleIndex)
+    const heightSvg = Math.ceil(props.figure.height * props.scaleIndex)
+    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scaleIndex)
+    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scaleIndex)
+
+    const styleSvg = {
+        top: `${xSvg}px`,
+        left: `${ySvg}px`,
+        width: widthSvg,
+        height: heightSvg
+    }
+
     const v1: Position = {
-        x: (props.figure.leftTopPoint.x + props.figure.width / 2) * scaleIndex,
-        y: props.figure.leftTopPoint.y * scaleIndex
+        x: Math.ceil(widthSvg / 2),
+        y: 0
     }
 
     const v2: Position = {
-        x: props.figure.leftTopPoint.x * scaleIndex,
-        y: (props.figure.leftTopPoint.y + props.figure.height) * scaleIndex
+        x: 0,
+        y: heightSvg
     }
 
     const v3: Position = {
-        x: (props.figure.leftTopPoint.x + props.figure.width) * scaleIndex,
-        y: (props.figure.leftTopPoint.y + props.figure.height) * scaleIndex
+        x: widthSvg,
+        y: heightSvg
     }
 
     const trianglePath = `M ${v1.x} ${v1.y} L ${v2.x} ${v2.y} L ${v3.x} ${v3.y} Z`

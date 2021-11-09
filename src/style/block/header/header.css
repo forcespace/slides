@@ -1,12 +1,10 @@
 @import '/src/style/font/euclid.css';
 .b-header {
   padding: 15px 0;
-  background: #c43e1c;
+  background: #14b855;
 }
 .b-header__title {
-  font-family: "Euclid Circular B Light", sans-serif;
-  font-size: 14px;
-  line-height: 1;
+  font: 400 16px/1 "Euclid Circular B Regular", sans-serif;
   text-align: center;
   color: #fff;
   width: max-content;

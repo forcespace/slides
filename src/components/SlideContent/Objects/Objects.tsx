@@ -4,11 +4,11 @@ import {Rect} from "./Figures/Rect";
 import {Circle} from "./Figures/Circle";
 import {Triangle} from "./Figures/Triangle";
 import {TextSvg} from "./Texts/Text";
-import {ImageSvg} from "./Images/Image";
+import {Img} from "./Images/Image";
 
 type Props = {
     figure: ObjectType,
-    isScale: boolean
+    scaleIndex: number
 }
 
 export function Objects(props: Props)
@@ -16,31 +16,31 @@ export function Objects(props: Props)
     if (props.figure.type === 'Rect')
     {
         return (
-            <Rect figure={props.figure} isScale={props.isScale}/>
+            <Rect figure={props.figure} scaleIndex={props.scaleIndex}/>
         )
     }
     else if (props.figure.type === 'Circle')
     {
         return (
-            <Circle figure={props.figure} isScale={props.isScale}/>
+            <Circle figure={props.figure} scaleIndex={props.scaleIndex}/>
         )
     }
     else if (props.figure.type === 'Image')
     {
         return (
-            <ImageSvg figure={props.figure} isScale={props.isScale}/>
+            <Img imgObject={props.figure} scaleIndex={props.scaleIndex}/>
         )
     }
     else if (props.figure.type === 'Text')
     {
         return (
-            <TextSvg figure={props.figure} isScale={props.isScale}/>
+            <TextSvg text={props.figure} scaleIndex={props.scaleIndex}/>
         )
     }
     else
     {
         return (
-            <Triangle figure={props.figure} isScale={props.isScale}/>
+            <Triangle figure={props.figure} scaleIndex={props.scaleIndex}/>
         )
     }
 }

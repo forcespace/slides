@@ -1,3 +1,4 @@
+@import '/src/style/font/euclid.css';
 * {
   margin: 0;
   padding: 0;
@@ -5,6 +6,10 @@
 
 body {
   overflow: hidden;
+}
+
+.presentation {
+  background: #ececec;
 }
 
 /*# sourceMappingURL=main.css.map */

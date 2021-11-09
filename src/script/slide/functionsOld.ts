@@ -338,7 +338,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     let text1: Text = {
         leftTopPoint: {x: 1, y: 1},
         background: {color: "#111", priority: 1, image: ''},
-        border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
+        border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: 12},
         width: 1,
         height: 1,
         active: false,
@@ -354,7 +354,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     let text2: Text = {
         leftTopPoint: {x: 2, y: 2},
         background: {color: "#222", priority: 1, image: ''},
-        border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
+        border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: 12},
         width: 2,
         height: 2,
         active: false,
@@ -415,7 +415,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
 let textNotEmptySlide: Text = {
     leftTopPoint: {x: 1, y: 1},
     background: {color: "#111", priority: 1, image: ''},
-    border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: "12"},
+    border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: 12},
     width: 1,
     height: 1,
     active: false,

@@ -1,21 +1,32 @@
 @import '/src/style/font/euclid.css';
 .b-slide-list {
   display: flex;
+  overflow: -moz-scrollbars-none;
+  overflow-x: hidden;
+  overflow-y: auto;
   align-items: center;
   flex-direction: column;
-  width: 100%;
-  padding-bottom: 50px;
+  width: 250px;
+  height: 100vh;
+  margin-right: 15px;
+  padding: 15px 0 0 15px;
+  border-right: 2px solid #fff;
+  background: #e9e9e9;
+  box-shadow: 0 20px 30px rgba(163, 172, 192, 0.26);
 }
-.b-slide-list__wrapper {
+.b-slide-list::-webkit-scrollbar {
+  width: 0;
+}
+.b-slide-list__item {
   position: relative;
 }
-.b-slide-list__wrapper:not(:last-child) {
+.b-slide-list__item:not(:last-child) {
   margin-bottom: 25px;
 }
-.b-slide-list__wrapper:last-child {
-  position: relative;
+.b-slide-list__item:last-child {
+  margin-bottom: 250px;
 }
-.b-slide-list__wrapper:last-child::after {
+.b-slide-list__item:last-child::after {
   position: absolute;
   right: 0;
   bottom: -10px;
@@ -23,38 +34,45 @@
   height: 2px;
   margin: auto;
   content: "";
-  animation: glowing 1.5s linear infinite;
-  background: #b7472a;
+  animation: glowing 1.5s alternate infinite;
+  background: #14b855;
 }
 @keyframes glowing {
   0% {
     width: 0;
   }
   100% {
-    width: 100%;
+    width: 95%;
   }
 }
 .b-slide-list__content {
-  width: 160px;
+  width: 178px;
   height: 100px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 8px;
   background: #fff;
-  box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
-  transition: 0.3s;
+  box-shadow: 0 20px 30px rgba(163, 172, 192, 0.26);
 }
 .b-slide-list__content_active {
-  border: 2px solid #b7472a;
+  transition: 0.15s;
+  animation: glowingSlide 1.5s alternate infinite;
+  border: 2px solid #14b855;
   box-shadow: 0 20px 30px rgba(163, 172, 192, 0.26);
-  transition: 0.3s;
+}
+@keyframes glowingSlide {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .b-slide-list__slide_count {
-  font: 400 14px/1 "Euclid Circular B Regular", sans-serif;
+  font: 300 14px/1 "Euclid Circular B Light", sans-serif;
   position: absolute;
   top: 5px;
-  left: -15px;
+  left: -25px;
   display: block;
-  margin-right: 5px;
   color: #151824;
 }
 

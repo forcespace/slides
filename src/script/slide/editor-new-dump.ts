@@ -38,7 +38,7 @@ let editor: Editor = {
                         leftTopPoint: {x: 100, y: 100},
                         border:
                             {
-                                borderSize: '',
+                                borderSize: 0,
                                 borderColor: '#00ff00',
                                 borderStyle: 'Dashed'
                             },
@@ -56,7 +56,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#fff',
                             borderStyle: 'Dashed'
                         },
@@ -88,7 +88,7 @@ let editor: Editor = {
                         leftTopPoint: {x: 41, y: 45},
                         border:
                             {
-                                borderSize: '',
+                                borderSize: 0,
                                 borderColor: '#ff0000',
                                 borderStyle: 'Solid'
                             },
@@ -106,7 +106,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '5',
+                            borderSize: 5,
                             borderColor: '#ff0000',
                             borderStyle: 'Solid'
                         },
@@ -123,7 +123,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#ccaddc',
                             borderStyle: 'Dashed'
                         },
@@ -150,7 +150,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#eee',
                             borderStyle: 'Dashed'
                         },
@@ -182,7 +182,7 @@ let editor: Editor = {
                         leftTopPoint: {x: 41, y: 45},
                         border:
                             {
-                                borderSize: '',
+                                borderSize: 0,
                                 borderColor: '#ff0000',
                                 borderStyle: 'Solid'
                             },
@@ -200,7 +200,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '5',
+                            borderSize: 5,
                             borderColor: '#ff0000',
                             borderStyle: 'Solid'
                         },
@@ -217,7 +217,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#ccaddc',
                             borderStyle: 'Dashed'
                         },
@@ -244,7 +244,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#eee',
                             borderStyle: 'Dashed'
                         },
@@ -276,7 +276,7 @@ let editor: Editor = {
                         leftTopPoint: {x: 41, y: 45},
                         border:
                             {
-                                borderSize: '',
+                                borderSize: 0,
                                 borderColor: '#ff0000',
                                 borderStyle: 'Solid'
                             },
@@ -294,7 +294,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '5',
+                            borderSize: 5,
                             borderColor: '#ff0000',
                             borderStyle: 'Solid'
                         },
@@ -311,7 +311,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#ccaddc',
                             borderStyle: 'Dashed'
                         },
@@ -338,7 +338,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#eee',
                             borderStyle: 'Dashed'
                         },
@@ -370,7 +370,7 @@ let editor: Editor = {
                         leftTopPoint: {x: 41, y: 45},
                         border:
                             {
-                                borderSize: '',
+                                borderSize: 0,
                                 borderColor: '#ff0000',
                                 borderStyle: 'Solid'
                             },
@@ -388,7 +388,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '5',
+                            borderSize: 5,
                             borderColor: '#ff0000',
                             borderStyle: 'Solid'
                         },
@@ -405,7 +405,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#ccaddc',
                             borderStyle: 'Dashed'
                         },
@@ -432,7 +432,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#eee',
                             borderStyle: 'Dashed'
                         },
@@ -464,7 +464,7 @@ let editor: Editor = {
                         leftTopPoint: {x: 41, y: 45},
                         border:
                             {
-                                borderSize: '',
+                                borderSize: 0,
                                 borderColor: '#ff0000',
                                 borderStyle: 'Solid'
                             },
@@ -482,7 +482,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '5',
+                            borderSize: 5,
                             borderColor: '#ff0000',
                             borderStyle: 'Solid'
                         },
@@ -499,7 +499,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#ccaddc',
                             borderStyle: 'Dashed'
                         },
@@ -526,7 +526,7 @@ let editor: Editor = {
                             priority: 1
                         },
                         border: {
-                            borderSize: '2',
+                            borderSize: 2,
                             borderColor: '#eee',
                             borderStyle: 'Dashed'
                         },

@@ -3,12 +3,25 @@
 .b-slide-list
 {
     display: flex;
+    overflow: -moz-scrollbars-none;
+    overflow-x: hidden;
+    overflow-y: auto;
     align-items: center;
     flex-direction: column;
-    width: 100%;
-    padding-bottom: 50px;
+    width: 250px;
+    height: 100vh;
+    margin-right: 15px;
+    padding: 15px 0 0 15px;
+    border-right: 2px solid $actualBorderSlideListColor;
+    background: $actualBaseSlideListBackground;
+    box-shadow: $actualBoxShadowBackground;
 
-    &__wrapper
+    &::-webkit-scrollbar
+    {
+        width: 0;
+    }
+
+    &__item
     {
         position: relative;
 
@@ -19,7 +32,7 @@
 
         &:last-child
         {
-            position: relative;
+            margin-bottom: 250px;
 
             &::after
             {
@@ -30,8 +43,8 @@
                 height: 2px;
                 margin: auto;
                 content: '';
-                animation: glowing 1.5s linear infinite;
-                background: #b7472a;
+                animation: glowing 1.5s alternate infinite;
+                background: $actualAppThemeColor;
 
                 @keyframes glowing
                 {
@@ -41,7 +54,7 @@
                     }
                     100%
                     {
-                        width: 100%;
+                        width: 95%;
                     }
                 }
             }
@@ -50,19 +63,32 @@
 
     &__content
     {
-        width: 160px;
+        width: 178px;
         height: 100px;
-        border: 1px solid #ccc;
+        border: 2px solid $actualBorderSlideColor;
         border-radius: 8px;
-        background: #fff;
-        box-shadow: 0 10px 30px rgba(163, 172, 192, 0.26);
-        transition: .3s;
+        background: $actualBaseSlideBackground;
+        box-shadow: $actualBoxShadowBackground;
+
 
         &_active
         {
-            border: 2px solid #b7472a;
-            box-shadow: 0 20px 30px rgba(163, 172, 192, 0.26);
-            transition: .3s;
+            transition: .15s;
+            animation: glowingSlide 1.5s alternate infinite;
+            border: 2px solid $actualAppThemeColor;
+            box-shadow: $actualBoxShadowBackground;
+
+            @keyframes glowingSlide
+            {
+                0%
+                {
+                    opacity: .5;
+                }
+                100%
+                {
+                    opacity: 1;
+                }
+            }
         }
     }
 
@@ -70,13 +96,12 @@
     {
         &_count
         {
-            font: 400 14px/1 $euclidCircularRegular;
+            font: 300 14px/1 $euclidCircularLight;
             position: absolute;
             top: 5px;
-            left: -15px;
+            left: -25px;
             display: block;
-            margin-right: 5px;
-            color: $actualColorTitle;
+            color: $actualTitleColor;
         }
     }
 }

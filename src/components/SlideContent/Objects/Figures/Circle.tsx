@@ -3,23 +3,40 @@ import {ObjectType} from '../../../../script/slide/slide'
 
 type Props = {
     figure: ObjectType,
-    isScale: boolean
+    scaleIndex: number
 }
 
 export function Circle(props: Props)
 {
-    const styleSvg = {top: `'${props.figure.leftTopPoint.x}px'`, left: `'${props.figure.leftTopPoint.y}px'`}
-    const scaleIndex = props.isScale ? 0.17 : 1
-    const widthSvg = props.figure.width * scaleIndex
-    const heightSvg = props.figure.height * scaleIndex
-    const xCircle = props.figure.leftTopPoint.x * scaleIndex
-    const yCircle = props.figure.leftTopPoint.y * scaleIndex
-    const widthCircle = props.figure.width * scaleIndex * 0.5 + xCircle
-    const heightCircle = props.figure.height * scaleIndex * 0.5 + yCircle
-    const radiusCircle = props.figure.height * scaleIndex * 0.5
+    
+    console.log('scaleIndex = ', props.scaleIndex)
+    const borderWidth = props.figure.border ? props.figure.border.borderSize : 0
+
+    const widthSvg = Math.ceil((props.figure.width + borderWidth + 2) * props.scaleIndex)
+    const heightSvg = Math.ceil((props.figure.height + borderWidth + 2) * props.scaleIndex)
+    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scaleIndex)
+    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scaleIndex)
+
+    const widthCircle = Math.ceil(widthSvg * 0.5)
+    const heightCircle = Math.ceil(heightSvg * 0.5)
+    const radiusCircle = Math.ceil((props.figure.height) * props.scaleIndex * 0.5)
+
+    const fillColorSvg = props.figure.background ? props.figure.background.color : ''
+    const strokeColorSvg = props.figure.border ? props.figure.border.borderColor : ''
+    const strokeSizeSvg = props.figure.border ? (props.figure.border.borderSize * props.scaleIndex) : 0
+
+    const styleSvg = {
+        top: `${xSvg}px`,
+        left: `${ySvg}px`,
+        width: widthSvg,
+        height: heightSvg,
+        fill: fillColorSvg,
+        stroke: strokeColorSvg,
+        strokeWidth: strokeSizeSvg
+    }
 
     return (
-        <svg style={styleSvg} className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
+        <svg style={styleSvg} className={'b-slide__content-item'} width={widthSvg} height={heightSvg} preserveAspectRatio="meet" xmlns="http://www.w3.org/2000/svg">
             <circle cx={widthCircle} cy={heightCircle} r={radiusCircle}/>
         </svg>
     )
