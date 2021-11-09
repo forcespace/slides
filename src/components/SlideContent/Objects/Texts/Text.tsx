@@ -8,11 +8,11 @@ type Props = {
 
 export function TextSvg(props: Props)
 {
-    const widthSvg = Math.round(props.text.width * props.scaleIndex)
-    const heightSvg = Math.round(props.text.height * props.scaleIndex)
-    const textX = Math.round(props.text.leftTopPoint.x * props.scaleIndex)
-    const textY = Math.round(props.text.leftTopPoint.y * props.scaleIndex)
-    const textSize = Math.round(props.text.size * props.scaleIndex)
+    const widthSvg = Math.ceil(props.text.width * props.scaleIndex)
+    const heightSvg = Math.ceil(props.text.height * props.scaleIndex)
+    const textX = Math.ceil(props.text.leftTopPoint.x * props.scaleIndex)
+    const textY = Math.ceil(props.text.leftTopPoint.y * props.scaleIndex)
+    const textSize = Math.ceil(props.text.size * props.scaleIndex)
 
     const textStyle = props.text.fontStyle ? `${props.text.fontStyle}` : ''
     const textFont = props.text.font ? `${props.text.font}` : ''
