@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/slides/static/css/main.d405448e.chunk.css",
+    "main.js": "/slides/static/js/main.4d65d114.chunk.js",
+    "main.js.map": "/slides/static/js/main.4d65d114.chunk.js.map",
+    "runtime-main.js": "/slides/static/js/runtime-main.fb280b20.js",
+    "runtime-main.js.map": "/slides/static/js/runtime-main.fb280b20.js.map",
+    "static/js/2.1902b50f.chunk.js": "/slides/static/js/2.1902b50f.chunk.js",
+    "static/js/2.1902b50f.chunk.js.map": "/slides/static/js/2.1902b50f.chunk.js.map",
+    "index.html": "/slides/index.html",
+    "static/css/main.d405448e.chunk.css.map": "/slides/static/css/main.d405448e.chunk.css.map",
+    "static/js/2.1902b50f.chunk.js.LICENSE.txt": "/slides/static/js/2.1902b50f.chunk.js.LICENSE.txt",
+    "static/media/nav.css": "/slides/static/media/EuclidCircularB-SemiBold.b55694b6.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fb280b20.js",
+    "static/js/2.1902b50f.chunk.js",
+    "static/css/main.d405448e.chunk.css",
+    "static/js/main.4d65d114.chunk.js"
+  ]
+}
