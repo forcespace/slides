@@ -3,7 +3,6 @@ import {SlideList} from "../SlidesList";
 import {SlideContent} from "../SlideContent";
 import {Editor} from "../../script/slide/slide";
 import '../../style/block/workspace/workspace.css';
-import '../../style/main.css';
 
 export function Workspace(props: Editor)
 {

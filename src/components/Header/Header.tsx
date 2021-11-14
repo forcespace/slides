@@ -3,7 +3,6 @@ import {Editor} from "../../script/slide/slide";
 import {dispatch} from "../../dispatch";
 import {setTitle} from "../../script/slide/functions";
 import '../../style/block/header/header.css';
-import '../../style/main.css';
 
 export function Header(props: Editor)
 {
