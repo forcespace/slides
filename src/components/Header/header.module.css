@@ -1,0 +1,14 @@
+.header
+{
+    padding: 15px 0;
+    background: #14b855;
+}
+
+.title
+{
+    font: 400 16px/1 "Euclid Circular B Regular", sans-serif;
+    text-align: center;
+    color: #fff;
+    width: max-content;
+    margin: 0 auto;
+}

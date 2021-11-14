@@ -2,6 +2,10 @@ import React from 'react';
 import {dispatch, dispatchWithoutParam} from "../../dispatch";
 import {createEditor, addEmptySlide, deleteSlide, addObject, moveSlideTopByStep, moveSlideDownByStep} from "../../script/slide/functions";
 import '../../style/block/nav/nav.css';
+import Button from '../TabsButton/Button'
+import NavTabs from "../NavTabs/NavTabs";
+import styles from './nav.module.css';
+import stylesButtonTabs from '../TabsButton/button.module.css';
 
 const TABS = {
     MAIN: 'main',
@@ -55,44 +59,88 @@ export function Nav()
     const [activeTab, setActiveTab] = React.useState(TABS.MAIN);
 
     return (
-        <nav className={'nav'}>
-            <ul className={'nav__list'}>
-                <li className={`nav__list-item${activeTab === TABS.MAIN ? " nav__list-item_active" : ""}`} onClick={() => setActiveTab(TABS.MAIN)}>
+        <nav className={styles.nav}>
+            <NavTabs className={styles.list}>
+                <span className={`${styles.list_item} ${activeTab === TABS.MAIN ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.MAIN)}>
                     Главная
-                </li>
-                <li className={`nav__list-item${activeTab === TABS.EDIT ? " nav__list-item_active" : ""}`} onClick={() => setActiveTab(TABS.EDIT)}>
+                </span>
+                <span className={`${styles.list_item} ${activeTab === TABS.EDIT ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.EDIT)}>
                     Редактирование
-                </li>
-                <li className={`nav__list-item${activeTab === TABS.PASTE ? " nav__list-item_active" : ""}`} onClick={() => setActiveTab(TABS.PASTE)}>
+                </span>
+                <span className={`${styles.list_item} ${activeTab === TABS.PASTE ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.PASTE)}>
                     Вставка
-                </li>
-                <li className={`nav__list-item${activeTab === TABS.SETTINGS ? " nav__list-item_active" : ""}`} onClick={() => setActiveTab(TABS.SETTINGS)}>
+                </span>
+                <span className={`${styles.list_item} ${activeTab === TABS.SETTINGS ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.SETTINGS)}>
                     Настройки вида
-                </li>
-            </ul>
+                </span>
+            </NavTabs>
 
-            <div className={`nav__tabs${activeTab === TABS.MAIN ? "" : " nav__tabs_hidden"}`}>
-                <button className={'nav__button nav__button_new-presentation'} onClick={handleNewPresentationClick} title={'Создать новую презентацию'}/>
-                <button className={'nav__button nav__button_add-slide'} onClick={handleAddNewSlideClick} title={'Добавить новый слайд'}/>
-                <button className={'nav__button nav__button_delete-slide'} onClick={handleRemoveSlideClick} title={'Удалить активный слайд'}/>
-            </div>
+            <NavTabs className={`${styles.tabs} ${activeTab === TABS.MAIN ? "" : `${styles.tabs_hidden}`}`}>
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_new_presentation}`}
+                    callback={handleNewPresentationClick}
+                    title={'Создать новую презентацию'}
+                />
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_add_slide}`}
+                    callback={handleAddNewSlideClick}
+                    title={'Добавить новый слайд'}
+                />
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_delete_slide}`}
+                    callback={handleRemoveSlideClick}
+                    title={'Удалить активный слайд'}
+                />
+            </NavTabs>
 
-            <div className={`nav__tabs${activeTab === TABS.EDIT ? "" : " nav__tabs_hidden"}`}>
-                <button className={'nav__button nav__button_slide-up'} onClick={handleMoveSlideUp} title={'Переместить текущий слайд на позицию выше'}/>
-                <button className={'nav__button nav__button_slide-down'} onClick={handleMoveSlideDown} title={'Переместить текущий слайд на позицию ниже'}/>
-            </div>
+            <NavTabs className={`${styles.tabs} ${activeTab === TABS.EDIT ? "" : `${styles.tabs_hidden}`}`}>
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_slide_up}`}
+                    callback={handleMoveSlideUp}
+                    title={'Переместить текущий слайд на позицию выше'}
+                />
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_slide_down}`}
+                    callback={handleMoveSlideDown}
+                    title={'Переместить текущий слайд на позицию ниже'}
+                />
+            </NavTabs>
 
-            <div className={`nav__tabs${activeTab === TABS.PASTE ? "" : " nav__tabs_hidden"}`}>
-                <button className={'nav__button nav__button_add-img'} onClick={handleAddRectClick} title={'Добавить картинку'}/>
-                <button className={'nav__button nav__button_add-rect'} onClick={handleAddRectClick} title={'Добавить прямоугольник'}/>
-                <button className={'nav__button nav__button_add-triangle'} onClick={handleAddTriangleClick} title={'Добавить треугольник'}/>
-                <button className={'nav__button nav__button_add-circle'} onClick={handleAddCircleClick} title={'Добавить круг'}/>
-            </div>
+            <NavTabs className={`${styles.tabs} ${activeTab === TABS.PASTE ? "" : `${styles.tabs_hidden}`}`}>
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_add_img}`}
+                    callback={handleAddRectClick}
+                    title={'Добавить картинку'}
+                />
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_add_rect}`}
+                    callback={handleAddRectClick}
+                    title={'Добавить прямоугольник'}
+                />
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_add_triangle}`}
+                    callback={handleAddTriangleClick}
+                    title={'Добавить треугольник'}
+                />
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_add_circle}`}
+                    callback={handleAddCircleClick}
+                    title={'Добавить круг'}
+                />
+            </NavTabs>
 
-            <div className={`nav__tabs${activeTab === TABS.SETTINGS ? "" : " nav__tabs_hidden"}`}>
-                <button className={'nav__button nav__button_mode-view'} title={'Настройки вида приложения'}/>
-                <button className={'nav__button nav__button_theme'} title={'Смена темы'}/>
-            </div>
+            <NavTabs className={`${styles.tabs} ${activeTab === TABS.SETTINGS ? "" : `${styles.tabs_hidden}`}`}>
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_mode_view}`}
+                    callback={handleAddRectClick}
+                    title={'Настройки вида приложения'}
+                />
+                <Button
+                    className={`${stylesButtonTabs.tabs_button} ${stylesButtonTabs.tabs_button_change_theme}`}
+                    callback={handleAddRectClick}
+                    title={'Смена темы'}
+                />
+            </NavTabs>
         </nav>
     );
 }
