@@ -2,7 +2,6 @@ import * as React from 'react';
 import {SlideView} from '../SlidesList/SlideView';
 import {Slide} from '../../script/slide/slide';
 import '../../style/block/slide/slide.css';
-import '../../style/main.css';
 
 type Props = {
     slide: Slide,

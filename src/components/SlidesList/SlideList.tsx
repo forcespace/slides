@@ -4,7 +4,6 @@ import {Editor, Slide} from '../../script/slide/slide'
 import {dispatch} from '../../dispatch'
 import {setActive} from '../../script/slide/functions'
 import '../../style/block/slide/slide-list.css'
-import '../../style/main.css'
 
 export function SlideList(props: Editor) {
     const active = props.active

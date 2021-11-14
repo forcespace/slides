@@ -2,7 +2,6 @@ import React from 'react';
 import {dispatch, dispatchWithoutParam} from "../../dispatch";
 import {createEditor, addEmptySlide, deleteSlide, addObject, moveSlideTopByStep, moveSlideDownByStep} from "../../script/slide/functions";
 import '../../style/block/nav/nav.css';
-import '../../style/main.css';
 
 const TABS = {
     MAIN: 'main',
