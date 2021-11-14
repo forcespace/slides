@@ -10,9 +10,7 @@ export function Workspace(props: Editor)
 
     return (
         <section className={'b-presentation__workspace'}>
-            <>
-                <SlideList {...props}/>
-            </>
+            <SlideList {...props}/>
             <>
                 {slidesCount ? (<SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>) : null}
             </>
