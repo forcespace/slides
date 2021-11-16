@@ -13,6 +13,19 @@ const TABS = {
     SETTINGS: 'settings'
 }
 
+function NavTab2(props:{tabs: Array<any>})
+{
+    return(
+        <NavTabs className={styles.list}>
+            {props.tabs.map(tab =>
+                <span className={tab.className} onClick={tab.onClick}>
+                    {tab.name}
+                </span>)
+            }
+        </NavTabs>
+    )
+}
+
 export function Nav()
 {
     function handleAddNewSlideClick()
@@ -59,6 +72,13 @@ export function Nav()
 
     return (
         <nav className={styles.nav}>
+            <NavTab2 tabs={[
+                {
+                    className: `${styles.list_item} ${activeTab === TABS.MAIN ? `${styles.active}` : ""}`,
+                    onClick: () => setActiveTab(TABS.MAIN),
+                    name: 'Главная'
+                },
+            ]}/>
             <NavTabs className={styles.list}>
                 <span className={`${styles.list_item} ${activeTab === TABS.MAIN ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.MAIN)}>
                     Главная
