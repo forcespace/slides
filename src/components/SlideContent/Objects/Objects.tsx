@@ -7,40 +7,40 @@ import {TextSvg} from "./Texts/Text";
 import {Img} from "./Images/Image";
 
 type Props = {
-    figure: ObjectType,
+    object: ObjectType,
     scaleIndex: number
 }
 
 export function Objects(props: Props)
 {
-    if (props.figure.type === 'Rect')
+    if (props.object.type === 'Rect')
     {
         return (
-            <Rect figure={props.figure} scaleIndex={props.scaleIndex}/>
+            <Rect figure={props.object} scaleIndex={props.scaleIndex}/>
         )
     }
-    else if (props.figure.type === 'Circle')
+    else if (props.object.type === 'Circle')
     {
         return (
-            <Circle figure={props.figure} scaleIndex={props.scaleIndex}/>
+            <Circle figure={props.object} scaleIndex={props.scaleIndex}/>
         )
     }
-    else if (props.figure.type === 'Image')
+    else if (props.object.type === 'Image')
     {
         return (
-            <Img imgObject={props.figure} scaleIndex={props.scaleIndex}/>
+            <Img imgObject={props.object} scaleIndex={props.scaleIndex}/>
         )
     }
-    else if (props.figure.type === 'Text')
+    else if (props.object.type === 'Text')
     {
         return (
-            <TextSvg text={props.figure} scaleIndex={props.scaleIndex}/>
+            <TextSvg text={props.object} scaleIndex={props.scaleIndex}/>
         )
     }
     else
     {
         return (
-            <Triangle figure={props.figure} scaleIndex={props.scaleIndex}/>
+            <Triangle figure={props.object} scaleIndex={props.scaleIndex}/>
         )
     }
 }

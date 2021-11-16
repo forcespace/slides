@@ -8,8 +8,6 @@ type Props = {
 
 export function Circle(props: Props)
 {
-    
-    console.log('scaleIndex = ', props.scaleIndex)
     const borderWidth = props.figure.border ? props.figure.border.borderSize : 0
 
     const widthSvg = Math.ceil((props.figure.width + borderWidth + 2) * props.scaleIndex)
