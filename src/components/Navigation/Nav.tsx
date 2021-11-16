@@ -1,7 +1,6 @@
 import React from 'react';
 import {dispatch, dispatchWithoutParam} from "../../dispatch";
 import {createEditor, addEmptySlide, deleteSlide, addObject, moveSlideTopByStep, moveSlideDownByStep} from "../../script/slide/functions";
-import '../../style/block/nav/nav.css';
 import Button from '../TabsButton/Button'
 import NavTabs from "../NavTabs/NavTabs";
 import styles from './nav.module.css';
