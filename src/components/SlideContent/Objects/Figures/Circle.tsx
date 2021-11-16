@@ -10,14 +10,14 @@ export function Circle(props: Props)
 {
     const borderWidth = props.figure.border ? props.figure.border.borderSize : 0
 
-    const widthSvg = Math.round((props.figure.width + borderWidth + 2) * props.scaleIndex)
-    const heightSvg = Math.round((props.figure.height + borderWidth + 2) * props.scaleIndex)
-    const xSvg = Math.round(props.figure.leftTopPoint.x * props.scaleIndex)
-    const ySvg = Math.round(props.figure.leftTopPoint.y * props.scaleIndex)
+    const widthSvg = Math.ceil((props.figure.width + borderWidth + 2) * props.scaleIndex)
+    const heightSvg = Math.ceil((props.figure.height + borderWidth + 2) * props.scaleIndex)
+    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scaleIndex)
+    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scaleIndex)
 
-    const widthCircle = Math.round(widthSvg * 0.5)
-    const heightCircle = Math.round(heightSvg * 0.5)
-    const radiusCircle = Math.round((props.figure.height) * props.scaleIndex * 0.5)
+    const widthCircle = Math.ceil(widthSvg * 0.5)
+    const heightCircle = Math.ceil(heightSvg * 0.5)
+    const radiusCircle = Math.ceil((props.figure.height) * props.scaleIndex * 0.5)
 
     const fillColorSvg = props.figure.background ? props.figure.background.color : ''
     const strokeColorSvg = props.figure.border ? props.figure.border.borderColor : ''

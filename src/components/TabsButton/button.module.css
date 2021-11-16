@@ -1,0 +1,100 @@
+.tabs_button
+{
+    position: relative;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+.tabs_button:not(:first-child),
+.tabs_button:not(:last-child)
+{
+    margin: 0 30px;
+}
+
+.tabs_button:first-child
+{
+    margin: 0 30px 0 0;
+}
+
+.tabs_button:last-child
+{
+    margin: 0 0 0 30px;
+}
+
+.tabs_button::before
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    margin: auto;
+    content: "";
+    transition: 0.3s;
+    opacity: 0.75;
+}
+
+.tabs_button:hover::before
+{
+    transition: 0.3s;
+    opacity: 1;
+}
+
+.tabs_button_new_presentation::before
+{
+    top: 3px;
+    background: url("/src/upload/icon/new.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_add_slide::before
+{
+    background: url("/src/upload/icon/add.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_delete_slide::before
+{
+    background: url("/src/upload/icon/delete.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_slide_up::before
+{
+    transform: rotateX(180deg);
+    background: url("/src/upload/icon/move.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_slide_down::before
+{
+    background: url("/src/upload/icon/move.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_add_img::before
+{
+    background: url("/src/upload/icon/img.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_add_rect::before
+{
+    background: url("/src/upload/icon/rect.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_add_triangle::before
+{
+    background: url("/src/upload/icon/triangle.png") no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_add_circle::before
+{
+    background: url("/src/upload/icon/circle.png") no-repeat center center;
+    background-size: cover;
+}

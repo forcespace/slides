@@ -3,17 +3,23 @@
 .b-slide-list
 {
     display: flex;
+    overflow: -moz-scrollbars-none;
     overflow-x: hidden;
     overflow-y: auto;
     align-items: center;
     flex-direction: column;
+    width: 250px;
     height: 100vh;
-    width: 270px;
     margin-right: 15px;
     padding: 15px 0 0 15px;
     border-right: 2px solid $actualBorderSlideListColor;
     background: $actualBaseSlideListBackground;
     box-shadow: $actualBoxShadowBackground;
+
+    &::-webkit-scrollbar
+    {
+        width: 0;
+    }
 
     &__item
     {
@@ -37,7 +43,7 @@
                 height: 2px;
                 margin: auto;
                 content: '';
-                animation: glowing 1.25s alternate infinite;
+                animation: glowing 1.5s alternate infinite;
                 background: $actualAppThemeColor;
 
                 @keyframes glowing
@@ -57,7 +63,7 @@
 
     &__content
     {
-        width: 170px;
+        width: 178px;
         height: 100px;
         border: 2px solid $actualBorderSlideColor;
         border-radius: 8px;

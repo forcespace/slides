@@ -9,10 +9,10 @@ type Props = {
 
 export function Rect(props: Props)
 {
-    const widthSvg = Math.round(props.figure.width * props.scaleIndex)
-    const heightSvg = Math.round(props.figure.height * props.scaleIndex)
-    const xSvg = Math.round(props.figure.leftTopPoint.x * props.scaleIndex)
-    const ySvg = Math.round(props.figure.leftTopPoint.y * props.scaleIndex)
+    const widthSvg = Math.ceil(props.figure.width * props.scaleIndex)
+    const heightSvg = Math.ceil(props.figure.height * props.scaleIndex)
+    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scaleIndex)
+    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scaleIndex)
 
     const rectStroke = props.figure.border ? props.figure.border.borderColor : ''
     const rectFill = props.figure.background ? props.figure.background.color : ''

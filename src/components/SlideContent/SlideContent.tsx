@@ -2,7 +2,6 @@ import * as React from 'react';
 import {SlideView} from '../SlidesList/SlideView';
 import {Slide} from '../../script/slide/slide';
 import '../../style/block/slide/slide.css';
-import '../../style/main.css';
 
 type Props = {
     slide: Slide,
@@ -13,7 +12,7 @@ export function SlideContent(props: Props)
 {
     const [width, setWidth] = React.useState(0)
 
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         const getWidth = (): number => {
             const el = document.getElementById('slide')
             if(el)
@@ -29,9 +28,9 @@ export function SlideContent(props: Props)
             setWidth(getWidth())
         };
 
-        handleWindowResize()
+        handleWindowResize();
 
-        window.addEventListener("resize", handleWindowResize)
+        window.addEventListener("resize", handleWindowResize);
 
         return () => {
             window.removeEventListener("resize", handleWindowResize)

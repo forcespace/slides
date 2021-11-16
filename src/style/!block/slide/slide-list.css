@@ -1,17 +1,21 @@
 @import '/src/style/font/euclid.css';
 .b-slide-list {
   display: flex;
+  overflow: -moz-scrollbars-none;
   overflow-x: hidden;
   overflow-y: auto;
   align-items: center;
   flex-direction: column;
+  width: 250px;
   height: 100vh;
-  width: 270px;
   margin-right: 15px;
   padding: 15px 0 0 15px;
   border-right: 2px solid #fff;
   background: #e9e9e9;
   box-shadow: 0 20px 30px rgba(163, 172, 192, 0.26);
+}
+.b-slide-list::-webkit-scrollbar {
+  width: 0;
 }
 .b-slide-list__item {
   position: relative;
@@ -30,7 +34,7 @@
   height: 2px;
   margin: auto;
   content: "";
-  animation: glowing 1.25s alternate infinite;
+  animation: glowing 1.5s alternate infinite;
   background: #14b855;
 }
 @keyframes glowing {
@@ -42,7 +46,7 @@
   }
 }
 .b-slide-list__content {
-  width: 170px;
+  width: 178px;
   height: 100px;
   border: 2px solid #ccc;
   border-radius: 8px;

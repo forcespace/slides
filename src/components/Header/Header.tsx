@@ -2,8 +2,7 @@ import React from 'react';
 import {Editor} from "../../script/slide/slide";
 import {dispatch} from "../../dispatch";
 import {setTitle} from "../../script/slide/functions";
-import '../../style/block/header/header.css';
-import '../../style/main.css';
+import styles from './header.module.css';
 
 export function Header(props: Editor)
 {
@@ -20,8 +19,8 @@ export function Header(props: Editor)
     }
 
     return (
-        <header className={'b-header'}>
-            <h1 className={'b-header__title'} onClick={handleTitleClick}>
+        <header className={styles.header}>
+            <h1 className={styles.title} onClick={handleTitleClick}>
                 {title}
             </h1>
         </header>
