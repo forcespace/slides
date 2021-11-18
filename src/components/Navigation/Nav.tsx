@@ -13,6 +13,19 @@ const TABS = {
     SETTINGS: 'settings'
 }
 
+function NavTab2(props:{tabs: Array<any>})
+{
+    return(
+        <NavTabs className={styles.list}>
+            {props.tabs.map(tab =>
+                <span className={tab.className} onClick={tab.onClick}>
+                    {tab.name}
+                </span>)
+            }
+        </NavTabs>
+    )
+}
+
 export function Nav()
 {
     function handleAddNewSlideClick()
@@ -59,20 +72,28 @@ export function Nav()
 
     return (
         <nav className={styles.nav}>
-            <NavTabs className={styles.list}>
-                <span className={`${styles.list_item} ${activeTab === TABS.MAIN ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.MAIN)}>
-                    Главная
-                </span>
-                <span className={`${styles.list_item} ${activeTab === TABS.EDIT ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.EDIT)}>
-                    Редактирование
-                </span>
-                <span className={`${styles.list_item} ${activeTab === TABS.PASTE ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.PASTE)}>
-                    Вставка
-                </span>
-                <span className={`${styles.list_item} ${activeTab === TABS.SETTINGS ? `${styles.active}` : ""}`} onClick={() => setActiveTab(TABS.SETTINGS)}>
-                    Настройки вида
-                </span>
-            </NavTabs>
+            <NavTab2 tabs={[
+                {
+                    className: `${styles.list_item} ${activeTab === TABS.MAIN ? `${styles.active}` : ""}`,
+                    onClick: () => setActiveTab(TABS.MAIN),
+                    name: 'Главная'
+                },
+                {
+                    className: `${styles.list_item} ${activeTab === TABS.EDIT ? `${styles.active}` : ""}`,
+                    onClick: () => setActiveTab(TABS.EDIT),
+                    name: 'Редактирование'
+                },
+                {
+                    className: `${styles.list_item} ${activeTab === TABS.PASTE ? `${styles.active}` : ""}`,
+                    onClick: () => setActiveTab(TABS.PASTE),
+                    name: 'Вставка'
+                },
+                {
+                    className: `${styles.list_item} ${activeTab === TABS.SETTINGS ? `${styles.active}` : ""}`,
+                    onClick: () => setActiveTab(TABS.SETTINGS),
+                    name: 'Настройки вида'
+                },
+            ]}/>
 
             <NavTabs className={`${styles.tabs} ${activeTab === TABS.MAIN ? "" : `${styles.tabs_hidden}`}`}>
                 <Button

@@ -46,10 +46,10 @@ export function Rect(props: Props)
             }),
         )
         document.addEventListener('mousemove', handleMouseMove.current)
+        document.addEventListener('mouseup', handleMouseMove.current)
     }
 
     const handleMouseUp = () => {
-        document.removeEventListener('mousemove', handleMouseMove.current)
         setPosition(position => Object.assign({}, position, {coords: {}}))
     }
 
