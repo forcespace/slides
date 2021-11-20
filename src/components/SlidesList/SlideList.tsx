@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React from 'react'
 import {SlideView} from './SlideView'
 import {Editor, Slide} from '../../script/slide/slide'
 import {dispatch} from '../../dispatch'
@@ -25,7 +25,7 @@ export function SlideList(props: Editor) {
             {slides.map((slide: Slide, index: number) =>
                 <div className={styles.slide_list_item}>
                     <div className={`b-slide-list__content${isActive(index) ? " b-slide-list__content_active" : ""}`} onClick={() => setActiveSlide(index)} draggable={true}>
-                        <SlideView slide={slide} scaleIndex={170/1231}/>
+                        <SlideView slide={slide} scale={{isMain: false, scaleIndex: 170/1231}}/>
                     </div>
                     <span className={styles.slide_count}>
                         {index + 1}

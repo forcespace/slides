@@ -12,7 +12,7 @@ export function Workspace(props: Editor)
         <section className={styles.workspace}>
             <SlideList {...props}/>
             <>
-                {slidesCount ? (<SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>) : null}
+                {slidesCount ? (<SlideContent slide={props.presentation.slides[props.active]}/>) : null}
             </>
         </section>
     );

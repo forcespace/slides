@@ -3,15 +3,18 @@ import {ObjectType, Position} from '../../../../script/slide/slide'
 
 type Props = {
     figure: ObjectType,
-    scaleIndex: number
+    scale: {
+        isMain: boolean,
+        scaleIndex: number
+    }
 }
 
 export function Triangle(props: Props)
 {
-    const widthSvg = Math.ceil(props.figure.width * props.scaleIndex)
-    const heightSvg = Math.ceil(props.figure.height * props.scaleIndex)
-    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scaleIndex)
-    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scaleIndex)
+    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex)
+    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex)
+    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex)
+    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex)
 
     const styleSvg = {
         top: `${xSvg}px`,

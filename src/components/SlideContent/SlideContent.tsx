@@ -4,8 +4,7 @@ import {Slide} from '../../script/slide/slide';
 import '../../style/block/slide/slide.css';
 
 type Props = {
-    slide: Slide,
-    isScale: boolean
+    slide: Slide
 }
 
 export function SlideContent(props: Props)
@@ -39,7 +38,7 @@ export function SlideContent(props: Props)
 
     return (
         <div className={'b-slide'} style={{height: width / 1.78}} id={"slide"}>
-            <SlideView slide={props.slide} scaleIndex={width / 1231}/>
+            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / 1231}}/>
         </div>
     );
 }

@@ -165,7 +165,7 @@ function createRect(priority: number): ObjectType {
         type: 'Rect',
         leftTopPoint: {
             x: 100,
-            y: 100},
+            y: 10},
         border: {
             borderSize: 2,
             borderColor: '#000000',
