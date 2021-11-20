@@ -229,6 +229,51 @@ function createCircle(priority: number): ObjectType {
     }
 }
 
+//Здесь добавила index, т.к. пока непонятно какой элемент внутри слайда активный
+export function setObjectPositionEditorVersion(editor: Editor, indexActiveObject: number, position: Position): Editor
+{
+    const newObject: ObjectType = {
+        ...editor.presentation.slides[editor.active].objects[indexActiveObject],
+        leftTopPoint: position
+    };
+
+    return replaceObjects(editor, indexActiveObject, newObject)
+}
+
+
+function replaceObjects(editor: Editor, indexActiveObject: number, newObject: ObjectType)
+{
+    const newObjects: Array<ObjectType> = {
+        ...editor.presentation.slides[editor.active].objects
+    }
+
+    newObjects[indexActiveObject] = newObject
+
+    const newSlide: Slide = {
+        ...editor.presentation.slides[editor.active],
+        objects: newObjects
+    }
+
+    return replaceActiveSlide(editor, newSlide)
+}
+
+function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor
+{
+    let newSlides: Array<Slide> = {
+        ...editor.presentation.slides
+    }
+
+    newSlides[editor.active] = newSlide
+
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
 function generateId(): string {
     let result = ''
     const words = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'

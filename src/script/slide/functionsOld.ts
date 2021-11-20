@@ -336,6 +336,7 @@ export {
 function createEditorForTest(): { presentation: { slides: Array<Slide>; title: string }; active: number; history: { undo: any[]; redo: any[] } }
 {
     let text1: Text = {
+        id: '1',
         leftTopPoint: {x: 1, y: 1},
         background: {color: "#111", priority: 1, image: ''},
         border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: 12},
@@ -352,6 +353,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
     }
 
     let text2: Text = {
+        id: '1',
         leftTopPoint: {x: 2, y: 2},
         background: {color: "#222", priority: 1, image: ''},
         border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: 12},
@@ -413,6 +415,7 @@ function createEditorForTest(): { presentation: { slides: Array<Slide>; title: s
 }
 
 let textNotEmptySlide: Text = {
+    id: '1',
     leftTopPoint: {x: 1, y: 1},
     background: {color: "#111", priority: 1, image: ''},
     border: {borderStyle: 'Dashed', borderColor: "#111", borderSize: 12},

@@ -2,6 +2,8 @@ import * as React from 'react'
 import {ObjectType} from '../../../../script/slide/slide'
 import {useRef, useState} from 'react'
 import {Figure} from "./Figure";
+import {dispatch} from "../../../../dispatch";
+import {setTitle} from "../../../../script/slide/functions";
 
 type Props = {
     figure: ObjectType,
@@ -26,13 +28,6 @@ export function SvgFigure(props: Props) {
     const ref = useRef(null)
 
     let startPosition = {x: 0, y: 0}
-
-    // useEffect(() => {
-    //
-    //     return () => {
-    //         document.removeEventListener('mousedown', handleMouseDown)
-    //     }
-    // })
 
     const handleMouseDown = (coord: {x: number, y: number}) => {
         console.log('ЗДЕСЬ')
