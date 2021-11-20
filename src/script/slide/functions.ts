@@ -162,6 +162,7 @@ function createObject(objectType: string, priority: number): ObjectType {
 
 function createRect(priority: number): ObjectType {
     return {
+        id: generateId(),
         type: 'Rect',
         leftTopPoint: {
             x: 100,
@@ -184,6 +185,7 @@ function createRect(priority: number): ObjectType {
 
 function createTriangle(priority: number): ObjectType {
     return {
+        id: generateId(),
         type: 'Triangle',
         leftTopPoint: {
             x: 100,
@@ -206,6 +208,7 @@ function createTriangle(priority: number): ObjectType {
 
 function createCircle(priority: number): ObjectType {
     return {
+        id: generateId(),
         type: 'Circle',
         leftTopPoint: {
             x: 100,
@@ -224,5 +227,20 @@ function createCircle(priority: number): ObjectType {
         active: true,
         priority: priority
     }
+}
+
+function generateId(): string {
+    let result = ''
+    const words = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            const position = Math.floor(Math.random() * (words.length - 1))
+            result += words.substring(position, position + 1)
+        }
+        if (i < 3) {
+            result += '-'
+        }
+    }
+    return result
 }
 
