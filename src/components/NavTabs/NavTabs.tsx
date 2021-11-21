@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 
 interface NavProps
 {
     className: string,
-    children: Array <React.ReactElement>
+    children: Array<React.ReactElement>
 }
 
 export default function NavTabs(props: NavProps)

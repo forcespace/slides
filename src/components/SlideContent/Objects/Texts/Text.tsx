@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {Text} from '../../../../script/slide/slide'
+import React from 'react';
+import {Text} from '../../../../script/slide/slide';
 
 type Props = {
     text: Text,

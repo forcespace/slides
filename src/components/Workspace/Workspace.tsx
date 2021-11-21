@@ -2,7 +2,7 @@ import React from 'react';
 import {SlideList} from "../SlidesList";
 import {SlideContent} from "../SlideContent";
 import {Editor} from "../../script/slide/slide";
-import styles from './workspace.module.css'
+import styles from './workspace.module.css';
 
 export function Workspace(props: Editor)
 {

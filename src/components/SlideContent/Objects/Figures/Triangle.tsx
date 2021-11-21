@@ -1,5 +1,6 @@
-import * as React from 'react';
-import {ObjectType, Position} from '../../../../script/slide/slide'
+import React from 'react';
+import {ObjectType, Position} from '../../../../script/slide/slide';
+import styles from '../../slideContent.module.css';
 
 type Props = {
     figure: ObjectType,
@@ -11,10 +12,10 @@ type Props = {
 
 export function Triangle(props: Props)
 {
-    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex)
-    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex)
-    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex)
-    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex)
+    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex);
+    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex);
+    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex);
+    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex);
 
     const styleSvg = {
         top: `${xSvg}px`,
@@ -41,7 +42,10 @@ export function Triangle(props: Props)
     const trianglePath = `M ${v1.x} ${v1.y} L ${v2.x} ${v2.y} L ${v3.x} ${v3.y} Z`
 
     return (
-        <svg style={styleSvg} className={'b-slide__content-item'} preserveAspectRatio="slice" xmlns="http://www.w3.org/2000/svg">
+        <svg style={styleSvg}
+             className={styles.slide_item}
+             preserveAspectRatio="slice"
+             xmlns="http://www.w3.org/2000/svg">
             <path d={trianglePath} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
         </svg>
     )

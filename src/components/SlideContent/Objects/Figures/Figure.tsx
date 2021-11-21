@@ -1,8 +1,8 @@
-import * as React from 'react'
-import {ObjectType} from "../../../../script/slide/slide";
-import {Circle} from './Circle'
-import {Triangle} from './Triangle'
-import {Rect} from './Rect'
+import React from 'react';
+import {ObjectType} from '../../../../script/slide/slide';
+import {Circle} from './Circle';
+import {Triangle} from './Triangle';
+import {Rect} from './Rect';
 
 type Props = {
     figure: ObjectType,
