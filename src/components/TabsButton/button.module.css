@@ -32,7 +32,7 @@
     width: 32px;
     height: 32px;
     margin: auto;
-    content: "";
+    content: '';
     transition: 0.3s;
     opacity: 0.75;
 }
@@ -46,55 +46,55 @@
 .tabs_button_new_presentation::before
 {
     top: 3px;
-    background: url("/src/upload/icon/new.png") no-repeat center center;
+    background: url('/src/upload/icon/new.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_add_slide::before
 {
-    background: url("/src/upload/icon/add.png") no-repeat center center;
+    background: url('/src/upload/icon/add.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_delete_slide::before
 {
-    background: url("/src/upload/icon/delete.png") no-repeat center center;
+    background: url('/src/upload/icon/delete.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_slide_up::before
 {
     transform: rotateX(180deg);
-    background: url("/src/upload/icon/move.png") no-repeat center center;
+    background: url('/src/upload/icon/move.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_slide_down::before
 {
-    background: url("/src/upload/icon/move.png") no-repeat center center;
+    background: url('/src/upload/icon/move.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_add_img::before
 {
-    background: url("/src/upload/icon/img.png") no-repeat center center;
+    background: url('/src/upload/icon/img.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_add_rect::before
 {
-    background: url("/src/upload/icon/rect.png") no-repeat center center;
+    background: url('/src/upload/icon/rect.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_add_triangle::before
 {
-    background: url("/src/upload/icon/triangle.png") no-repeat center center;
+    background: url('/src/upload/icon/triangle.png') no-repeat center center;
     background-size: cover;
 }
 
 .tabs_button_add_circle::before
 {
-    background: url("/src/upload/icon/circle.png") no-repeat center center;
+    background: url('/src/upload/icon/circle.png') no-repeat center center;
     background-size: cover;
 }
