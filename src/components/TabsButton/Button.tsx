@@ -1,16 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 
 interface ButtonProps
 {
     className: string,
-    callback: () => void,
+    onClick: () => void,
     title: string
 }
-
 
 export default function Button(props: ButtonProps)
 {
     return (
-        <button className={props.className} onClick={props.callback} title={props.title}/>
+        <button className={props.className} onClick={props.onClick} title={props.title}/>
     )
 }

@@ -1,8 +1,8 @@
-import * as React from 'react';
-import {ObjectType} from '../../../script/slide/slide'
-import {TextSvg} from "./Texts/Text";
-import {Img} from "./Images/Image";
-import {SvgFigure} from './Figures/SvgFigure'
+import React from 'react';
+import {ObjectType} from '../../../script/slide/slide';
+import {TextSvg} from './Texts/Text';
+import {Img} from './Images/Image';
+import {SvgFigure} from './Figures/SvgFigure';
 
 type Props = {
     object: ObjectType,

@@ -5,13 +5,13 @@
     background: #ececec;
 }
 
-.list
+.menu_list
 {
     display: flex;
     padding: 0;
 }
 
-.list_item
+.menu_list_item
 {
     font: 400 16px/1 "Euclid Circular B Regular", sans-serif;
     margin: 0;
@@ -20,18 +20,18 @@
     color: #151824;
 }
 
-.list_item:not(:first-child),
-.list_item:not(:last-child)
+.menu_list_item:not(:first-child),
+.menu_list_item:not(:last-child)
 {
     margin: 0 25px;
 }
 
-.list_item:first-child
+.menu_list_item:first-child
 {
     margin: 0 25px 0 0;
 }
 
-.list_item:last-child
+.menu_list_item:last-child
 {
     margin: 0 0 0 25px;
 }

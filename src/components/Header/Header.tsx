@@ -1,7 +1,7 @@
 import React from 'react';
-import {Editor} from "../../script/slide/slide";
-import {dispatch} from "../../dispatch";
-import {setTitle} from "../../script/slide/functions";
+import {Editor} from '../../script/slide/slide';
+import {dispatch} from '../../dispatch';
+import {setTitle} from '../../script/slide/functions';
 import styles from './header.module.css';
 
 export function Header(props: Editor)
