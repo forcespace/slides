@@ -15,7 +15,7 @@ export function SlideContent(props: Props)
     {
         const getWidth = (): number =>
         {
-            const el = document.getElementById('slide')
+            const el = document.getElementById('slide') //исп ref
             if (el)
             {
                 const slide = window.getComputedStyle(el)

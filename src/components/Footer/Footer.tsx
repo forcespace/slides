@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {Editor} from "../../script/slide/slide";
 import styles from './footer.module.css'
 
