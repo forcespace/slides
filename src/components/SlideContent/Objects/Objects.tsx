@@ -9,7 +9,7 @@ type Props = {
     scale: {
         isMain: boolean,
         scaleIndex: number
-    }
+    },
 }
 
 export function Objects(props: Props)

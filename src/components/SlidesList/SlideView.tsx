@@ -17,7 +17,7 @@ export function SlideView(props: Props)
     return (
         <>
             {slideObjects.map((object: ObjectType) =>
-                <Objects object={object} scale={props.scale}/>
+                <Objects object={object} scale={props.scale} key={Math.random()}/>
             )}
         </>
     );

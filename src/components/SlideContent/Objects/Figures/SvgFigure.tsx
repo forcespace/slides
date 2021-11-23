@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Ref, RefObject, useEffect} from 'react';
 import {ObjectType} from '../../../../script/slide/slide';
 import {useRef, useState} from 'react';
 import {Figure} from './Figure';
@@ -9,7 +9,7 @@ type Props = {
     scale: {
         isMain: boolean,
         scaleIndex: number
-    }
+    },
 }
 
 export function SvgFigure(props: Props)
@@ -24,13 +24,26 @@ export function SvgFigure(props: Props)
         x: Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex),
         y: Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex)
     })
-    const ref = useRef(null)
+    const ref: Ref<SVGSVGElement> = useRef(null)
 
-    let startPosition = {x: 0, y: 0}
+    const startPosition = useRef({x: 0, y: 0})
 
-    const handleMouseDown = (coord: {x: number, y: number}) =>
+    useEffect(() => {
+        if (!ref.current)
+        {
+            return
+        }
+        ref.current.addEventListener('mousedown', handleMouseDown)
+        return () => {
+            ref.current && ref.current.removeEventListener('mousedown', handleMouseDown)
+        }
+    })
+
+    const handleMouseDown = (e: Event) =>
     {
-        startPosition = {x: coord.x, y: coord.y}
+        const mouseEvent = e as MouseEvent
+        startPosition.current.x = mouseEvent.pageX
+        startPosition.current.y = mouseEvent.pageY
         document.addEventListener('mousemove', handleMouseMove)
         document.addEventListener('mouseup', handleMouseUp)
     }
@@ -40,13 +53,13 @@ export function SvgFigure(props: Props)
         let delta: {x: number, y: number}
         if (props.scale.isMain)
         {
-            delta = {x: e.pageX - startPosition.x, y: e.pageY - startPosition.y}
+            delta = {x: e.pageX - startPosition.current.x, y: e.pageY - startPosition.current.y}
         }
         else
         {
             delta = {
-                x: (e.pageX - startPosition.x) * props.scale.scaleIndex,
-                y: (e.pageY - startPosition.y) * props.scale.scaleIndex
+                x: (e.pageX - startPosition.current.x) * props.scale.scaleIndex,
+                y: (e.pageY - startPosition.current.y) * props.scale.scaleIndex
             }
         }
 
@@ -77,7 +90,7 @@ export function SvgFigure(props: Props)
     }
 
     return (
-        <svg onMouseDown={(e) => handleMouseDown({x: e.pageX, y: e.pageY})}
+        <svg
              ref={ref}
              style={styleSvg}
              className={styles.slide_item}
