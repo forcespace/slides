@@ -18,7 +18,7 @@ export function setTitle(editor: Editor, newTitle: string): Editor {
     }
 }
 
-function createSlide(): Slide
+export function createSlide(): Slide
 {
     return {
         background: {color: '', image: '', priority: 0},
@@ -288,4 +288,3 @@ function generateId(): string {
     }
     return result
 }
-

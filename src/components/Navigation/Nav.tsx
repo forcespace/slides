@@ -1,10 +1,12 @@
 import React from 'react';
 import {dispatch, dispatchWithoutParam} from '../../dispatch';
 import {createEditor, addEmptySlide, deleteSlide, addObject, moveSlideTopByStep, moveSlideDownByStep} from '../../script/slide/functions';
-import Button from '../TabsButton/Button';
+import Button from '../Button/Button';
 import NavTabs from '../NavTabs/NavTabs';
+import Input from '../Input/Input';
 import styles from './nav.module.css';
-import stylesButtonTabs from '../TabsButton/button.module.css';
+import stylesButtonTabs from '../Button/button.module.css';
+import InputFile from '../InputFile/InputFile';
 
 const TABS = {
     MAIN: 'main',
@@ -37,17 +39,33 @@ function NavTab(props: {tabs: Array<NavTabMenu>, active: string})
 interface NavTabButton
 {
     className: string,
-    onClick: () => void,
-    title: string
+    onClick?: () => void,
+    title: string,
+    mode?: 'button' | 'input' | 'input-file',
+    type?: string,
+    value?: string
 }
 
 function NavTabButtons(props: {buttons: Array<NavTabButton>, hidden: boolean})
 {
     return (
         <NavTabs className={`${styles.tabs} ${props.hidden ? styles.tabs_hidden : ''}`}>
-            {props.buttons.map(button =>
-                <Button {...button} key={button.title} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
-            )}
+            {
+                props.buttons.map((button) =>
+                    {
+                        if (button.mode === 'input')
+                        {
+                            return <Input {...button} key={button.title} type={button.type} className={`${stylesButtonTabs.tabs_button} ${button.className}`} value={button.value}/>
+                        }
+
+                        if (button.mode === 'input-file')
+                        {
+                            return <InputFile {...button} key={button.title} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
+                        }
+
+                        return <Button {...button} key={button.title} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
+                    }
+                )}
         </NavTabs>
     )
 }
@@ -161,8 +179,9 @@ export function Nav()
             <NavTabButtons buttons={[
                 {
                     className: stylesButtonTabs.tabs_button_add_img,
-                    onClick: handleAddRectClick,
-                    title: 'Добавить картинку'
+                    title: 'Загрузить картинку',
+                    mode: 'input',
+                    type: 'file'
                 },
                 {
                     className: stylesButtonTabs.tabs_button_add_rect,
@@ -183,13 +202,18 @@ export function Nav()
 
             <NavTabButtons buttons={[
                 {
+                    className: stylesButtonTabs.tabs_button_add_color,
+                    title: 'Выбрать цвет',
+                    mode: 'input',
+                    type: 'color',
+                    value: '#14b855'
+                },
+                {
                     className: stylesButtonTabs.tabs_button_mode_view,
-                    onClick: handleMoveSlideUp,
                     title: 'Настройки вида приложения'
                 },
                 {
                     className: stylesButtonTabs.tabs_button_change_theme,
-                    onClick: handleMoveSlideDown,
                     title: 'Смена темы'
                 }
             ]} hidden={activeTab !== TABS.SETTINGS}/>

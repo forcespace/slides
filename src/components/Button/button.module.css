@@ -1,99 +1,78 @@
 .tabs_button
 {
     position: relative;
+    width: 32px;
+    height: 32px;
+    margin: 0 30px 0 0;
     cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.75;
     border: none;
     background: transparent;
 }
 
-.tabs_button:not(:first-child),
-.tabs_button:not(:last-child)
-{
-    margin: 0 30px;
-}
-
-.tabs_button:first-child
-{
-    margin: 0 30px 0 0;
-}
-
 .tabs_button:last-child
 {
-    margin: 0 0 0 30px;
+    margin: 0;
 }
 
-.tabs_button::before
-{
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 32px;
-    height: 32px;
-    margin: auto;
-    content: '';
-    transition: 0.3s;
-    opacity: 0.75;
-}
-
-.tabs_button:hover::before
+.tabs_button:hover
 {
     transition: 0.3s;
     opacity: 1;
 }
 
-.tabs_button_new_presentation::before
+.tabs_button_new_presentation
 {
     top: 3px;
     background: url('/src/upload/icon/new.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_slide::before
+.tabs_button_add_slide
 {
     background: url('/src/upload/icon/add.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_delete_slide::before
+.tabs_button_delete_slide
 {
     background: url('/src/upload/icon/delete.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_slide_up::before
+.tabs_button_slide_up
 {
     transform: rotateX(180deg);
     background: url('/src/upload/icon/move.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_slide_down::before
+.tabs_button_slide_down
 {
     background: url('/src/upload/icon/move.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_img::before
+.tabs_button_add_img
 {
     background: url('/src/upload/icon/img.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_rect::before
+.tabs_button_add_rect
 {
     background: url('/src/upload/icon/rect.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_triangle::before
+.tabs_button_add_triangle
 {
     background: url('/src/upload/icon/triangle.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_circle::before
+.tabs_button_add_circle
 {
     background: url('/src/upload/icon/circle.png') no-repeat center center;
     background-size: cover;

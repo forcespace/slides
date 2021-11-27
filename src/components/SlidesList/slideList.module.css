@@ -1,3 +1,8 @@
+:root
+{
+    --main-color: #14b855;
+}
+
 .slide_list
 {
     display: flex;
@@ -45,7 +50,7 @@
     margin: auto;
     content: '';
     animation: glowing 1.5s alternate infinite;
-    background: #14b855;
+    background: var(--main-color);
 }
 
 @keyframes glowing
@@ -84,7 +89,7 @@
 {
     transition: 0.15s;
     animation: glowingSlide 1.5s alternate infinite;
-    border: 2px solid #14b855;
+    border: 2px solid var(--main-color);
     box-shadow: 0 20px 30px rgba(163, 172, 192, 0.26);
 }
 

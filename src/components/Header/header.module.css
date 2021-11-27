@@ -1,7 +1,12 @@
+:root
+{
+    --main-color: #14b855;
+}
+
 .header
 {
     padding: 15px 0;
-    background: #14b855;
+    background: var(--main-color);
 }
 
 .title

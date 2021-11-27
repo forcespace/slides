@@ -1,6 +1,6 @@
 import React from 'react';
 import {ObjectType, Slide} from '../../script/slide/slide';
-import {Objects} from "../SlideContent/Objects/Objects";
+import {Objects} from '../SlideContent/Objects/Objects';
 
 type Props = {
     slide: Slide,
