@@ -1,3 +1,8 @@
+:root
+{
+    --main-color: #14b855;
+}
+
 .nav
 {
     padding: 15px 30px 25px;
@@ -53,11 +58,13 @@
     height: 2px;
     margin: auto;
     content: '';
-    background: #14b855;
+    background: var(--main-color);
 }
 
 .tabs
 {
+    display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
