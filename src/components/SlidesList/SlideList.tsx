@@ -23,7 +23,7 @@ export function SlideList(props: Editor)
     return (
         <div className={styles.slide_list}>
             {slides.map((slide: Slide, index: number) =>
-                <div className={styles.slide_list_item}>
+                <div key={Math.random()} className={styles.slide_list_item}>
                     <div className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`}
                          onClick={() => setActiveSlide(index)} draggable={true}>
                         <SlideView slide={slide} scale={{isMain: false, scaleIndex: 170 / 1231}}/>
