@@ -4,9 +4,9 @@ import {createEditor, addEmptySlide, deleteSlide, addObject, moveSlideTopByStep,
 import Button from '../Button/Button';
 import NavTabs from '../NavTabs/NavTabs';
 import Input from '../Input/Input';
+import InputFile from '../InputFile/InputFile';
 import styles from './nav.module.css';
 import stylesButtonTabs from '../Button/button.module.css';
-import InputFile from '../InputFile/InputFile';
 
 const TABS = {
     MAIN: 'main',
@@ -28,7 +28,7 @@ function NavTab(props: {tabs: Array<NavTabMenu>, active: string})
     return (
         <NavTabs className={styles.menu_list}>
             {props.tabs.map(tab =>
-                <span key={tab.id} className={`${tab.className} ${props.active === tab.id ? styles.active : ''}`} onClick={tab.onClick}>
+                <span key={Math.random()} className={`${tab.className} ${props.active === tab.id ? styles.active : ''}`} onClick={tab.onClick}>
                     {tab.name}
                 </span>)
             }
@@ -38,6 +38,7 @@ function NavTab(props: {tabs: Array<NavTabMenu>, active: string})
 
 interface NavTabButton
 {
+    classNameParent?: string,
     className: string,
     onClick?: () => void,
     title: string,
@@ -55,15 +56,19 @@ function NavTabButtons(props: {buttons: Array<NavTabButton>, hidden: boolean})
                     {
                         if (button.mode === 'input')
                         {
-                            return <Input {...button} key={button.title} type={button.type} className={`${stylesButtonTabs.tabs_button} ${button.className}`} value={button.value}/>
+                            return <Input {...button} key={Math.random()} type={button.type} className={`${stylesButtonTabs.tabs_button} ${button.className}`} value={button.value}/>
                         }
 
                         if (button.mode === 'input-file')
                         {
-                            return <InputFile {...button} key={button.title} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
+                            return (
+                                <label className={button.classNameParent}>
+                                    <InputFile {...button} key={Math.random()} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
+                                </label>
+                            )
                         }
 
-                        return <Button {...button} key={button.title} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
+                        return <Button {...button} key={Math.random()} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
                     }
                 )}
         </NavTabs>
@@ -178,9 +183,10 @@ export function Nav()
 
             <NavTabButtons buttons={[
                 {
+                    classNameParent: stylesButtonTabs.tabs_button_add_img_wrapper,
                     className: stylesButtonTabs.tabs_button_add_img,
                     title: 'Загрузить картинку',
-                    mode: 'input',
+                    mode: 'input-file',
                     type: 'file'
                 },
                 {

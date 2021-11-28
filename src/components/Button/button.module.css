@@ -54,10 +54,38 @@
     background-size: cover;
 }
 
-.tabs_button_add_img
+.tabs_button_add_img_wrapper
 {
+    position: relative;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    margin-right: 30px;
+    transition: .3s;
+    opacity: .75;
     background: url('/src/upload/icon/img.png') no-repeat center center;
     background-size: cover;
+}
+
+.tabs_button_add_img_wrapper:hover
+{
+    transition: .3s;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.tabs_button_add_img
+{
+    position: absolute;
+    z-index: -1;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.tabs_button_add_img:hover
+{
+    z-index: -1;
+    opacity: 0;
 }
 
 .tabs_button_add_rect
