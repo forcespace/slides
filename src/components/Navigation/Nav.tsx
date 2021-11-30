@@ -211,8 +211,7 @@ export function Nav()
                     className: stylesButtonTabs.tabs_button_add_color,
                     title: 'Выбрать цвет',
                     mode: 'input',
-                    type: 'color',
-                    value: '#14b855'
+                    type: 'color'
                 },
                 {
                     className: stylesButtonTabs.tabs_button_mode_view,
