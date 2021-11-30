@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {SlideView} from '../SlidesList/SlideView';
 import {Slide} from '../../script/slide/slide';
 import styles from './slideContent.module.css';
@@ -15,7 +15,7 @@ export function SlideContent(props: Props)
     const slideProportion = 1.78;
     const scaleProportion = 1231;
 
-    React.useEffect(() =>
+    useEffect(() =>
     {
         const getWidth = (): number =>
         {
