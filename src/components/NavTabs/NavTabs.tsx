@@ -10,9 +10,9 @@ export default function NavTabs(props: NavProps)
 {
     return (
         <div className={props.className}>
-            {props.children.map((child: React.ReactElement) =>
-                child
-            )}
+            {
+                props.children.map((child: React.ReactElement) => child)
+            }
         </div>
     )
 }

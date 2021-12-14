@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import {SlideView} from '../SlidesList/SlideView';
 import {Slide} from '../../script/slide/slide';
 import styles from './slideContent.module.css';
+import {Rect} from './Objects/Figures/Rect';
 
 type Props = {
     slide: Slide
@@ -9,16 +10,18 @@ type Props = {
 
 export function SlideContent(props: Props)
 {
-    const [width, setWidth] = React.useState(0)
+    const [width, setWidth] = React.useState(0);
+    const slideRef = useRef(null);
+    const slideProportion = 1.78;
+    const scaleProportion = 1231;
 
-    React.useEffect(() =>
+    useEffect(() =>
     {
         const getWidth = (): number =>
         {
-            const el = document.getElementById('slide') //исп ref
-            if (el)
+            if (slideRef.current)
             {
-                const slide = window.getComputedStyle(el)
+                const slide = window.getComputedStyle(slideRef.current)
                 return slide ? parseFloat(slide.width) : 0
             }
 
@@ -41,8 +44,8 @@ export function SlideContent(props: Props)
     }, []);
 
     return (
-        <div className={styles.slide} style={{height: width / 1.78}} id={'slide'}>
-            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / 1231}}/>
+        <div className={styles.slide} style={{height: width / slideProportion}} ref={slideRef}>
+            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / scaleProportion}}/>
         </div>
     );
 }
