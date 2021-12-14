@@ -587,6 +587,7 @@ function setEditor(newEditor: Editor)
 }
 
 export {
+    editor,
     setEditor,
     getEditor
 }

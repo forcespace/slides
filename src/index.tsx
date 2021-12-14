@@ -1,14 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import './index.css'
 
-import {App} from "./App";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
+import {App} from './App'
+import {createStore, Store} from 'redux'
+import {rootReducer} from './script/slide/root-reducer'
+import {editor} from './script/slide/editor-new'
+import { Editor } from './script/slide/slide'
 
-import './index.css';
-import {getEditor} from "./script/slide/editor-new";
+const store: Store<Editor> = createStore(rootReducer, editor)
 
 ReactDOM.render(
     <React.StrictMode>
-        <App editor={getEditor()}/>
+        <Provider store={store}>
+            <App/>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
-);
+)

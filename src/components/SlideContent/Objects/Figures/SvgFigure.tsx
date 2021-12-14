@@ -3,6 +3,7 @@ import {ObjectType} from '../../../../script/slide/slide';
 import {useRef, useState} from 'react';
 import {Figure} from './Figure';
 import styles from '../../slideContent.module.css';
+import { useDragAndDrop } from '../../../../script/slide/dragAndDropHook';
 
 type Props = {
     figure: ObjectType,
@@ -25,59 +26,61 @@ export function SvgFigure(props: Props)
         y: Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex)
     })
     const ref: Ref<SVGSVGElement> = useRef(null)
+    
+    useDragAndDrop(ref.current, position, setPosition, props.scale.isMain, props.scale.scaleIndex)
+    
+    // const startPosition = useRef({x: 0, y: 0})
 
-    const startPosition = useRef({x: 0, y: 0})
+    // useEffect(() => {
+    //     if (!ref.current)
+    //     {
+    //         return
+    //     }
+    //     ref.current.addEventListener('mousedown', handleMouseDown)
+    //     return () => {
+    //         ref.current && ref.current.removeEventListener('mousedown', handleMouseDown)
+    //     }
+    // })
 
-    useEffect(() => {
-        if (!ref.current)
-        {
-            return
-        }
-        ref.current.addEventListener('mousedown', handleMouseDown)
-        return () => {
-            ref.current && ref.current.removeEventListener('mousedown', handleMouseDown)
-        }
-    })
+    // const handleMouseDown = (e: Event) =>
+    // {
+    //     const mouseEvent = e as MouseEvent
+    //     startPosition.current.x = mouseEvent.pageX
+    //     startPosition.current.y = mouseEvent.pageY
+    //     document.addEventListener('mousemove', handleMouseMove)
+    //     document.addEventListener('mouseup', handleMouseUp)
+    // }
 
-    const handleMouseDown = (e: Event) =>
-    {
-        const mouseEvent = e as MouseEvent
-        startPosition.current.x = mouseEvent.pageX
-        startPosition.current.y = mouseEvent.pageY
-        document.addEventListener('mousemove', handleMouseMove)
-        document.addEventListener('mouseup', handleMouseUp)
-    }
+    // const handleMouseMove = ((e: MouseEvent) =>
+    // {
+    //     let delta: {x: number, y: number}
+    //     if (props.scale.isMain)
+    //     {
+    //         delta = {x: e.pageX - startPosition.current.x, y: e.pageY - startPosition.current.y}
+    //     }
+    //     else
+    //     {
+    //         delta = {
+    //             x: (e.pageX - startPosition.current.x) * props.scale.scaleIndex,
+    //             y: (e.pageY - startPosition.current.y) * props.scale.scaleIndex
+    //         }
+    //     }
 
-    const handleMouseMove = ((e: MouseEvent) =>
-    {
-        let delta: {x: number, y: number}
-        if (props.scale.isMain)
-        {
-            delta = {x: e.pageX - startPosition.current.x, y: e.pageY - startPosition.current.y}
-        }
-        else
-        {
-            delta = {
-                x: (e.pageX - startPosition.current.x) * props.scale.scaleIndex,
-                y: (e.pageY - startPosition.current.y) * props.scale.scaleIndex
-            }
-        }
+    //     if (ref.current != null)
+    //     {
+    //         const newPos = {
+    //             x: position.x + delta.x,
+    //             y: position.y + delta.y
+    //         }
+    //         setPosition(newPos)
+    //     }
+    // })
 
-        if (ref.current != null)
-        {
-            const newPos = {
-                x: position.x + delta.x,
-                y: position.y + delta.y
-            }
-            setPosition(newPos)
-        }
-    })
-
-    const handleMouseUp = () =>
-    {
-        document.removeEventListener('mousemove', handleMouseMove)
-        document.removeEventListener('mouseup', handleMouseUp)
-    }
+    // const handleMouseUp = () =>
+    // {
+    //     document.removeEventListener('mousemove', handleMouseMove)
+    //     document.removeEventListener('mouseup', handleMouseUp)
+    // }
 
     const styleSvg = {
         top: `${position.y}px`,

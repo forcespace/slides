@@ -1,5 +1,5 @@
 import React from 'react';
-import {dispatch, dispatchWithoutParam} from '../../dispatch';
+//import {dispatch, dispatchWithoutParam} from '../../dispatch';
 import {createEditor, addEmptySlide, deleteSlide, addObject, moveSlideTopByStep, moveSlideDownByStep} from '../../script/slide/functions';
 import Button from '../TabsButton/Button';
 import NavTabs from '../NavTabs/NavTabs';
@@ -56,42 +56,42 @@ export function Nav()
 {
     function handleAddNewSlideClick()
     {
-        dispatchWithoutParam(addEmptySlide)
+        // dispatchWithoutParam(addEmptySlide)
     }
 
     function handleRemoveSlideClick()
     {
-        dispatchWithoutParam(deleteSlide)
+        // dispatchWithoutParam(deleteSlide)
     }
 
     function handleNewPresentationClick()
     {
-        dispatchWithoutParam(createEditor)
+        // dispatchWithoutParam(createEditor)
     }
 
     function handleMoveSlideUp()
     {
-        dispatchWithoutParam(moveSlideTopByStep)
+        // dispatchWithoutParam(moveSlideTopByStep)
     }
 
     function handleMoveSlideDown()
     {
-        dispatchWithoutParam(moveSlideDownByStep)
+        // dispatchWithoutParam(moveSlideDownByStep)
     }
 
     function handleAddRectClick()
     {
-        dispatch(addObject, {objectType: 'Rect'})
+        // dispatch(addObject, {objectType: 'Rect'})
     }
 
     function handleAddTriangleClick()
     {
-        dispatch(addObject, {objectType: 'Triangle'})
+        // dispatch(addObject, {objectType: 'Triangle'})
     }
 
     function handleAddCircleClick()
     {
-        dispatch(addObject, {objectType: 'Circle'})
+        // dispatch(addObject, {objectType: 'Circle'})
     }
 
     const [activeTab, setActiveTab] = React.useState(TABS.MAIN);

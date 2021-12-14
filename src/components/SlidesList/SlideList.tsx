@@ -1,32 +1,41 @@
-import React from 'react';
-import {SlideView} from './SlideView';
-import {Editor, Slide} from '../../script/slide/slide';
-import {dispatch} from '../../dispatch';
-import {setActive} from '../../script/slide/functions';
-import styles from './slideList.module.css';
+import {SlideView} from './SlideView'
+import {Editor, Slide} from '../../script/slide/slide'
+import {setActive, ExtendedAction} from '../../script/slide/actionCreators'
+import styles from './slideList.module.css'
+import {connect} from 'react-redux'
 
-export function SlideList(props: Editor)
+const SCALE_INDEX = 0.1381
+
+function mapStateToProps(state: Editor): {activeSlide: number, slides: Slide[]} {
+    return {activeSlide: state.active, slides: state.presentation.slides} 
+}
+
+const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => any) => {
+    return {
+        setActive: (index: number) => dispatch(setActive(index))
+    }
+}
+
+function SlideList(props: {activeSlide: number, slides: Slide[], setActive: Function})
 {
-    const active = props.active
-    const slides: Slide[] = props.presentation.slides
-
     function isActive(index: number)
     {
-        return index === active
+        return index === props.activeSlide
     }
+    
 
     function setActiveSlide(index: number)
     {
-        dispatch(setActive, index)
+        props.setActive(index)
     }
 
     return (
         <div className={styles.slide_list}>
-            {slides.map((slide: Slide, index: number) =>
+            {props.slides.map((slide: Slide, index: number) =>
                 <div className={styles.slide_list_item}>
                     <div className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`}
-                         onClick={() => setActiveSlide(index)} draggable={true}>
-                        <SlideView slide={slide} scale={{isMain: false, scaleIndex: 170 / 1231}}/>
+                            onClick={() => setActiveSlide(index)} draggable={true}>
+                        <SlideView slide={slide} scale={{isMain: false, scaleIndex: SCALE_INDEX}}/>
                     </div>
                     <span className={styles.slide_count}>
                         {index + 1}
@@ -36,3 +45,5 @@ export function SlideList(props: Editor)
         </div>
     )
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SlideList)
