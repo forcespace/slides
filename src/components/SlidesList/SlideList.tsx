@@ -6,8 +6,8 @@ import {connect} from 'react-redux'
 
 const SCALE_INDEX = 0.1381
 
-function mapStateToProps(state: Editor): {activeSlide: number, slides: Slide[]} {
-    return {activeSlide: state.active, slides: state.presentation.slides} 
+function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]} {
+    return {activeSlide: state.presentationReducer.active, slides: state.presentationReducer.presentation.slides} 
 }
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => any) => {

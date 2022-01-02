@@ -6,6 +6,7 @@ let editor: Editor = {
         title: 'Презентация онлайн',
         slides: [
             {
+                id: '1',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -73,6 +74,7 @@ let editor: Editor = {
                 ]
             },
             {
+                id: '2',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -173,6 +175,7 @@ let editor: Editor = {
                 ]
             },
             {
+                id: '3',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -273,6 +276,7 @@ let editor: Editor = {
                 ]
             },
             {
+                id: '4',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -373,6 +377,7 @@ let editor: Editor = {
                 ]
             },
             {
+                id: '2',
                 background: {
                     color: '#fff',
                     priority: 1
@@ -473,6 +478,7 @@ let editor: Editor = {
                 ]
             },
             {
+                id: '2',
                 background: {
                     color: '#fff',
                     priority: 1

@@ -2,10 +2,10 @@ import { connect } from 'react-redux'
 import {Editor, Slide} from '../../script/slide/slide'
 import styles from './footer.module.css'
 
-function mapStateToProps(state: Editor): {activeSlide: number, slides: Slide[]}  {
+function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]}  {
     return {
-        activeSlide: state.active,
-        slides: state.presentation.slides
+        activeSlide: state.presentationReducer.active,
+        slides: state.presentationReducer.presentation.slides
     } 
 }
 

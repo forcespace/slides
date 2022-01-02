@@ -1,17 +1,12 @@
+import {combineReducers} from 'redux'
 import {ExtendedAction} from './actionCreators'
-import {setTitle, setActive} from './functions'
+import {editor} from './editor-new'
+import {setTitle, setActive, createEditor, addEmptySlide, deleteSlide} from './functions'
 import {Editor} from './slide'
 
-const initState: Editor = {
-    history: {},
-    presentation: {
-        title: '',
-        slides: []
-    },
-    active: -1,
-}
+const initState: Editor = createEditor()
 
-const rootReducer = (state: Editor = initState, action: ExtendedAction): Editor => {
+const presentationReducer = (state: Editor = initState, action: ExtendedAction): Editor => {
     switch (action.type) {
         case 'SET_TITLE': {
             const newTitle = action.newTitle ?? state.presentation.title
@@ -21,12 +16,24 @@ const rootReducer = (state: Editor = initState, action: ExtendedAction): Editor 
             const activeIndex = action.index ?? state.active
             return setActive(state, activeIndex)
         }
+        case 'CREATE_PRESENTATION': {
+            return createEditor()
+        }
+        case 'ADD_SLIDE': {
+            return addEmptySlide(state)
+        }
+        case 'DELETE_SLIDE': {
+            return deleteSlide(state)
+        }
         default: {
             return state
         }
     }
 }
 
+const rootReducer = combineReducers({presentationReducer})
+
 export {
     rootReducer,
 }
+

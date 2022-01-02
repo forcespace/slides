@@ -1,12 +1,13 @@
-import React from 'react';
-//import {dispatch, dispatchWithoutParam} from '../../dispatch';
-import {createEditor, addEmptySlide, deleteSlide, addObject, moveSlideTopByStep, moveSlideDownByStep} from '../../script/slide/functions';
-import Button from '../Button/Button';
-import NavTabs from '../NavTabs/NavTabs';
-import Input from '../Input/Input';
-import InputFile from '../InputFile/InputFile';
-import styles from './nav.module.css';
-import stylesButtonTabs from '../Button/button.module.css';
+import React from 'react'
+import {createEditor, addEmptySlide, deleteSlide} from '../../script/slide/actionCreators'
+import Button from '../Button/Button'
+import NavTabs from '../NavTabs/NavTabs'
+import Input from '../Input/Input'
+import InputFile from '../InputFile/InputFile'
+import styles from './nav.module.css'
+import stylesButtonTabs from '../Button/button.module.css'
+import {Action} from 'redux'
+import { connect } from 'react-redux'
 
 const TABS = {
     MAIN: 'main',
@@ -21,6 +22,18 @@ interface NavTabMenu
     className: string,
     onClick: () => void,
     name: string
+}
+
+function mapStateToProps() {
+    
+}
+
+const mapDispatchToProps = (dispatch: (arg0: Action) => any) => {
+    return {
+        createEditor: () => dispatch(createEditor()),
+        addEmptySlide: () => dispatch(addEmptySlide()),
+        deleteSlide: () => dispatch(deleteSlide()),
+    }
 }
 
 function NavTab(props: {tabs: Array<NavTabMenu>, active: string})
@@ -75,21 +88,21 @@ function NavTabButtons(props: {buttons: Array<NavTabButton>, hidden: boolean})
     )
 }
 
-export function Nav()
+function Nav(props: {addEmptySlide: Function, deleteSlide: Function, createEditor: Function})
 {
     function handleAddNewSlideClick()
     {
-        // dispatchWithoutParam(addEmptySlide)
+        props.addEmptySlide()
     }
 
     function handleRemoveSlideClick()
     {
-        // dispatchWithoutParam(deleteSlide)
+        props.deleteSlide()
     }
 
     function handleNewPresentationClick()
     {
-        // dispatchWithoutParam(createEditor)
+        props.createEditor()
     }
 
     function handleMoveSlideUp()
@@ -117,7 +130,7 @@ export function Nav()
         // dispatch(addObject, {objectType: 'Circle'})
     }
 
-    const [activeTab, setActiveTab] = React.useState(TABS.MAIN);
+    const [activeTab, setActiveTab] = React.useState(TABS.MAIN)
 
     return (
         <nav className={styles.nav}>
@@ -223,5 +236,7 @@ export function Nav()
                 }
             ]} hidden={activeTab !== TABS.SETTINGS}/>
         </nav>
-    );
+    )
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)

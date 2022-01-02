@@ -45,7 +45,7 @@ export function SlideContent(props: Props)
 
     return (
         <div className={styles.slide} style={{height: width / slideProportion}} ref={slideRef}>
-            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / scaleProportion}}/>
+            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / scaleProportion}} key={props.slide.id}/>
         </div>
     );
 }

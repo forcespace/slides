@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {setTitle, ExtendedAction} from '../../script/slide/actionCreators'
 import styles from './header.module.css'
 
-function mapStateToProps(state: Editor): {title: string} {
-    return {title: state.presentation.title} 
+function mapStateToProps(state: {presentationReducer: Editor}): {title: string} {
+    return {title: state.presentationReducer.presentation.title} 
 }
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => any) => {

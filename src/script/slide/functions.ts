@@ -21,6 +21,7 @@ export function setTitle(editor: Editor, newTitle: string): Editor {
 export function createSlide(): Slide
 {
     return {
+        id: generateId(),
         background: {color: '', image: '', priority: 0},
         objects: []
     }
@@ -47,17 +48,18 @@ export function addEmptySlide(editor: Editor): Editor {
 export function deleteSlide(editor: Editor): Editor {
     let newSlides: Array<Slide> = editor.presentation.slides
     const index: number = editor.active
+    const slideArrayLenght: number = editor.presentation.slides.length
 
     let newIndex: number
-    if (editor.presentation.slides.length > 0 && editor.active === 0) {
-        newIndex = editor.active
-    } else if (editor.presentation.slides.length === 0) {
+    if (slideArrayLenght > 0 && index === 0) {
+        newIndex = index
+    } else if (slideArrayLenght === 0) {
         newIndex = -1
     } else {
-        newIndex = editor.active - 1
+        newIndex = index - 1
     }
 
-    if (editor.presentation.slides.length > 0) {
+    if (slideArrayLenght > 0) {
         newSlides.splice(index, 1)
     }
 
