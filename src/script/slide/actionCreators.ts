@@ -1,47 +1,52 @@
-import { Action } from "redux"
+import {Action} from 'redux'
 
 export type ExtendedAction = {
     type: string,
-    newTitle?: string, 
-    index?: number, 
+    newTitle?: string,
+    index?: number,
 }
 
-function setTitle(newTitle: string): ExtendedAction {
+export function setTitle(newTitle: string): ExtendedAction
+{
     return {
-      type: 'SET_TITLE',
-      newTitle
+        type: 'SET_TITLE',
+        newTitle
     }
-  }
-
-function setActive(index: number): ExtendedAction {
-  return {
-    type: 'SET_ACTIVE',
-    index
-  }
 }
 
-function createEditor(): Action {
+export function setActive(index: number): ExtendedAction
+{
     return {
-      type: 'CREATE_PRESENTATION'
+        type: 'SET_ACTIVE',
+        index
     }
-  }
-
-function addEmptySlide(): Action {
-  return {
-    type: 'ADD_SLIDE'
-  }
 }
 
-function deleteSlide(): Action {
-  return {
-    type: 'DELETE_SLIDE'
-  }
+export function createEditor(): Action
+{
+    return {
+        type: 'CREATE_PRESENTATION'
+    }
 }
 
-export {
-    setTitle,
-    setActive,
-    createEditor,
-    addEmptySlide,
-    deleteSlide,
+export function addEmptySlide(): Action
+{
+    return {
+        type: 'ADD_SLIDE'
+    }
+}
+
+export function deleteSlide(): Action
+{
+    return {
+        type: 'DELETE_SLIDE'
+    }
+}
+
+export function moveSlideTopByStep(index: number): ExtendedAction
+{
+    return {
+        type: 'MOVE_SLIDE_TOP',
+        index
+    }
 }

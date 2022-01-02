@@ -1,13 +1,13 @@
-import React from 'react'
-import {createEditor, addEmptySlide, deleteSlide} from '../../script/slide/actionCreators'
-import Button from '../Button/Button'
-import NavTabs from '../NavTabs/NavTabs'
-import Input from '../Input/Input'
-import InputFile from '../InputFile/InputFile'
-import styles from './nav.module.css'
-import stylesButtonTabs from '../Button/button.module.css'
-import {Action} from 'redux'
-import { connect } from 'react-redux'
+import React from 'react';
+import {createEditor, addEmptySlide, deleteSlide, moveSlideTopByStep} from '../../script/slide/actionCreators';
+import Button from '../Button/Button';
+import NavTabs from '../NavTabs/NavTabs';
+import Input from '../Input/Input';
+import InputFile from '../InputFile/InputFile';
+import styles from './nav.module.css';
+import stylesButtonTabs from '../Button/button.module.css';
+import {Action} from 'redux';
+import {connect} from 'react-redux';
 
 const TABS = {
     MAIN: 'main',
@@ -24,15 +24,17 @@ interface NavTabMenu
     name: string
 }
 
-function mapStateToProps() {
-    
+function mapStateToProps()
+{
+
 }
 
-const mapDispatchToProps = (dispatch: (arg0: Action) => any) => {
+const mapDispatchToProps = (dispatch: (arg0: Action) => any) =>
+{
     return {
         createEditor: () => dispatch(createEditor()),
         addEmptySlide: () => dispatch(addEmptySlide()),
-        deleteSlide: () => dispatch(deleteSlide()),
+        deleteSlide: () => dispatch(deleteSlide())
     }
 }
 
@@ -53,7 +55,7 @@ interface NavTabButton
 {
     classNameParent?: string,
     className: string,
-    onClick?: () => void,
+    onClick?: Function,
     title: string,
     mode?: 'button' | 'input' | 'input-file',
     type?: string,
@@ -69,7 +71,8 @@ function NavTabButtons(props: {buttons: Array<NavTabButton>, hidden: boolean})
                     {
                         if (button.mode === 'input')
                         {
-                            return <Input {...button} key={Math.random()} type={button.type} className={`${stylesButtonTabs.tabs_button} ${button.className}`} value={button.value}/>
+                            return <Input {...button} key={Math.random()} type={button.type}
+                                          className={`${stylesButtonTabs.tabs_button} ${button.className}`} value={button.value}/>
                         }
 
                         if (button.mode === 'input-file')
@@ -184,7 +187,10 @@ function Nav(props: {addEmptySlide: Function, deleteSlide: Function, createEdito
             <NavTabButtons buttons={[
                 {
                     className: stylesButtonTabs.tabs_button_slide_up,
-                    onClick: handleMoveSlideUp,
+                    onClick: (index: number) =>
+                    {
+                        moveSlideTopByStep(index)
+                    },
                     title: 'Переместить текущий слайд на позицию выше'
                 },
                 {
