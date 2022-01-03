@@ -20,7 +20,7 @@ interface NavTabMenu
 {
     id: string,
     className: string,
-    onClick: () => void,
+    onClick: Function,
     name: string
 }
 
@@ -41,7 +41,7 @@ function NavTab(props: {tabs: Array<NavTabMenu>, active: string})
     return (
         <NavTabs className={styles.menu_list}>
             {props.tabs.map(tab =>
-                <span key={Math.random()} className={`${tab.className} ${props.active === tab.id ? styles.active : ''}`} onClick={tab.onClick}>
+                <span key={Math.random()} className={`${tab.className} ${props.active === tab.id ? styles.active : ''}`} onClick={() => tab.onClick == undefined ? null : tab.onClick()}>
                     {tab.name}
                 </span>)
             }
@@ -53,7 +53,7 @@ interface NavTabButton
 {
     classNameParent?: string,
     className: string,
-    onClick?: () => void,
+    onClick?: Function,
     title: string,
     mode?: 'button' | 'input' | 'input-file',
     type?: string,
