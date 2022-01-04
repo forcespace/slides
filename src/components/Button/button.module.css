@@ -1,0 +1,126 @@
+.tab
+{
+    position: relative;
+    width: 32px;
+    height: 32px;
+    margin: 0 30px 0 0;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.75;
+    border: none;
+    background: transparent;
+}
+
+.tab:last-child
+{
+    margin: 0;
+}
+
+.tab:hover
+{
+    transition: 0.3s;
+    opacity: 1;
+}
+
+.tab_new_presentation
+{
+    top: 3px;
+    background: url('/src/upload/icon/new.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_slide
+{
+    background: url('/src/upload/icon/add.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_delete_slide
+{
+    background: url('/src/upload/icon/delete.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_slide_up
+{
+    transform: rotateX(180deg);
+    background: url('/src/upload/icon/move.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_slide_down
+{
+    background: url('/src/upload/icon/move.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_wrapper_file
+{
+    position: relative;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    margin-right: 30px;
+    transition: .3s;
+    opacity: .75;
+}
+
+.tab_wrapper_file:hover
+{
+    cursor: pointer;
+    transition: .3s;
+    opacity: 1;
+}
+
+.tab_add_img_wrapper
+{
+    background: url('/src/upload/icon/img.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_import_json_wrapper
+{
+    background: url('/src/upload/icon/save-json.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_img,
+.tab_import_json
+{
+    position: absolute;
+    z-index: -1;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.tab_add_img:hover,
+.tab_import_json:hover
+{
+    z-index: -1;
+    opacity: 0;
+}
+
+.tab_add_rect
+{
+    background: url('/src/upload/icon/rect.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_triangle
+{
+    background: url('/src/upload/icon/triangle.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_circle
+{
+    background: url('/src/upload/icon/circle.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_exp_json
+{
+    transform: rotate(180deg);
+    background: url('/src/upload/icon/save-json.png') no-repeat center center;
+    background-size: cover;
+}

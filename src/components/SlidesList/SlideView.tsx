@@ -1,10 +1,13 @@
-import * as React from 'react';
+import {connect} from 'react-redux';
 import {ObjectType, Slide} from '../../script/slide/slide';
-import {Objects} from "../SlideContent/Objects/Objects";
+import {Objects} from '../SlideContent/Objects/Objects';
 
 type Props = {
     slide: Slide,
-    scaleIndex: number
+    scale: {
+        isMain: boolean,
+        scaleIndex: number
+    }
 }
 
 export function SlideView(props: Props)
@@ -14,7 +17,7 @@ export function SlideView(props: Props)
     return (
         <>
             {slideObjects.map((object: ObjectType) =>
-                <Objects figure={object} scaleIndex={props.scaleIndex}/>
+                <Objects object={object} scale={props.scale} key={Math.random()}/>
             )}
         </>
     );

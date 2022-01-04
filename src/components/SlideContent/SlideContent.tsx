@@ -1,46 +1,51 @@
-import * as React from 'react';
+import React, {useRef, useEffect} from 'react';
 import {SlideView} from '../SlidesList/SlideView';
 import {Slide} from '../../script/slide/slide';
-import '../../style/block/slide/slide.css';
-import '../../style/main.css';
+import styles from './slideContent.module.css';
+import {Rect} from './Objects/Figures/Rect';
 
 type Props = {
-    slide: Slide,
-    isScale: boolean
+    slide: Slide
 }
 
 export function SlideContent(props: Props)
 {
-    const [width, setWidth] = React.useState(0)
+    const [width, setWidth] = React.useState(0);
+    const slideRef = useRef(null);
+    const slideProportion = 1.78;
+    const scaleProportion = 1231;
 
-    React.useLayoutEffect(() => {
-        const getWidth = (): number => {
-            const el = document.getElementById('slide')
-            if(el)
+    useEffect(() =>
+    {
+        const getWidth = (): number =>
+        {
+            if (slideRef.current)
             {
-                const slide = window.getComputedStyle(el)
-                return slide ? parseFloat(slide.width) : 0
+                const slide = window.getComputedStyle(slideRef.current);
+                return slide ? parseFloat(slide.width) : 0;
             }
 
             return 0;
-        }
-
-        const handleWindowResize = () => {
-            setWidth(getWidth())
         };
 
-        handleWindowResize()
+        const handleWindowResize = () =>
+        {
+            setWidth(getWidth());
+        };
 
-        window.addEventListener("resize", handleWindowResize)
+        handleWindowResize();
 
-        return () => {
-            window.removeEventListener("resize", handleWindowResize)
-        }
+        window.addEventListener('resize', handleWindowResize);
+
+        return () =>
+        {
+            window.removeEventListener('resize', handleWindowResize);
+        };
     }, []);
 
     return (
-        <div className={'b-slide'} style={{height: width / 1.78}} id={"slide"}>
-            <SlideView slide={props.slide} scaleIndex={width / 1231}/>
+        <div className={styles.slide} style={{height: width / slideProportion}} ref={slideRef}>
+            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / scaleProportion}} key={props.slide.id}/>
         </div>
     );
 }

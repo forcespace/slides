@@ -1,16 +1,26 @@
-import * as React from 'react';
-import '../../style/block/footer/footer.css'
-import {Editor} from "../../script/slide/slide";
+import { connect } from 'react-redux'
+import {Editor, Slide} from '../../script/slide/slide'
+import styles from './footer.module.css'
 
-export function Footer(props: Editor) {
-    const countSlides = props.presentation.slides.length
-    const activeSlide = props.active + 1
+function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]}  {
+    return {
+        activeSlide: state.presentationReducer.active,
+        slides: state.presentationReducer.presentation.slides
+    } 
+}
+
+function Footer(props: {activeSlide: number, slides: Slide[]})
+{
+    const countSlides = props.slides.length
+    const activeSlideNumber = props.activeSlide + 1
 
     return (
-        <footer className={'b-footer'}>
-            <span className={'b-footer__text_count'}>
-               Slide {activeSlide} of {countSlides}
+        <footer className={styles.footer}>
+            <span className={styles.count}>
+               Slide {activeSlideNumber} of {countSlides}
             </span>
         </footer>
     );
 }
+
+export default connect(mapStateToProps)(Footer)

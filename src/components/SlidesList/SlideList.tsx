@@ -1,37 +1,53 @@
-import React, {useEffect, useState, useRef} from 'react'
-import {SlideView} from './SlideView'
-import {Editor, Slide} from '../../script/slide/slide'
-import {dispatch} from '../../dispatch'
-import {setActive} from '../../script/slide/functions'
-import '../../style/block/slide/slide-list.css'
-import '../../style/main.css'
+import {SlideView} from './SlideView';
+import {Editor, Slide} from '../../script/slide/slide';
+import {ExtendedAction, setActive} from '../../script/slide/actionCreators';
+import styles from './slideList.module.css';
+import {connect} from 'react-redux';
+import {AnyAction} from 'redux';
 
-export function SlideList(props: Editor) {
-    const active = props.active
-    const slides: Slide[] = props.presentation.slides
+const SCALE_INDEX = 0.1381;
 
+function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]}
+{
+    return {
+        activeSlide: state.presentationReducer.active,
+        slides: state.presentationReducer.presentation.slides
+    };
+}
+
+const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction) =>
+{
+    return {
+        setActive: (index: number) => dispatch(setActive(index))
+    };
+};
+
+function SlideList(props: {activeSlide: number, slides: Slide[], setActive: Function})
+{
     function isActive(index: number)
     {
-        return index === active
+        return index === props.activeSlide;
     }
 
     function setActiveSlide(index: number)
     {
-        dispatch(setActive, index)
+        props.setActive(index);
     }
 
     return (
-        <div className={'b-slide-list'}>
-            {slides.map((slide: Slide, index: number) =>
-                <div className={'b-slide-list__item'}>
-                    <div className={`b-slide-list__content${isActive(index) ? " b-slide-list__content_active" : ""}`} onClick={() => setActiveSlide(index)}>
-                        <SlideView slide={slide} scaleIndex={170/1231}/>
+        <div className={styles.slide_list}>
+            {props.slides.map((slide: Slide, index: number) =>
+                <div key={slide.id} className={styles.slide}>
+                    <div className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`} onClick={() => setActiveSlide(index)} draggable={true}>
+                        <SlideView slide={slide} scale={{isMain: false, scaleIndex: SCALE_INDEX}}/>
                     </div>
-                    <span className={'b-slide-list__slide_count'}>
+                    <span className={styles.slide_count}>
                         {index + 1}
                     </span>
                 </div>
             )}
         </div>
-    )
+    );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SlideList);

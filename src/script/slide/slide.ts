@@ -15,11 +15,13 @@ export type Presentation = {
 }
 
 export type Slide = {
+    id: string,
     background: Background,
     objects: Array<ObjectType>
 }
 
 export type Object = {
+    id: string,
     leftTopPoint: Position,
     background?: Background,
     border?: Border,
@@ -61,7 +63,7 @@ export type Background = {
     color?: string,
     image?: string,
     priority: number
-};
+}
 
 export type Position = {
     x: number,

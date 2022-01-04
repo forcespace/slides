@@ -1,29 +1,39 @@
+import {Editor} from '../../script/slide/slide';
+import {connect} from 'react-redux';
+import {ExtendedAction, setTitle} from '../../script/slide/actionCreators';
+import styles from './header.module.css';
+import {AnyAction} from 'redux';
 import React from 'react';
-import {Editor} from "../../script/slide/slide";
-import {dispatch} from "../../dispatch";
-import {setTitle} from "../../script/slide/functions";
-import '../../style/block/header/header.css';
-import '../../style/main.css';
 
-export function Header(props: Editor)
+function mapStateToProps(state:
+    {presentationReducer: Editor}): {title: string}
 {
-    const {title} = props.presentation;
+    return {
+        title: state.presentationReducer.presentation?.title
+    };
+}
 
-    function handleTitleClick()
+const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction) =>
+{
+    return {
+        setTitle: (newTitle: string) => dispatch(setTitle(newTitle))
+    };
+};
+
+function Header(props: {title: string, setTitle: Function})
+{
+    function handleTitleChange(event: React.FocusEvent<HTMLInputElement>)
     {
-        const newTitle = window.prompt('Заголовок презентации', title);
-
-        if (newTitle)
-        {
-            dispatch(setTitle, newTitle)
-        }
+        props.setTitle(event.target.textContent || `Презентация от ${new Date().toLocaleString('ru-RU')}`);
     }
 
     return (
-        <header className={'b-header'}>
-            <h1 className={'b-header__title'} onClick={handleTitleClick}>
-                {title}
-            </h1>
+        <header className={styles.main}>
+            <div className={styles.wrapper}>
+                <h1 className={styles.title} contentEditable onBlur={handleTitleChange} suppressContentEditableWarning>{props.title}</h1>
+            </div>
         </header>
     );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

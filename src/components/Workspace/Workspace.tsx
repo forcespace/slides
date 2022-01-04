@@ -1,22 +1,28 @@
-import React from 'react';
-import {SlideList} from "../SlidesList";
-import {SlideContent} from "../SlideContent";
-import {Editor} from "../../script/slide/slide";
-import '../../style/block/workspace/workspace.css';
-import '../../style/main.css';
+import {SlideContent} from '../SlideContent'
+import {Editor, Slide} from '../../script/slide/slide'
+import styles from './workspace.module.css'
+import {connect} from 'react-redux'
+import SlideList from '../SlidesList/SlideList'
 
-export function Workspace(props: Editor)
+function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]}  {
+    return {
+        activeSlide: state.presentationReducer.active,
+        slides: state.presentationReducer.presentation.slides
+    } 
+}
+
+function Workspace(props: {activeSlide: number, slides: Slide[]})
 {
-    const slidesCount = props.presentation.slides.length;
+    const slidesCount = props.slides.length
 
     return (
-        <section className={'b-presentation__workspace'}>
+        <section className={styles.workspace}>
+            <SlideList/>
             <>
-                <SlideList {...props}/>
-            </>
-            <>
-                {slidesCount ? (<SlideContent slide={props.presentation.slides[props.active]} isScale={false}/>) : null}
+                {slidesCount ? (<SlideContent slide={props.slides[props.activeSlide]}/>) : null}
             </>
         </section>
-    );
+    )
 }
+
+export default connect(mapStateToProps)(Workspace)
