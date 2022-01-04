@@ -3,7 +3,8 @@ import React from 'react';
 interface InputFileProps
 {
     className: string,
-    onClick?: Function,
+    onClick?: React.MouseEventHandler<HTMLInputElement>,
+    onChange?: React.ChangeEventHandler<HTMLInputElement>,
     title: string,
     type?: string
 }
@@ -11,6 +12,6 @@ interface InputFileProps
 export default function InputFile(props: InputFileProps)
 {
     return (
-        <input className={props.className} onClick={() => props.onClick == undefined ? null : props.onClick()} title={props.title} type={'file'}/>
+        <input className={props.className} onClick={props.onClick} onChange={props.onChange} title={props.title} type={'file'}/>
     )
 }
