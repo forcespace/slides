@@ -58,31 +58,19 @@ export function deleteSlide(editor: Editor): Editor
     if (slideArrayLenght > 1 && index === 0)
     {
         newIndex = index;
-        console.log("number: " + 1);
-        console.log("slideArrayLenght: " + slideArrayLenght);
-        console.log("newIndex: " + newIndex);
     }
     else if (slideArrayLenght === 0)
     {
         newIndex = -1;
-        console.log("number: " + 2);
-        console.log("slideArrayLenght: " + slideArrayLenght);
-        console.log("newIndex: " + newIndex);
     }
     else
     {
         newIndex = index - 1;
-        console.log("number: " + 3);
-        console.log("slideArrayLenght: " + slideArrayLenght);
-        console.log("newIndex: " + newIndex);
     }
 
     if (slideArrayLenght > 0)
     {
         newSlides.splice(index, 1);
-        console.log("number: " + 4);
-        console.log("slideArrayLenght: " + slideArrayLenght);
-        console.log("newIndex: " + newIndex);
     }
 
     return {
