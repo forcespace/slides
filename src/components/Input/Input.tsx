@@ -4,7 +4,7 @@ interface InputProps
 {
     className: string,
     onClick?: React.MouseEventHandler<HTMLInputElement>,
-    title: string,
+    title?: string,
     type?: string,
     value?: string
 }

@@ -4,7 +4,7 @@ interface ButtonProps
 {
     className: string,
     onClick?: Function,
-    title: string
+    title?: string
 }
 
 export default function Button(props: ButtonProps)

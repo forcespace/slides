@@ -25,22 +25,22 @@
     width: 0;
 }
 
-.slide_list_item
+.slide
 {
     position: relative;
 }
 
-.slide_list_item:not(:last-child)
+.slide:not(:last-child)
 {
     margin-bottom: 25px;
 }
 
-.slide_list_item:last-child
+.slide:last-child
 {
     margin-bottom: 250px;
 }
 
-.slide_list_item:last-child::after
+.slide:last-child::after
 {
     position: absolute;
     right: 0;

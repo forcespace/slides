@@ -59,7 +59,8 @@ interface NavTabButton
     className: string,
     onClick?: React.MouseEventHandler<HTMLInputElement>,
     onChange?: React.ChangeEventHandler<HTMLInputElement>,
-    title: string,
+    titleLabel?: string,
+    title?: string,
     mode?: 'button' | 'input' | 'input-file',
     type?: string,
     value?: string
@@ -76,15 +77,15 @@ function NavTabButtons(props: {buttons: Array<NavTabButton>, hidden: boolean})
                         {
                             case 'input':
                             {
-                                return <Input {...button} key={Math.random()} type={button.type}
-                                              className={`${stylesButtonTabs.tab} ${button.className}`} value={button.value}/>;
+                                return <Input {...button} key={Math.random()} type={button.type} className={`${stylesButtonTabs.tab} ${button.className}`}
+                                              value={button.value}/>;
                             }
                             case 'input-file':
                             {
                                 return (
-                                    <label className={`${button.classNameParent} ${stylesButtonTabs.tab_wrapper_file}`}>
-                                        <InputFile {...button} key={Math.random()} className={`${stylesButtonTabs.tab} ${button.className}`}/>
-                                    </label>
+                                    <InputFile classNameLabel={`${stylesButtonTabs.tab_wrapper_file} ${button.classNameParent}`}
+                                               titleLabel={button.titleLabel} {...button} key={Math.random()}
+                                               className={`${stylesButtonTabs.tab} ${button.className}`}/>
                                 );
                             }
                             default:
@@ -222,7 +223,7 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                     classNameParent: stylesButtonTabs.tab_import_json_wrapper,
                     className: stylesButtonTabs.tab_import_json,
                     onChange: importProject,
-                    title: 'Загрузить проект в формате JSON',
+                    titleLabel: 'Загрузить проект в формате JSON',
                     mode: 'input-file',
                     type: 'file'
                 }
@@ -269,7 +270,7 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                 {
                     classNameParent: stylesButtonTabs.tab_add_img_wrapper,
                     className: stylesButtonTabs.tab_add_img,
-                    title: 'Загрузить картинку',
+                    titleLabel: 'Загрузить картинку',
                     mode: 'input-file',
                     type: 'file'
                 },
