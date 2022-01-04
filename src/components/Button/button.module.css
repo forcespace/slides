@@ -1,4 +1,4 @@
-.tabs_button
+.tab
 {
     position: relative;
     width: 32px;
@@ -11,50 +11,50 @@
     background: transparent;
 }
 
-.tabs_button:last-child
+.tab:last-child
 {
     margin: 0;
 }
 
-.tabs_button:hover
+.tab:hover
 {
     transition: 0.3s;
     opacity: 1;
 }
 
-.tabs_button_new_presentation
+.tab_new_presentation
 {
     top: 3px;
     background: url('/src/upload/icon/new.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_slide
+.tab_add_slide
 {
     background: url('/src/upload/icon/add.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_delete_slide
+.tab_delete_slide
 {
     background: url('/src/upload/icon/delete.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_slide_up
+.tab_slide_up
 {
     transform: rotateX(180deg);
     background: url('/src/upload/icon/move.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_slide_down
+.tab_slide_down
 {
     background: url('/src/upload/icon/move.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_wrapper_file
+.tab_wrapper_file
 {
     position: relative;
     z-index: 1;
@@ -65,27 +65,27 @@
     opacity: .75;
 }
 
-.tabs_button_wrapper_file:hover
+.tab_wrapper_file:hover
 {
     cursor: pointer;
     transition: .3s;
     opacity: 1;
 }
 
-.tabs_button_add_img_wrapper
+.tab_add_img_wrapper
 {
     background: url('/src/upload/icon/img.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_import_json_wrapper
+.tab_import_json_wrapper
 {
     background: url('/src/upload/icon/save-json.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_img,
-.tabs_button_import_json
+.tab_add_img,
+.tab_import_json
 {
     position: absolute;
     z-index: -1;
@@ -93,32 +93,32 @@
     opacity: 0;
 }
 
-.tabs_button_add_img:hover,
-.tabs_button_import_json:hover
+.tab_add_img:hover,
+.tab_import_json:hover
 {
     z-index: -1;
     opacity: 0;
 }
 
-.tabs_button_add_rect
+.tab_add_rect
 {
     background: url('/src/upload/icon/rect.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_triangle
+.tab_add_triangle
 {
     background: url('/src/upload/icon/triangle.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_circle
+.tab_add_circle
 {
     background: url('/src/upload/icon/circle.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_exp_json
+.tab_exp_json
 {
     transform: rotate(180deg);
     background: url('/src/upload/icon/save-json.png') no-repeat center center;
