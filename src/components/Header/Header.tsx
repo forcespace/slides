@@ -28,7 +28,7 @@ function Header(props: {title: string, setTitle: Function})
     }
 
     return (
-        <header className={styles.header}>
+        <header className={styles.main}>
             <div className={styles.wrapper}>
                 <h1 className={styles.title} contentEditable onBlur={handleTitleChange} suppressContentEditableWarning>{props.title}</h1>
             </div>
