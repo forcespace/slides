@@ -54,7 +54,7 @@
     background-size: cover;
 }
 
-.tabs_button_add_img_wrapper
+.tabs_button_wrapper_file
 {
     position: relative;
     z-index: 1;
@@ -63,18 +63,29 @@
     margin-right: 30px;
     transition: .3s;
     opacity: .75;
+}
+
+.tabs_button_wrapper_file:hover
+{
+    cursor: pointer;
+    transition: .3s;
+    opacity: 1;
+}
+
+.tabs_button_add_img_wrapper
+{
     background: url('/src/upload/icon/img.png') no-repeat center center;
     background-size: cover;
 }
 
-.tabs_button_add_img_wrapper:hover
+.tabs_button_import_json_wrapper
 {
-    transition: .3s;
-    opacity: 1;
-    cursor: pointer;
+    background: url('/src/upload/icon/save-json.png') no-repeat center center;
+    background-size: cover;
 }
 
-.tabs_button_add_img
+.tabs_button_add_img,
+.tabs_button_import_json
 {
     position: absolute;
     z-index: -1;
@@ -82,7 +93,8 @@
     opacity: 0;
 }
 
-.tabs_button_add_img:hover
+.tabs_button_add_img:hover,
+.tabs_button_import_json:hover
 {
     z-index: -1;
     opacity: 0;
@@ -103,5 +115,12 @@
 .tabs_button_add_circle
 {
     background: url('/src/upload/icon/circle.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tabs_button_exp_json
+{
+    transform: rotate(180deg);
+    background: url('/src/upload/icon/save-json.png') no-repeat center center;
     background-size: cover;
 }

@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {ObjectType, Slide} from '../../script/slide/slide'
 import {Objects} from '../SlideContent/Objects/Objects'
 
