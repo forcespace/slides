@@ -12,8 +12,8 @@ import {store} from '../../store';
 
 const TABS = {
     SAVE: 'save',
-    MAIN: 'main',
-    EDIT: 'edit',
+    MAIN: 'presentation',
+    EDIT: 'slides',
     PASTE: 'paste'
 };
 
@@ -196,13 +196,13 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                         id: TABS.MAIN,
                         className: `${styles.menu_list_item}`,
                         onClick: () => setActiveTab(TABS.MAIN),
-                        name: 'Главная'
+                        name: 'Презентация'
                     },
                     {
                         id: TABS.EDIT,
                         className: `${styles.menu_list_item}`,
                         onClick: () => setActiveTab(TABS.EDIT),
-                        name: 'Редактирование'
+                        name: 'Слайды'
                     },
                     {
                         id: TABS.PASTE,
