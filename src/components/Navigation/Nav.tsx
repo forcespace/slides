@@ -59,7 +59,8 @@ interface NavTabButton
     className: string,
     onClick?: React.MouseEventHandler<HTMLInputElement>,
     onChange?: React.ChangeEventHandler<HTMLInputElement>,
-    title: string,
+    titleLabel?: string,
+    title?: string,
     mode?: 'button' | 'input' | 'input-file',
     type?: string,
     value?: string
@@ -76,20 +77,20 @@ function NavTabButtons(props: {buttons: Array<NavTabButton>, hidden: boolean})
                         {
                             case 'input':
                             {
-                                return <Input {...button} key={Math.random()} type={button.type}
-                                              className={`${stylesButtonTabs.tabs_button} ${button.className}`} value={button.value}/>;
+                                return <Input {...button} key={Math.random()} type={button.type} className={`${stylesButtonTabs.tab} ${button.className}`}
+                                              value={button.value}/>;
                             }
                             case 'input-file':
                             {
                                 return (
-                                    <label className={`${button.classNameParent} ${stylesButtonTabs.tabs_button_wrapper_file}`}>
-                                        <InputFile {...button} key={Math.random()} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>
-                                    </label>
+                                    <InputFile classNameLabel={`${stylesButtonTabs.tab_wrapper_file} ${button.classNameParent}`}
+                                               titleLabel={button.titleLabel} {...button} key={Math.random()}
+                                               className={`${stylesButtonTabs.tab} ${button.className}`}/>
                                 );
                             }
                             default:
                             {
-                                return <Button {...button} key={Math.random()} className={`${stylesButtonTabs.tabs_button} ${button.className}`}/>;
+                                return <Button {...button} key={Math.random()} className={`${stylesButtonTabs.tab} ${button.className}`}/>;
                             }
                         }
                     }
@@ -214,15 +215,15 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
 
             <NavTabButtons buttons={[
                 {
-                    className: stylesButtonTabs.tabs_button_exp_json,
+                    className: stylesButtonTabs.tab_exp_json,
                     onClick: exportProject,
                     title: 'Сохранить проект в формате JSON'
                 },
                 {
-                    classNameParent: stylesButtonTabs.tabs_button_import_json_wrapper,
-                    className: stylesButtonTabs.tabs_button_import_json,
+                    classNameParent: stylesButtonTabs.tab_import_json_wrapper,
+                    className: stylesButtonTabs.tab_import_json,
                     onChange: importProject,
-                    title: 'Загрузить проект в формате JSON',
+                    titleLabel: 'Загрузить проект в формате JSON',
                     mode: 'input-file',
                     type: 'file'
                 }
@@ -230,17 +231,17 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
 
             <NavTabButtons buttons={[
                 {
-                    className: stylesButtonTabs.tabs_button_new_presentation,
+                    className: stylesButtonTabs.tab_new_presentation,
                     onClick: handleNewPresentationClick,
                     title: 'Создать новую презентацию'
                 },
                 {
-                    className: stylesButtonTabs.tabs_button_add_slide,
+                    className: stylesButtonTabs.tab_add_slide,
                     onClick: handleAddNewSlideClick,
                     title: 'Добавить новый слайд'
                 },
                 {
-                    className: stylesButtonTabs.tabs_button_delete_slide,
+                    className: stylesButtonTabs.tab_delete_slide,
                     onClick: handleRemoveSlideClick,
                     title: 'Удалить активный слайд'
                 }
@@ -248,12 +249,12 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
 
             <NavTabButtons buttons={[
                 {
-                    className: stylesButtonTabs.tabs_button_slide_up,
+                    className: stylesButtonTabs.tab_slide_up,
                     onClick: handleMoveSlideUp,
                     title: 'Переместить текущий слайд на позицию выше'
                 },
                 {
-                    className: stylesButtonTabs.tabs_button_slide_down,
+                    className: stylesButtonTabs.tab_slide_down,
                     onClick: handleMoveSlideDown,
                     title: 'Переместить текущий слайд на позицию ниже'
                 }
@@ -261,30 +262,30 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
 
             <NavTabButtons buttons={[
                 {
-                    className: stylesButtonTabs.tabs_button_add_color,
+                    className: stylesButtonTabs.tab_add_color,
                     title: 'Выбрать цвет',
                     mode: 'input',
                     type: 'color'
                 },
                 {
-                    classNameParent: stylesButtonTabs.tabs_button_add_img_wrapper,
-                    className: stylesButtonTabs.tabs_button_add_img,
-                    title: 'Загрузить картинку',
+                    classNameParent: stylesButtonTabs.tab_add_img_wrapper,
+                    className: stylesButtonTabs.tab_add_img,
+                    titleLabel: 'Загрузить картинку',
                     mode: 'input-file',
                     type: 'file'
                 },
                 {
-                    className: stylesButtonTabs.tabs_button_add_rect,
+                    className: stylesButtonTabs.tab_add_rect,
                     onClick: handleAddRectClick,
                     title: 'Добавить прямоугольник'
                 },
                 {
-                    className: stylesButtonTabs.tabs_button_add_triangle,
+                    className: stylesButtonTabs.tab_add_triangle,
                     onClick: handleAddTriangleClick,
                     title: 'Добавить треугольник'
                 },
                 {
-                    className: stylesButtonTabs.tabs_button_add_circle,
+                    className: stylesButtonTabs.tab_add_circle,
                     onClick: handleAddCircleClick,
                     title: 'Добавить круг'
                 }

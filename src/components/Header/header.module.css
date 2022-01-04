@@ -3,17 +3,25 @@
     --main-color: #14b855;
 }
 
-.header
+.main
 {
     padding: 15px 0;
     background: var(--main-color);
 }
 
+.wrapper
+{
+    overflow: hidden;
+    max-width: 500px;
+    height: 20px;
+    margin: 0 auto;
+}
+
 .title
 {
     font: 400 16px/1 'Euclid Circular B Regular', sans-serif;
-    text-align: center;
-    color: #fff;
     width: max-content;
     margin: 0 auto;
+    text-align: center;
+    color: #fff;
 }

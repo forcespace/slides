@@ -21,16 +21,16 @@ export function SlideContent(props: Props)
         {
             if (slideRef.current)
             {
-                const slide = window.getComputedStyle(slideRef.current)
-                return slide ? parseFloat(slide.width) : 0
+                const slide = window.getComputedStyle(slideRef.current);
+                return slide ? parseFloat(slide.width) : 0;
             }
 
             return 0;
-        }
+        };
 
         const handleWindowResize = () =>
         {
-            setWidth(getWidth())
+            setWidth(getWidth());
         };
 
         handleWindowResize();
@@ -39,8 +39,8 @@ export function SlideContent(props: Props)
 
         return () =>
         {
-            window.removeEventListener('resize', handleWindowResize)
-        }
+            window.removeEventListener('resize', handleWindowResize);
+        };
     }, []);
 
     return (

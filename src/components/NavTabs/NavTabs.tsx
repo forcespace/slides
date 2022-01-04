@@ -14,5 +14,5 @@ export default function NavTabs(props: NavProps)
                 props.children.map((child: React.ReactElement) => child)
             }
         </div>
-    )
+    );
 }

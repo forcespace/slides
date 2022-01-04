@@ -4,7 +4,7 @@ export function createEditor(): Editor
 {
     return {
         history: {undo: [], redo: []},
-        presentation: {title: 'Заголовок презентации', slides: [createSlide()]},
+        presentation: {title: `Презентация от ${new Date().toLocaleString('ru-RU')}`, slides: [createSlide()]},
         active: 0
     };
 }
