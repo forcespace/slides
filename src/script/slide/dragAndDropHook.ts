@@ -4,6 +4,7 @@ export function useDragAndDrop(
     ref: RefObject<SVGSVGElement>, //Ref<SVGSVGElement>,
     position: {x: number, y: number},
     setPosition: React.Dispatch<React.SetStateAction<{x: number, y: number}>>,
+    setDragEnd: React.Dispatch<React.SetStateAction<boolean>>,
     isMain: boolean,
     scaleIndex: number,
 ): void {
@@ -52,6 +53,7 @@ export function useDragAndDrop(
 
     const handleMouseUp = (e: MouseEvent) =>
     {
+        setDragEnd(true)
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
     }
