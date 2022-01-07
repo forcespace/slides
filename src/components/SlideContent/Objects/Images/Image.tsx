@@ -1,6 +1,6 @@
-import React from 'react';
-import {Image} from '../../../../script/slide/slide';
-import styles from '../../slideContent.module.css';
+import {connect} from 'react-redux'
+import {Image} from '../../../../script/slide/slide'
+import styles from '../../slideContent.module.css'
 
 type Props = {
     imgObject: Image,
@@ -10,7 +10,7 @@ type Props = {
     }
 }
 
-export function Img(props: Props)
+function Img(props: Props)
 {
     const imgSrc = props.imgObject.src;
     const imgX = Math.ceil(props.imgObject.leftTopPoint.x * props.scale.scaleIndex);
@@ -22,3 +22,5 @@ export function Img(props: Props)
         <img className={styles.slide_item} src={imgSrc} style={{width: `${imgWidth}px`, height: `${imgHeight}px`, top: `${imgX}px`, left: `${imgY}px`}}/>
     )
 }
+
+export default connect()(Img)

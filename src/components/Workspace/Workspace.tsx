@@ -1,4 +1,4 @@
-import {SlideContent} from '../SlideContent'
+import SlideContent from '../SlideContent/SlideContent'
 import {Editor, Slide} from '../../script/slide/slide'
 import styles from './workspace.module.css'
 import {connect} from 'react-redux'

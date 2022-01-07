@@ -1,8 +1,8 @@
-import React from 'react';
-import {ObjectType} from '../../../../script/slide/slide';
-import {Circle} from './Circle';
-import {Triangle} from './Triangle';
-import {Rect} from './Rect';
+import {Editor, ObjectType} from '../../../../script/slide/slide'
+import Circle from './Circle'
+import Triangle from './Triangle'
+import Rect from './Rect'
+import {connect} from 'react-redux'
 
 type Props = {
     figure: ObjectType,
@@ -12,24 +12,33 @@ type Props = {
     }
 }
 
-export function Figure(props: Props)
+function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props): {state: {presentationReducer: Editor}, ownProps: Props} {
+    return {
+        state,
+        ownProps
+    } 
+}
+
+function Figure(props: {state: {presentationReducer: Editor}, ownProps: Props})
 {
-    if (props.figure.type === 'Rect')
+    if (props.ownProps.figure.type === 'Rect')
     {
         return (
-            <Rect figure={props.figure} scale={props.scale}/>
+            <Rect figure={props.ownProps.figure} scale={props.ownProps.scale}/>
         )
     }
-    else if (props.figure.type === 'Circle')
+    else if (props.ownProps.figure.type === 'Circle')
     {
         return (
-            <Circle figure={props.figure} scale={props.scale}/>
+            <Circle figure={props.ownProps.figure} scale={props.ownProps.scale}/>
         )
     }
     else
     {
         return (
-            <Triangle figure={props.figure} scale={props.scale}/>
+            <Triangle figure={props.ownProps.figure} scale={props.ownProps.scale}/>
         )
     }
 }
+
+export default connect(mapStateToProps)(Figure)

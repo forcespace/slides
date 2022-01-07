@@ -1,7 +1,8 @@
-import {ObjectType} from '../../../script/slide/slide'
-import {TextSvg} from './Texts/Text'
-import {Img} from './Images/Image'
-import {SvgFigure} from './Figures/SvgFigure'
+import {Editor, ObjectType} from '../../../script/slide/slide'
+import TextSvg from './Texts/Text'
+import Img from './Images/Image'
+import SvgFigure from './Figures/SvgFigure'
+import {connect} from 'react-redux'
 
 type Props = {
     object: ObjectType,
@@ -11,24 +12,33 @@ type Props = {
     },
 }
 
-export function Objects(props: Props)
+function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props): {state: {presentationReducer: Editor}, ownProps: Props} {
+    return {
+        state,
+        ownProps
+    } 
+}
+
+function Objects(props: {state: {presentationReducer: Editor}, ownProps: Props})
 {
-    if (props.object.type === 'Image')
+    if (props.ownProps.object.type === 'Image')
     {
         return (
-            <Img imgObject={props.object} scale={props.scale}/>
+            <Img imgObject={props.ownProps.object} scale={props.ownProps.scale}/>
         )
     }
-    else if (props.object.type === 'Text')
+    else if (props.ownProps.object.type === 'Text')
     {
         return (
-            <TextSvg text={props.object} scale={props.scale}/>
+            <TextSvg text={props.ownProps.object} scale={props.ownProps.scale}/>
         )
     }
     else
     {
         return (
-            <SvgFigure figure={props.object} scale={props.scale}/>
+            <SvgFigure figure={props.ownProps.object} scale={props.ownProps.scale} />
         )
     }
 }
+
+export default connect(mapStateToProps)(Objects)

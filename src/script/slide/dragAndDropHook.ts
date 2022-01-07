@@ -1,4 +1,4 @@
-import React, {Ref, RefObject, useEffect, useRef} from 'react';
+import React, {RefObject, useEffect, useRef} from 'react'
 
 export function useDragAndDrop(
     ref: RefObject<SVGSVGElement>, //Ref<SVGSVGElement>,
@@ -6,8 +6,7 @@ export function useDragAndDrop(
     setPosition: React.Dispatch<React.SetStateAction<{x: number, y: number}>>,
     isMain: boolean,
     scaleIndex: number,
-) {
-    
+): void {
     const startPosition = useRef({x: 0, y: 0})
 
     useEffect(() => {
@@ -48,11 +47,10 @@ export function useDragAndDrop(
             x: position.x + delta.x,
             y: position.y + delta.y
         }
-        console.log('newPos = ', newPos)
         setPosition(newPos)
     })
 
-    const handleMouseUp = () =>
+    const handleMouseUp = (e: MouseEvent) =>
     {
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)

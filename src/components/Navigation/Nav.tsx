@@ -143,10 +143,10 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
 
     function exportProject()
     {
-        const storeState = store.getState();
+        const storeState = store.getState()
         const fileName = 'slides.json';
-        const content = JSON.stringify(storeState);
-        download(content, fileName, 'text/plain');
+        const content = JSON.stringify(storeState)
+        download(content, fileName, 'text/plain')
     }
 
     function download(content: string, fileName: string, contentType: string)

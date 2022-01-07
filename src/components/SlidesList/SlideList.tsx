@@ -1,9 +1,9 @@
-import {SlideView} from './SlideView';
-import {Editor, Slide} from '../../script/slide/slide';
-import {ExtendedAction, setActive} from '../../script/slide/actionCreators';
-import styles from './slideList.module.css';
-import {connect} from 'react-redux';
-import {AnyAction} from 'redux';
+import SlideView from './SlideView'
+import {Editor, Slide} from '../../script/slide/slide'
+import {ExtendedAction, setActive} from '../../script/slide/actionCreators'
+import styles from './slideList.module.css'
+import {connect} from 'react-redux'
+import {AnyAction} from 'redux'
 
 const SCALE_INDEX = 0.1381;
 
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction) =>
     };
 };
 
-function SlideList(props: {activeSlide: number, slides: Slide[], setActive: Function})
+function SlideList(props: {activeSlide: number, slides: Slide[]} & ReturnType<typeof mapDispatchToProps>)
 {
     function isActive(index: number)
     {
@@ -31,7 +31,7 @@ function SlideList(props: {activeSlide: number, slides: Slide[], setActive: Func
 
     function setActiveSlide(index: number)
     {
-        props.setActive(index);
+        props.setActive(index)
     }
 
     return (
@@ -50,4 +50,4 @@ function SlideList(props: {activeSlide: number, slides: Slide[], setActive: Func
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SlideList);
+export default connect(mapStateToProps, mapDispatchToProps)(SlideList)

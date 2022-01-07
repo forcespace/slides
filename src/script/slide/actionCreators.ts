@@ -1,11 +1,14 @@
-import {Action} from 'redux';
+import {Action} from 'redux'
+import {Position} from '../slide/slide'
 
 export type ExtendedAction = {
     type: string,
     newTitle?: string,
     index?: number,
     object?: ObjectType,
-    data?: string
+    objectId?: string,
+    position?: Position,
+    data?: string | ArrayBuffer | null
 }
 
 export type ObjectType = {
@@ -84,4 +87,13 @@ export function importProject(data: string | ArrayBuffer | null): {data: string 
         type: 'IMPORT',
         data: data
     };
+}
+
+export function setPosition(objectId: string, position: Position): ExtendedAction
+{
+    return {
+        type: 'SET_POSITION',
+        objectId,
+        position,
+    }
 }

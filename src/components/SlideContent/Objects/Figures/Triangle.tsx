@@ -1,6 +1,6 @@
-import React from 'react';
-import {ObjectType, Position} from '../../../../script/slide/slide';
-import styles from '../../slideContent.module.css';
+import {connect} from 'react-redux'
+import {ObjectType, Position} from '../../../../script/slide/slide'
+import styles from '../../slideContent.module.css'
 
 type Props = {
     figure: ObjectType,
@@ -12,10 +12,10 @@ type Props = {
 
 export function Triangle(props: Props)
 {
-    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex);
-    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex);
-    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex);
-    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex);
+    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex)
+    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex)
+    const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex)
+    const ySvg = Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex)
 
     const styleSvg = {
         top: `${xSvg}px`,
@@ -50,3 +50,5 @@ export function Triangle(props: Props)
         </svg>
     )
 }
+
+export default connect()(Triangle)

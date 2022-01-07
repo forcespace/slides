@@ -9,6 +9,15 @@ export function createEditor(): Editor
     };
 }
 
+export function importProject(data: string | ArrayBuffer | null): Editor {
+    if(typeof data === 'string') {
+        const editor: Editor = JSON.parse(data).presentationReducer
+        return editor
+    }
+
+    return createEditor()
+}
+
 export function setTitle(editor: Editor, newTitle: string): Editor
 {
     return {
@@ -262,25 +271,33 @@ function createCircle(priority: number): ObjectType
     };
 }
 
-//Здесь добавила index, т.к. пока непонятно какой элемент внутри слайда активный
-export function setObjectPositionEditorVersion(editor: Editor, indexActiveObject: number, position: Position): Editor
-{
-    const newObject: ObjectType = {
-        ...editor.presentation.slides[editor.active].objects[indexActiveObject],
-        leftTopPoint: position
-    };
 
-    return replaceObjects(editor, indexActiveObject, newObject);
+export function setObjectPositionEditorVersion(editor: Editor, objectId: string, position: Position): Editor {
+    let objectIndex = -1
+
+    editor.presentation.slides[editor.active].objects.forEach((object, index) => {
+        if(object.id === objectId) {
+            objectIndex = index
+        }
+    })
+
+    if(objectIndex != -1) {
+        const newObject: ObjectType = {
+            ...editor.presentation.slides[editor.active].objects[objectIndex],
+            leftTopPoint: position
+        }
+
+        return replaceObjects(editor, objectIndex, newObject)
+    }
+
+    return editor
 }
 
 
-function replaceObjects(editor: Editor, indexActiveObject: number, newObject: ObjectType)
-{
-    const newObjects: Array<ObjectType> = {
-        ...editor.presentation.slides[editor.active].objects
-    };
+function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectType): Editor {
+    const newObjects: Array<ObjectType> = editor.presentation.slides[editor.active].objects
 
-    newObjects[indexActiveObject] = newObject;
+    newObjects[objectIndex] = newObject;
 
     const newSlide: Slide = {
         ...editor.presentation.slides[editor.active],

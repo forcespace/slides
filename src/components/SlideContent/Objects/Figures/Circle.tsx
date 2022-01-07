@@ -1,5 +1,5 @@
-import React from 'react';
-import {ObjectType} from '../../../../script/slide/slide';
+import {connect} from 'react-redux';
+import {ObjectType} from '../../../../script/slide/slide'
 
 type Props = {
     figure: ObjectType,
@@ -9,7 +9,7 @@ type Props = {
     }
 }
 
-export function Circle(props: Props)
+function Circle(props: Props)
 {
     const borderWidth = props.figure.border ? props.figure.border.borderSize : 0;
     const circleWidth = Math.ceil((props.figure.width + borderWidth + 2) * props.scale.scaleIndex);
@@ -22,3 +22,5 @@ export function Circle(props: Props)
         <circle cx={cx} cy={cy} r={circleRadius}/>
     )
 }
+
+export default connect()(Circle)

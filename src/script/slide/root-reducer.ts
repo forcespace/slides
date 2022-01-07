@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {ExtendedAction} from './actionCreators';
-import {addEmptySlide, addObject, createEditor, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle} from './functions';
+import {addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion} from './functions';
 import {Editor} from './slide';
 
 const initState: Editor = createEditor();
@@ -41,20 +41,20 @@ const presentationReducer = (state: Editor = initState, action: ExtendedAction):
         }
         case 'ADD_OBJECT':
         {
-            return addObject(state, action.object!);
+            return addObject(state, action.object!)
         }
         case 'IMPORT':
         {
-            try
-            {
-                return JSON.parse(action.data!).presentationReducer;
-            }
-            catch (error)
-            {
+            // try
+            // {
+            //     return JSON.parse(action.data!).presentationReducer;
+            // }
+            // catch (error)
+            // {
 
-            }
+            // }
 
-            return state;
+            return importProject(action.data!)
         }
         default:
         {
@@ -63,4 +63,19 @@ const presentationReducer = (state: Editor = initState, action: ExtendedAction):
     }
 };
 
-export const rootReducer = combineReducers({presentationReducer});
+const objectReducer = (state: Editor = initState, action: ExtendedAction): Editor =>
+{
+    switch (action.type)
+    {
+        case 'SET_POSITION':
+        {
+            return setObjectPositionEditorVersion(state, action.objectId!, action.position!)
+        }
+        default:
+        {
+            return state
+        }
+    }
+};
+
+export const rootReducer = combineReducers({presentationReducer, objectReducer})

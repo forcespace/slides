@@ -1,14 +1,21 @@
-import React, {useRef, useEffect} from 'react';
-import {SlideView} from '../SlidesList/SlideView';
-import {Slide} from '../../script/slide/slide';
-import styles from './slideContent.module.css';
-import {Rect} from './Objects/Figures/Rect';
+import React, {useRef, useEffect} from 'react'
+import SlideView from '../SlidesList/SlideView'
+import {Editor, Slide} from '../../script/slide/slide'
+import styles from './slideContent.module.css'
+import {connect} from 'react-redux'
 
 type Props = {
     slide: Slide
 }
 
-export function SlideContent(props: Props)
+function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props): {state: {presentationReducer: Editor}, ownProps: Props} {
+    return {
+        state,
+        ownProps
+    } 
+}
+
+function SlideContent(props: {state: {presentationReducer: Editor}, ownProps: Props})
 {
     const [width, setWidth] = React.useState(0);
     const slideRef = useRef(null);
@@ -45,7 +52,9 @@ export function SlideContent(props: Props)
 
     return (
         <div className={styles.slide} style={{height: width / slideProportion}} ref={slideRef}>
-            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / scaleProportion}} key={props.slide.id}/>
+            <SlideView slide={props.ownProps.slide} scale={{isMain: true, scaleIndex: width / scaleProportion}} key={props.ownProps.slide.id}/>
         </div>
     );
 }
+
+export default connect(mapStateToProps)(SlideContent)

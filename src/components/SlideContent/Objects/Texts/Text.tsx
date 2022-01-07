@@ -1,5 +1,5 @@
-import React from 'react';
-import {Text} from '../../../../script/slide/slide';
+import {connect} from 'react-redux'
+import {Text} from '../../../../script/slide/slide'
 
 type Props = {
     text: Text,
@@ -9,9 +9,11 @@ type Props = {
     }
 }
 
-export function TextSvg(props: Props)
+function TextSvg(props: Props)
 {
     return (
         <span>{props.text.content}</span>
     )
 }
+
+export default connect()(TextSvg)

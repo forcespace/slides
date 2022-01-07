@@ -1,9 +1,11 @@
-import React, {Ref, RefObject, useEffect} from 'react';
-import {ObjectType} from '../../../../script/slide/slide';
-import {useRef, useState} from 'react';
-import {Figure} from './Figure';
-import styles from '../../slideContent.module.css';
-import { useDragAndDrop } from '../../../../script/slide/dragAndDropHook';
+import {Editor, ObjectType, Position} from '../../../../script/slide/slide'
+import {Ref, useRef, useState} from 'react'
+import {AnyAction} from 'redux'
+import Figure from './Figure'
+import styles from '../../slideContent.module.css'
+import {useDragAndDrop} from '../../../../script/slide/dragAndDropHook'
+import {ExtendedAction, setPosition} from '../../../../script/slide/actionCreators'
+import {connect} from 'react-redux'
 
 type Props = {
     figure: ObjectType,
@@ -13,21 +15,36 @@ type Props = {
     },
 }
 
-export function SvgFigure(props: Props)
-{
-    const fillColorSvg = props.figure.background ? props.figure.background.color : '';
-    const strokeColorSvg = props.figure.border ? props.figure.border.borderColor : '';
-    const strokeSizeSvg = props.figure.border ? props.figure.border.borderSize * props.scale.scaleIndex : 0;
-    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex + 2 * strokeSizeSvg);
-    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex + 2 * strokeSizeSvg);
+function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props): {state: {presentationReducer: Editor}, ownProps: Props} {
+    return {
+        state,
+        ownProps
+    } 
+}
+
+//const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) =>
+const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction, ownProps: Props) => {
+    return {
+        setObjectPosition: (position: Position) => dispatch(setPosition(ownProps.figure.id, position)),
+    }
+}
+
+function SvgFigure(props: {state: {presentationReducer: Editor}, ownProps: Props} & ReturnType<typeof mapDispatchToProps>) {
+    const fillColorSvg = props.ownProps.figure.background ? props.ownProps.figure.background.color : ''
+    const strokeColorSvg = props.ownProps.figure.border ? props.ownProps.figure.border.borderColor : ''
+    const strokeSizeSvg = props.ownProps.figure.border ? props.ownProps.figure.border.borderSize * props.ownProps.scale.scaleIndex : 0
+    const widthSvg = Math.ceil(props.ownProps.figure.width * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
+    const heightSvg = Math.ceil(props.ownProps.figure.height * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
+
 
     const [position, setPosition] = useState({
-        x: Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex),
-        y: Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex)
+        x: Math.ceil(props.ownProps.figure.leftTopPoint.x * props.ownProps.scale.scaleIndex),
+        y: Math.ceil(props.ownProps.figure.leftTopPoint.y * props.ownProps.scale.scaleIndex)
     })
     const ref: Ref<SVGSVGElement> = useRef(null)
     
-    useDragAndDrop(ref, position, setPosition, props.scale.isMain, props.scale.scaleIndex)
+    useDragAndDrop(ref, position, setPosition, props.ownProps.scale.isMain, props.ownProps.scale.scaleIndex)
+    //props.setObjectPosition(position)
 
     const styleSvg = {
         top: `${position.y}px`,
@@ -45,7 +62,9 @@ export function SvgFigure(props: Props)
              style={styleSvg}
              className={styles.slide_item}
              xmlns="http://www.w3.org/2000/svg">
-            <Figure figure={props.figure} scale={props.scale}/>
+            <Figure figure={props.ownProps.figure} scale={props.ownProps.scale}/>
         </svg>
     )
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SvgFigure)
