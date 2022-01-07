@@ -2,7 +2,7 @@ import React, {RefObject, useEffect, useRef} from 'react'
 
 export function useDragAndDrop(
     ref: RefObject<SVGSVGElement>, 
-    position: {x: number, y: number},
+    objectParams: {x: number, y: number, width: number, height: number},
     setPosition: React.Dispatch<React.SetStateAction<{x: number, y: number}>>,
     setDragEnd: React.Dispatch<React.SetStateAction<boolean>>,
     isMain: boolean,
@@ -47,11 +47,11 @@ export function useDragAndDrop(
         }
 
         const newPos = {
-            x: position.x + delta.x,
-            y: position.y + delta.y
+            x: objectParams.x + delta.x,
+            y: objectParams.y + delta.y
         }
 
-        if(newPos.x <= fullWidth * scaleIndex && newPos.y <= fullWidth / slideProportion * scaleIndex && newPos.x >= 0 && newPos.y >= 0) {
+        if(newPos.x <= fullWidth * scaleIndex - objectParams.width && newPos.y <= fullWidth / slideProportion * scaleIndex - objectParams.height && newPos.x >= 0 && newPos.y >= 0) {
             setPosition(newPos)
         }
     })

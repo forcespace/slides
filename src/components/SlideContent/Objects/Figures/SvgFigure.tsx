@@ -42,8 +42,14 @@ function SvgFigure(props: {state: {presentationReducer: Editor}, ownProps: Props
     })
     const [dragEnd, setDragEnd] = useState(false)
     const ref: Ref<SVGSVGElement> = useRef(null)
+
+    const objectParametrs = {
+        ...position,
+        width: widthSvg,
+        height: heightSvg,
+    }
     
-    useDragAndDrop(ref, position, setPosition, setDragEnd, props.ownProps.scale.isMain, props.ownProps.scale.scaleIndex)
+    useDragAndDrop(ref, objectParametrs, setPosition, setDragEnd, props.ownProps.scale.isMain, props.ownProps.scale.scaleIndex)
     if(dragEnd) {
         const statePosition: Position = {
             x: Math.ceil(position.x / props.ownProps.scale.scaleIndex),

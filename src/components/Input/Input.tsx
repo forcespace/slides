@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useState } from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { ExtendedAction, setColor } from '../../script/slide/actionCreators';
@@ -46,8 +46,6 @@ function Input(props: {state: {presentationReducer: Editor}, ownProps: InputProp
         title={props.ownProps.title} 
         type={props.ownProps.type} 
         value={props.ownProps.value} 
-        
-
         onChange={changeColor}/>
     )
 }
