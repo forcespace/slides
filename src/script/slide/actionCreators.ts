@@ -8,7 +8,8 @@ export type ExtendedAction = {
     object?: ObjectType,
     objectId?: string,
     position?: Position,
-    data?: string | ArrayBuffer | null
+    data?: string | ArrayBuffer | null,
+    color?: string
 }
 
 export type ObjectType = {
@@ -95,5 +96,13 @@ export function setPosition(objectId: string, position: Position): ExtendedActio
         type: 'SET_POSITION',
         objectId,
         position,
+    }
+}
+
+export function setColor(color: string): ExtendedAction
+{
+    return {
+        type: 'SET_COLOR',
+        color,
     }
 }

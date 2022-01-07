@@ -265,7 +265,7 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                     className: stylesButtonTabs.tab_add_color,
                     title: 'Выбрать цвет',
                     mode: 'input',
-                    type: 'color'
+                    type: 'color',
                 },
                 {
                     classNameParent: stylesButtonTabs.tab_add_img_wrapper,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 interface NavProps
 {
@@ -14,5 +14,5 @@ export default function NavTabs(props: NavProps)
                 props.children.map((child: React.ReactElement) => child)
             }
         </div>
-    );
+    )
 }

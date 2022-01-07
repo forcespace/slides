@@ -1,7 +1,8 @@
 export type Editor = {
     history: History,
     presentation: Presentation,
-    active: number
+    active: number,
+    color?: string
 }
 
 export type History = {

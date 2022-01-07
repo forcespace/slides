@@ -52,9 +52,6 @@ export function useDragAndDrop(
         }
 
         if(newPos.x <= fullWidth * scaleIndex && newPos.y <= fullWidth / slideProportion * scaleIndex && newPos.x >= 0 && newPos.y >= 0) {
-            console.log('fullWidth * scaleIndex = ', fullWidth * scaleIndex)
-            console.log('fullWidth * slideProportion * scaleIndex = ', fullWidth * slideProportion * scaleIndex)
-            console.log('newPos = ', newPos)
             setPosition(newPos)
         }
     })

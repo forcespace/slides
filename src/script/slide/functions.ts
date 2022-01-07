@@ -18,6 +18,14 @@ export function importProject(data: string | ArrayBuffer | null): Editor {
     return createEditor()
 }
 
+export function setColor(editor: Editor, color: string): Editor
+{
+    return {
+        ...editor,
+        color: color
+    };
+}
+
 export function setTitle(editor: Editor, newTitle: string): Editor
 {
     return {
