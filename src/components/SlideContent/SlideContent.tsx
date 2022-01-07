@@ -18,9 +18,9 @@ function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props):
 function SlideContent(props: {state: {presentationReducer: Editor}, ownProps: Props})
 {
     const [width, setWidth] = React.useState(0);
-    const slideRef = useRef(null);
-    const slideProportion = 1.78;
-    const scaleProportion = 1231;
+    const slideRef = useRef(null)
+    const slideProportion = 1.78
+    const fullWidth = 1231
 
     useEffect(() =>
     {
@@ -52,7 +52,7 @@ function SlideContent(props: {state: {presentationReducer: Editor}, ownProps: Pr
 
     return (
         <div className={styles.slide} style={{height: width / slideProportion}} ref={slideRef}>
-            <SlideView slide={props.ownProps.slide} scale={{isMain: true, scaleIndex: width / scaleProportion}} key={props.ownProps.slide.id}/>
+            <SlideView slide={props.ownProps.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.ownProps.slide.id}/>
         </div>
     );
 }

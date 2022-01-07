@@ -1,13 +1,15 @@
 import React, {RefObject, useEffect, useRef} from 'react'
 
 export function useDragAndDrop(
-    ref: RefObject<SVGSVGElement>, //Ref<SVGSVGElement>,
+    ref: RefObject<SVGSVGElement>, 
     position: {x: number, y: number},
     setPosition: React.Dispatch<React.SetStateAction<{x: number, y: number}>>,
     setDragEnd: React.Dispatch<React.SetStateAction<boolean>>,
     isMain: boolean,
     scaleIndex: number,
 ): void {
+    const slideProportion = 1.78
+    const fullWidth = 1231
     const startPosition = useRef({x: 0, y: 0})
 
     useEffect(() => {
@@ -48,7 +50,13 @@ export function useDragAndDrop(
             x: position.x + delta.x,
             y: position.y + delta.y
         }
-        setPosition(newPos)
+
+        if(newPos.x <= fullWidth * scaleIndex && newPos.y <= fullWidth / slideProportion * scaleIndex && newPos.x >= 0 && newPos.y >= 0) {
+            console.log('fullWidth * scaleIndex = ', fullWidth * scaleIndex)
+            console.log('fullWidth * slideProportion * scaleIndex = ', fullWidth * slideProportion * scaleIndex)
+            console.log('newPos = ', newPos)
+            setPosition(newPos)
+        }
     })
 
     const handleMouseUp = (e: MouseEvent) =>

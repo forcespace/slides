@@ -22,7 +22,6 @@ function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props):
     } 
 }
 
-//const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) =>
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction, ownProps: Props) => {
     return {
         setObjectPosition: (position: Position) => dispatch(setPosition(ownProps.figure.id, position)),
@@ -52,7 +51,6 @@ function SvgFigure(props: {state: {presentationReducer: Editor}, ownProps: Props
         }
         props.setObjectPosition(statePosition)
     }
-    //props.setObjectPosition(position)
 
     const styleSvg = {
         top: `${position.y}px`,
