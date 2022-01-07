@@ -55,22 +55,41 @@ export function deleteSlide(editor: Editor): Editor
     const slideArrayLenght: number = editor.presentation.slides.length;
 
     let newIndex: number;
-    if (slideArrayLenght > 1 && index === 0)
-    {
-        newIndex = index;
-    }
-    else if (slideArrayLenght === 0)
-    {
-        newIndex = -1;
-    }
-    else
-    {
-        newIndex = index - 1;
-    }
 
-    if (slideArrayLenght > 0)
-    {
-        newSlides.splice(index, 1);
+    switch (slideArrayLenght){
+        case 0:
+            newIndex = -1;
+            console.log("case 0");
+            console.log("slideArrayLenght: " + slideArrayLenght);
+            console.log("index: " + index);
+            console.log("newIndex: " + newIndex);
+            break;
+        case 1:
+            newSlides.splice(index, 1);
+            newIndex = -1;
+            console.log("case 1");
+            console.log("slideArrayLenght: " + slideArrayLenght);
+            console.log("index: " + index);
+            console.log("newIndex: " + newIndex);
+            break;
+        default:
+            newSlides.splice(index, 1);
+            if (index + 1 === slideArrayLenght)
+            {
+                newIndex = index - 1;
+                console.log("last slide");
+                console.log("slideArrayLenght: " + slideArrayLenght);
+                console.log("index: " + index);
+                console.log("newIndex: " + newIndex);
+            }
+            else
+            {
+                newIndex = index;
+                console.log("tipical");
+                console.log("slideArrayLenght: " + slideArrayLenght);
+                console.log("index: " + index);
+                console.log("newIndex: " + newIndex);
+            }
     }
 
     return {
