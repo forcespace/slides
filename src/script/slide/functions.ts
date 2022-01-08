@@ -135,8 +135,8 @@ export function moveSlideTopByStep(editor: Editor): Editor
     // };
     
     const slide: Slide = editor.presentation.slides[editor.active];
-    const active = editor.active !== 0 ? editor.active - 1 : editor.active
-    const newSlides = editor.presentation.slides.filter((_, index) => index != editor.active)
+    const active: number = editor.active !== 0 ? editor.active - 1 : editor.active
+    const newSlides: Array<Slide> = editor.presentation.slides.filter((_, index) => index != editor.active)
     newSlides.splice(Math.max(editor.active - 1, 0), 0, slide)
 
     return {
@@ -160,8 +160,8 @@ export function moveSlideTopByStep(editor: Editor): Editor
 export function moveSlideDownByStep(editor: Editor): Editor
 {
     const slide: Slide = editor.presentation.slides[editor.active];
-    const active = editor.active !== editor.presentation.slides.length - 1 ? editor.active + 1 : editor.active
-    const newSlides = editor.presentation.slides.filter((_, index) => index != editor.active)
+    const active: number = editor.active !== editor.presentation.slides.length - 1 ? editor.active + 1 : editor.active
+    const newSlides: Array<Slide> = editor.presentation.slides.filter((_, index) => index != editor.active)
     newSlides.splice(Math.min(editor.active + 1, editor.presentation.slides.length - 1), 0, slide)
 
     return {
@@ -176,11 +176,11 @@ export function moveSlideDownByStep(editor: Editor): Editor
 
 export function addObject(editor: Editor, object: {objectType: string}): Editor
 {
-    const newObjectArray = setNonActiveObject(editor.presentation.slides[editor.active].objects);
+    const newObjectArray: Array<ObjectType> = setNonActiveObject(editor.presentation.slides[editor.active].objects);
 
     newObjectArray.push(createObject(object.objectType, editor.presentation.slides[editor.active].objects.length));
 
-    const newSlides = editor.presentation.slides;
+    const newSlides: Array<Slide> = editor.presentation.slides.slice();
     newSlides[editor.active].objects = newObjectArray;
 
     return {
@@ -194,7 +194,7 @@ export function addObject(editor: Editor, object: {objectType: string}): Editor
 
 function setNonActiveObject(objectArray: Array<ObjectType>): Array<ObjectType>
 {
-    const newObjectArray = objectArray;
+    const newObjectArray: Array<ObjectType> = objectArray.slice();
     newObjectArray.forEach(object =>
     {
         object.active = false;
