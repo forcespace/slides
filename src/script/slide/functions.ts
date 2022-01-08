@@ -300,31 +300,33 @@ function createCircle(priority: number): ObjectType
     };
 }
 
-
 export function setObjectPositionEditorVersion(editor: Editor, objectId: string, position: Position): Editor {
-    let objectIndex = -1
+    let objectIndex : number = -1;
 
-    editor.presentation.slides[editor.active].objects.forEach((object, index) => {
-        if(object.id === objectId) {
+    const objects: Array<ObjectType> = editor.presentation.slides[editor.active].objects.slice();
+
+    objects.forEach((object, index) => {
+        if (object.id === objectId) {
             objectIndex = index
         }
     })
+    console.log(position.x + ":" + position.y);
 
-    if(objectIndex != -1) {
+    if (objectIndex !== -1) {
         const newObject: ObjectType = {
             ...editor.presentation.slides[editor.active].objects[objectIndex],
             leftTopPoint: position
         }
 
-        return replaceObjects(editor, objectIndex, newObject)
+        return replaceObjects({...editor}, objectIndex, newObject)
     }
 
-    return editor
+    return {...editor}
 }
 
 
 function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectType): Editor {
-    const newObjects: Array<ObjectType> = editor.presentation.slides[editor.active].objects
+    const newObjects: Array<ObjectType> = editor.presentation.slides[editor.active].objects.slice();
 
     newObjects[objectIndex] = newObject;
 
@@ -333,7 +335,7 @@ function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectTy
         objects: newObjects
     };
 
-    return replaceActiveSlide(editor, newSlide);
+    return replaceActiveSlide({...editor}, newSlide);
 }
 
 function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor
@@ -355,7 +357,7 @@ function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor
 
 export function setBackgroundColor(editor:Editor, id: string): Editor {
     console.log('id = ', id)
-    const newEditor = editor
+    const newEditor = {...editor}
     newEditor.presentation.slides.forEach((slide) => {
         if(slide.id === id) {
             slide.background.color = editor.color
