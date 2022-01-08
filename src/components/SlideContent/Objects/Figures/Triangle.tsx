@@ -1,8 +1,8 @@
-import {connect} from 'react-redux'
-import {ObjectType, Position} from '../../../../script/slide/slide'
+import {connect, ConnectedProps} from 'react-redux'
+import {Editor, ObjectType, Position} from '../../../../script/slide/slide'
 import styles from '../../slideContent.module.css'
 
-type Props = {
+type OwnProps = {
     figure: ObjectType,
     scale: {
         isMain: boolean,
@@ -10,8 +10,17 @@ type Props = {
     }
 }
 
-export function Triangle(props: Props)
-{
+const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
+    state,
+    ownProps
+})
+
+const connector = connect(mapStateToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type Props = PropsFromRedux & OwnProps
+
+export function Triangle(props: Props) {
     const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex)
     const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex)
     const xSvg = Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex)
@@ -43,12 +52,12 @@ export function Triangle(props: Props)
 
     return (
         <svg style={styleSvg}
-             className={styles.slide_item}
-             preserveAspectRatio="slice"
-             xmlns="http://www.w3.org/2000/svg">
-            <path d={trianglePath} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color}/>
+            className={styles.slide_item}
+            preserveAspectRatio="slice"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d={trianglePath} stroke={props.figure.border?.borderColor} fill={props.figure.background?.color} />
         </svg>
     )
 }
 
-export default connect()(Triangle)
+export default connector(Triangle)

@@ -16,101 +16,88 @@ export type ObjectType = {
     objectType: string
 }
 
-export function setTitle(newTitle: string): ExtendedAction
-{
+export function setTitle(newTitle: string): ExtendedAction {
     return {
         type: 'SET_TITLE',
         newTitle
-    };
+    }
 }
 
-export function setActive(index: number): ExtendedAction
-{
+export function setActive(index: number): ExtendedAction {
     return {
         type: 'SET_ACTIVE',
         index
-    };
+    }
 }
 
-export function createEditor(): Action
-{
+export function createEditor(): Action {
     return {
         type: 'CREATE_PRESENTATION'
-    };
+    }
 }
 
-export function addEmptySlide(): Action
-{
+export function addEmptySlide(): Action {
     return {
         type: 'ADD_SLIDE'
-    };
+    }
 }
 
-export function deleteSlide(): Action
-{
+export function deleteSlide(): Action {
     return {
         type: 'DELETE_SLIDE'
-    };
+    }
 }
 
-export function moveSlideTopByStep(): Action
-{
+export function moveSlideTopByStep(): Action {
     return {
         type: 'MOVE_SLIDE_TOP_BY_STEP'
-    };
+    }
 }
 
-export function moveSlideDownByStep(): Action
-{
+export function moveSlideDownByStep(): Action {
     return {
         type: 'MOVE_SLIDE_DOWN_BY_STEP'
-    };
+    }
 }
 
-export function addObject(object: ObjectType): ExtendedAction
-{
+export function addObject(object: ObjectType): ExtendedAction {
     return {
         type: 'ADD_OBJECT',
         object
-    };
+    }
 }
 
-export function exportProject(): Action
-{
+export function exportProject(): Action {
     return {
         type: 'EXPORT'
-    };
+    }
 }
 
-export function importProject(data: string | ArrayBuffer | null): {data: string | ArrayBuffer | null; type: string}
-{
+export function importProject(data: string | ArrayBuffer | null): ExtendedAction {
     return {
         type: 'IMPORT',
         data: data
-    };
+    }
 }
 
-export function setPosition(objectId: string, position: Position): ExtendedAction
-{
+export function setObjectPosition(objectId: string, position: Position): ExtendedAction {
     return {
         type: 'SET_POSITION',
         objectId,
-        position,
+        position
     }
 }
 
-export function setColor(color: string): ExtendedAction
-{
+export function setEditorColor(color: string): ExtendedAction {
     return {
         type: 'SET_COLOR',
-        color,
+        color
     }
 }
 
-export function setBackgroundColor(objectId: string): ExtendedAction
-{
+export function setBackgroundColor(objectId: string): ExtendedAction {
     return {
         type: 'SET_BACKGROUND_COLOR',
-        objectId,
+        objectId
     }
 }

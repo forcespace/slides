@@ -2,9 +2,9 @@ import {Editor, ObjectType} from '../../../script/slide/slide'
 import TextSvg from './Texts/Text'
 import Img from './Images/Image'
 import SvgFigure from './Figures/SvgFigure'
-import {connect} from 'react-redux'
+import {connect, ConnectedProps} from 'react-redux'
 
-type Props = {
+type OwnProps = {
     object: ObjectType,
     scale: {
         isMain: boolean,
@@ -12,33 +12,30 @@ type Props = {
     },
 }
 
-function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props): {state: {presentationReducer: Editor}, ownProps: Props} {
-    return {
-        state,
-        ownProps
-    } 
-}
+const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
+    state,
+    ownProps
+})
 
-function Objects(props: {state: {presentationReducer: Editor}, ownProps: Props})
-{
-    if (props.ownProps.object.type === 'Image')
-    {
+const connector = connect(mapStateToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type Props = PropsFromRedux & OwnProps
+
+function Objects(props: Props) {
+    if (props.ownProps.object.type === 'Image') {
         return (
-            <Img imgObject={props.ownProps.object} scale={props.ownProps.scale}/>
+            <Img imgObject={props.ownProps.object} scale={props.ownProps.scale} />
         )
-    }
-    else if (props.ownProps.object.type === 'Text')
-    {
+    } else if (props.ownProps.object.type === 'Text') {
         return (
-            <TextSvg text={props.ownProps.object} scale={props.ownProps.scale}/>
+            <TextSvg text={props.ownProps.object} scale={props.ownProps.scale} />
         )
-    }
-    else
-    {
+    } else {
         return (
             <SvgFigure figure={props.ownProps.object} scale={props.ownProps.scale} />
         )
     }
 }
 
-export default connect(mapStateToProps)(Objects)
+export default connector(Objects)

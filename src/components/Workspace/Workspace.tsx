@@ -4,16 +4,14 @@ import styles from './workspace.module.css'
 import {connect} from 'react-redux'
 import SlideList from '../SlidesList/SlideList'
 
-function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]}  {
+function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]} {
     return {
         activeSlide: state.presentationReducer.active,
         slides: state.presentationReducer.presentation.slides
-    } 
+    }
 }
 
-function Workspace(props: {activeSlide: number, slides: Slide[]})
-{
-    console.log('Last Bogatyr')
+function Workspace(props: {activeSlide: number, slides: Slide[]}) {
     const slidesCount = props.slides.length
 
     return (

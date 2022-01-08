@@ -1,4 +1,5 @@
- import {Editor} from './slide'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {Editor} from './slide'
 
 // let editor: Editor = {
 //     history: {},

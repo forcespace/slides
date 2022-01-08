@@ -1,60 +1,54 @@
-import React from 'react';
-import {addEmptySlide, addObject, createEditor, deleteSlide, exportProject, importProject, moveSlideDownByStep, moveSlideTopByStep, ObjectType} from '../../script/slide/actionCreators';
-import Button from '../Button/Button';
-import NavTabs from '../NavTabs/NavTabs';
-import Input from '../Input/Input';
-import InputFile from '../InputFile/InputFile';
-import styles from './nav.module.css';
-import stylesButtonTabs from '../Button/button.module.css';
-import {Action, AnyAction} from 'redux';
-import {connect} from 'react-redux';
-import {store} from '../../store';
+import React from 'react'
+import {addEmptySlide, addObject, createEditor, deleteSlide, exportProject, importProject, moveSlideDownByStep, moveSlideTopByStep, ObjectType} from '../../script/slide/actionCreators'
+import Button from '../Button/Button'
+import NavTabs from '../NavTabs/NavTabs'
+import Input from '../Input/Input'
+import InputFile from '../InputFile/InputFile'
+import styles from './nav.module.css'
+import stylesButtonTabs from '../Button/button.module.css'
+import {Action, AnyAction} from 'redux'
+import {connect} from 'react-redux'
+import {store} from '../../store'
 
 const TABS = {
     SAVE: 'save',
     MAIN: 'presentation',
     EDIT: 'slides',
     PASTE: 'paste'
-};
+}
 
-interface NavTabMenu
-{
+interface NavTabMenu {
     id: string,
     className: string,
     onClick: Function,
     name: string
 }
 
-const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) =>
-{
-    return {
-        createEditor: () => dispatch(createEditor()),
-        addEmptySlide: () => dispatch(addEmptySlide()),
-        deleteSlide: () => dispatch(deleteSlide()),
-        moveSlideTopByStep: () => dispatch(moveSlideTopByStep()),
-        moveSlideDownByStep: () => dispatch(moveSlideDownByStep()),
-        addObject: (object: ObjectType) => dispatch(addObject(object)),
-        exportProject: () => dispatch(exportProject()),
-        importProject: (data: string | ArrayBuffer | null) => dispatch(importProject(data))
-    };
-};
+const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) => ({
+    createEditor: () => dispatch(createEditor()),
+    addEmptySlide: () => dispatch(addEmptySlide()),
+    deleteSlide: () => dispatch(deleteSlide()),
+    moveSlideTopByStep: () => dispatch(moveSlideTopByStep()),
+    moveSlideDownByStep: () => dispatch(moveSlideDownByStep()),
+    addObject: (object: ObjectType) => dispatch(addObject(object)),
+    exportProject: () => dispatch(exportProject()),
+    importProject: (data: string | ArrayBuffer | null) => dispatch(importProject(data))
+})
 
-function NavTab(props: {tabs: Array<NavTabMenu>, active: string})
-{
+function NavTab(props: { tabs: Array<NavTabMenu>, active: string }) {
     return (
         <NavTabs className={styles.menu_list}>
             {props.tabs.map(tab =>
                 <span key={Math.random()} className={`${tab.className} ${props.active === tab.id ? styles.active : ''}`}
-                      onClick={() => tab.onClick == undefined ? null : tab.onClick()}>
+                    onClick={() => (tab.onClick == undefined ? null : tab.onClick())}>
                     {tab.name}
                 </span>)
             }
         </NavTabs>
-    );
+    )
 }
 
-interface NavTabButton
-{
+interface NavTabButton {
     classNameParent?: string,
     className: string,
     onClick?: React.MouseEventHandler<HTMLInputElement>,
@@ -66,121 +60,100 @@ interface NavTabButton
     value?: string
 }
 
-function NavTabButtons(props: {buttons: Array<NavTabButton>, hidden: boolean})
-{
+function NavTabButtons(props: { buttons: Array<NavTabButton>, hidden: boolean }) {
     return (
         <NavTabs className={`${styles.tabs} ${props.hidden ? styles.tabs_hidden : ''}`}>
             {
-                props.buttons.map((button) =>
-                    {
-                        switch (button.mode)
-                        {
-                            case 'input':
-                            {
-                                return <Input {...button} key={Math.random()} type={button.type} className={`${stylesButtonTabs.tab} ${button.className}`}
-                                              value={button.value}/>;
-                            }
-                            case 'input-file':
-                            {
-                                return (
-                                    <InputFile classNameLabel={`${stylesButtonTabs.tab_wrapper_file} ${button.classNameParent}`}
-                                               titleLabel={button.titleLabel} {...button} key={Math.random()}
-                                               className={`${stylesButtonTabs.tab} ${button.className}`}/>
-                                );
-                            }
-                            default:
-                            {
-                                return <Button {...button} key={Math.random()} className={`${stylesButtonTabs.tab} ${button.className}`}/>;
-                            }
+                props.buttons.map(button => {
+                    switch (button.mode) {
+                        case 'input': {
+                            return <Input {...button} key={Math.random()} type={button.type} className={`${stylesButtonTabs.tab} ${button.className}`}
+                                value={button.value} />
+                        }
+                        case 'input-file': {
+                            return (
+                                <InputFile classNameLabel={`${stylesButtonTabs.tab_wrapper_file} ${button.classNameParent}`}
+                                    titleLabel={button.titleLabel} {...button} key={Math.random()}
+                                    className={`${stylesButtonTabs.tab} ${button.className}`} />
+                            )
+                        }
+                        default: {
+                            return <Button {...button} key={Math.random()} className={`${stylesButtonTabs.tab} ${button.className}`} />
                         }
                     }
+                }
                 )}
         </NavTabs>
-    );
+    )
 }
 
-function Nav(props: ReturnType<typeof mapDispatchToProps>)
-{
-    function handleAddNewSlideClick()
-    {
-        props.addEmptySlide();
+function Nav(props: ReturnType<typeof mapDispatchToProps>) {
+    function handleAddNewSlideClick() {
+        props.addEmptySlide()
     }
 
-    function handleRemoveSlideClick()
-    {
-        props.deleteSlide();
+    function handleRemoveSlideClick() {
+        props.deleteSlide()
     }
 
-    function handleNewPresentationClick()
-    {
-        props.createEditor();
+    function handleNewPresentationClick() {
+        props.createEditor()
     }
 
-    function handleMoveSlideUp()
-    {
-        props.moveSlideTopByStep();
+    function handleMoveSlideUp() {
+        props.moveSlideTopByStep()
     }
 
-    function handleMoveSlideDown()
-    {
-        props.moveSlideDownByStep();
+    function handleMoveSlideDown() {
+        props.moveSlideDownByStep()
     }
 
-    function handleAddRectClick()
-    {
-        props.addObject({objectType: 'Rect'});
+    function handleAddRectClick() {
+        props.addObject({objectType: 'Rect'})
     }
 
-    function handleAddTriangleClick()
-    {
-        props.addObject({objectType: 'Triangle'});
+    function handleAddTriangleClick() {
+        props.addObject({objectType: 'Triangle'})
     }
 
-    function handleAddCircleClick()
-    {
-        props.addObject({objectType: 'Circle'});
+    function handleAddCircleClick() {
+        props.addObject({objectType: 'Circle'})
     }
 
-    function exportProject()
-    {
+    function exportProject() {
         const storeState = store.getState()
-        const fileName = 'slides.json';
+        const fileName = 'slides.json'
         const content = JSON.stringify(storeState)
         download(content, fileName, 'text/plain')
     }
 
-    function download(content: string, fileName: string, contentType: string)
-    {
-        const a = document.createElement('a');
-        const file = new Blob([content], {type: contentType});
-        a.href = URL.createObjectURL(file);
-        a.download = fileName;
-        a.click();
+    function download(content: string, fileName: string, contentType: string) {
+        const a = document.createElement('a')
+        const file = new Blob([content], {type: contentType})
+        a.href = URL.createObjectURL(file)
+        a.download = fileName
+        a.click()
     }
 
-    function importProject(event: React.ChangeEvent<HTMLInputElement>)
-    {
-        const input = event.target;
-        const file = input?.files?.[0];
+    function importProject(event: React.ChangeEvent<HTMLInputElement>) {
+        const input = event.target
+        const file = input?.files?.[0]
 
-        if (file)
-        {
-            let reader = new FileReader();
+        if (file) {
+            const reader = new FileReader()
 
-            reader.readAsText(file);
+            reader.readAsText(file)
 
-            reader.onload = function ()
-            {
-                props.importProject(reader.result);
-            };
+            reader.onload = function () {
+                props.importProject(reader.result)
+            }
 
-            reader.onerror = function ()
-            {
-            };
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            reader.onerror = function () {}
         }
     }
 
-    const [activeTab, setActiveTab] = React.useState(TABS.MAIN);
+    const [activeTab, setActiveTab] = React.useState(TABS.MAIN)
 
     return (
         <nav className={styles.nav}>
@@ -211,7 +184,7 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                         onClick: () => setActiveTab(TABS.PASTE),
                         name: 'Вставка'
                     }
-                ]}/>
+                ]} />
 
             <NavTabButtons buttons={[
                 {
@@ -227,7 +200,7 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                     mode: 'input-file',
                     type: 'file'
                 }
-            ]} hidden={activeTab !== TABS.SAVE}/>
+            ]} hidden={activeTab !== TABS.SAVE} />
 
             <NavTabButtons buttons={[
                 {
@@ -245,7 +218,7 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                     onClick: handleRemoveSlideClick,
                     title: 'Удалить активный слайд'
                 }
-            ]} hidden={activeTab !== TABS.MAIN}/>
+            ]} hidden={activeTab !== TABS.MAIN} />
 
             <NavTabButtons buttons={[
                 {
@@ -258,14 +231,14 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                     onClick: handleMoveSlideDown,
                     title: 'Переместить текущий слайд на позицию ниже'
                 }
-            ]} hidden={activeTab !== TABS.EDIT}/>
+            ]} hidden={activeTab !== TABS.EDIT} />
 
             <NavTabButtons buttons={[
                 {
                     className: stylesButtonTabs.tab_add_color,
                     title: 'Выбрать цвет',
                     mode: 'input',
-                    type: 'color',
+                    type: 'color'
                 },
                 {
                     classNameParent: stylesButtonTabs.tab_add_img_wrapper,
@@ -289,9 +262,9 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>)
                     onClick: handleAddCircleClick,
                     title: 'Добавить круг'
                 }
-            ]} hidden={activeTab !== TABS.PASTE}/>
+            ]} hidden={activeTab !== TABS.PASTE} />
         </nav>
-    );
+    )
 }
 
-export default connect(null, mapDispatchToProps)(Nav);
+export default connect(null, mapDispatchToProps)(Nav)

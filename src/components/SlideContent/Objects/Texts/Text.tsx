@@ -9,8 +9,7 @@ type Props = {
     }
 }
 
-function TextSvg(props: Props)
-{
+function TextSvg(props: Props) {
     return (
         <span>{props.text.content}</span>
     )

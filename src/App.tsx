@@ -4,14 +4,13 @@ import Footer from './components/Footer/Footer'
 import Header from './components/Header/Header'
 import Nav from './components/Navigation/Nav'
 
-export function App()
-{
+export function App() {
     return (
         <div className={'presentation'}>
-            <Header/>
-            <Nav/>
-            <Workspace/>
-            <Footer/>
+            <Header />
+            <Nav />
+            <Workspace />
+            <Footer />
         </div>
-    );
+    )
 }
