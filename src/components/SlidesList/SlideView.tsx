@@ -28,16 +28,12 @@ type Props = PropsFromRedux & OwnProps
 function SlideView(props: Props) {
     const slideObjects = props.ownProps.slide.objects
 
-    function setBackground() {
-        props.setBackgroundColor(props.ownProps.slide.id, props.state.color!)
-    }
-
     const styleDiv = {
         backgroundColor: props.ownProps.slide.background.color ?? '#fff'
     }
 
     return (
-        <div onClick={setBackground} style={styleDiv}>
+        <div style={styleDiv}>
             {slideObjects.map((object: ObjectType) =>
                 <Objects object={object} scale={props.ownProps.scale} key={Math.random()} />
             )}

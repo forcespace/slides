@@ -321,24 +321,38 @@ function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor {
     }
 }
 
-export function setBackgroundColor(presentation:Presentation, id: string, color: string): Presentation {
-    console.log('id = ', id)
-    const newSlides: Array<Slide> = presentation.slides.slice()
+export function setBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
+    // const newSlides: Array<Slide> = presentation.slides.slice()
+    // eslint-disable-next-line no-unused-vars
+    let indexSlide = -1
 
-    newSlides.forEach(slide => {
+    presentation.slides.forEach((slide, index) => {
         if (slide.id === id) {
-            slide.background.color = color
-        } else {
-            slide.objects.forEach(object => {
-                if (object.id === id) {
-                    object.background.color = color
-                }
-            })
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            indexSlide = index
         }
     })
-    return {
-        ...presentation,
-        slides: newSlides
+
+    if (indexSlide >= 0) {
+        const newSlide: Slide = {
+            ...presentation.slides[indexSlide],
+            background: {
+                priority: 0,
+                color: newColor}
+        }
+
+        // eslint-disable-next-line no-negated-condition
+        const newSlides: Array<Slide> = presentation.slides.filter((_, index) => index != indexSlide)
+        newSlides.splice(Math.max(indexSlide, 0), 0, newSlide)
+
+        return {
+            ...presentation,
+            slides: newSlides
+        }
+    } else {
+        return {
+            ...presentation
+        }
     }
 }
 

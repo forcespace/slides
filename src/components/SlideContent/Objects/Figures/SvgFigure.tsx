@@ -48,7 +48,7 @@ function SvgFigure(props: Props) {
         height: heightSvg
     }
 
-    console.log('pos: ', position)
+    // console.log('pos: ', position)
 
     useDragAndDrop(
         ref,
@@ -59,7 +59,7 @@ function SvgFigure(props: Props) {
                 x: Math.ceil(newPosition.x / props.ownProps.scale.scaleIndex),
                 y: Math.ceil(newPosition.y / props.ownProps.scale.scaleIndex)
             }
-            console.log('on drag end pos: ', newPosition)
+            // console.log('on drag end pos: ', newPosition)
             props.setObjectPosition(statePosition)
         },
         props.ownProps.scale.isMain,

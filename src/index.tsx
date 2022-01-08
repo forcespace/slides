@@ -16,5 +16,5 @@ ReactDOM.render(
 )
 
 store.subscribe(() => {
-    console.log('Spider Man. No Way Back')
+    // console.log('Spider Man. No Way Back')
 })
