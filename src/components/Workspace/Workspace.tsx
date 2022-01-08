@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 import SlideList from '../SlidesList/SlideList'
 
 function mapStateToProps(state: Editor): {activeSlide: number, slides: Slide[]} {
-    console.log(state)
     return {
         activeSlide: state.presentation.active,
         slides: state.presentation.slides
