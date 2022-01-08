@@ -6,10 +6,13 @@ import {connect, ConnectedProps} from 'react-redux'
 
 const SCALE_INDEX = 0.1381
 
-const mapStateToProps = (state: Editor): {activeSlide: number, slides: Slide[]} => ({
-    activeSlide: state.active,
-    slides: state.presentation.slides
-})
+const mapStateToProps = (state: Editor): {activeSlide: number, slides: Slide[]} => {
+    console.log('state = ', state)
+    return {
+        activeSlide: state.presentation.active,
+        slides: state.presentation.slides
+    }
+}
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) => ({
     setActive: (index: number) => dispatch(setActive(index))
@@ -26,6 +29,8 @@ function SlideList(props: Props) {
     function setActiveSlide(index: number) {
         props.setActive(index)
     }
+
+    console.log('slides = ', props.slides)
 
     return (
         <div className={styles.slide_list}>

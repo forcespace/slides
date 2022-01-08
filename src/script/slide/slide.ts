@@ -1,7 +1,7 @@
 export type Editor = {
     history: History,
     presentation: Presentation,
-    active: number,
+    active: string,
     color?: string
 }
 
@@ -12,6 +12,7 @@ export type History = {
 
 export type Presentation = {
     title: string,
+    active: number,
     slides: Array<Slide>
 }
 

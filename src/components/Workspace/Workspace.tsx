@@ -4,10 +4,11 @@ import styles from './workspace.module.css'
 import {connect} from 'react-redux'
 import SlideList from '../SlidesList/SlideList'
 
-function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]} {
+function mapStateToProps(state: Editor): {activeSlide: number, slides: Slide[]} {
+    console.log(state)
     return {
-        activeSlide: state.presentationReducer.active,
-        slides: state.presentationReducer.presentation.slides
+        activeSlide: state.presentation.active,
+        slides: state.presentation.slides
     }
 }
 

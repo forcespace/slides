@@ -19,17 +19,9 @@ const mapStateToProps = (state: { presentationReducer: Editor }, ownProps: OwnPr
     ownProps
 })
 
-<<<<<<< HEAD
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction, ownProps: OwnProps) => ({
     setObjectPosition: (position: Position) => dispatch(setObjectPosition(ownProps.figure.id, position))
 })
-=======
-const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction, ownProps: Props) => {
-    return {
-        setObjectPosition: (objectId: string, position: Position) => dispatch(setPosition(objectId, position)),
-    }
-}
->>>>>>> development
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -68,15 +60,9 @@ function SvgFigure(props: Props) {
                 y: Math.ceil(newPosition.y / props.ownProps.scale.scaleIndex)
             }
             console.log('on drag end pos: ', newPosition)
-<<<<<<< HEAD
             props.setObjectPosition(statePosition)
         },
         props.ownProps.scale.isMain,
-=======
-            props.setObjectPosition(props.ownProps.figure.id, statePosition);
-        }, 
-        props.ownProps.scale.isMain, 
->>>>>>> development
         props.ownProps.scale.scaleIndex
     )
 

@@ -95,9 +95,10 @@ export function setEditorColor(color: string): ExtendedAction {
     }
 }
 
-export function setBackgroundColor(objectId: string): ExtendedAction {
+export function setBackgroundColor(objectId: string, color: string): ExtendedAction {
     return {
         type: 'SET_BACKGROUND_COLOR',
-        objectId
+        objectId,
+        color
     }
 }

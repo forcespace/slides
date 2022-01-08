@@ -17,7 +17,7 @@ const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
 })
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) => ({
-    setBackgroundColor: (slideId: string) => dispatch(setBackgroundColor(slideId))
+    setBackgroundColor: (slideId: string, color: string) => dispatch(setBackgroundColor(slideId, color))
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -29,7 +29,7 @@ function SlideView(props: Props) {
     const slideObjects = props.ownProps.slide.objects
 
     function setBackground() {
-        props.setBackgroundColor(props.ownProps.slide.id)
+        props.setBackgroundColor(props.ownProps.slide.id, props.state.color!)
     }
 
     const styleDiv = {

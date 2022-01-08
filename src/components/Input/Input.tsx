@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {connect} from 'react-redux'
+import {connect, ConnectedProps} from 'react-redux'
 import {Action} from 'redux'
-import {ExtendedAction, setBackgroundColor} from '../../script/slide/actionCreators'
+import {ExtendedAction, setEditorColor} from '../../script/slide/actionCreators'
 import {Editor} from '../../script/slide/slide'
 
-interface InputProps {
+interface OwnProps {
     className: string,
     onClick?: React.MouseEventHandler<HTMLInputElement>,
     title?: string,
@@ -12,24 +12,27 @@ interface InputProps {
     value?: string
 }
 
-function mapStateToProps(state: { presentationReducer: Editor }, ownProps: InputProps): { state: { presentationReducer: Editor }, ownProps: InputProps } {
-    return {
-        state,
-        ownProps
-    }
-}
-
-const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
-    setBackgroundColor: (color: string) => dispatch(setBackgroundColor(color))
+const mapStateToProps = (state: Editor, ownProps: OwnProps): {state: Editor, ownProps: OwnProps} => ({
+    state,
+    ownProps
 })
 
-function Input(props: { state: { presentationReducer: Editor }, ownProps: InputProps } & ReturnType<typeof mapDispatchToProps>) {
+const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
+    setBackgroundColor: (color: string) => dispatch(setEditorColor(color))
+})
+
+const connector = connect(mapStateToProps, mapDispatchToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type Props = PropsFromRedux & OwnProps
+
+function Input(props: Props) {
     const [color, setColor] = useState('#000')
     useEffect(() => {
-        if (props.state.presentationReducer.color !== color) {
+        if (props.state.color !== color) {
             props.setBackgroundColor(color)
         }
-    }, [color, props.state.presentationReducer.color, props.setBackgroundColor])
+    }, [color, props.state.color, props.setBackgroundColor])
 
     const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value)
@@ -47,4 +50,4 @@ function Input(props: { state: { presentationReducer: Editor }, ownProps: InputP
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Input)
+export default connector(Input)

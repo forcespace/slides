@@ -121,9 +121,13 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>) {
     }
 
     function exportProject() {
-        const storeState = store.getState()
+        // const storeState = store.getState()
+        // const fileName = 'slides.json'
+        // const content = JSON.stringify(storeState)
+        // download(content, fileName, 'text/plain')
+
         const fileName = 'slides.json'
-        const content = JSON.stringify(storeState)
+        const content = JSON.stringify('storeState')
         download(content, fileName, 'text/plain')
     }
 

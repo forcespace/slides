@@ -1,14 +1,15 @@
 import {combineReducers} from 'redux'
 import {ExtendedAction} from './actionCreators'
-import {setBackgroundColor, addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion, setColor} from './functions'
-import {Editor} from './slide'
+import {setBackgroundColor, addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion, createPresentation} from './functions'
+import {Editor, Presentation} from './slide'
 
+const initPresentation: Presentation = createPresentation()
 const initState: Editor = createEditor()
 
-const presentationReducer = (state: Editor = initState, action: ExtendedAction): Editor => {
+const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
     switch (action.type) {
         case 'SET_TITLE': {
-            const newTitle = action.newTitle ?? state.presentation.title
+            const newTitle = action.newTitle ?? state.title
             return setTitle(state, newTitle)
         }
         case 'SET_ACTIVE': {
@@ -16,7 +17,7 @@ const presentationReducer = (state: Editor = initState, action: ExtendedAction):
             return setActive(state, activeIndex)
         }
         case 'CREATE_PRESENTATION': {
-            return createEditor()
+            return createPresentation()
         }
         case 'ADD_SLIDE': {
             return addEmptySlide(state)
@@ -36,12 +37,20 @@ const presentationReducer = (state: Editor = initState, action: ExtendedAction):
         case 'IMPORT': {
             return importProject(action.data!)
         }
-        case 'SET_COLOR': {
-            return setColor(state, action.color!)
-        }
         case 'SET_BACKGROUND_COLOR':
         {
-            return setBackgroundColor(state, action.objectId!)
+            return setBackgroundColor(state, action.objectId!, action.color!)
+        }
+        default: {
+            return state
+        }
+    }
+}
+
+const color = (state = '', action: ExtendedAction): string => {
+    switch (action.type) {
+        case 'SET_COLOR': {
+            return action.color!
         }
         default: {
             return state
@@ -60,4 +69,4 @@ const objectReducer = (state: Editor = initState, action: ExtendedAction): Edito
     }
 }
 
-export const rootReducer = combineReducers({presentationReducer, objectReducer})
+export const rootReducer = combineReducers({presentation, color, objectReducer})
