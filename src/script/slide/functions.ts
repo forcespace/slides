@@ -333,10 +333,9 @@ function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectTy
 
     newObjects[objectIndex] = newObject;
 
-    const newSlide: Slide = {
-        ...editor.presentation.slides[editor.active],
-        objects: newObjects
-    };
+    const newSlide: Slide = editor.presentation.slides[editor.active];
+
+    newSlide.objects = newObjects;
 
     return replaceActiveSlide({...editor}, newSlide);
 }
