@@ -24,7 +24,7 @@ function mapStateToProps(state: {presentationReducer: Editor}, ownProps: Props):
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction, ownProps: Props) => {
     return {
-        setObjectPosition: (position: Position) => dispatch(setPosition(ownProps.figure.id, position)),
+        setObjectPosition: (objectId: string, position: Position) => dispatch(setPosition(objectId, position)),
     }
 }
 
@@ -60,7 +60,7 @@ function SvgFigure(props: {state: {presentationReducer: Editor}, ownProps: Props
                 y: Math.ceil(newPosition.y / props.ownProps.scale.scaleIndex)
             }
             console.log('on drag end pos: ', newPosition)
-            props.setObjectPosition(statePosition)
+            props.setObjectPosition(props.ownProps.figure.id, statePosition);
         }, 
         props.ownProps.scale.isMain, 
         props.ownProps.scale.scaleIndex
