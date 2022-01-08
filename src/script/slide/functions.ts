@@ -49,45 +49,49 @@ export function createSlide(): Slide
 //Добавление пустого слайда в коллекцию после активного
 export function addEmptySlide(editor: Editor): Editor
 {
-    const newSlides: Array<Slide> = editor.presentation.slides;
+    const newSlides = editor.presentation.slides;
     const slide: Slide = createSlide();
-    const index: number = editor.active;
-    newSlides.splice(index + 1, 0, slide);
+    const active = editor.active + 1;
+    newSlides.splice(active, 0, slide);
 
     return {
         ...editor,
+        active,
         presentation: {
             ...editor.presentation,
             slides: newSlides
         },
-        active: index + 1
     };
 }
 
 //Удаление активного слайда из коллекции
 export function deleteSlide(editor: Editor): Editor
 {
-    let newSlides: Array<Slide> = editor.presentation.slides;
+    let newSlides = editor.presentation.slides;
     const index: number = editor.active;
     const slideArrayLenght: number = editor.presentation.slides.length;
 
     let newIndex: number;
-    if (slideArrayLenght > 0 && index === 0)
-    {
-        newIndex = index;
-    }
-    else if (slideArrayLenght === 0)
-    {
-        newIndex = -1;
-    }
-    else
-    {
-        newIndex = index - 1;
-    }
 
-    if (slideArrayLenght > 0)
+    switch (slideArrayLenght)
     {
-        newSlides.splice(index, 1);
+        case 0:
+            newIndex = -1;
+            break;
+        case 1:
+            newSlides.splice(index, 1);
+            newIndex = -1;
+            break;
+        default:
+            newSlides.splice(index, 1);
+            if (index + 1 === slideArrayLenght)
+            {
+                newIndex = index - 1;
+            }
+            else
+            {
+                newIndex = index;
+            }
     }
 
     return {
