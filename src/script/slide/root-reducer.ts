@@ -39,7 +39,8 @@ const presentationReducer = (state: Editor = initState, action: ExtendedAction):
         case 'SET_COLOR': {
             return setColor(state, action.color!)
         }
-        case 'SET_BACKGROUND_COLOR': {
+        case 'SET_BACKGROUND_COLOR':
+        {
             return setBackgroundColor(state, action.objectId!)
         }
         default: {

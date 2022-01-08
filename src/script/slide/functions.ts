@@ -44,84 +44,92 @@ export function createSlide(): Slide {
 
 //Добавление пустого слайда в коллекцию после активного
 export function addEmptySlide(editor: Editor): Editor {
-    const newSlides: Array<Slide> = editor.presentation.slides
+    const newSlides: Array<Slide> = editor.presentation.slides.slice()
     const slide: Slide = createSlide()
-    const index: number = editor.active
-    newSlides.splice(index + 1, 0, slide)
+    const active: number = editor.active + 1
+    newSlides.splice(active, 0, slide)
 
     return {
         ...editor,
+        active,
         presentation: {
             ...editor.presentation,
             slides: newSlides
-        },
-        active: index + 1
+        }
     }
 }
 
 //Удаление активного слайда из коллекции
-export function deleteSlide(editor: Editor): Editor {
-    const newSlides: Array<Slide> = editor.presentation.slides
+export function deleteSlide(editor: Editor): Editor
+{
+    const newSlides: Array<Slide> = editor.presentation.slides.slice()
     const index: number = editor.active
-    const slideArrayLenght: number = editor.presentation.slides.length
+    const slideArrayLenght: number = newSlides.length
 
-    let newIndex: number
-    if (slideArrayLenght > 0 && index === 0) {
-        newIndex = index
-    } else if (slideArrayLenght === 0) {
-        newIndex = -1
-    } else {
-        newIndex = index - 1
-    }
+    let active: number
 
-    if (slideArrayLenght > 0) {
-        newSlides.splice(index, 1)
+    switch (slideArrayLenght) {
+        case 0:
+            active = -1
+            break
+        case 1:
+            newSlides.splice(index, 1)
+            active = -1
+            break
+        default:
+            newSlides.splice(index, 1)
+            active = index === slideArrayLenght - 1 ? index - 1 : index
     }
 
     return {
         ...editor,
+        active,
         presentation: {
             ...editor.presentation,
             slides: newSlides
-        },
-        active: newIndex
+        }
     }
 }
 
 //Добавление слайда через Editor
-// Функция добавления какого-то заполненного слайда и она работает
+//Функция добавления какого-то заполненного слайда и она работает
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line no-unused-vars
 function addSlide(editor: Editor, slide: Slide): Editor {
-    const newSlides: Array<Slide> = editor.presentation.slides
+    const newSlides: Array<Slide> = editor.presentation.slides.slice()
     const index: number = editor.active
+    const active: number = editor.active + 1
     newSlides.splice(index, 0, slide)
 
     return {
         ...editor,
+        active,
         presentation: {
             ...editor.presentation,
             slides: newSlides
-        },
-        active: index + 1
+        }
     }
 }
 
 export function setActive(editor: Editor, index: number): Editor {
+    const active: number = index
+
     return {
         ...editor,
-        active: index
+        active
     }
 }
 
 //Перемещение слайда вверх в презентации
 export function moveSlideTopByStep(editor: Editor): Editor {
-    // const newEditor: Editor = {
-    //     ...editor,
-    // }
+    if (editor.presentation.slides.length === 0) {
+        return {...editor}
+    }
 
     const slide: Slide = editor.presentation.slides[editor.active]
     // eslint-disable-next-line no-negated-condition
-    const active = editor.active !== 0 ? editor.active - 1 : editor.active
-    const newSlides = editor.presentation.slides.filter((_, index) => index != editor.active)
+    const active: number = editor.active !== 0 ? editor.active - 1 : editor.active
+    const newSlides: Array<Slide> = editor.presentation.slides.filter((_, index) => index != editor.active)
     newSlides.splice(Math.max(editor.active - 1, 0), 0, slide)
 
     return {
@@ -132,33 +140,39 @@ export function moveSlideTopByStep(editor: Editor): Editor {
             slides: newSlides
         }
     }
-
-    // if (editor.active !== 0)
-    // {
-    //     deleteSlide(newEditor)
-    //     newEditor.active = newEditor.active - 1
-    //     addSlide(newEditor, slide)
-    // }
-    // return newEditor
 }
 
 export function moveSlideDownByStep(editor: Editor): Editor {
-    const newEditor: Editor = editor
-    const slide: Slide = editor.presentation.slides[editor.active]
-    if (editor.active !== newEditor.presentation.slides.length - 1) {
-        deleteSlide(newEditor)
-        newEditor.active += 1
-        addSlide(newEditor, slide)
+    if (editor.presentation.slides.length === 0) {
+        return {...editor}
     }
-    return newEditor
+
+    const slide: Slide = editor.presentation.slides[editor.active]
+    // eslint-disable-next-line no-negated-condition
+    const active: number = editor.active !== editor.presentation.slides.length - 1 ? editor.active + 1 : editor.active
+    const newSlides: Array<Slide> = editor.presentation.slides.filter((_, index) => index != editor.active)
+    newSlides.splice(Math.min(editor.active + 1, editor.presentation.slides.length - 1), 0, slide)
+
+    return {
+        ...editor,
+        active,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
 }
 
-export function addObject(editor: Editor, object: { objectType: string }): Editor {
-    const newObjectArray = setNonActiveObject(editor.presentation.slides[editor.active].objects)
+export function addObject(editor: Editor, object: {objectType: string}): Editor {
+    if (editor.presentation.slides.length === 0) {
+        return {...editor}
+    }
+
+    const newObjectArray: Array<ObjectType> = setNonActiveObject(editor.presentation.slides[editor.active].objects)
 
     newObjectArray.push(createObject(object.objectType, editor.presentation.slides[editor.active].objects.length))
 
-    const newSlides = editor.presentation.slides
+    const newSlides: Array<Slide> = editor.presentation.slides.slice()
     newSlides[editor.active].objects = newObjectArray
 
     return {
@@ -171,7 +185,7 @@ export function addObject(editor: Editor, object: { objectType: string }): Edito
 }
 
 function setNonActiveObject(objectArray: Array<ObjectType>): Array<ObjectType> {
-    const newObjectArray = objectArray
+    const newObjectArray: Array<ObjectType> = objectArray.slice()
     newObjectArray.forEach(object => {
         object.active = false
     })
@@ -267,46 +281,40 @@ function createCircle(priority: number): ObjectType {
     }
 }
 
-
 export function setObjectPositionEditorVersion(editor: Editor, objectId: string, position: Position): Editor {
     let objectIndex = -1
+    const objects: Array<ObjectType> = editor.presentation.slides[editor.active].objects.slice()
 
-    editor.presentation.slides[editor.active].objects.forEach((object, index) => {
+    objects.forEach((object, index) => {
         if (object.id === objectId) {
             objectIndex = index
         }
     })
 
-    if (objectIndex != -1) {
-        const newObject: ObjectType = {
-            ...editor.presentation.slides[editor.active].objects[objectIndex],
-            leftTopPoint: position
-        }
+    if (objectIndex !== -1) {
+        const newObject: ObjectType = editor.presentation.slides[editor.active].objects[objectIndex]
+        newObject.leftTopPoint = position
 
-        return replaceObjects(editor, objectIndex, newObject)
+        return replaceObjects({...editor}, objectIndex, newObject)
     }
 
-    return editor
+    return {...editor}
 }
 
-
 function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectType): Editor {
-    const newObjects: Array<ObjectType> = editor.presentation.slides[editor.active].objects
+    const newObjects: Array<ObjectType> = editor.presentation.slides[editor.active].objects.slice()
 
     newObjects[objectIndex] = newObject
 
-    const newSlide: Slide = {
-        ...editor.presentation.slides[editor.active],
-        objects: newObjects
-    }
+    const newSlide: Slide = editor.presentation.slides[editor.active]
 
-    return replaceActiveSlide(editor, newSlide)
+    newSlide.objects = newObjects
+
+    return replaceActiveSlide({...editor}, newSlide)
 }
 
 function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor {
-    const newSlides: Array<Slide> = {
-        ...editor.presentation.slides
-    }
+    const newSlides: Array<Slide> = editor.presentation.slides.slice()
 
     newSlides[editor.active] = newSlide
 
@@ -319,9 +327,11 @@ function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor {
     }
 }
 
-export function setBackgroundColor(editor: Editor, id: string): Editor {
-    const newEditor = editor
-    newEditor.presentation.slides.forEach(slide => {
+export function setBackgroundColor(editor:Editor, id: string): Editor {
+    console.log('id = ', id)
+    const newSlides: Array<Slide> = editor.presentation.slides.slice()
+
+    newSlides.forEach(slide => {
         if (slide.id === id) {
             slide.background.color = editor.color
         } else {
@@ -332,7 +342,13 @@ export function setBackgroundColor(editor: Editor, id: string): Editor {
             })
         }
     })
-    return newEditor
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
 }
 
 function generateId(): string {
