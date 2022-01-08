@@ -313,11 +313,7 @@ export function setObjectPositionEditorVersion(editor: Editor, objectId: string,
         }
     })
 
-    console.log("Position: " + position.x,position.y);
-
     if (objectIndex !== -1) {
-        console.log("objectIndex: " + objectIndex);
-
         const newObject: ObjectType = editor.presentation.slides[editor.active].objects[objectIndex];
         newObject.leftTopPoint = position;
 
