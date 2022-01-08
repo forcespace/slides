@@ -49,9 +49,9 @@ export function createSlide(): Slide
 //Добавление пустого слайда в коллекцию после активного
 export function addEmptySlide(editor: Editor): Editor
 {
-    const newSlides = editor.presentation.slides;
+    const newSlides: Array<Slide> = editor.presentation.slides.slice();
     const slide: Slide = createSlide();
-    const active = editor.active + 1;
+    const active: number = editor.active + 1;
     newSlides.splice(active, 0, slide);
 
     return {
@@ -60,73 +60,70 @@ export function addEmptySlide(editor: Editor): Editor
         presentation: {
             ...editor.presentation,
             slides: newSlides
-        },
+        }
     };
 }
 
 //Удаление активного слайда из коллекции
 export function deleteSlide(editor: Editor): Editor
 {
-    let newSlides = editor.presentation.slides;
+    const newSlides: Array<Slide> = editor.presentation.slides.slice();
     const index: number = editor.active;
-    const slideArrayLenght: number = editor.presentation.slides.length;
+    const slideArrayLenght: number = newSlides.length;
 
-    let newIndex: number;
+    let active: number;
 
     switch (slideArrayLenght)
     {
         case 0:
-            newIndex = -1;
+            active = -1;
             break;
         case 1:
             newSlides.splice(index, 1);
-            newIndex = -1;
+            active = -1;
             break;
         default:
             newSlides.splice(index, 1);
-            if (index + 1 === slideArrayLenght)
-            {
-                newIndex = index - 1;
-            }
-            else
-            {
-                newIndex = index;
-            }
+            active = index === slideArrayLenght - 1 ? index - 1 : index
     }
 
     return {
         ...editor,
+        active,
         presentation: {
             ...editor.presentation,
             slides: newSlides
-        },
-        active: newIndex
+        }
     };
 }
 
 //Добавление слайда через Editor
-// Функция добавления какого-то заполненного слайда и она работает
+//Функция добавления какого-то заполненного слайда и она работает
+//Нужна такая?
 function addSlide(editor: Editor, slide: Slide): Editor
 {
-    const newSlides: Array<Slide> = editor.presentation.slides;
+    const newSlides: Array<Slide> = editor.presentation.slides.slice();
     const index: number = editor.active;
+    const active: number = editor.active + 1;
     newSlides.splice(index, 0, slide);
 
     return {
         ...editor,
+        active,
         presentation: {
             ...editor.presentation,
             slides: newSlides
-        },
-        active: index + 1
+        }
     };
 }
 
 export function setActive(editor: Editor, index: number): Editor
 {
+    const active: number = index
+
     return {
         ...editor,
-        active: index
+        active
     };
 }
 
@@ -147,7 +144,7 @@ export function moveSlideTopByStep(editor: Editor): Editor
         active,
         presentation: {
             ...editor.presentation,
-            slides: newSlides,
+            slides: newSlides
         }
     }
     
@@ -172,7 +169,7 @@ export function moveSlideDownByStep(editor: Editor): Editor
         active,
         presentation: {
             ...editor.presentation,
-            slides: newSlides,
+            slides: newSlides
         }
     }
 }
