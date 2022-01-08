@@ -158,15 +158,19 @@ export function moveSlideTopByStep(editor: Editor): Editor
 
 export function moveSlideDownByStep(editor: Editor): Editor
 {
-    const newEditor: Editor = editor;
     const slide: Slide = editor.presentation.slides[editor.active];
-    if (editor.active !== newEditor.presentation.slides.length - 1)
-    {
-        deleteSlide(newEditor);
-        newEditor.active = newEditor.active + 1;
-        addSlide(newEditor, slide);
+    const active = editor.active !== editor.presentation.slides.length - 1 ? editor.active + 1 : editor.active
+    const newSlides = editor.presentation.slides.filter((_, index) => index != editor.active)
+    newSlides.splice(Math.min(editor.active + 1, editor.presentation.slides.length - 1), 0, slide)
+
+    return {
+        ...editor,
+        active,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides,
+        }
     }
-    return newEditor;
 }
 
 export function addObject(editor: Editor, object: {objectType: string}): Editor
