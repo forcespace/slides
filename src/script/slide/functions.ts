@@ -129,15 +129,31 @@ export function setActive(editor: Editor, index: number): Editor
 //Перемещение слайда вверх в презентации
 export function moveSlideTopByStep(editor: Editor): Editor
 {
-    const newEditor: Editor = editor;
+    // const newEditor: Editor = {
+    //     ...editor,
+    // };
+    
     const slide: Slide = editor.presentation.slides[editor.active];
-    if (editor.active !== 0)
-    {
-        deleteSlide(newEditor);
-        newEditor.active = newEditor.active - 1;
-        addSlide(newEditor, slide);
+    const active = editor.active !== 0 ? editor.active - 1 : editor.active
+    const newSlides = editor.presentation.slides.filter((_, index) => index != editor.active)
+    newSlides.splice(Math.max(editor.active - 1, 0), 0, slide)
+
+    return {
+        ...editor,
+        active,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides,
+        }
     }
-    return newEditor;
+    
+    // if (editor.active !== 0)
+    // {
+    //     deleteSlide(newEditor);
+    //     newEditor.active = newEditor.active - 1;
+    //     addSlide(newEditor, slide);
+    // }
+    // return newEditor;
 }
 
 export function moveSlideDownByStep(editor: Editor): Editor
@@ -332,6 +348,23 @@ function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor
     };
 }
 
+export function setBackgroundColor(editor:Editor, id: string): Editor {
+    console.log('id = ', id)
+    const newEditor = editor
+    newEditor.presentation.slides.forEach((slide) => {
+        if(slide.id === id) {
+            slide.background.color = editor.color
+        } else {
+            slide.objects.forEach((object) => {
+                if(object.id === id) {
+                    object.background.color = editor.color
+                }
+            })
+        }
+    })
+    return newEditor
+}
+
 function generateId(): string
 {
     let result = '';
@@ -350,3 +383,23 @@ function generateId(): string
     }
     return result;
 }
+
+
+
+
+
+
+
+// const obj = {
+//     a: 1,
+//     b: 'hello',
+// }
+
+// const obj2 = obj
+
+// obj2.a = 2
+
+// const obj2 = {
+//     ...obj,
+//     a: 2,
+// }

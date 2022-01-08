@@ -9,6 +9,7 @@ const SCALE_INDEX = 0.1381;
 
 function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]}
 {
+    console.log('Matrix 4')
     return {
         activeSlide: state.presentationReducer.active,
         slides: state.presentationReducer.presentation.slides
@@ -24,6 +25,7 @@ const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction) =>
 
 function SlideList(props: {activeSlide: number, slides: Slide[]} & ReturnType<typeof mapDispatchToProps>)
 {
+    console.log('Test')
     function isActive(index: number)
     {
         return index === props.activeSlide;

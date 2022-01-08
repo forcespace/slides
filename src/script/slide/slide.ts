@@ -24,7 +24,7 @@ export type Slide = {
 export type Object = {
     id: string,
     leftTopPoint: Position,
-    background?: Background,
+    background: Background,
     border?: Border,
     width: number,
     height: number,

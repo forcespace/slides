@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { ExtendedAction, setColor } from '../../script/slide/actionCreators';
@@ -30,9 +30,11 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) =>
 function Input(props: {state: {presentationReducer: Editor}, ownProps: InputProps} & ReturnType<typeof mapDispatchToProps>)
 {
     const [color, setColor] = useState('#000')
-    if(props.state.presentationReducer.color !== color) {
-        props.setColor(color)
-    }
+    useEffect(() => {
+        if(props.state.presentationReducer.color !== color) {
+            props.setColor(color)
+        }
+    }, [color, props.state.presentationReducer.color, props.setColor])
 
     const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value)

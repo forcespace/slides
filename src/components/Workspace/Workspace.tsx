@@ -13,6 +13,7 @@ function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: nu
 
 function Workspace(props: {activeSlide: number, slides: Slide[]})
 {
+    console.log('Last Bogatyr')
     const slidesCount = props.slides.length
 
     return (

@@ -106,3 +106,11 @@ export function setColor(color: string): ExtendedAction
         color,
     }
 }
+
+export function setBackgroundColor(objectId: string): ExtendedAction
+{
+    return {
+        type: 'SET_BACKGROUND_COLOR',
+        objectId,
+    }
+}

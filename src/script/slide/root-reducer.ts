@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {ExtendedAction} from './actionCreators';
-import {addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion, setColor} from './functions';
+import {setBackgroundColor, addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion, setColor} from './functions';
 import {Editor} from './slide';
 
 const initState: Editor = createEditor();
@@ -59,6 +59,9 @@ const presentationReducer = (state: Editor = initState, action: ExtendedAction):
         case 'SET_COLOR':
         {
             return setColor(state, action.color!)
+        }
+        case 'SET_BACKGROUND_COLOR': {
+            return setBackgroundColor(state, action.objectId!)
         }
         default:
         {

@@ -1,8 +1,8 @@
-import {Editor} from "./script/slide/slide";
-import {getEditor, setEditor} from "./script/slide/editor-new";
-import ReactDOM from "react-dom";
-import React from "react";
-import {App} from "./App";
+ import {Editor} from "./script/slide/slide";
+//import {getEditor, setEditor} from "./script/slide/editor-new";
+// import ReactDOM from "react-dom";
+// import React from "react";
+// import {App} from "./App";
 
 // export function dispatch(modifyFn: Function, payload: Object)
 // {

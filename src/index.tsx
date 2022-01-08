@@ -14,3 +14,7 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 )
+
+store.subscribe(() => {
+    console.log('Spider Man. No Way Back')
+})
