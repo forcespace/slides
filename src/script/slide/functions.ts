@@ -99,7 +99,6 @@ export function deleteSlide(editor: Editor): Editor
 
 //Добавление слайда через Editor
 //Функция добавления какого-то заполненного слайда и она работает
-//Нужна такая?
 function addSlide(editor: Editor, slide: Slide): Editor
 {
     const newSlides: Array<Slide> = editor.presentation.slides.slice();
@@ -130,10 +129,11 @@ export function setActive(editor: Editor, index: number): Editor
 //Перемещение слайда вверх в презентации
 export function moveSlideTopByStep(editor: Editor): Editor
 {
-    // const newEditor: Editor = {
-    //     ...editor,
-    // };
-    
+    if (editor.presentation.slides.length === 0)
+    {
+        return {...editor}
+    }
+
     const slide: Slide = editor.presentation.slides[editor.active];
     const active: number = editor.active !== 0 ? editor.active - 1 : editor.active
     const newSlides: Array<Slide> = editor.presentation.slides.filter((_, index) => index != editor.active)
@@ -147,18 +147,15 @@ export function moveSlideTopByStep(editor: Editor): Editor
             slides: newSlides
         }
     }
-    
-    // if (editor.active !== 0)
-    // {
-    //     deleteSlide(newEditor);
-    //     newEditor.active = newEditor.active - 1;
-    //     addSlide(newEditor, slide);
-    // }
-    // return newEditor;
 }
 
 export function moveSlideDownByStep(editor: Editor): Editor
 {
+    if (editor.presentation.slides.length === 0)
+    {
+        return {...editor}
+    }
+
     const slide: Slide = editor.presentation.slides[editor.active];
     const active: number = editor.active !== editor.presentation.slides.length - 1 ? editor.active + 1 : editor.active
     const newSlides: Array<Slide> = editor.presentation.slides.filter((_, index) => index != editor.active)
@@ -176,6 +173,11 @@ export function moveSlideDownByStep(editor: Editor): Editor
 
 export function addObject(editor: Editor, object: {objectType: string}): Editor
 {
+    if (editor.presentation.slides.length === 0)
+    {
+        return {...editor}
+    }
+
     const newObjectArray: Array<ObjectType> = setNonActiveObject(editor.presentation.slides[editor.active].objects);
 
     newObjectArray.push(createObject(object.objectType, editor.presentation.slides[editor.active].objects.length));
@@ -310,7 +312,6 @@ export function setObjectPositionEditorVersion(editor: Editor, objectId: string,
             objectIndex = index
         }
     })
-    console.log(position.x + ":" + position.y);
 
     if (objectIndex !== -1) {
         const newObject: ObjectType = {
@@ -324,8 +325,8 @@ export function setObjectPositionEditorVersion(editor: Editor, objectId: string,
     return {...editor}
 }
 
-
-function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectType): Editor {
+function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectType): Editor
+{
     const newObjects: Array<ObjectType> = editor.presentation.slides[editor.active].objects.slice();
 
     newObjects[objectIndex] = newObject;
@@ -390,12 +391,6 @@ function generateId(): string
     }
     return result;
 }
-
-
-
-
-
-
 
 // const obj = {
 //     a: 1,
