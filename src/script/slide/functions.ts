@@ -341,9 +341,7 @@ function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectTy
 
 function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor
 {
-    let newSlides: Array<Slide> = {
-        ...editor.presentation.slides
-    };
+    const newSlides: Array<Slide> = editor.presentation.slides.slice();
 
     newSlides[editor.active] = newSlide;
 
@@ -358,8 +356,9 @@ function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor
 
 export function setBackgroundColor(editor:Editor, id: string): Editor {
     console.log('id = ', id)
-    const newEditor = {...editor}
-    newEditor.presentation.slides.forEach((slide) => {
+    const newSlides: Array<Slide> = editor.presentation.slides.slice();
+
+    newSlides.forEach((slide) => {
         if(slide.id === id) {
             slide.background.color = editor.color
         } else {
@@ -370,7 +369,13 @@ export function setBackgroundColor(editor:Editor, id: string): Editor {
             })
         }
     })
-    return newEditor
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
 }
 
 function generateId(): string
