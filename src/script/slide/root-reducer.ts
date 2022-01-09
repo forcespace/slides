@@ -14,9 +14,10 @@ import {
     createPresentation,
     createHistory,
     undo,
-    redo
+    redo,
+    historyUpdate
 } from './functions'
-import {Presentation} from './slide'
+import {Presentation, History} from './slide'
 
 const initPresentation: Presentation = createPresentation()
 const initHistory: History = createHistory()
@@ -95,9 +96,9 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
         case 'REDO': {
             return redo(state)
         }
-        // case 'HISTORY_UPDATE': {
-        //     return historyUpdate()
-        // }
+        case 'HISTORY_UPDATE': {
+            return historyUpdate(state)
+        }
         default: {
             return state
         }

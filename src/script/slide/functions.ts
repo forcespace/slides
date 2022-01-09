@@ -390,7 +390,7 @@ export function undo(history: History): History {
     history.redo.splice(0, 0, history.present)
     // eslint-disable-next-line no-negated-condition
     history.present = history.undo.length !== 0 ? history.undo[history.undo.length] : history.present
-    history.undo.push()
+    history.undo.pop()
     console.log(history)
     return history
 }
@@ -404,11 +404,12 @@ export function redo(history: History): History {
     return history
 }
 
-//
-// function historyUpdate(history: History): History {
-//     return history
-//
-// }
+export function historyUpdate(history: History): History {
+    history.undo.splice(history.undo.length, 0, history.present)
+    history.redo.slice(0, history.redo.length)
+    console.log(history)
+    return history
+}
 
 
 // const obj = {
