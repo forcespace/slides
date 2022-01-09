@@ -1,23 +1,19 @@
 import NavTabs from '../NavTabs/NavTabs'
 import styles from './nav.module.css'
-import {connect, ConnectedProps} from 'react-redux'
-import {Editor} from '../../script/slide/slide'
 
-interface NavTabMenu {
+type NavTabMenu = {
     id: string,
     className: string,
     onClick: Function,
     name: string
 }
 
-const mapStateToProps = (state: Editor) => ({
-    state
-})
+type Props = {
+    tabs: Array<NavTabMenu>,
+    active: string
+}
 
-const connector = connect(mapStateToProps)
-type Props = ConnectedProps<typeof connector> & {tabs: Array<NavTabMenu>, active: string}
-
-function NavTab(props: Props) {
+export function NavTab(props: Props) {
     return (
         <NavTabs className={styles.menu_list}>
             {props.tabs.map(tab =>
@@ -29,5 +25,3 @@ function NavTab(props: Props) {
         </NavTabs>
     )
 }
-
-export default connector(NavTab)

@@ -4,9 +4,9 @@ import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
 import {Action} from 'redux'
 import {connect, ConnectedProps} from 'react-redux'
-import {Editor} from '../../script/slide/slide'
-import NavTab from './NavTab'
-import NavTabButtons from './NavTabButtons'
+import {NavTab} from './NavTab'
+import {NavTabButtons} from './NavTabButtons'
+import {store} from '../../store'
 
 const TABS = {
     SAVE: 'save',
@@ -14,10 +14,6 @@ const TABS = {
     EDIT: 'slides',
     PASTE: 'paste'
 }
-
-const mapStateToProps = (state: Editor) => ({
-    state
-})
 
 const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     createEditor: () => dispatch(createEditor()),
@@ -32,11 +28,10 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     importProject: (data: string | ArrayBuffer | null) => dispatch(importProject(data))
 })
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
+const connector = connect(null, mapDispatchToProps)
 type Props = ConnectedProps<typeof connector>
 
 function Nav(props: Props) {
-    console.log('Nav props.state.color = ', props.state.color)
     function handleAddNewSlideClick() {
         props.addEmptySlide()
     }
@@ -70,11 +65,13 @@ function Nav(props: Props) {
     }
 
     function handleSetBackgroundColor() {
-        props.setBackgroundColor(props.state.active, props.state.color!)
+        const state = store.getState()
+        props.setBackgroundColor(state.active, state.color!)
     }
 
     function handleSetBorderColor() {
-        props.setBorderColor(props.state.active, props.state.color!)
+        const state = store.getState()
+        props.setBorderColor(state.active, state.color!)
     }
 
     function exportProject() {

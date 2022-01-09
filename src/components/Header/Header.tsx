@@ -6,7 +6,7 @@ import {AnyAction} from 'redux'
 import React from 'react'
 
 const mapStateToProps = (state: Editor): {title: string} => ({
-    title: state.presentation?.title
+    title: state.presentation.title
 })
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction) => ({

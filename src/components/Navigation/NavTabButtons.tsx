@@ -5,17 +5,8 @@ import Input from '../Input/Input'
 import InputFile from '../InputFile/InputFile'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
-import {connect, ConnectedProps} from 'react-redux'
-import {Editor} from '../../script/slide/slide'
 
-const mapStateToProps = (state: Editor) => ({
-    state
-})
-
-const connector = connect(mapStateToProps)
-type Props = ConnectedProps<typeof connector> & { buttons: Array<NavTabButton>, hidden: boolean }
-
-interface NavTabButton {
+type NavTabButton = {
     classNameParent?: string,
     className: string,
     onClick?: React.MouseEventHandler<HTMLInputElement>,
@@ -27,8 +18,12 @@ interface NavTabButton {
     value?: string
 }
 
-function NavTabButtons(props: Props) {
-    console.log('NavTabs props.state.color = ', props.state.color)
+type Props = {
+    buttons: Array<NavTabButton>,
+    hidden: boolean
+}
+
+export function NavTabButtons(props: Props) {
     return (
         <NavTabs className={`${styles.tabs} ${props.hidden ? styles.tabs_hidden : ''}`}>
             {
@@ -54,5 +49,3 @@ function NavTabButtons(props: Props) {
         </NavTabs>
     )
 }
-
-export default connector(NavTabButtons)

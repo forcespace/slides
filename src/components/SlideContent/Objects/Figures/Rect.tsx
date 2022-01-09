@@ -9,7 +9,7 @@ type OwnProps = {
     }
 }
 
-const mapStateToProps = (state: {presentationReducer: Editor}, ownProps: OwnProps) => ({
+const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
     state,
     ownProps
 })

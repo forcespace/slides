@@ -17,7 +17,7 @@ import {
 import {Presentation} from './slide'
 
 const initPresentation: Presentation = createPresentation()
-const initColor = ''
+const initColor = '#000000'
 
 const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
     switch (action.type) {

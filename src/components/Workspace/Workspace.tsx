@@ -13,7 +13,6 @@ type Props = ConnectedProps<typeof connector>
 
 function Workspace(props: Props) {
     const slidesCount = props.state.presentation.slides.length
-    console.log('Workspace props.state.color = ', props.state.color)
 
     return (
         <section className={styles.workspace}>

@@ -1,6 +1,5 @@
-import {LegacyRef, useRef, useState} from 'react'
+import {useState} from 'react'
 import {connect, ConnectedProps} from 'react-redux'
-import {ExtendedAction, setBackgroundColor} from '../../script/slide/actionCreators'
 import {Editor, ObjectType} from '../../script/slide/slide'
 import Objects from './Objects/Objects'
 import styles from './slideContent.module.css'
@@ -13,36 +12,26 @@ type OwnProps = {
     },
 }
 
-const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
-    state,
-    ownProps
+const mapStateToProps = (state: Editor): {state: Editor} => ({
+    state
 })
 
-const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) => ({
-    setBackgroundColor: (slideId: string, color: string) => dispatch(setBackgroundColor(slideId, color))
-})
-
-const connector = connect(mapStateToProps, mapDispatchToProps)
-type Props = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps)
+type Props = ConnectedProps<typeof connector> & OwnProps
 
 function ObjectContainer(props: Props) {
-    const strokeSizeSvg = props.ownProps.object.border ? props.ownProps.object.border.borderSize * props.ownProps.scale.scaleIndex : 0
-    const width = Math.round(props.ownProps.object.width * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
-    const height = Math.round(props.ownProps.object.height * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
+    const strokeSizeSvg = props.object.border ? props.object.border.borderSize * props.scale.scaleIndex : 0
+    const width = Math.round(props.object.width * props.scale.scaleIndex + 2 * strokeSizeSvg)
+    const height = Math.round(props.object.height * props.scale.scaleIndex + 2 * strokeSizeSvg)
 
     const [position, setPosition] = useState({
-        x: Math.round(props.ownProps.object.leftTopPoint.x * props.ownProps.scale.scaleIndex) - 1,
-        y: Math.round(props.ownProps.object.leftTopPoint.y * props.ownProps.scale.scaleIndex) - 1
+        x: Math.round(props.object.leftTopPoint.x * props.scale.scaleIndex) - 1,
+        y: Math.round(props.object.leftTopPoint.y * props.scale.scaleIndex) - 1
     })
-
-    const ref: LegacyRef<HTMLDivElement> = useRef(null)
-
-    // console.log('props.state.active = ', props.state.active)
-    // console.log('props.ownProps.object.id = ', props.ownProps.object.id)
 
     let borderColor = '#ffffff'
 
-    if (props.state.active == props.ownProps.object.id) {
+    if (props.state.active == props.object.id) {
         borderColor = '#00ff00'
     }
 
@@ -57,11 +46,10 @@ function ObjectContainer(props: Props) {
     return (
         <>
             <div
-                ref={ref}
                 style={styleDiv}
                 className={styles.slide_item}>
             </div>
-            <Objects object={props.ownProps.object} scale={props.ownProps.scale} key={props.ownProps.object.id} />
+            <Objects object={props.object} scale={props.scale} key={props.object.id} />
         </>
     )
 }

@@ -25,7 +25,6 @@ function SlideList(props: Props) {
     function setActiveSlide(index: number) {
         props.setActive(index)
     }
-    console.log('SlideList props.state.color = ', props.state.color)
 
     return (
         <div className={styles.slide_list}>

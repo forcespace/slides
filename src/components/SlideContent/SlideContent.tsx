@@ -3,25 +3,22 @@ import SlideView from '../SlidesList/SlideView'
 import {Editor, Slide} from '../../script/slide/slide'
 import styles from './slideContent.module.css'
 import {connect, ConnectedProps} from 'react-redux'
-import {ExtendedAction, setBackgroundColor} from '../../script/slide/actionCreators'
+import {ExtendedAction, setEditorActive} from '../../script/slide/actionCreators'
 
 type OwnProps = {
     slide: Slide
 }
 
-const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
-    state,
-    ownProps
+const mapStateToProps = (state: Editor): {state: Editor} => ({
+    state
 })
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) => ({
-    setBackgroundColor: (slideId: string, color: string) => dispatch(setBackgroundColor(slideId, color))
+    setEditorActive: (slideId: string) => dispatch(setEditorActive(slideId))
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-type Props = PropsFromRedux & OwnProps
+type Props = ConnectedProps<typeof connector> & OwnProps
 
 function SlideContent(props: Props) {
     const [width, setWidth] = React.useState(0)
@@ -29,8 +26,8 @@ function SlideContent(props: Props) {
     const slideProportion = 1.78
     const fullWidth = 1231
 
-    function setBackground() {
-        props.setBackgroundColor(props.ownProps.slide.id, props.state.color!)
+    function setActive() {
+        props.setEditorActive(props.slide.id)
     }
 
     useEffect(() => {
@@ -57,13 +54,13 @@ function SlideContent(props: Props) {
     }, [])
 
     const styleDiv = {
-        backgroundColor: props.ownProps.slide.background.color ?? '#fff',
+        backgroundColor: props.slide.background.color,
         height: width / slideProportion
     }
 
     return (
-        <div style={styleDiv} onClick={setBackground} className={styles.slide} ref={slideRef}>
-            <SlideView slide={props.ownProps.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.ownProps.slide.id} />
+        <div style={styleDiv} onClick={setActive} className={styles.slide} ref={slideRef}>
+            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.slide.id} />
         </div>
     )
 }
