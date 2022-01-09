@@ -1,7 +1,7 @@
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setBackgroundColor} from '../../script/slide/actionCreators'
 import {Editor, ObjectType, Slide} from '../../script/slide/slide'
-import Objects from '../SlideContent/Objects/Objects'
+import ObjectContainer from '../SlideContent/ObjectContainer'
 
 type OwnProps = {
     slide: Slide,
@@ -28,14 +28,10 @@ type Props = PropsFromRedux & OwnProps
 function SlideView(props: Props) {
     const slideObjects = props.ownProps.slide.objects
 
-    const styleDiv = {
-        backgroundColor: props.ownProps.slide.background.color ?? '#fff'
-    }
-
     return (
-        <div style={styleDiv}>
+        <div>
             {slideObjects.map((object: ObjectType) =>
-                <Objects object={object} scale={props.ownProps.scale} key={Math.random()} />
+                <ObjectContainer object={object} scale={props.ownProps.scale} key={Math.random()} />
             )}
         </div>
     )
