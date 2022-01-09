@@ -2,9 +2,7 @@ import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo} fr
 
 export function createUndoRedo(): UndoRedo {
     return {
-        title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
-        active: 0,
-        slides: [createSlide()],
+        presentation: createPresentation(),
         activeElem: '0',
         color: '0'
     }
@@ -384,6 +382,16 @@ function generateId(): string {
         }
     }
     return result
+}
+
+export function addStateUndo(history: History, newState: UndoRedo): History {
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    newHistoryUndo.push(newState)
+    console.log('newHistoryUndo = ', newHistoryUndo)
+    return {
+        ...history,
+        undo: newHistoryUndo
+    }
 }
 
 export function undo(history: History): History {

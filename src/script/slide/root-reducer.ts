@@ -15,7 +15,8 @@ import {
     createHistory,
     undo,
     redo,
-    historyUpdate
+    historyUpdate,
+    addStateUndo
 } from './functions'
 import {Presentation, History} from './slide'
 
@@ -90,6 +91,10 @@ const active = (state = '', action: ExtendedAction): string => {
 
 const history = (state: History = initHistory, action: ExtendedAction): History => {
     switch (action.type) {
+        case 'ADD_STATE_UNDO': {
+            console.log('action.obj!', action.obj!)
+            return addStateUndo(state, action.obj!)
+        }
         case 'UNDO': {
             return undo(state)
         }

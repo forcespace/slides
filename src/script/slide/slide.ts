@@ -5,7 +5,8 @@ export type Editor = {
     color?: string
 }
 
-export type UndoRedo = Presentation & {
+export type UndoRedo = {
+    presentation: Presentation,
     activeElem: string,
     color?: string
 }

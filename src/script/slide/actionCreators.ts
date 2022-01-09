@@ -12,7 +12,8 @@ export type ExtendedAction = {
     color?: string,
     undo?: Array<UndoRedo>,
     present?: UndoRedo,
-    redo?: Array<UndoRedo>
+    redo?: Array<UndoRedo>,
+    obj?: UndoRedo
 }
 
 export type ObjectType = {
@@ -112,6 +113,14 @@ export function setEditorActive(objectId: string): ExtendedAction {
         objectId
     }
 }
+
+export function addStateUndo(obj: UndoRedo): ExtendedAction {
+    return {
+        type: 'ADD_STATE_UNDO',
+        obj
+    }
+}
+
 export function undo(): ExtendedAction {
     return {
         type: 'UNDO'
