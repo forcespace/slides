@@ -27,18 +27,18 @@ type Props = ConnectedProps<typeof connector>
 
 function ObjectContainer(props: Props) {
     const strokeSizeSvg = props.ownProps.object.border ? props.ownProps.object.border.borderSize * props.ownProps.scale.scaleIndex : 0
-    const width = Math.ceil(props.ownProps.object.width * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
-    const height = Math.ceil(props.ownProps.object.height * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
+    const width = Math.round(props.ownProps.object.width * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
+    const height = Math.round(props.ownProps.object.height * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
 
     const [position, setPosition] = useState({
-        x: Math.ceil(props.ownProps.object.leftTopPoint.x * props.ownProps.scale.scaleIndex) - 1,
-        y: Math.ceil(props.ownProps.object.leftTopPoint.y * props.ownProps.scale.scaleIndex) - 1
+        x: Math.round(props.ownProps.object.leftTopPoint.x * props.ownProps.scale.scaleIndex) - 1,
+        y: Math.round(props.ownProps.object.leftTopPoint.y * props.ownProps.scale.scaleIndex) - 1
     })
 
     const ref: LegacyRef<HTMLDivElement> = useRef(null)
 
-    console.log('props.state.active = ', props.state.active)
-    console.log('props.ownProps.object.id = ', props.ownProps.object.id)
+    // console.log('props.state.active = ', props.state.active)
+    // console.log('props.ownProps.object.id = ', props.ownProps.object.id)
 
     let borderColor = '#ffffff'
 

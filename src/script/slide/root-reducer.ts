@@ -11,11 +11,13 @@ import {
     setActive,
     setTitle,
     setObjectPosition,
-    createPresentation
+    createPresentation,
+    setBorderColor
 } from './functions'
 import {Presentation} from './slide'
 
 const initPresentation: Presentation = createPresentation()
+const initColor = ''
 
 const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
     switch (action.type) {
@@ -52,6 +54,10 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         {
             return setBackgroundColor(state, action.objectId!, action.color!)
         }
+        case 'SET_BORDER_COLOR':
+        {
+            return setBorderColor(state, action.objectId!, action.color!)
+        }
         case 'SET_POSITION': {
             return setObjectPosition(state, action.objectId!, action.position!)
         }
@@ -61,9 +67,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
     }
 }
 
-const color = (state = '', action: ExtendedAction): string => {
+const color = (state: string = initColor, action: ExtendedAction): string => {
     switch (action.type) {
-        case 'SET_COLOR': {
+        case 'SET_EDITOR_COLOR': {
             return action.color!
         }
         default: {

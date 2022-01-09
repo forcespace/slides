@@ -18,7 +18,7 @@ const mapStateToProps = (state: Editor, ownProps: OwnProps): {state: Editor, own
 })
 
 const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
-    setBackgroundColor: (color: string) => dispatch(setEditorColor(color))
+    setEditorColor: (color: string) => dispatch(setEditorColor(color))
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -27,12 +27,14 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 function Input(props: Props) {
-    const [color, setColor] = useState('#000')
+    console.log('Input props.state.color = ', props.state.color)
+    const [color, setColor] = useState('#000000')
+
     useEffect(() => {
         if (props.state.color !== color) {
-            props.setBackgroundColor(color)
+            props.setEditorColor(color)
         }
-    }, [color, props.state.color, props.setBackgroundColor])
+    }, [color, props.state.color, props.setEditorColor])
 
     const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value)

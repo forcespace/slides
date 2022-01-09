@@ -20,10 +20,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 function Rect(props: Props) {
-    const rectWidth = Math.ceil(props.ownProps.figure.width * props.ownProps.scale.scaleIndex)
-    const rectHeight = Math.ceil(props.ownProps.figure.height * props.ownProps.scale.scaleIndex)
+    const rectWidth = Math.round(props.ownProps.figure.width * props.ownProps.scale.scaleIndex)
+    const rectHeight = Math.round(props.ownProps.figure.height * props.ownProps.scale.scaleIndex)
     const rectStroke = props.ownProps.figure.border ? props.ownProps.figure.border.borderColor : ''
-    const rectStrokeSize = props.ownProps.figure.border ? Math.ceil(props.ownProps.figure.border.borderSize * props.ownProps.scale.scaleIndex) : 0
+    const rectStrokeSize = props.ownProps.figure.border ? Math.round(props.ownProps.figure.border.borderSize * props.ownProps.scale.scaleIndex) : 0
     const rectFill = props.ownProps.figure.background ? props.ownProps.figure.background.color : ''
 
     return (

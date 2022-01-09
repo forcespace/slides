@@ -319,16 +319,8 @@ function replaceActiveSlide(presentation: Presentation, newSlide: Slide): Presen
 }
 
 export function setBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
-    // const newSlides: Array<Slide> = presentation.slides.slice()
-    // eslint-disable-next-line no-unused-vars
-    let indexSlide = -1
-
-    presentation.slides.forEach((slide, index) => {
-        if (slide.id === id) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            indexSlide = index
-        }
-    })
+    const indexSlide = searchSlide(presentation, id)
+    const indexObject = searchObject(presentation, id)
 
     if (indexSlide >= 0) {
         const newSlide: Slide = {
@@ -338,9 +330,32 @@ export function setBackgroundColor(presentation: Presentation, id: string, newCo
                 color: newColor}
         }
 
-        // eslint-disable-next-line no-negated-condition
         const newSlides: Array<Slide> = presentation.slides.filter((_, index) => index != indexSlide)
         newSlides.splice(Math.max(indexSlide, 0), 0, newSlide)
+
+        return {
+            ...presentation,
+            slides: newSlides
+        }
+    } else if (indexObject.objectIndex >= 0) {
+        const newObject: ObjectType = {
+            ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
+            background: {
+                priority: 0,
+                color: newColor
+            }
+        }
+
+        const newObjects: Array<ObjectType> = presentation.slides[indexObject.slideindex].objects.slice()
+        newObjects.splice(indexObject.objectIndex, 1, newObject)
+
+        const newSlide: Slide = {
+            ...presentation.slides[indexObject.slideindex],
+            objects: newObjects
+        }
+
+        const newSlides: Array<Slide> = presentation.slides.slice()
+        newSlides.splice(indexObject.slideindex, 1, newSlide)
 
         return {
             ...presentation,
@@ -350,6 +365,73 @@ export function setBackgroundColor(presentation: Presentation, id: string, newCo
         return {
             ...presentation
         }
+    }
+}
+
+export function setBorderColor(presentation: Presentation, id: string, newColor: string): Presentation {
+    const indexObject = searchObject(presentation, id)
+
+    if (indexObject.objectIndex >= 0) {
+        const newObject: ObjectType = {
+            ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
+            border: {
+                borderColor: newColor,
+                borderSize: 2,
+                borderStyle: 'Solid'
+            }
+        }
+
+        const newObjects: Array<ObjectType> = presentation.slides[indexObject.slideindex].objects.slice()
+        newObjects.splice(indexObject.objectIndex, 1, newObject)
+
+        const newSlide: Slide = {
+            ...presentation.slides[indexObject.slideindex],
+            objects: newObjects
+        }
+
+        const newSlides: Array<Slide> = presentation.slides.slice()
+        newSlides.splice(indexObject.slideindex, 1, newSlide)
+
+        return {
+            ...presentation,
+            slides: newSlides
+        }
+    } else {
+        return {
+            ...presentation
+        }
+    }
+
+}
+
+function searchSlide(presentation: Presentation, id: string): number {
+    let foundedSlideIndex = -1
+
+    presentation.slides.forEach((slide, slideIndex) => {
+        if (slide.id === id) {
+            foundedSlideIndex = slideIndex
+        }
+    })
+
+    return foundedSlideIndex
+}
+
+function searchObject(presentation: Presentation, id: string): {slideindex: number, objectIndex: number} {
+    let foundedSlideIndex = -1
+    let foundedObjectIndex = -1
+
+    presentation.slides.forEach((slide, index) => {
+        slide.objects.forEach((object, objectIndex) => {
+            if (object.id === id) {
+                foundedSlideIndex = index
+                foundedObjectIndex = objectIndex
+            }
+        })
+    })
+
+    return {
+        slideindex: foundedSlideIndex,
+        objectIndex: foundedObjectIndex
     }
 }
 

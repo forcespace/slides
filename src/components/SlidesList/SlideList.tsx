@@ -6,13 +6,9 @@ import {connect, ConnectedProps} from 'react-redux'
 
 const SCALE_INDEX = 0.1381
 
-const mapStateToProps = (state: Editor): {activeSlide: number, slides: Slide[]} => {
-    console.log('')
-    return {
-        activeSlide: state.presentation.active,
-        slides: state.presentation.slides
-    }
-}
+const mapStateToProps = (state: Editor): {state: Editor} => ({
+    state
+})
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) => ({
     setActive: (index: number) => dispatch(setActive(index))
@@ -23,16 +19,17 @@ type Props = ConnectedProps<typeof connector>
 
 function SlideList(props: Props) {
     function isActive(index: number) {
-        return index === props.activeSlide
+        return index === props.state.presentation.active
     }
 
     function setActiveSlide(index: number) {
         props.setActive(index)
     }
+    console.log('SlideList props.state.color = ', props.state.color)
 
     return (
         <div className={styles.slide_list}>
-            {props.slides.map((slide: Slide, index: number) =>
+            {props.state.presentation.slides.map((slide: Slide, index: number) =>
                 <div key={slide.id} className={styles.slide}>
                     <div className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`} onClick={() => setActiveSlide(index)} draggable={true}>
                         <SlideView slide={slide} scale={{isMain: false, scaleIndex: SCALE_INDEX}} />
