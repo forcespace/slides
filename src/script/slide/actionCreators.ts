@@ -102,3 +102,10 @@ export function setBackgroundColor(objectId: string, color: string): ExtendedAct
         color
     }
 }
+
+export function setEditorActive(objectId: string): ExtendedAction {
+    return {
+        type: 'SET_EDITOR_ACTIVE',
+        objectId
+    }
+}

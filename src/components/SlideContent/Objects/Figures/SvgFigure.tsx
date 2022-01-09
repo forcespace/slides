@@ -3,7 +3,7 @@ import {Ref, useRef, useState} from 'react'
 import Figure from './Figure'
 import styles from '../../slideContent.module.css'
 import {useDragAndDrop} from '../../../../script/slide/dragAndDropHook'
-import {ExtendedAction, setObjectPosition} from '../../../../script/slide/actionCreators'
+import {ExtendedAction, setEditorActive, setObjectPosition} from '../../../../script/slide/actionCreators'
 import {connect, ConnectedProps} from 'react-redux'
 
 type OwnProps = {
@@ -14,13 +14,14 @@ type OwnProps = {
     },
 }
 
-const mapStateToProps = (state: { presentationReducer: Editor }, ownProps: OwnProps) => ({
+const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
     state,
     ownProps
 })
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction, ownProps: OwnProps) => ({
-    setObjectPosition: (position: Position) => dispatch(setObjectPosition(ownProps.figure.id, position))
+    setObjectPosition: (position: Position) => dispatch(setObjectPosition(ownProps.figure.id, position)),
+    setEditorActive: (objectId: string) => dispatch(setEditorActive(objectId))
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -48,20 +49,20 @@ function SvgFigure(props: Props) {
         height: heightSvg
     }
 
-    // console.log('pos: ', position)
+    const setNewPosition = (newPosition: Position) => {
+        const statePosition: Position = {
+            x: Math.ceil(newPosition.x / props.ownProps.scale.scaleIndex),
+            y: Math.ceil(newPosition.y / props.ownProps.scale.scaleIndex)
+        }
+        props.setObjectPosition(statePosition)
+        props.setEditorActive(props.figure.id)
+    }
 
     useDragAndDrop(
         ref,
         objectParametrs,
         setPosition,
-        (newPosition: any) => {
-            const statePosition: Position = {
-                x: Math.ceil(newPosition.x / props.ownProps.scale.scaleIndex),
-                y: Math.ceil(newPosition.y / props.ownProps.scale.scaleIndex)
-            }
-            // console.log('on drag end pos: ', newPosition)
-            props.setObjectPosition(statePosition)
-        },
+        setNewPosition,
         props.ownProps.scale.isMain,
         props.ownProps.scale.scaleIndex
     )
