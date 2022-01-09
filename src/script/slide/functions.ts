@@ -1,8 +1,18 @@
-import {Editor, ObjectType, Position, Presentation, Slide} from './slide'
+import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo} from './slide'
+
+export function createUndoRedo(): UndoRedo {
+    return {
+        title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
+        active: 0,
+        slides: [createSlide()],
+        activeElem: '0',
+        color: '0'
+    }
+}
 
 export function createEditor(): Editor {
     return {
-        history: {undo: [], redo: []},
+        history: {undo: [], present: createUndoRedo(), redo: []},
         presentation: {
             title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
             slides: [createSlide()],
@@ -17,6 +27,14 @@ export function createPresentation(): Presentation {
         title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
         active: 0,
         slides: [createSlide()]
+    }
+}
+
+export function createHistory(): History {
+    return {
+        undo: [createUndoRedo()],
+        present: createUndoRedo(),
+        redo: [createUndoRedo()]
     }
 }
 
@@ -370,6 +388,31 @@ function generateId(): string {
     }
     return result
 }
+
+export function undo(history: History): History {
+    history.redo.splice(0, 0, history.present)
+    // eslint-disable-next-line no-negated-condition
+    history.present = history.undo.length !== 0 ? history.undo[history.undo.length] : history.present
+    history.undo.push()
+    console.log(history)
+    return history
+}
+
+export function redo(history: History): History {
+    history.undo.splice(history.undo.length, 0, history.present)
+    // eslint-disable-next-line no-negated-condition
+    history.present = history.redo.length !== 0 ? history.redo[0] : history.present
+    history.redo.slice(0, 1)
+    console.log(history)
+    return history
+}
+
+//
+// function historyUpdate(history: History): History {
+//     return history
+//
+// }
+
 
 // const obj = {
 //     a: 1,

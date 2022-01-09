@@ -1,5 +1,5 @@
 import React from 'react'
-import {addEmptySlide, addObject, createEditor, deleteSlide, exportProject, importProject, moveSlideDownByStep, moveSlideTopByStep, ObjectType} from '../../script/slide/actionCreators'
+import {addEmptySlide, addObject, createEditor, deleteSlide, exportProject, importProject, moveSlideDownByStep, moveSlideTopByStep, undo, redo, ObjectType} from '../../script/slide/actionCreators'
 import Button from '../Button/Button'
 import NavTabs from '../NavTabs/NavTabs'
 import Input from '../Input/Input'
@@ -8,7 +8,7 @@ import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
 import {Action, AnyAction} from 'redux'
 import {connect} from 'react-redux'
-import {store} from '../../store'
+// import {store} from '../../store'
 
 const TABS = {
     SAVE: 'save',
@@ -30,6 +30,8 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) => ({
     deleteSlide: () => dispatch(deleteSlide()),
     moveSlideTopByStep: () => dispatch(moveSlideTopByStep()),
     moveSlideDownByStep: () => dispatch(moveSlideDownByStep()),
+    undo: () => dispatch(undo()),
+    redo: () => dispatch(redo()),
     addObject: (object: ObjectType) => dispatch(addObject(object)),
     exportProject: () => dispatch(exportProject()),
     importProject: (data: string | ArrayBuffer | null) => dispatch(importProject(data))
@@ -106,6 +108,12 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>) {
 
     function handleMoveSlideDown() {
         props.moveSlideDownByStep()
+    }
+    function undo() {
+        props.undo()
+    }
+    function redo() {
+        props.redo()
     }
 
     function handleAddRectClick() {
@@ -234,6 +242,16 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>) {
                     className: stylesButtonTabs.tab_slide_down,
                     onClick: handleMoveSlideDown,
                     title: 'Переместить текущий слайд на позицию ниже'
+                },
+                {
+                    className: stylesButtonTabs.tab_slide_up,
+                    onClick: undo,
+                    title: 'Undo'
+                },
+                {
+                    className: stylesButtonTabs.tab_slide_down,
+                    onClick: redo,
+                    title: 'Redo'
                 }
             ]} hidden={activeTab !== TABS.EDIT} />
 

@@ -1,5 +1,5 @@
 import {Action} from 'redux'
-import {Position} from '../slide/slide'
+import {Position, UndoRedo} from '../slide/slide'
 
 export type ExtendedAction = {
     type: string,
@@ -9,7 +9,10 @@ export type ExtendedAction = {
     objectId?: string,
     position?: Position,
     data?: string | ArrayBuffer | null,
-    color?: string
+    color?: string,
+    undo?: Array<UndoRedo>,
+    present?: UndoRedo,
+    redo?: Array<UndoRedo>
 }
 
 export type ObjectType = {
@@ -100,5 +103,22 @@ export function setBackgroundColor(objectId: string, color: string): ExtendedAct
         type: 'SET_BACKGROUND_COLOR',
         objectId,
         color
+    }
+}
+export function undo(): ExtendedAction {
+    return {
+        type: 'UNDO'
+    }
+}
+
+export function redo(): ExtendedAction {
+    return {
+        type: 'REDO'
+    }
+}
+
+export function historyUpdate(): ExtendedAction {
+    return {
+        type: 'HISTORY_UPDATE'
     }
 }

@@ -5,9 +5,15 @@ export type Editor = {
     color?: string
 }
 
+export type UndoRedo = Presentation & {
+    activeElem: string,
+    color?: string
+}
+
 export type History = {
-    undo?: Array<Presentation>
-    redo?: Array<Presentation>
+    undo: Array<UndoRedo>,
+    present: UndoRedo,
+    redo: Array<UndoRedo>
 }
 
 export type Presentation = {

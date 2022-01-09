@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux'
 import {ExtendedAction} from './actionCreators'
-import {setBackgroundColor, addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion, createPresentation} from './functions'
-import {Editor, Presentation} from './slide'
+import {setBackgroundColor, addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion, createPresentation, createHistory, undo, redo} from './functions'
+import {Editor, Presentation, History} from './slide'
 
 const initPresentation: Presentation = createPresentation()
 const initState: Editor = createEditor()
+const initHistory: History = createHistory()
 
 const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
     switch (action.type) {
@@ -69,4 +70,21 @@ const objectReducer = (state: Editor = initState, action: ExtendedAction): Edito
     }
 }
 
-export const rootReducer = combineReducers({presentation, color, objectReducer})
+const history = (state: History = initHistory, action: ExtendedAction): History => {
+    switch (action.type) {
+        case 'UNDO': {
+            return undo(state)
+        }
+        case 'REDO': {
+            return redo(state)
+        }
+        // case 'HISTORY_UPDATE': {
+        //     return historyUpdate()
+        // }
+        default: {
+            return state
+        }
+    }
+}
+
+export const rootReducer = combineReducers({presentation, color, objectReducer, history})
