@@ -293,49 +293,46 @@ function createCircle(priority: number): ObjectType {
     }
 }
 
-export function setObjectPositionEditorVersion(editor: Editor, objectId: string, position: Position): Editor {
+export function setObjectPosition(presentation: Presentation, objectId: string, position: Position): Presentation {
     let objectIndex = -1
-    const objects: Array<ObjectType> = editor.presentation.slides[editor.presentation.active].objects.slice()
+    const slide: Slide = presentation.slides[presentation.active]
 
-    objects.forEach((object, index) => {
+    slide.objects.forEach((object, index) => {
         if (object.id === objectId) {
             objectIndex = index
         }
     })
 
     if (objectIndex !== -1) {
-        const newObject: ObjectType = editor.presentation.slides[editor.presentation.active].objects[objectIndex]
-        newObject.leftTopPoint = position
+        const newObject: ObjectType = {
+            ...presentation.slides[presentation.active].objects[objectIndex],
+            leftTopPoint: position
+        }
 
-        return replaceObjects({...editor}, objectIndex, newObject)
+        return replaceActiveSlide(presentation, replaceSlideObjects(slide, objectIndex, newObject))
     }
 
-    return {...editor}
+    return {
+        ...presentation
+    }
 }
 
-function replaceObjects(editor: Editor, objectIndex: number, newObject: ObjectType): Editor {
-    const newObjects: Array<ObjectType> = editor.presentation.slides[editor.presentation.active].objects.slice()
-
-    newObjects[objectIndex] = newObject
-
-    const newSlide: Slide = editor.presentation.slides[editor.presentation.active]
-
-    newSlide.objects = newObjects
-
-    return replaceActiveSlide({...editor}, newSlide)
+function replaceSlideObjects(slide: Slide, objectIndex: number, newObject: ObjectType): Slide {
+    const newObjects: Array<ObjectType> = slide.objects.slice()
+    newObjects.splice(objectIndex, 1, newObject)
+    return {
+        ...slide,
+        objects: newObjects
+    }
 }
 
-function replaceActiveSlide(editor: Editor, newSlide: Slide): Editor {
-    const newSlides: Array<Slide> = editor.presentation.slides.slice()
-
-    newSlides[editor.presentation.active] = newSlide
+function replaceActiveSlide(presentation: Presentation, newSlide: Slide): Presentation {
+    const newSlides: Array<Slide> = presentation.slides.slice()
+    newSlides.splice(presentation.active, 1, newSlide)
 
     return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: newSlides
-        }
+        ...presentation,
+        slides: newSlides
     }
 }
 

@@ -1,10 +1,24 @@
 import {combineReducers} from 'redux'
 import {ExtendedAction} from './actionCreators'
-import {setBackgroundColor, addEmptySlide, addObject, createEditor, importProject, deleteSlide, moveSlideDownByStep, moveSlideTopByStep, setActive, setTitle, setObjectPositionEditorVersion, createPresentation, createHistory, undo, redo} from './functions'
-import {Editor, Presentation, History} from './slide'
+import {
+    setBackgroundColor,
+    addEmptySlide,
+    addObject,
+    importProject,
+    deleteSlide,
+    moveSlideDownByStep,
+    moveSlideTopByStep,
+    setActive,
+    setTitle,
+    setObjectPosition,
+    createPresentation,
+    createHistory,
+    undo,
+    redo
+} from './functions'
+import {Presentation} from './slide'
 
 const initPresentation: Presentation = createPresentation()
-const initState: Editor = createEditor()
 const initHistory: History = createHistory()
 
 const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
@@ -42,6 +56,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         {
             return setBackgroundColor(state, action.objectId!, action.color!)
         }
+        case 'SET_POSITION': {
+            return setObjectPosition(state, action.objectId!, action.position!)
+        }
         default: {
             return state
         }
@@ -59,10 +76,10 @@ const color = (state = '', action: ExtendedAction): string => {
     }
 }
 
-const objectReducer = (state: Editor = initState, action: ExtendedAction): Editor => {
+const active = (state = '', action: ExtendedAction): string => {
     switch (action.type) {
-        case 'SET_POSITION': {
-            return setObjectPositionEditorVersion(state, action.objectId!, action.position!)
+        case 'SET_EDITOR_ACTIVE': {
+            return action.objectId!
         }
         default: {
             return state
@@ -87,4 +104,4 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
     }
 }
 
-export const rootReducer = combineReducers({presentation, color, objectReducer, history})
+export const rootReducer = combineReducers({presentation, color, active, history})

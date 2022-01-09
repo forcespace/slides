@@ -30,8 +30,6 @@ function SlideList(props: Props) {
         props.setActive(index)
     }
 
-    // console.log('slides = ', props.slides)
-
     return (
         <div className={styles.slide_list}>
             {props.slides.map((slide: Slide, index: number) =>
