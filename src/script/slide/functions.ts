@@ -1,4 +1,4 @@
-import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo} from './slide'
+import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo, Image} from './slide'
 
 export function createUndoRedo(): UndoRedo {
     return {
@@ -36,13 +36,48 @@ export function createHistory(): History {
     }
 }
 
-export function importProject(data: string | ArrayBuffer | null): Presentation {
+export function importPresentation(data: string | ArrayBuffer | null): Presentation {
     if (typeof data === 'string') {
-        const editor: Presentation = JSON.parse(data)
-        return editor
+        const presentation: Presentation = JSON.parse(data).presentation
+        return presentation
     }
 
     return createPresentation()
+}
+
+export function importHistory(data: string | ArrayBuffer | null): History {
+    if (typeof data === 'string') {
+        const history: History = JSON.parse(data).history
+        return history
+    }
+
+    return {
+        undo: [],
+        present: {
+            presentation: createPresentation(),
+            activeElem: '',
+            color: ''
+        },
+        redo: []
+    }
+}
+
+export function importEditorColor(data: string | ArrayBuffer | null): string {
+    if (typeof data === 'string') {
+        const color: string = JSON.parse(data).color
+        return color
+    }
+
+    return ''
+}
+
+export function importEditorActive(data: string | ArrayBuffer | null): string {
+    if (typeof data === 'string') {
+        const active: string = JSON.parse(data).active
+        return active
+    }
+
+    return ''
 }
 
 // export function setColor(editor: Editor, color: string): Editor {
@@ -194,6 +229,23 @@ export function addObject(presentation: Presentation, object: {objectType: strin
     }
 }
 
+export function addImage(presentation: Presentation, data: string | ArrayBuffer | null | undefined): Presentation {
+    if (typeof data === 'string' && presentation.slides.length != 0) {
+        const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active].objects.slice()
+        newObjectArray.push(createImage(data, presentation.slides[presentation.active].objects.length))
+
+        const newSlides: Array<Slide> = presentation.slides.slice()
+        newSlides[presentation.active].objects = newObjectArray
+
+        return {
+            ...presentation,
+            slides: newSlides
+        }
+    }
+
+    return {...presentation}
+}
+
 function setNonActiveObject(objectArray: Array<ObjectType>): Array<ObjectType> {
     const newObjectArray: Array<ObjectType> = objectArray.slice()
     newObjectArray.forEach(object => {
@@ -282,6 +334,26 @@ function createCircle(priority: number): ObjectType {
         },
         background: {
             color: '#0000ff',
+            priority: 1
+        },
+        width: 100,
+        height: 100,
+        active: true,
+        priority: priority
+    }
+}
+
+function createImage(data: string, priority: number): Image {
+    return {
+        type: 'Image',
+        src: data,
+        id: generateId(),
+        leftTopPoint: {
+            x: 100,
+            y: 100
+        },
+        background: {
+            color: '#000000',
             priority: 1
         },
         width: 100,

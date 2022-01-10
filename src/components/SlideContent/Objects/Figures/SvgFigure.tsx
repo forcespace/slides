@@ -14,9 +14,8 @@ type OwnProps = {
     },
 }
 
-const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
-    state,
-    ownProps
+const mapStateToProps = (state: Editor) => ({
+    state
 })
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction, ownProps: OwnProps) => ({
@@ -30,16 +29,16 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 function SvgFigure(props: Props) {
-    const fillColorSvg = props.ownProps.figure.background ? props.ownProps.figure.background.color : ''
-    const strokeColorSvg = props.ownProps.figure.border ? props.ownProps.figure.border.borderColor : ''
-    const strokeSizeSvg = props.ownProps.figure.border ? props.ownProps.figure.border.borderSize * props.ownProps.scale.scaleIndex : 0
-    const widthSvg = Math.ceil(props.ownProps.figure.width * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
-    const heightSvg = Math.ceil(props.ownProps.figure.height * props.ownProps.scale.scaleIndex + 2 * strokeSizeSvg)
+    const fillColorSvg = props.figure.background ? props.figure.background.color : ''
+    const strokeColorSvg = props.figure.border ? props.figure.border.borderColor : ''
+    const strokeSizeSvg = props.figure.border ? props.figure.border.borderSize * props.scale.scaleIndex : 0
+    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex + 2 * strokeSizeSvg)
+    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex + 2 * strokeSizeSvg)
 
 
     const [position, setPosition] = useState({
-        x: Math.ceil(props.ownProps.figure.leftTopPoint.x * props.ownProps.scale.scaleIndex),
-        y: Math.ceil(props.ownProps.figure.leftTopPoint.y * props.ownProps.scale.scaleIndex)
+        x: Math.ceil(props.figure.leftTopPoint.x * props.scale.scaleIndex),
+        y: Math.ceil(props.figure.leftTopPoint.y * props.scale.scaleIndex)
     })
     const ref: Ref<SVGSVGElement> = useRef(null)
 
@@ -51,8 +50,8 @@ function SvgFigure(props: Props) {
 
     const setNewPosition = (newPosition: Position) => {
         const statePosition: Position = {
-            x: Math.ceil(newPosition.x / props.ownProps.scale.scaleIndex),
-            y: Math.ceil(newPosition.y / props.ownProps.scale.scaleIndex)
+            x: Math.ceil(newPosition.x / props.scale.scaleIndex),
+            y: Math.ceil(newPosition.y / props.scale.scaleIndex)
         }
         props.setObjectPosition(statePosition)
         props.setEditorActive(props.figure.id)
@@ -63,8 +62,8 @@ function SvgFigure(props: Props) {
         objectParametrs,
         setPosition,
         setNewPosition,
-        props.ownProps.scale.isMain,
-        props.ownProps.scale.scaleIndex
+        props.scale.isMain,
+        props.scale.scaleIndex
     )
 
     const styleSvg = {
@@ -83,7 +82,7 @@ function SvgFigure(props: Props) {
             style={styleSvg}
             className={styles.slide_item}
             xmlns="http://www.w3.org/2000/svg">
-            <Figure figure={props.ownProps.figure} scale={props.ownProps.scale} />
+            <Figure figure={props.figure} scale={props.scale} />
         </svg>
     )
 }
