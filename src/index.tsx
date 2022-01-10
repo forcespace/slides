@@ -34,7 +34,6 @@ store.subscribe(() => {
     }
     // console.log('state.history.undo.length = ', state.history.undo)
     // TODO: подписаться на нажатие клавиш функциями внутри index ctrl^s
-    // переписать функции истории с копированием (на slice)
     // поправить условие в subscribe изменения в презентации и в полях color и active
     // сравнивать с present состоянием
     if (state.history.undo.length === 1) {
