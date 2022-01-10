@@ -94,7 +94,7 @@ export function setObjectPosition(objectId: string, position: Position): Extende
 
 export function setEditorColor(color: string): ExtendedAction {
     return {
-        type: 'SET_COLOR',
+        type: 'SET_EDITOR_COLOR',
         color
     }
 }
@@ -102,6 +102,14 @@ export function setEditorColor(color: string): ExtendedAction {
 export function setBackgroundColor(objectId: string, color: string): ExtendedAction {
     return {
         type: 'SET_BACKGROUND_COLOR',
+        objectId,
+        color
+    }
+}
+
+export function setBorderColor(objectId: string, color: string): ExtendedAction {
+    return {
+        type: 'SET_BORDER_COLOR',
         objectId,
         color
     }

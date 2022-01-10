@@ -12,13 +12,10 @@ interface OwnProps {
     value?: string
 }
 
-const mapStateToProps = (state: Editor, ownProps: OwnProps): {state: Editor, ownProps: OwnProps} => ({
-    state,
-    ownProps
-})
+const mapStateToProps = (state: Editor): {state: Editor} => ({state})
 
 const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
-    setBackgroundColor: (color: string) => dispatch(setEditorColor(color))
+    setEditorColor: (color: string) => dispatch(setEditorColor(color))
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -27,12 +24,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 function Input(props: Props) {
-    const [color, setColor] = useState('#000')
+    const [color, setColor] = useState('#000000')
+
     useEffect(() => {
         if (props.state.color !== color) {
-            props.setBackgroundColor(color)
+            props.setEditorColor(color)
         }
-    }, [color, props.state.color, props.setBackgroundColor])
+    }, [color, props.state.color, props.setEditorColor])
 
     const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value)
@@ -41,11 +39,11 @@ function Input(props: Props) {
     return (
         <input
             contentEditable
-            className={props.ownProps.className}
-            onClick={props.ownProps.onClick}
-            title={props.ownProps.title}
-            type={props.ownProps.type}
-            value={props.ownProps.value}
+            className={props.className}
+            onClick={props.onClick}
+            title={props.title}
+            type={props.type}
+            value={props.value}
             onChange={changeColor} />
     )
 }

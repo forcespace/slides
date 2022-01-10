@@ -1,14 +1,12 @@
 import React from 'react'
-import {addEmptySlide, addObject, createEditor, deleteSlide, exportProject, importProject, moveSlideDownByStep, moveSlideTopByStep, undo, redo, ObjectType} from '../../script/slide/actionCreators'
-import Button from '../Button/Button'
-import NavTabs from '../NavTabs/NavTabs'
-import Input from '../Input/Input'
-import InputFile from '../InputFile/InputFile'
+import {addEmptySlide, addObject, createEditor, deleteSlide, exportProject, ExtendedAction, importProject, moveSlideDownByStep, moveSlideTopByStep, ObjectType, undo, redo, setBackgroundColor, setBorderColor} from '../../script/slide/actionCreators'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
-import {Action, AnyAction} from 'redux'
-import {connect} from 'react-redux'
-// import {store} from '../../store'
+import {Action} from 'redux'
+import {connect, ConnectedProps} from 'react-redux'
+import {NavTab} from './NavTab'
+import {NavTabButtons} from './NavTabButtons'
+import {store} from '../../store'
 
 const TABS = {
     SAVE: 'save',
@@ -17,14 +15,7 @@ const TABS = {
     PASTE: 'paste'
 }
 
-interface NavTabMenu {
-    id: string,
-    className: string,
-    onClick: Function,
-    name: string
-}
-
-const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) => ({
+const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     createEditor: () => dispatch(createEditor()),
     addEmptySlide: () => dispatch(addEmptySlide()),
     deleteSlide: () => dispatch(deleteSlide()),
@@ -33,63 +24,16 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) => ({
     undo: () => dispatch(undo()),
     redo: () => dispatch(redo()),
     addObject: (object: ObjectType) => dispatch(addObject(object)),
+    setBackgroundColor: (id: string, color: string) => dispatch(setBackgroundColor(id, color)),
+    setBorderColor: (id: string, color: string) => dispatch(setBorderColor(id, color)),
     exportProject: () => dispatch(exportProject()),
     importProject: (data: string | ArrayBuffer | null) => dispatch(importProject(data))
 })
 
-function NavTab(props: { tabs: Array<NavTabMenu>, active: string }) {
-    return (
-        <NavTabs className={styles.menu_list}>
-            {props.tabs.map(tab =>
-                <span key={Math.random()} className={`${tab.className} ${props.active === tab.id ? styles.active : ''}`}
-                    onClick={() => (tab.onClick == undefined ? null : tab.onClick())}>
-                    {tab.name}
-                </span>)
-            }
-        </NavTabs>
-    )
-}
+const connector = connect(null, mapDispatchToProps)
+type Props = ConnectedProps<typeof connector>
 
-interface NavTabButton {
-    classNameParent?: string,
-    className: string,
-    onClick?: React.MouseEventHandler<HTMLInputElement>,
-    onChange?: React.ChangeEventHandler<HTMLInputElement>,
-    titleLabel?: string,
-    title?: string,
-    mode?: 'button' | 'input' | 'input-file',
-    type?: string,
-    value?: string
-}
-
-function NavTabButtons(props: { buttons: Array<NavTabButton>, hidden: boolean }) {
-    return (
-        <NavTabs className={`${styles.tabs} ${props.hidden ? styles.tabs_hidden : ''}`}>
-            {
-                props.buttons.map(button => {
-                    switch (button.mode) {
-                        case 'input': {
-                            return <Input {...button} key={Math.random()} type={button.type} className={`${stylesButtonTabs.tab} ${button.className}`}
-                                value={button.value} />
-                        }
-                        case 'input-file': {
-                            return (
-                                <InputFile classNameLabel={`${stylesButtonTabs.tab_wrapper_file} ${button.classNameParent}`}
-                                    titleLabel={button.titleLabel} {...button} key={Math.random()}
-                                    className={`${stylesButtonTabs.tab} ${button.className}`} />
-                            )
-                        }
-                        default: {
-                            return <Button {...button} key={Math.random()} className={`${stylesButtonTabs.tab} ${button.className}`} />
-                        }
-                    }
-                }
-                )}
-        </NavTabs>
-    )
-}
-
-function Nav(props: ReturnType<typeof mapDispatchToProps>) {
+function Nav(props: Props) {
     function handleAddNewSlideClick() {
         props.addEmptySlide()
     }
@@ -126,6 +70,16 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>) {
 
     function handleAddCircleClick() {
         props.addObject({objectType: 'Circle'})
+    }
+
+    function handleSetBackgroundColor() {
+        const state = store.getState()
+        props.setBackgroundColor(state.active, state.color!)
+    }
+
+    function handleSetBorderColor() {
+        const state = store.getState()
+        props.setBorderColor(state.active, state.color!)
     }
 
     function exportProject() {
@@ -283,10 +237,20 @@ function Nav(props: ReturnType<typeof mapDispatchToProps>) {
                     className: stylesButtonTabs.tab_add_circle,
                     onClick: handleAddCircleClick,
                     title: 'Добавить круг'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_circle,
+                    onClick: handleSetBackgroundColor,
+                    title: 'Заливка фона'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_circle,
+                    onClick: handleSetBorderColor,
+                    title: 'Цвет границы'
                 }
             ]} hidden={activeTab !== TABS.PASTE} />
         </nav>
     )
 }
 
-export default connect(null, mapDispatchToProps)(Nav)
+export default connector(Nav)
