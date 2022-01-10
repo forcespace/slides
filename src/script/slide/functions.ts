@@ -469,7 +469,7 @@ function generateId(): string {
 export function addStateUndo(history: History, newState: UndoRedo): History {
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
     newHistoryUndo.push(newState)
-    console.log('newHistoryUndo = ', newHistoryUndo)
+    // console.log('newHistoryUndo = ', newHistoryUndo)
     return {
         ...history,
         undo: newHistoryUndo
@@ -477,28 +477,46 @@ export function addStateUndo(history: History, newState: UndoRedo): History {
 }
 
 export function undo(history: History): History {
-    history.redo.splice(0, 0, history.present)
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    let newHistoryPresent: UndoRedo = history.present
+    newHistoryRedo.splice(0, 0, newHistoryPresent)
     // eslint-disable-next-line no-negated-condition
-    history.present = history.undo.length !== 0 ? history.undo[history.undo.length] : history.present
-    history.undo.pop()
-    console.log(history)
-    return history
+    newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
+    newHistoryUndo.pop()
+    return {
+        undo: newHistoryUndo,
+        present: newHistoryPresent,
+        redo: newHistoryRedo
+    }
 }
 
 export function redo(history: History): History {
-    history.undo.splice(history.undo.length, 0, history.present)
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    let newHistoryPresent: UndoRedo = history.present
+    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
     // eslint-disable-next-line no-negated-condition
-    history.present = history.redo.length !== 0 ? history.redo[0] : history.present
-    history.redo.splice(0, 1)
-    console.log(history)
-    return history
+    newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
+    newHistoryRedo.splice(0, 1)
+    return {
+        undo: newHistoryUndo,
+        present: newHistoryPresent,
+        redo: newHistoryRedo
+    }
 }
 
 export function historyUpdate(history: History): History {
-    history.undo.splice(history.undo.length, 0, history.present)
-    history.redo.slice(0, history.redo.length)
-    console.log(history)
-    return history
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    const newHistoryPresent: UndoRedo = history.present
+    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
+    newHistoryRedo.slice(0, newHistoryRedo.length)
+    return {
+        undo: newHistoryUndo,
+        present: newHistoryPresent,
+        redo: newHistoryRedo
+    }
 }
 
 // const obj = {
