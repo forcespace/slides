@@ -16,7 +16,8 @@ import {
     setBorderColor,
     importEditorActive,
     importHistory,
-    importEditorColor
+    importEditorColor,
+    addImage
 } from '../../script/slide/actionCreators'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
@@ -42,6 +43,7 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     undo: () => dispatch(undo()),
     redo: () => dispatch(redo()),
     addObject: (object: ObjectType) => dispatch(addObject(object)),
+    addImage: (data: string | ArrayBuffer | null) => dispatch(addImage(data)),
     setBackgroundColor: (id: string, color: string) => dispatch(setBackgroundColor(id, color)),
     setBorderColor: (id: string, color: string) => dispatch(setBorderColor(id, color)),
     exportProject: () => dispatch(exportProject()),
@@ -116,6 +118,23 @@ function Nav(props: Props) {
         a.href = URL.createObjectURL(file)
         a.download = fileName
         a.click()
+    }
+
+    function loadImage(event: React.ChangeEvent<HTMLInputElement>) {
+        const input = event.target
+        const file = input?.files?.[0]
+
+        if (file) {
+            const reader = new FileReader()
+
+            reader.readAsDataURL(file)
+
+            reader.onload = function () {
+                props.addImage(reader.result)
+            }
+
+            reader.onerror = function () {}
+        }
     }
 
     function importProject(event: React.ChangeEvent<HTMLInputElement>) {
@@ -239,6 +258,7 @@ function Nav(props: Props) {
                     classNameParent: stylesButtonTabs.tab_add_img_wrapper,
                     className: stylesButtonTabs.tab_add_img,
                     titleLabel: 'Загрузить картинку',
+                    onChange: loadImage,
                     mode: 'input-file',
                     type: 'file'
                 },

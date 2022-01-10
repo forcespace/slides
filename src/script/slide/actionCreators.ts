@@ -71,6 +71,13 @@ export function addObject(object: ObjectType): ExtendedAction {
     }
 }
 
+export function addImage(data: string | ArrayBuffer | null): ExtendedAction {
+    return {
+        type: 'ADD_IMAGE',
+        data
+    }
+}
+
 export function exportProject(): Action {
     return {
         type: 'EXPORT'

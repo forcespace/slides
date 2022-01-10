@@ -40,7 +40,7 @@ store.subscribe(() => {
     if (state.history.undo.length === 1) {
         store.dispatch(addStateUndo(newHistory))
     }
-    console.log('newHistoryUndoIndex = ', newHistory)
+    // console.log('newHistoryUndoIndex = ', newHistory)
 })
 
 export default connect(null, mapDispatchToProps)

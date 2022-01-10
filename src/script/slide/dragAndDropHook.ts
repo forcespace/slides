@@ -1,7 +1,7 @@
 import React, {RefObject, useEffect, useRef} from 'react'
 
 export function useDragAndDrop(
-    ref: RefObject<SVGSVGElement>,
+    ref: RefObject<SVGSVGElement> | RefObject<HTMLImageElement>,
     objectParams: { x: number, y: number, width: number, height: number },
     setPosition: React.Dispatch<React.SetStateAction<{ x: number, y: number }>>,
     onDragEnd: Function,
@@ -14,7 +14,7 @@ export function useDragAndDrop(
     const position = useRef({x: objectParams.x, y: objectParams.y})
 
     useEffect(() => {
-        const element: SVGSVGElement | null = ref.current
+        const element: SVGSVGElement | HTMLImageElement | null = ref.current
         if (element) {
             element.addEventListener('mousedown', handleMouseDown)
         }
