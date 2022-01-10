@@ -77,9 +77,30 @@ export function exportProject(): Action {
     }
 }
 
-export function importProject(data: string | ArrayBuffer | null): ExtendedAction {
+export function importPresentation(data: string | ArrayBuffer | null): ExtendedAction {
     return {
-        type: 'IMPORT',
+        type: 'IMPORT_PRESENTATION',
+        data: data
+    }
+}
+
+export function importHistory(data: string | ArrayBuffer | null): ExtendedAction {
+    return {
+        type: 'IMPORT_HISTORY',
+        data: data
+    }
+}
+
+export function importEditorActive(data: string | ArrayBuffer | null): ExtendedAction {
+    return {
+        type: 'IMPORT_EDITOR_ACTIVE',
+        data: data
+    }
+}
+
+export function importEditorColor(data: string | ArrayBuffer | null): ExtendedAction {
+    return {
+        type: 'IMPORT_EDITOR_COLOR',
         data: data
     }
 }

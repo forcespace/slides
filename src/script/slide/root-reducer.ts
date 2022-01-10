@@ -4,7 +4,10 @@ import {
     setBackgroundColor,
     addEmptySlide,
     addObject,
-    importProject,
+    importPresentation,
+    importEditorActive,
+    importEditorColor,
+    importHistory,
     deleteSlide,
     moveSlideDownByStep,
     moveSlideTopByStep,
@@ -22,7 +25,7 @@ import {
 import {Presentation, History} from './slide'
 
 const initPresentation: Presentation = createPresentation()
-const initColor = '#000000'
+const initColor = ''
 const initHistory: History = createHistory()
 
 const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
@@ -53,8 +56,8 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         case 'ADD_OBJECT': {
             return addObject(state, action.object!)
         }
-        case 'IMPORT': {
-            return importProject(action.data!)
+        case 'IMPORT_PRESENTATION': {
+            return importPresentation(action.data!)
         }
         case 'SET_BACKGROUND_COLOR':
         {
@@ -78,6 +81,9 @@ const color = (state: string = initColor, action: ExtendedAction): string => {
         case 'SET_EDITOR_COLOR': {
             return action.color!
         }
+        case 'IMPORT_EDITOR_COLOR': {
+            return importEditorColor(action.data!)
+        }
         default: {
             return state
         }
@@ -89,6 +95,9 @@ const active = (state = '', action: ExtendedAction): string => {
         case 'SET_EDITOR_ACTIVE': {
             return action.objectId!
         }
+        case 'IMPORT_EDITOR_COLOR': {
+            return importEditorActive(action.data!)
+        }
         default: {
             return state
         }
@@ -98,7 +107,7 @@ const active = (state = '', action: ExtendedAction): string => {
 const history = (state: History = initHistory, action: ExtendedAction): History => {
     switch (action.type) {
         case 'ADD_STATE_UNDO': {
-            console.log('action.obj!', action.obj!)
+            // console.log('action.obj!', action.obj!)
             return addStateUndo(state, action.obj!)
         }
         case 'UNDO': {
@@ -109,6 +118,9 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
         }
         case 'HISTORY_UPDATE': {
             return historyUpdate(state)
+        }
+        case 'IMPORT_HISTORY': {
+            return importHistory(action.data!)
         }
         default: {
             return state

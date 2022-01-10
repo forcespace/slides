@@ -36,13 +36,48 @@ export function createHistory(): History {
     }
 }
 
-export function importProject(data: string | ArrayBuffer | null): Presentation {
+export function importPresentation(data: string | ArrayBuffer | null): Presentation {
     if (typeof data === 'string') {
-        const editor: Presentation = JSON.parse(data)
-        return editor
+        const presentation: Presentation = JSON.parse(data).presentation
+        return presentation
     }
 
     return createPresentation()
+}
+
+export function importHistory(data: string | ArrayBuffer | null): History {
+    if (typeof data === 'string') {
+        const history: History = JSON.parse(data).history
+        return history
+    }
+
+    return {
+        undo: [],
+        present: {
+            presentation: createPresentation(),
+            activeElem: '',
+            color: ''
+        },
+        redo: []
+    }
+}
+
+export function importEditorColor(data: string | ArrayBuffer | null): string {
+    if (typeof data === 'string') {
+        const color: string = JSON.parse(data).color
+        return color
+    }
+
+    return ''
+}
+
+export function importEditorActive(data: string | ArrayBuffer | null): string {
+    if (typeof data === 'string') {
+        const active: string = JSON.parse(data).active
+        return active
+    }
+
+    return ''
 }
 
 // export function setColor(editor: Editor, color: string): Editor {
@@ -469,7 +504,7 @@ function generateId(): string {
 export function addStateUndo(history: History, newState: UndoRedo): History {
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
     newHistoryUndo.push(newState)
-    console.log('newHistoryUndo = ', newHistoryUndo)
+    // console.log('newHistoryUndo = ', newHistoryUndo)
     return {
         ...history,
         undo: newHistoryUndo
@@ -481,7 +516,7 @@ export function undo(history: History): History {
     // eslint-disable-next-line no-negated-condition
     history.present = history.undo.length !== 0 ? history.undo[history.undo.length] : history.present
     history.undo.pop()
-    console.log(history)
+    // console.log(history)
     return history
 }
 
@@ -490,14 +525,14 @@ export function redo(history: History): History {
     // eslint-disable-next-line no-negated-condition
     history.present = history.redo.length !== 0 ? history.redo[0] : history.present
     history.redo.splice(0, 1)
-    console.log(history)
+    // console.log(history)
     return history
 }
 
 export function historyUpdate(history: History): History {
     history.undo.splice(history.undo.length, 0, history.present)
     history.redo.slice(0, history.redo.length)
-    console.log(history)
+    // console.log(history)
     return history
 }
 

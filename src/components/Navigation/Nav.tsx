@@ -1,5 +1,23 @@
 import React from 'react'
-import {addEmptySlide, addObject, createEditor, deleteSlide, exportProject, ExtendedAction, importProject, moveSlideDownByStep, moveSlideTopByStep, ObjectType, undo, redo, setBackgroundColor, setBorderColor} from '../../script/slide/actionCreators'
+import {
+    ExtendedAction,
+    addEmptySlide,
+    addObject,
+    createEditor,
+    deleteSlide,
+    exportProject,
+    importPresentation,
+    moveSlideDownByStep,
+    moveSlideTopByStep,
+    ObjectType,
+    undo,
+    redo,
+    setBackgroundColor,
+    setBorderColor,
+    importEditorActive,
+    importHistory,
+    importEditorColor
+} from '../../script/slide/actionCreators'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
 import {Action} from 'redux'
@@ -27,7 +45,10 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     setBackgroundColor: (id: string, color: string) => dispatch(setBackgroundColor(id, color)),
     setBorderColor: (id: string, color: string) => dispatch(setBorderColor(id, color)),
     exportProject: () => dispatch(exportProject()),
-    importProject: (data: string | ArrayBuffer | null) => dispatch(importProject(data))
+    importPresentation: (data: string | ArrayBuffer | null) => dispatch(importPresentation(data)),
+    importHistory: (data: string | ArrayBuffer | null) => dispatch(importHistory(data)),
+    importEditorActive: (data: string | ArrayBuffer | null) => dispatch(importEditorActive(data)),
+    importEditorColor: (data: string | ArrayBuffer | null) => dispatch(importEditorColor(data))
 })
 
 const connector = connect(null, mapDispatchToProps)
@@ -83,13 +104,9 @@ function Nav(props: Props) {
     }
 
     function exportProject() {
-        // const storeState = store.getState()
-        // const fileName = 'slides.json'
-        // const content = JSON.stringify(storeState)
-        // download(content, fileName, 'text/plain')
-
+        const storeState = store.getState()
         const fileName = 'slides.json'
-        const content = JSON.stringify('storeState')
+        const content = JSON.stringify(storeState)
         download(content, fileName, 'text/plain')
     }
 
@@ -111,10 +128,12 @@ function Nav(props: Props) {
             reader.readAsText(file)
 
             reader.onload = function () {
-                props.importProject(reader.result)
+                props.importPresentation(reader.result)
+                props.importHistory(reader.result)
+                props.importEditorActive(reader.result)
+                props.importEditorColor(reader.result)
             }
 
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             reader.onerror = function () {}
         }
     }

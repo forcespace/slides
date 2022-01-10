@@ -24,8 +24,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 function Input(props: Props) {
-    const [color, setColor] = useState('#000000')
-
+    const [color, setColor] = useState(props.state.color ?? '')
     useEffect(() => {
         if (props.state.color !== color) {
             props.setEditorColor(color)
@@ -43,7 +42,7 @@ function Input(props: Props) {
             onClick={props.onClick}
             title={props.title}
             type={props.type}
-            value={props.value}
+            value={color}
             onChange={changeColor} />
     )
 }
