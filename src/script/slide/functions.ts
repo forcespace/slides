@@ -1,4 +1,4 @@
-import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo, Image} from './slide'
+import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo, Image, Text} from './slide'
 
 export function createUndoRedo(): UndoRedo {
     return {
@@ -246,6 +246,19 @@ export function addImage(presentation: Presentation, data: string | ArrayBuffer 
     return {...presentation}
 }
 
+export function addText(presentation: Presentation): Presentation {
+    const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active].objects.slice()
+    newObjectArray.push(createText(presentation.slides[presentation.active].objects.length))
+
+    const newSlides: Array<Slide> = presentation.slides.slice()
+    newSlides[presentation.active].objects = newObjectArray
+
+    return {
+        ...presentation,
+        slides: newSlides
+    }
+}
+
 function setNonActiveObject(objectArray: Array<ObjectType>): Array<ObjectType> {
     const newObjectArray: Array<ObjectType> = objectArray.slice()
     newObjectArray.forEach(object => {
@@ -358,6 +371,27 @@ function createImage(data: string, priority: number): Image {
         },
         width: 100,
         height: 100,
+        active: true,
+        priority: priority
+    }
+}
+
+function createText(priority: number): Text {
+    return {
+        type: 'Text',
+        content: 'Text',
+        size: 24,
+        id: generateId(),
+        leftTopPoint: {
+            x: 100,
+            y: 100
+        },
+        background: {
+            color: '#000000',
+            priority: 1
+        },
+        width: 200,
+        height: 50,
         active: true,
         priority: priority
     }

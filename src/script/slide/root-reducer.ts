@@ -5,6 +5,7 @@ import {
     addEmptySlide,
     addObject,
     addImage,
+    addText,
     importPresentation,
     importEditorActive,
     importEditorColor,
@@ -59,6 +60,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         }
         case 'ADD_IMAGE': {
             return addImage(state, action.data!)
+        }
+        case 'ADD_TEXT': {
+            return addText(state)
         }
         case 'IMPORT_PRESENTATION': {
             return importPresentation(action.data!)

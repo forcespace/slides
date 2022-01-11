@@ -17,7 +17,8 @@ import {
     importEditorActive,
     importHistory,
     importEditorColor,
-    addImage
+    addImage,
+    addText
 } from '../../script/slide/actionCreators'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
@@ -44,6 +45,7 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     redo: () => dispatch(redo()),
     addObject: (object: ObjectType) => dispatch(addObject(object)),
     addImage: (data: string | ArrayBuffer | null) => dispatch(addImage(data)),
+    addText: () => dispatch(addText()),
     setBackgroundColor: (id: string, color: string) => dispatch(setBackgroundColor(id, color)),
     setBorderColor: (id: string, color: string) => dispatch(setBorderColor(id, color)),
     exportProject: () => dispatch(exportProject()),
@@ -93,6 +95,10 @@ function Nav(props: Props) {
 
     function handleAddCircleClick() {
         props.addObject({objectType: 'Circle'})
+    }
+
+    function handleAddText() {
+        props.addText()
     }
 
     function handleSetBackgroundColor() {
@@ -286,6 +292,11 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_add_circle,
                     onClick: handleSetBorderColor,
                     title: 'Цвет границы'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_circle,
+                    onClick: handleAddText,
+                    title: 'Текст'
                 }
             ]} hidden={activeTab !== TABS.PASTE} />
         </nav>

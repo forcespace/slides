@@ -1,7 +1,8 @@
-import {connect} from 'react-redux'
-import {Text} from '../../../../script/slide/slide'
+import {connect, ConnectedProps} from 'react-redux'
+import {ExtendedAction, setEditorActive, setObjectPosition} from '../../../../script/slide/actionCreators'
+import {Editor, Position, Text} from '../../../../script/slide/slide'
 
-type Props = {
+type OwnProps = {
     text: Text,
     scale: {
         isMain: boolean,
@@ -9,10 +10,24 @@ type Props = {
     }
 }
 
-function TextSvg(props: Props) {
+const mapStateToProps = (state: Editor) => ({
+    state
+})
+
+const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction, ownProps: OwnProps) => ({
+    setObjectPosition: (position: Position) => dispatch(setObjectPosition(ownProps.text.id, position)),
+    setEditorActive: (objectId: string) => dispatch(setEditorActive(objectId))
+})
+
+const connector = connect(mapStateToProps, mapDispatchToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type Props = PropsFromRedux & OwnProps
+
+function TextArea(props: Props) {
     return (
-        <span>{props.text.content}</span>
+        <textarea>{props.text.content}</textarea>
     )
 }
 
-export default connect()(TextSvg)
+export default connector(TextArea)

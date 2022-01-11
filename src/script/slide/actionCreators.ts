@@ -174,3 +174,9 @@ export function historyUpdate(): ExtendedAction {
         type: 'HISTORY_UPDATE'
     }
 }
+
+export function addText(): ExtendedAction {
+    return {
+        type: 'ADD_TEXT'
+    }
+}
