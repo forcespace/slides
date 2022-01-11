@@ -1,16 +1,25 @@
 export type Editor = {
     history: History,
     presentation: Presentation,
-    active: number
+    active: string,
+    color?: string
+}
+
+export type UndoRedo = {
+    presentation: Presentation,
+    activeElem: string,
+    color?: string
 }
 
 export type History = {
-    undo?: Array<Presentation>
-    redo?: Array<Presentation>
+    undo: Array<UndoRedo>,
+    present: UndoRedo,
+    redo: Array<UndoRedo>
 }
 
 export type Presentation = {
     title: string,
+    active: number,
     slides: Array<Slide>
 }
 
@@ -23,7 +32,7 @@ export type Slide = {
 export type Object = {
     id: string,
     leftTopPoint: Position,
-    background?: Background,
+    background: Background,
     border?: Border,
     width: number,
     height: number,

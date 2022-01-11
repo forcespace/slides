@@ -1,7 +1,7 @@
-import React from 'react';
-import {ObjectType} from '../../../../script/slide/slide';
+import {connect, ConnectedProps} from 'react-redux'
+import {Editor, ObjectType} from '../../../../script/slide/slide'
 
-type Props = {
+type OwnProps = {
     figure: ObjectType,
     scale: {
         isMain: boolean,
@@ -9,15 +9,26 @@ type Props = {
     }
 }
 
-export function Rect(props: Props)
-{
-    const rectWidth = Math.ceil(props.figure.width * props.scale.scaleIndex);
-    const rectHeight = Math.ceil(props.figure.height * props.scale.scaleIndex);
-    const rectStroke = props.figure.border ? props.figure.border.borderColor : '';
-    const rectStrokeSize = props.figure.border ? Math.ceil(props.figure.border.borderSize * props.scale.scaleIndex) : 0;
-    const rectFill = props.figure.background ? props.figure.background.color : '';
+const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
+    state,
+    ownProps
+})
+
+const connector = connect(mapStateToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type Props = PropsFromRedux & OwnProps
+
+function Rect(props: Props) {
+    const rectWidth = Math.round(props.ownProps.figure.width * props.ownProps.scale.scaleIndex)
+    const rectHeight = Math.round(props.ownProps.figure.height * props.ownProps.scale.scaleIndex)
+    const rectStroke = props.ownProps.figure.border ? props.ownProps.figure.border.borderColor : ''
+    const rectStrokeSize = props.ownProps.figure.border ? Math.round(props.ownProps.figure.border.borderSize * props.ownProps.scale.scaleIndex) : 0
+    const rectFill = props.ownProps.figure.background ? props.ownProps.figure.background.color : ''
 
     return (
         <rect x={rectStrokeSize} y={rectStrokeSize} width={rectWidth} height={rectHeight} stroke={rectStroke} fill={rectFill}/>
     )
 }
+
+export default connector(Rect)

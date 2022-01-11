@@ -1,28 +1,27 @@
-import {SlideContent} from '../SlideContent'
-import {Editor, Slide} from '../../script/slide/slide'
+import SlideContent from '../SlideContent/SlideContent'
+import {Editor} from '../../script/slide/slide'
 import styles from './workspace.module.css'
-import {connect} from 'react-redux'
+import {connect, ConnectedProps} from 'react-redux'
 import SlideList from '../SlidesList/SlideList'
 
-function mapStateToProps(state: {presentationReducer: Editor}): {activeSlide: number, slides: Slide[]}  {
-    return {
-        activeSlide: state.presentationReducer.active,
-        slides: state.presentationReducer.presentation.slides
-    } 
-}
+const mapStateToProps = (state: Editor): {state: Editor} => ({
+    state: state
+})
 
-function Workspace(props: {activeSlide: number, slides: Slide[]})
-{
-    const slidesCount = props.slides.length
+const connector = connect(mapStateToProps)
+type Props = ConnectedProps<typeof connector>
+
+function Workspace(props: Props) {
+    const slidesCount = props.state.presentation.slides.length
 
     return (
         <section className={styles.workspace}>
             <SlideList/>
             <>
-                {slidesCount ? (<SlideContent slide={props.slides[props.activeSlide]}/>) : null}
+                {slidesCount ? (<SlideContent slide={props.state.presentation.slides[props.state.presentation.active]}/>) : null}
             </>
         </section>
     )
 }
 
-export default connect(mapStateToProps)(Workspace)
+export default connector(Workspace)
