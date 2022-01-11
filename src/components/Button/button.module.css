@@ -80,7 +80,7 @@
 
 .tab_import_json_wrapper
 {
-    background: url('/src/upload/icon/save-json.png') no-repeat center center;
+    background: url('/src/upload/icon/json.png') no-repeat center center;
     background-size: cover;
 }
 
@@ -121,6 +121,43 @@
 .tab_exp_json
 {
     transform: rotate(180deg);
-    background: url('/src/upload/icon/save-json.png') no-repeat center center;
+    background: url('/src/upload/icon/json.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_text
+{
+    background: url('/src/upload/icon/text.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_color_picker_background
+{
+    background: url('/src/upload/icon/color-picker-background.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_color_picker_border
+{
+    background: url('/src/upload/icon/color-picker-border.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_slide_undo
+{
+    background: url('/src/upload/icon/history.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_slide_redo
+{
+    background: url('/src/upload/icon/history.png') no-repeat center center;
+    background-size: cover;
+    transform: rotate(180deg);
+}
+
+.tab_del_object
+{
+    background: url('/src/upload/icon/del.png') no-repeat center center;
     background-size: cover;
 }

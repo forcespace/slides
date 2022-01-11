@@ -42,7 +42,7 @@ function SvgFigure(props: Props) {
     })
     const ref: Ref<SVGSVGElement> = useRef(null)
 
-    const objectParametrs = {
+    const objectParameters = {
         ...position,
         width: widthSvg,
         height: heightSvg
@@ -59,7 +59,7 @@ function SvgFigure(props: Props) {
 
     useDragAndDrop(
         ref,
-        objectParametrs,
+        objectParameters,
         setPosition,
         setNewPosition,
         props.scale.isMain,
@@ -73,14 +73,22 @@ function SvgFigure(props: Props) {
         height: heightSvg,
         fill: fillColorSvg,
         stroke: strokeColorSvg,
-        strokeWidth: strokeSizeSvg
+        strokeWidth: strokeSizeSvg,
+        border: ''
+    }
+
+    let className = '';
+
+    if (props.state.active === props.figure.id)
+    {
+        className = `${styles.slide_item_active}`;
     }
 
     return (
         <svg
             ref={ref}
             style={styleSvg}
-            className={styles.slide_item}
+            className={`${styles.slide_item} ${className}`}
             xmlns="http://www.w3.org/2000/svg">
             <Figure figure={props.figure} scale={props.scale} />
         </svg>
