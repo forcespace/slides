@@ -7,7 +7,7 @@ export type Editor = {
 
 export type UndoRedo = {
     presentation: Presentation,
-    activeElem: string,
+    active: string,
     color?: string
 }
 

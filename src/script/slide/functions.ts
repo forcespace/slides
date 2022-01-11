@@ -3,8 +3,8 @@ import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo, Im
 export function createUndoRedo(): UndoRedo {
     return {
         presentation: createPresentation(),
-        activeElem: '0',
-        color: '0'
+        active: '',
+        color: ''
     }
 }
 
@@ -55,7 +55,7 @@ export function importHistory(data: string | ArrayBuffer | null): History {
         undo: [],
         present: {
             presentation: createPresentation(),
-            activeElem: '',
+            active: '',
             color: ''
         },
         redo: []
@@ -108,7 +108,11 @@ export function addEmptySlide(presentation: Presentation): Presentation {
     const slide: Slide = createSlide()
     const active: number = presentation.active + 1
     newSlides.splice(active, 0, slide)
-
+    // console.log('newPresentation = ', {
+    //     ...presentation,
+    //     slides: newSlides,
+    //     active
+    // })
     return {
         ...presentation,
         slides: newSlides,
@@ -541,24 +545,46 @@ function generateId(): string {
 export function addStateUndo(history: History, newState: UndoRedo): History {
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
     newHistoryUndo.push(newState)
-    // console.log('newHistoryUndo = ', newHistoryUndo)
+    // console.log('newState = ', newState)
+    const newHistory: History = {
+        ...history,
+        undo: newHistoryUndo,
+        present: newState,
+        redo: []
+    }
+    // console.log('newHistory: ', newHistory)
+    return newHistory
+}
+
+export function setPresentation(presentation: Presentation, newPresentation: Presentation): Presentation {
+    return {
+        ...newPresentation
+    }
+}
+
+export function updateHistoryPresentAfterUndo(history: History): History {
+    const newHistoryPresent: UndoRedo = history.undo[history.undo.length - 1]
+
     return {
         ...history,
-        undo: newHistoryUndo
+        present: newHistoryPresent
     }
 }
 
 export function undo(history: History): History {
     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    newHistoryRedo.splice(0, 0, history.undo[history.undo.length - 1])
+
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryRedo.splice(0, 0, newHistoryPresent)
-    // eslint-disable-next-line no-negated-condition
-    newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
-    newHistoryUndo.pop()
+    newHistoryUndo.splice(newHistoryUndo.length - 1, 1)
+
+    //
+    // const newHistoryPresent: UndoRedo = newHistoryUndo[newHistoryUndo.length - 1]
+    // console.log('newHistoryPresent = ', newHistoryPresent)
+
     return {
         undo: newHistoryUndo,
-        present: newHistoryPresent,
+        present: history.present,
         redo: newHistoryRedo
     }
 }
