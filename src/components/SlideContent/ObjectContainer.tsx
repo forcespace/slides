@@ -33,7 +33,7 @@ function ObjectContainer(props: Props) {
     let borderColor = 'transparent'
 
     if (props.state.active == props.object.id) {
-        borderColor = '#00ff00'
+        borderColor = '#3498DB'
     }
 
     const styleDiv = {

@@ -31,7 +31,7 @@ import {store} from '../../store'
 const TABS = {
     PRESENTATION: 'presentation',
     SLIDES: 'slides',
-    PASTE_OBJECT: 'paste_object',
+    OBJECTS: 'objects',
     COLOR_PICKER: 'color_picker',
     SAVE_LOAD: 'save_load'
 }
@@ -182,10 +182,10 @@ function Nav(props: Props) {
                     name: 'Слайды'
                 },
                 {
-                    id: TABS.PASTE_OBJECT,
+                    id: TABS.OBJECTS,
                     className: `${styles.menu_list_item}`,
-                    onClick: () => setActiveTab(TABS.PASTE_OBJECT),
-                    name: 'Вставить объект'
+                    onClick: () => setActiveTab(TABS.OBJECTS),
+                    name: 'Объекты'
                 },
                 {
                     id: TABS.COLOR_PICKER,
@@ -270,8 +270,13 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_add_circle,
                     onClick: handleAddCircleClick,
                     title: 'Добавить круг'
+                },
+                {
+                    className: stylesButtonTabs.tab_del_object,
+                    onClick: handleAddCircleClick,
+                    title: 'Удалить активный объект'
                 }
-            ]} hidden={activeTab !== TABS.PASTE_OBJECT} />
+            ]} hidden={activeTab !== TABS.OBJECTS} />
 
             <NavTabButtons buttons={[
                 {

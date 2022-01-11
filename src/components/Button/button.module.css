@@ -155,3 +155,9 @@
     background-size: cover;
     transform: rotate(180deg);
 }
+
+.tab_del_object
+{
+    background: url('/src/upload/icon/del.png') no-repeat center center;
+    background-size: cover;
+}
