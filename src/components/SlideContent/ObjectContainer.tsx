@@ -39,17 +39,13 @@ function ObjectContainer(props: Props) {
     const styleDiv = {
         top: `${position.y}px`,
         left: `${position.x}px`,
-        border: `1px dashed ${borderColor}`,
         width: width,
         height: height
     }
 
     return (
         <>
-            <div
-                style={styleDiv}
-                className={styles.slide_item}>
-            </div>
+            <div style={styleDiv}/>
             <Objects object={props.object} scale={props.scale} key={props.object.id} />
         </>
     )

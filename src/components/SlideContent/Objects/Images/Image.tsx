@@ -77,10 +77,17 @@ function Img(props: Props) {
         height: imgHeight
     }
 
+    let className = '';
+
+    if (props.state.active === props.imgObject.id)
+    {
+        className = `${styles.slide_item_active}`;
+    }
+
     return (
         <img
             ref={ref}
-            className={styles.slide_item}
+            className={`${styles.slide_item} ${className}`}
             src={imgSrc}
             style={styleImage} />
     )

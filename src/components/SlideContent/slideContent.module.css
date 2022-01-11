@@ -18,6 +18,16 @@
     height: 100%;
 }
 
+/*svg:active*/
+/*{*/
+/*    border: 1px dashed #3498db;*/
+/*}*/
+
+.slide_item_active
+{
+    border: 1px dashed #3498db;
+}
+
 @media screen and (min-width: 1400px)
 {
     .slide

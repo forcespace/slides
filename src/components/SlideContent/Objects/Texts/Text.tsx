@@ -1,6 +1,7 @@
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setEditorActive, setObjectPosition} from '../../../../script/slide/actionCreators'
 import {Editor, Position, Text} from '../../../../script/slide/slide'
+import styles from '../../slideContent.module.css';
 
 type OwnProps = {
     text: Text,
@@ -25,8 +26,16 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 function TextArea(props: Props) {
+
+    let className = '';
+
+    if (props.state.active === props.text.id)
+    {
+        className = `${styles.slide_item_active}`;
+    }
+
     return (
-        <textarea>{props.text.content}</textarea>
+        <textarea className={`${className}`}>{props.text.content}</textarea>
     )
 }
 
