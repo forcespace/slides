@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import {connect, ConnectedProps} from 'react-redux'
-import {Editor, ObjectType} from '../../script/slide/slide'
+import {Editor, Object, ObjectType} from '../../script/slide/slide';
 import Objects from './Objects/Objects'
 import styles from './slideContent.module.css'
+import {ExtendedAction, setActive} from '../../script/slide/actionCreators';
 
 type OwnProps = {
     object: ObjectType,
@@ -29,26 +30,22 @@ function ObjectContainer(props: Props) {
         y: Math.round(props.object.leftTopPoint.y * props.scale.scaleIndex) - 1
     })
 
-    let borderColor = '#ffffff'
+    let borderColor = 'transparent'
 
     if (props.state.active == props.object.id) {
-        borderColor = '#00ff00'
+        borderColor = '#3498DB'
     }
 
     const styleDiv = {
         top: `${position.y}px`,
         left: `${position.x}px`,
-        border: `2px solid ${borderColor}`,
         width: width,
         height: height
     }
 
     return (
         <>
-            <div
-                style={styleDiv}
-                className={styles.slide_item}>
-            </div>
+            <div style={styleDiv}/>
             <Objects object={props.object} scale={props.scale} key={props.object.id} />
         </>
     )

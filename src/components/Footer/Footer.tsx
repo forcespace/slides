@@ -3,7 +3,7 @@ import {Editor} from '../../script/slide/slide'
 import styles from './footer.module.css'
 
 const mapStateToProps = (state: Editor) => ({
-    activeSlide: state.active,
+    activeSlide: state.presentation.active,
     slides: state.presentation.slides
 })
 

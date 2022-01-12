@@ -1,5 +1,5 @@
 import {Editor, ObjectType} from '../../../script/slide/slide'
-import TextSvg from './Texts/Text'
+import TextArea from './Texts/Text'
 import Img from './Images/Image'
 import SvgFigure from './Figures/SvgFigure'
 import {connect, ConnectedProps} from 'react-redux'
@@ -29,7 +29,7 @@ function Objects(props: Props) {
         )
     } else if (props.ownProps.object.type === 'Text') {
         return (
-            <TextSvg text={props.ownProps.object} scale={props.ownProps.scale} />
+            <TextArea text={props.ownProps.object} scale={props.ownProps.scale} />
         )
     } else {
         return (
