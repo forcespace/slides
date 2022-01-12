@@ -1,4 +1,4 @@
-import {ChangeEvent, Ref, useEffect, useRef, useState} from 'react'
+import {Ref, useRef, useState} from 'react'
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setEditorActive, setObjectPosition, setText} from '../../../../script/slide/actionCreators'
 import {useDragAndDrop} from '../../../../script/slide/dragAndDropHook'
@@ -37,15 +37,13 @@ function TextArea(props: Props) {
         y: Math.ceil(props.text.leftTopPoint.y * props.scale.scaleIndex)
     })
 
-    const [value, setValue] = useState(props.text.content)
-    useEffect(() => {
-        if (props.text.content !== value) {
-            props.setText(props.text.id, value)
-        }
-    }, [value, props.text.content, props.setText])
+    // const [value, setValue] = useState(props.text.content)
+    // console.log('value = ', value)
+    // console.log('props.text.content = ', props.text.content)
 
-    const changeText = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(event.toString)
+    const changeText = (event: React.FocusEvent<HTMLInputElement>) => {
+        // setValue(event.target.value)
+        props.setText(props.text.id, event.target.textContent ?? props.text.content)
     }
 
     const ref: Ref<HTMLDivElement> = useRef(null)
@@ -80,37 +78,39 @@ function TextArea(props: Props) {
         className = `${styles.slide_item_active}`
     }
 
+    const fontSize = Math.ceil(props.text.size * props.scale.scaleIndex)
     const styleText = {
         top: `${position.y}px`,
         left: `${position.x}px`,
         width: textWidth,
         height: textHeight,
-        border: ''
+        fontSize: fontSize
+        // fontStyle: 'italic'
     }
 
     const styleDiv = {
-        top: `${position.y - 2}px`,
-        left: `${position.x - 2}px`,
-        width: textWidth + 4,
-        height: textHeight + 4
+        top: `${position.y}px`,
+        left: `${position.x}px`,
+        width: textWidth,
+        height: textHeight
     }
 
     return (
         <div>
             <div
-                draggable={false}
                 ref={ref}
+                draggable={false}
                 style={styleDiv}
                 className={`${styles.slide_item} ${className}`}
             >
             </div>
-            <textarea
+            <p
                 style={styleText}
                 className={`${styles.slide_item}`}
-                onChange={changeText}
-            >
-                {props.text.content}
-            </textarea>
+                contentEditable
+                suppressContentEditableWarning={true}
+                onBlur={changeText}
+            >{props.text.content}</p>
         </div>
     )
 }
