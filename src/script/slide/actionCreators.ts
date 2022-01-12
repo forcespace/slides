@@ -79,6 +79,13 @@ export function addImage(data: string | ArrayBuffer | null): ExtendedAction {
     }
 }
 
+export function deleteObject(objectId: string): ExtendedAction {
+    return {
+        type: 'DELETE_OBJECT',
+        objectId
+    }
+}
+
 export function exportProject(): Action {
     return {
         type: 'EXPORT'

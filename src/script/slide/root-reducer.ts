@@ -23,7 +23,8 @@ import {
     undo,
     redo,
     historyUpdate,
-    addStateUndo
+    addStateUndo,
+    deleteObject
 } from './functions'
 import {Presentation, History} from './slide'
 
@@ -64,6 +65,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         }
         case 'ADD_TEXT': {
             return addText(state)
+        }
+        case 'DELETE_OBJECT': {
+            return deleteObject(state, action.objectId!)
         }
         case 'SET_TEXT': {
             return setText(state, action.objectId!, action.text!)
@@ -119,7 +123,6 @@ const active = (state = '', action: ExtendedAction): string => {
 const history = (state: History = initHistory, action: ExtendedAction): History => {
     switch (action.type) {
         case 'ADD_STATE_UNDO': {
-            // console.log('action.obj!', action.obj!)
             return addStateUndo(state, action.obj!)
         }
         case 'UNDO': {
