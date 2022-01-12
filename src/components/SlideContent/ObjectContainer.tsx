@@ -30,24 +30,8 @@ function ObjectContainer(props: Props) {
         y: Math.round(props.object.leftTopPoint.y * props.scale.scaleIndex) - 1
     })
 
-    let borderColor = 'transparent'
-
-    if (props.state.active == props.object.id) {
-        borderColor = '#3498DB'
-    }
-
-    const styleDiv = {
-        top: `${position.y}px`,
-        left: `${position.x}px`,
-        width: width,
-        height: height
-    }
-
     return (
-        <>
-            <div style={styleDiv}/>
-            <Objects object={props.object} scale={props.scale} key={props.object.id} />
-        </>
+        <Objects object={props.object} scale={props.scale} key={props.object.id} />
     )
 }
 

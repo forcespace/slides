@@ -110,7 +110,9 @@ function TextArea(props: Props) {
                 contentEditable
                 suppressContentEditableWarning={true}
                 onBlur={changeText}
-            >{props.text.content}</p>
+            >
+                {props.text.content}
+            </p>
         </div>
     )
 }
