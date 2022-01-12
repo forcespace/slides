@@ -77,11 +77,10 @@ function SvgFigure(props: Props) {
         border: ''
     }
 
-    let className = '';
+    let className = ''
 
-    if (props.state.active === props.figure.id)
-    {
-        className = `${styles.slide_item_active}`;
+    if (props.state.active === props.figure.id) {
+        className = `${styles.slide_item_active}`
     }
 
     return (

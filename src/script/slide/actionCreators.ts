@@ -13,7 +13,8 @@ export type ExtendedAction = {
     undo?: Array<UndoRedo>,
     present?: UndoRedo,
     redo?: Array<UndoRedo>,
-    obj?: UndoRedo
+    obj?: UndoRedo,
+    text?: string
 }
 
 export type ObjectType = {
@@ -178,5 +179,13 @@ export function historyUpdate(): ExtendedAction {
 export function addText(): ExtendedAction {
     return {
         type: 'ADD_TEXT'
+    }
+}
+
+export function setText(objectId: string, text: string): ExtendedAction {
+    return {
+        type: 'SET_TEXT',
+        objectId,
+        text
     }
 }

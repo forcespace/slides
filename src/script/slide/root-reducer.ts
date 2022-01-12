@@ -6,6 +6,7 @@ import {
     addObject,
     addImage,
     addText,
+    setText,
     importPresentation,
     importEditorActive,
     importEditorColor,
@@ -63,6 +64,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         }
         case 'ADD_TEXT': {
             return addText(state)
+        }
+        case 'SET_TEXT': {
+            return setText(state, action.objectId!, action.text!)
         }
         case 'IMPORT_PRESENTATION': {
             return importPresentation(action.data!)
