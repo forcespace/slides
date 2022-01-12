@@ -265,6 +265,32 @@ export function addText(presentation: Presentation): Presentation {
     }
 }
 
+export function deleteObject(presentation: Presentation, id: string): Presentation {
+    const indexObject = searchObject(presentation, id)
+
+    if (indexObject.objectIndex >= 0) {
+        const newObjects: Array<ObjectType> = presentation.slides[indexObject.slideindex].objects.slice()
+        newObjects.splice(indexObject.objectIndex, 1)
+
+        const newSlide: Slide = {
+            ...presentation.slides[indexObject.slideindex],
+            objects: newObjects
+        }
+
+        const newSlides: Array<Slide> = presentation.slides.slice()
+        newSlides.splice(indexObject.slideindex, 1, newSlide)
+
+        return {
+            ...presentation,
+            slides: newSlides
+        }
+    } else {
+        return {
+            ...presentation
+        }
+    }
+}
+
 export function setText(presentation: Presentation, id: string, text: string): Presentation {
     const indexObject = searchObject(presentation, id)
 

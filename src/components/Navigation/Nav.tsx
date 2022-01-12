@@ -18,7 +18,8 @@ import {
     importHistory,
     importEditorColor,
     addImage,
-    addText
+    addText,
+    deleteObject
 } from '../../script/slide/actionCreators'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
@@ -45,6 +46,7 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     undo: () => dispatch(undo()),
     redo: () => dispatch(redo()),
     addObject: (object: ObjectType) => dispatch(addObject(object)),
+    deleteObject: (idObject: string) => dispatch(deleteObject(idObject)),
     addImage: (data: string | ArrayBuffer | null) => dispatch(addImage(data)),
     addText: () => dispatch(addText()),
     setBackgroundColor: (id: string, color: string) => dispatch(setBackgroundColor(id, color)),
@@ -96,6 +98,11 @@ function Nav(props: Props) {
 
     function handleAddCircleClick() {
         props.addObject({objectType: 'Circle'})
+    }
+
+    function handleDeleteObject() {
+        const state = store.getState()
+        props.deleteObject(state.active)
     }
 
     function handleAddText() {
@@ -273,7 +280,7 @@ function Nav(props: Props) {
                 },
                 {
                     className: stylesButtonTabs.tab_del_object,
-                    onClick: handleAddCircleClick,
+                    onClick: handleDeleteObject,
                     title: 'Удалить активный объект'
                 }
             ]} hidden={activeTab !== TABS.OBJECTS} />
