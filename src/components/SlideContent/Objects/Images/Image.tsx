@@ -79,8 +79,7 @@ function Img(props: Props) {
 
     let className = '';
 
-    if (props.state.active === props.imgObject.id)
-    {
+    if (props.state.active === props.imgObject.id) {
         className = `${styles.slide_item_active}`;
     }
 
@@ -89,6 +88,7 @@ function Img(props: Props) {
             ref={ref}
             className={`${styles.slide_item} ${className}`}
             src={imgSrc}
+            draggable={false}
             style={styleImage} />
     )
 }
