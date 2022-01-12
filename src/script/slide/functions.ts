@@ -10,7 +10,7 @@ export function createUndoRedo(): UndoRedo {
 
 export function createEditor(): Editor {
     return {
-        history: {undo: [], present: createUndoRedo(), redo: []},
+        history: {undo: [], present: createUndoRedo(), redo: [], flag: 'empty'},
         presentation: {
             title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
             slides: [createSlide()],
@@ -32,7 +32,8 @@ export function createHistory(): History {
     return {
         undo: [createUndoRedo()],
         present: createUndoRedo(),
-        redo: [createUndoRedo()]
+        redo: [createUndoRedo()],
+        flag: ''
     }
 }
 
@@ -58,7 +59,8 @@ export function importHistory(data: string | ArrayBuffer | null): History {
             active: '',
             color: ''
         },
-        redo: []
+        redo: [],
+        flag: 'empty'
     }
 }
 
@@ -544,15 +546,16 @@ function generateId(): string {
 
 export function addStateUndo(history: History, newState: UndoRedo): History {
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    newHistoryUndo.push(newState)
-    // console.log('newState = ', newState)
+    newHistoryUndo.splice(newHistoryUndo.length - 1, 0, newState)
+
     const newHistory: History = {
         ...history,
         undo: newHistoryUndo,
         present: newState,
-        redo: []
+        flag: 'empty'
     }
-    // console.log('newHistory: ', newHistory)
+
+    console.log(newHistory)
     return newHistory
 }
 
@@ -571,6 +574,15 @@ export function updateHistoryPresentAfterUndo(history: History): History {
     }
 }
 
+export function updateHistoryPresentAfterRedo(history: History): History {
+    const newHistoryPresent: UndoRedo = history.redo[0]
+
+    return {
+        ...history,
+        present: newHistoryPresent
+    }
+}
+
 export function undo(history: History): History {
     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
     newHistoryRedo.splice(0, 0, history.undo[history.undo.length - 1])
@@ -578,30 +590,42 @@ export function undo(history: History): History {
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
     newHistoryUndo.splice(newHistoryUndo.length - 1, 1)
 
-    //
+    return {
+        undo: newHistoryUndo,
+        present: history.present,
+        redo: newHistoryRedo,
+        flag: 'undo'
+    }
+}
+
+export function redo(history: History): History {
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+
+    newHistoryUndo.splice(newHistoryUndo.length - 1, 0, newHistoryRedo[0])
+    newHistoryRedo.splice(0, 1)
+
     // const newHistoryPresent: UndoRedo = newHistoryUndo[newHistoryUndo.length - 1]
     // console.log('newHistoryPresent = ', newHistoryPresent)
 
     return {
         undo: newHistoryUndo,
         present: history.present,
-        redo: newHistoryRedo
+        redo: newHistoryRedo,
+        flag: 'redo'
     }
-}
-
-export function redo(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-    // eslint-disable-next-line no-negated-condition
-    newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
-    newHistoryRedo.splice(0, 1)
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
+    // const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    // const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    // let newHistoryPresent: UndoRedo = history.present
+    // newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
+    // // eslint-disable-next-line no-negated-condition
+    // newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
+    // newHistoryRedo.splice(0, 1)
+    // return {
+    //     undo: newHistoryUndo,
+    //     present: newHistoryPresent,
+    //     redo: newHistoryRedo
+    // }
 }
 
 export function historyUpdate(history: History): History {
@@ -613,20 +637,7 @@ export function historyUpdate(history: History): History {
     return {
         undo: newHistoryUndo,
         present: newHistoryPresent,
-        redo: newHistoryRedo
+        redo: newHistoryRedo,
+        flag: 'empty'
     }
 }
-
-// const obj = {
-//     a: 1,
-//     b: 'hello',
-// }
-
-// const obj2 = obj
-
-// obj2.a = 2
-
-// const obj2 = {
-//     ...obj,
-//     a: 2,
-// }

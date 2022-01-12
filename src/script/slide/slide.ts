@@ -14,7 +14,8 @@ export type UndoRedo = {
 export type History = {
     undo: Array<UndoRedo>,
     present: UndoRedo,
-    redo: Array<UndoRedo>
+    redo: Array<UndoRedo>,
+    flag: string,
 }
 
 export type Presentation = {

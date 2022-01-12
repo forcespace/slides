@@ -23,7 +23,8 @@ import {
     historyUpdate,
     addStateUndo,
     setPresentation,
-    updateHistoryPresentAfterUndo
+    updateHistoryPresentAfterUndo,
+    updateHistoryPresentAfterRedo
 } from './functions'
 import {Presentation, History} from './slide'
 
@@ -135,6 +136,9 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
         }
         case 'UPDATE_HISTORY_PRESENT_UNDO': {
             return updateHistoryPresentAfterUndo(state)
+        }
+        case 'UPDATE_HISTORY_PRESENT_REDO': {
+            return updateHistoryPresentAfterRedo(state)
         }
         default: {
             return state

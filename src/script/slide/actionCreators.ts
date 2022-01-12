@@ -187,3 +187,9 @@ export function updateHistoryPresentAfterUndo(): ExtendedAction {
         type: 'UPDATE_HISTORY_PRESENT_UNDO'
     }
 }
+
+export function updateHistoryPresentAfterRedo(): ExtendedAction {
+    return {
+        type: 'UPDATE_HISTORY_PRESENT_REDO'
+    }
+}
