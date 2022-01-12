@@ -85,9 +85,6 @@ function TextArea(props: Props) {
         left: `${position.x}px`,
         width: textWidth,
         height: textHeight,
-        fill: fillColorSvg,
-        stroke: strokeColorSvg,
-        strokeWidth: strokeSizeSvg,
         border: ''
     }
 
