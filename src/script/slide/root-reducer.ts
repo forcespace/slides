@@ -27,7 +27,7 @@ import {
     updateHistoryPresentAfterUndo,
     updateHistoryPresentAfterRedo,
     addStateUndo,
-    deleteObject
+    deleteObject,
 } from './functions'
 import {Presentation, History} from './slide'
 
@@ -89,6 +89,19 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         case 'SET_POSITION': {
             return setObjectPosition(state, action.objectId!, action.position!)
         }
+        case 'VIEW_SHOW': {
+            return {
+                ...state,
+                viewShown: true
+            }
+        }
+        case 'VIEW_CLOSE': {
+            return {
+                ...state,
+                viewShown: false
+            }
+        }
+
 
         case 'SET_PRESENTATION': {
             // console.log('action.newPresentation', action.newPresentation)

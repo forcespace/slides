@@ -1,4 +1,5 @@
 import {Action} from 'redux'
+import {type} from 'os';
 import {Position, Presentation, UndoRedo} from '../slide/slide'
 
 export type ExtendedAction = {
@@ -213,5 +214,19 @@ export function setText(objectId: string, text: string): ExtendedAction {
         type: 'SET_TEXT',
         objectId,
         text
+    }
+}
+
+export function viewShow()
+{
+    return {
+        type: 'VIEW_SHOW'
+    }
+}
+
+export function viewClose()
+{
+    return {
+        type: 'VIEW_CLOSE'
     }
 }

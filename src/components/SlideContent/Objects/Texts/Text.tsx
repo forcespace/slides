@@ -1,9 +1,11 @@
-import {Ref, useRef, useState} from 'react'
+import React, {FormEvent, FormEventHandler, Ref, useRef, useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setEditorActive, setObjectPosition, setText} from '../../../../script/slide/actionCreators'
 import {useDragAndDrop} from '../../../../script/slide/dragAndDropHook'
 import {Editor, Position, Text} from '../../../../script/slide/slide'
 import styles from '../../slideContent.module.css'
+
+// сохранять позиицию только при mouse up на фигуре
 
 type OwnProps = {
     text: Text,
@@ -41,9 +43,18 @@ function TextArea(props: Props) {
     // console.log('value = ', value)
     // console.log('props.text.content = ', props.text.content)
 
+    function parseText(text: string | null) : string
+    {
+        return text? text.replace(/\s\S/gm,'<br>') : ''
+    }
+
+    const [text, setText] = React.useState(parseText(props.text.content))
+
     const changeText = (event: React.FocusEvent<HTMLInputElement>) => {
+        const text = parseText(event.target.innerHTML ?? props.text.content)
         // setValue(event.target.value)
-        props.setText(props.text.id, event.target.textContent ?? props.text.content)
+        setText(text)
+        props.setText(props.text.id, text)
     }
 
     const ref: Ref<HTMLDivElement> = useRef(null)
@@ -110,7 +121,8 @@ function TextArea(props: Props) {
                 contentEditable
                 suppressContentEditableWarning={true}
                 onBlur={changeText}
-            >{props.text.content}</p>
+                dangerouslySetInnerHTML={{__html: text}}
+            />
         </div>
     )
 }
