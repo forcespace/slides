@@ -14,7 +14,8 @@ export function createEditor(): Editor {
         presentation: {
             title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
             slides: [createSlide()],
-            active: 0
+            active: 0,
+            viewShown: false
         },
         active: '0'
     }
@@ -24,7 +25,8 @@ export function createPresentation(): Presentation {
     return {
         title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
         active: 0,
-        slides: [createSlide()]
+        slides: [createSlide()],
+        viewShown: false
     }
 }
 

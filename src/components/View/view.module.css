@@ -1,0 +1,33 @@
+.view
+{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 760px;
+    height: 430px;
+    border: 1px solid #000;
+}
+
+.prev_btn, .next_btn, .close_btn
+{
+    width: 20px;
+    height: 20px;
+
+}
+
+.prev_btn
+{
+    background: red;
+}
+
+.next_btn
+{
+    background: #14b855;
+    margin-left: 8px;
+}
+
+.close_btn
+{
+    background: blue;
+    margin-left: 8px;
+}
