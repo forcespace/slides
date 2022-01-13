@@ -5,6 +5,7 @@ import styles from './view.module.css'
 import Button from '../Button/Button';
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setEditorActive, viewClose} from '../../script/slide/actionCreators';
+import SlideContentView from '../SlideContent/SlideContentView';
 
 type MapState = {
     slides: Array<Slide>
@@ -43,8 +44,9 @@ function View(props: Props)
     }
 
     return (
-        <div className={styles.view}>
-            <SlideContent slide={props.slides[active]}/>
+        <div className={styles.wrapper}>
+            <span className={styles.overlay}/>
+            <SlideContentView slide={props.slides[active]}/>
             <Button onClick={prevSlide} className={styles.prev_btn}/>
             <Button onClick={nextSlide} className={styles.next_btn}/>
             <Button onClick={props.viewClose} className={styles.close_btn}/>
