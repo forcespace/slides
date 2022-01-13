@@ -19,8 +19,8 @@ import {
     importEditorColor,
     addImage,
     addText,
-    deleteObject
-} from '../../script/slide/actionCreators'
+    deleteObject, viewShow
+} from '../../script/slide/actionCreators';
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
 import {Action} from 'redux'
@@ -34,7 +34,8 @@ const TABS = {
     SLIDES: 'slides',
     OBJECTS: 'objects',
     COLOR_PICKER: 'color_picker',
-    SAVE_LOAD: 'save_load'
+    SAVE_LOAD: 'save_load',
+    PLAY: 'play'
 }
 
 const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
@@ -55,7 +56,8 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     importPresentation: (data: string | ArrayBuffer | null) => dispatch(importPresentation(data)),
     importHistory: (data: string | ArrayBuffer | null) => dispatch(importHistory(data)),
     importEditorActive: (data: string | ArrayBuffer | null) => dispatch(importEditorActive(data)),
-    importEditorColor: (data: string | ArrayBuffer | null) => dispatch(importEditorColor(data))
+    importEditorColor: (data: string | ArrayBuffer | null) => dispatch(importEditorColor(data)),
+    viewShow: () => dispatch(viewShow())
 })
 
 const connector = connect(null, mapDispatchToProps)
@@ -205,6 +207,12 @@ function Nav(props: Props) {
                     className: `${styles.menu_list_item}`,
                     onClick: () => setActiveTab(TABS.SAVE_LOAD),
                     name: 'Сохранить / Загрузить'
+                },
+                {
+                    id: TABS.PLAY,
+                    className: `${styles.menu_list_item}`,
+                    onClick: () => setActiveTab(TABS.PLAY),
+                    name: 'Просмотр'
                 }
             ]}/>
 
@@ -319,6 +327,14 @@ function Nav(props: Props) {
                     type: 'file'
                 }
             ]} hidden={activeTab !== TABS.SAVE_LOAD} />
+
+            <NavTabButtons buttons={[
+                {
+                    className: stylesButtonTabs.tab_exp_json,
+                    onClick: props.viewShow,
+                    title: 'Просмотр'
+                }
+            ]} hidden={activeTab !== TABS.PLAY} />
         </nav>
     )
 }

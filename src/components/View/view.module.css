@@ -1,0 +1,54 @@
+iframe
+{
+    display: none;
+}
+
+.wrapper,
+.overlay
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+
+.wrapper
+{
+    z-index: 2;
+    bottom: 0;
+}
+
+.overlay
+{
+    z-index: 3;
+    opacity: .7;
+    background: #000;
+}
+
+.prev_btn, .next_btn, .close_btn
+{
+    position: relative;
+    z-index: 6;
+    width: 20px;
+    height: 20px;
+}
+
+.prev_btn
+{
+    background: red;
+}
+
+.next_btn
+{
+    margin-left: 8px;
+    background: #14b855;
+}
+
+.close_btn
+{
+    margin-left: 8px;
+    background: blue;
+}

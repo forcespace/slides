@@ -20,7 +20,8 @@ export type History = {
 export type Presentation = {
     title: string,
     active: number,
-    slides: Array<Slide>
+    slides: Array<Slide>,
+    viewShown: boolean
 }
 
 export type Slide = {

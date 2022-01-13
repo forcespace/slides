@@ -29,11 +29,11 @@ function SlideView(props: Props) {
     const slideObjects = props.ownProps.slide.objects
 
     return (
-        <div>
+        <>
             {slideObjects.map((object: ObjectType) =>
                 <ObjectContainer object={object} scale={props.ownProps.scale} key={Math.random()} />
             )}
-        </div>
+        </>
     )
 }
 
