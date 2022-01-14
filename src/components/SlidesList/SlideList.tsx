@@ -18,7 +18,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type Props = ConnectedProps<typeof connector>
 
 function SlideList(props: Props) {
-    const width = 250
+    const width = 178
     const slideProportion = 1.78
 
     function isActive(index: number) {
