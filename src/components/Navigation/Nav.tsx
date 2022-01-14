@@ -114,6 +114,12 @@ function Nav(props: Props) {
         props.setBackgroundColor(state.active, state.color!)
     }
 
+    function handleSetSlideBackgroundColor() {
+        const state = store.getState()
+        const activeSlideIndex = state.presentation.active
+        props.setBackgroundColor(state.presentation.slides[activeSlideIndex].id, state.color!)
+    }
+
     function handleSetBorderColor() {
         const state = store.getState()
         props.setBorderColor(state.active, state.color!)
@@ -291,6 +297,11 @@ function Nav(props: Props) {
                     title: 'Выбрать цвет',
                     mode: 'input',
                     type: 'color'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_color_picker_background,
+                    onClick: handleSetSlideBackgroundColor,
+                    title: 'Заливка фона слайда'
                 },
                 {
                     className: stylesButtonTabs.tab_add_color_picker_background,

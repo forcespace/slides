@@ -26,10 +26,6 @@ function SlideContent(props: Props) {
     const slideProportion = 1.78
     const fullWidth = 1231
 
-    function setActive() {
-        props.setEditorActive(props.slide.id)
-    }
-
     useEffect(() => {
         const getWidth = (): number => {
             if (slideRef.current) {
@@ -59,7 +55,7 @@ function SlideContent(props: Props) {
     }
 
     return (
-        <div style={styleDiv} onClick={setActive} className={styles.slide} ref={slideRef}>
+        <div style={styleDiv} className={styles.slide} ref={slideRef}>
             <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.slide.id} />
         </div>
     )

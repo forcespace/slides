@@ -18,6 +18,9 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type Props = ConnectedProps<typeof connector>
 
 function SlideList(props: Props) {
+    const width = 250
+    const slideProportion = 1.78
+
     function isActive(index: number) {
         return index === props.state.presentation.active
     }
@@ -30,7 +33,7 @@ function SlideList(props: Props) {
         <div className={styles.slide_list}>
             {props.state.presentation.slides.map((slide: Slide, index: number) =>
                 <div key={slide.id} className={styles.slide}>
-                    <div className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`} onClick={() => setActiveSlide(index)} draggable={true}>
+                    <div style={{backgroundColor: slide.background.color, height: width / slideProportion}} className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`} onClick={() => setActiveSlide(index)} draggable={true}>
                         <SlideView slide={slide} scale={{isMain: false, scaleIndex: SCALE_INDEX}} />
                     </div>
                     <span className={styles.slide_count}>
