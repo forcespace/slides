@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react'
+import {useState, useRef, useEffect} from 'react'
 import SlideView from '../SlidesList/SlideView'
 import {Editor, Slide} from '../../script/slide/slide'
 import styles from './slideContentView.module.css'
@@ -21,10 +21,13 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type Props = ConnectedProps<typeof connector> & OwnProps
 
 function SlideContent(props: Props) {
-    const [width, setWidth] = React.useState(0)
+    const [width, setWidth] = useState(0)
+    const [color, setColor] = useState('')
+    const [image, setImage] = useState('')
     const slideRef = useRef(null)
     const slideProportion = 1.78
     const fullWidth = 1231
+    const colorPriority = 0
 
     function setActive() {
         props.setEditorActive(props.slide.id)
@@ -48,13 +51,22 @@ function SlideContent(props: Props) {
 
         window.addEventListener('resize', handleWindowResize)
 
+        if (props.slide.background.priority === colorPriority) {
+            setColor(props.slide.background.color ?? '')
+            setImage('')
+        } else {
+            setImage(props.slide.background.image ?? '')
+            setColor('')
+        }
+
         return () => {
             window.removeEventListener('resize', handleWindowResize)
         }
-    }, [])
+    }, [width, color, image, props.slide])
 
     const styleDiv = {
-        backgroundColor: props.slide.background.color,
+        backgroundColor: color,
+        backgroundImage: `url(${image})`,
         height: width / slideProportion
     }
 
@@ -63,7 +75,7 @@ function SlideContent(props: Props) {
             <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.slide.id}/>
             <span className={styles.overlay}/>
         </div>
-    );
+    )
 }
 
 export default connector(SlideContent)

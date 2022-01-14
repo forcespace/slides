@@ -1,6 +1,5 @@
 import {Action} from 'redux'
 import {Position, UndoRedo} from '../slide/slide'
-import {type} from 'os';
 
 export type ExtendedAction = {
     type: string,
@@ -136,6 +135,13 @@ export function setEditorColor(color: string): ExtendedAction {
     }
 }
 
+export function setBackgroundImage(data: string | ArrayBuffer | null): ExtendedAction {
+    return {
+        type: 'SET_BACKGROUND_IMAGE',
+        data
+    }
+}
+
 export function setBackgroundColor(objectId: string, color: string): ExtendedAction {
     return {
         type: 'SET_BACKGROUND_COLOR',
@@ -198,15 +204,13 @@ export function setText(objectId: string, text: string): ExtendedAction {
     }
 }
 
-export function viewShow()
-{
+export function viewShow() {
     return {
         type: 'VIEW_SHOW'
     }
 }
 
-export function viewClose()
-{
+export function viewClose() {
     return {
         type: 'VIEW_CLOSE'
     }

@@ -2,6 +2,7 @@ import {combineReducers} from 'redux'
 import {ExtendedAction} from './actionCreators'
 import {
     setBackgroundColor,
+    setBackgroundImage,
     addEmptySlide,
     addObject,
     addImage,
@@ -18,13 +19,13 @@ import {
     setTitle,
     setObjectPosition,
     createPresentation,
-    setBorderColor,
+    setObjectBorderColor,
     createHistory,
     undo,
     redo,
     historyUpdate,
     addStateUndo,
-    deleteObject,
+    deleteObject
 } from './functions'
 import {Presentation, History} from './slide'
 
@@ -81,10 +82,13 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         }
         case 'SET_BORDER_COLOR':
         {
-            return setBorderColor(state, action.objectId!, action.color!)
+            return setObjectBorderColor(state, action.objectId!, action.color!)
         }
         case 'SET_POSITION': {
             return setObjectPosition(state, action.objectId!, action.position!)
+        }
+        case 'SET_BACKGROUND_IMAGE': {
+            return setBackgroundImage(state, action.data!)
         }
         case 'VIEW_SHOW': {
             return {

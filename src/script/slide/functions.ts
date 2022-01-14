@@ -82,13 +82,6 @@ export function importEditorActive(data: string | ArrayBuffer | null): string {
     return ''
 }
 
-// export function setColor(editor: Editor, color: string): Editor {
-//     return {
-//         ...editor,
-//         color: color
-//     }
-// }
-
 export function setTitle(presentation: Presentation, newTitle: string): Presentation {
     return {
         ...presentation,
@@ -104,7 +97,6 @@ export function createSlide(): Slide {
     }
 }
 
-//Добавление пустого слайда в коллекцию после активного
 export function addEmptySlide(presentation: Presentation): Presentation {
     const newSlides: Array<Slide> = presentation.slides.slice()
     const slide: Slide = createSlide()
@@ -118,7 +110,6 @@ export function addEmptySlide(presentation: Presentation): Presentation {
     }
 }
 
-//Удаление активного слайда из коллекции
 export function deleteSlide(presentation: Presentation): Presentation {
     const newSlides: Array<Slide> = presentation.slides.slice()
     const index: number = presentation.active
@@ -146,11 +137,6 @@ export function deleteSlide(presentation: Presentation): Presentation {
     }
 }
 
-//Добавление слайда через Editor
-//Функция добавления какого-то заполненного слайда и она работает
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// eslint-disable-next-line no-unused-vars
-
 export function addSlide(editor: Editor, slide: Slide): Editor {
     const newSlides: Array<Slide> = editor.presentation.slides.slice()
     const index: number = editor.presentation.active
@@ -176,7 +162,6 @@ export function setActive(presentation: Presentation, index: number): Presentati
     }
 }
 
-//Перемещение слайда вверх в презентации
 export function moveSlideTopByStep(presentation: Presentation): Presentation {
     if (presentation.slides.length === 0) {
         return {...presentation}
@@ -245,7 +230,9 @@ export function addImage(presentation: Presentation, data: string | ArrayBuffer 
         }
     }
 
-    return {...presentation}
+    return {
+        ...presentation
+    }
 }
 
 export function addText(presentation: Presentation): Presentation {
@@ -317,6 +304,245 @@ export function setText(presentation: Presentation, id: string, text: string): P
             ...presentation
         }
     }
+}
+
+export function setObjectPosition(presentation: Presentation, objectId: string, position: Position): Presentation {
+    let objectIndex = -1
+    const slide: Slide = presentation.slides[presentation.active]
+
+    slide.objects.forEach((object, index) => {
+        if (object.id === objectId) {
+            objectIndex = index
+        }
+    })
+
+    if (objectIndex !== -1) {
+        const newObject: ObjectType = {
+            ...presentation.slides[presentation.active].objects[objectIndex],
+            leftTopPoint: position
+        }
+
+        return replaceActiveSlide(presentation, replaceSlideObjects(slide, objectIndex, newObject))
+    }
+
+    return {
+        ...presentation
+    }
+}
+
+export function setSlideBackgroundColor(presentation: Presentation, newColor: string): Presentation {
+    const newSlide: Slide = {
+        ...presentation.slides[presentation.active],
+        background: {
+            priority: 0,
+            color: newColor}
+    }
+
+    return {
+        ...presentation,
+        slides: updateSlides(presentation.slides, newSlide, presentation.active)
+    }
+}
+
+export function setBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
+    if (presentation.slides[presentation.active].id === id) {
+        return setSlideBackgroundColor(presentation, newColor)
+    } else {
+        return setObjectBackgroundColor(presentation, id, newColor)
+    }
+}
+
+export function setBackgroundImage(presentation: Presentation, data: string | ArrayBuffer | null): Presentation {
+    if (typeof data === 'string' && presentation.slides.length != 0) {
+        const newSlide: Slide = {
+            ...presentation.slides[presentation.active],
+            background: {
+                priority: 1,
+                image: data}
+        }
+
+        return {
+            ...presentation,
+            slides: updateSlides(presentation.slides, newSlide, presentation.active)
+        }
+    }
+
+    return {
+        ...presentation
+    }
+}
+
+export function setObjectBorderColor(presentation: Presentation, id: string, newColor: string): Presentation {
+    const indexObject = searchObject(presentation, id)
+
+    if (indexObject.slideindex === presentation.active && indexObject.objectIndex >= 0) {
+        const newObject: ObjectType = {
+            ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
+            border: {
+                borderColor: newColor,
+                borderSize: 2,
+                borderStyle: 'Solid'
+            }
+        }
+
+        const newSlide: Slide = {
+            ...presentation.slides[indexObject.slideindex],
+            objects: updateObjects(presentation.slides[indexObject.slideindex].objects, newObject, indexObject.objectIndex)
+        }
+
+        return {
+            ...presentation,
+            slides: updateSlides(presentation.slides, newSlide, presentation.active)
+        }
+    } else {
+        return {
+            ...presentation
+        }
+    }
+
+}
+
+export function addStateUndo(history: History, newState: UndoRedo): History {
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    newHistoryUndo.push(newState)
+    return {
+        ...history,
+        undo: newHistoryUndo
+    }
+}
+
+export function undo(history: History): History {
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    let newHistoryPresent: UndoRedo = history.present
+    newHistoryRedo.splice(0, 0, newHistoryPresent)
+    newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
+    newHistoryUndo.pop()
+    return {
+        undo: newHistoryUndo,
+        present: newHistoryPresent,
+        redo: newHistoryRedo
+    }
+}
+
+export function redo(history: History): History {
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    let newHistoryPresent: UndoRedo = history.present
+    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
+    newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
+    newHistoryRedo.splice(0, 1)
+    return {
+        undo: newHistoryUndo,
+        present: newHistoryPresent,
+        redo: newHistoryRedo
+    }
+}
+
+export function historyUpdate(history: History): History {
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+    const newHistoryPresent: UndoRedo = history.present
+    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
+    newHistoryRedo.slice(0, newHistoryRedo.length)
+    return {
+        undo: newHistoryUndo,
+        present: newHistoryPresent,
+        redo: newHistoryRedo
+    }
+}
+
+function replaceSlideObjects(slide: Slide, objectIndex: number, newObject: ObjectType): Slide {
+    const newObjects: Array<ObjectType> = slide.objects.slice()
+    newObjects.splice(objectIndex, 1, newObject)
+    return {
+        ...slide,
+        objects: newObjects
+    }
+}
+
+function replaceActiveSlide(presentation: Presentation, newSlide: Slide): Presentation {
+    const newSlides: Array<Slide> = presentation.slides.slice()
+    newSlides.splice(presentation.active, 1, newSlide)
+
+    return {
+        ...presentation,
+        slides: newSlides
+    }
+}
+
+function setObjectBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
+    const indexObject = searchObject(presentation, id)
+
+    if (indexObject.slideindex === presentation.active && indexObject.objectIndex >= 0) {
+        const newObject: ObjectType = {
+            ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
+            background: {
+                priority: 0,
+                color: newColor
+            }
+        }
+
+        const newSlide: Slide = {
+            ...presentation.slides[indexObject.slideindex],
+            objects: updateObjects(presentation.slides[indexObject.slideindex].objects, newObject, indexObject.objectIndex)
+        }
+
+        return {
+            ...presentation,
+            slides: updateSlides(presentation.slides, newSlide, presentation.active)
+        }
+    } else {
+        return {
+            ...presentation
+        }
+    }
+}
+
+function updateSlides(slides: Slide[], newSlide: Slide, index: number): Slide[] {
+    const newSlides: Slide[] = slides.slice()
+    newSlides.splice(index, 1, newSlide)
+    return newSlides
+}
+
+function updateObjects(objects: ObjectType[], newObject: ObjectType, index: number): ObjectType[] {
+    const newObjects: ObjectType[] = objects.slice()
+    newObjects.splice(index, 1, newObject)
+    return newObjects
+}
+
+function searchObject(presentation: Presentation, id: string): {slideindex: number, objectIndex: number} {
+    let foundedSlideIndex = -1
+    let foundedObjectIndex = -1
+
+    presentation.slides.forEach((slide, index) => {
+        slide.objects.forEach((object, objectIndex) => {
+            if (object.id === id) {
+                foundedSlideIndex = index
+                foundedObjectIndex = objectIndex
+            }
+        })
+    })
+
+    return {
+        slideindex: foundedSlideIndex,
+        objectIndex: foundedObjectIndex
+    }
+}
+
+function generateId(): string {
+    let result = ''
+    const words = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            const position = Math.floor(Math.random() * (words.length - 1))
+            result += words.substring(position, position + 1)
+        }
+        if (i < 3) {
+            result += '-'
+        }
+    }
+    return result
 }
 
 function setNonActiveObject(objectArray: Array<ObjectType>): Array<ObjectType> {
@@ -402,11 +628,11 @@ function createCircle(priority: number): ObjectType {
         },
         border: {
             borderSize: 2,
-            borderColor: '#ffffff',
+            borderColor: '#000000',
             borderStyle: 'Solid'
         },
         background: {
-            color: '#0000ff',
+            color: '#ffffff',
             priority: 1
         },
         width: 100,
@@ -456,245 +682,3 @@ function createText(priority: number): Text {
         priority: priority
     }
 }
-
-export function setObjectPosition(presentation: Presentation, objectId: string, position: Position): Presentation {
-    let objectIndex = -1
-    const slide: Slide = presentation.slides[presentation.active]
-
-    slide.objects.forEach((object, index) => {
-        if (object.id === objectId) {
-            objectIndex = index
-        }
-    })
-
-    if (objectIndex !== -1) {
-        const newObject: ObjectType = {
-            ...presentation.slides[presentation.active].objects[objectIndex],
-            leftTopPoint: position
-        }
-
-        return replaceActiveSlide(presentation, replaceSlideObjects(slide, objectIndex, newObject))
-    }
-
-    return {
-        ...presentation
-    }
-}
-
-function replaceSlideObjects(slide: Slide, objectIndex: number, newObject: ObjectType): Slide {
-    const newObjects: Array<ObjectType> = slide.objects.slice()
-    newObjects.splice(objectIndex, 1, newObject)
-    return {
-        ...slide,
-        objects: newObjects
-    }
-}
-
-function replaceActiveSlide(presentation: Presentation, newSlide: Slide): Presentation {
-    const newSlides: Array<Slide> = presentation.slides.slice()
-    newSlides.splice(presentation.active, 1, newSlide)
-
-    return {
-        ...presentation,
-        slides: newSlides
-    }
-}
-
-export function setBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
-    const indexSlide = searchSlide(presentation, id)
-    const indexObject = searchObject(presentation, id)
-
-    if (indexSlide >= 0) {
-        const newSlide: Slide = {
-            ...presentation.slides[indexSlide],
-            background: {
-                priority: 0,
-                color: newColor}
-        }
-
-        const newSlides: Array<Slide> = presentation.slides.filter((_, index) => index != indexSlide)
-        newSlides.splice(Math.max(indexSlide, 0), 0, newSlide)
-
-        return {
-            ...presentation,
-            slides: newSlides
-        }
-    } else if (indexObject.objectIndex >= 0) {
-        const newObject: ObjectType = {
-            ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
-            background: {
-                priority: 0,
-                color: newColor
-            }
-        }
-
-        const newObjects: Array<ObjectType> = presentation.slides[indexObject.slideindex].objects.slice()
-        newObjects.splice(indexObject.objectIndex, 1, newObject)
-
-        const newSlide: Slide = {
-            ...presentation.slides[indexObject.slideindex],
-            objects: newObjects
-        }
-
-        const newSlides: Array<Slide> = presentation.slides.slice()
-        newSlides.splice(indexObject.slideindex, 1, newSlide)
-
-        return {
-            ...presentation,
-            slides: newSlides
-        }
-    } else {
-        return {
-            ...presentation
-        }
-    }
-}
-
-export function setBorderColor(presentation: Presentation, id: string, newColor: string): Presentation {
-    const indexObject = searchObject(presentation, id)
-
-    if (indexObject.objectIndex >= 0) {
-        const newObject: ObjectType = {
-            ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
-            border: {
-                borderColor: newColor,
-                borderSize: 2,
-                borderStyle: 'Solid'
-            }
-        }
-
-        const newObjects: Array<ObjectType> = presentation.slides[indexObject.slideindex].objects.slice()
-        newObjects.splice(indexObject.objectIndex, 1, newObject)
-
-        const newSlide: Slide = {
-            ...presentation.slides[indexObject.slideindex],
-            objects: newObjects
-        }
-
-        const newSlides: Array<Slide> = presentation.slides.slice()
-        newSlides.splice(indexObject.slideindex, 1, newSlide)
-
-        return {
-            ...presentation,
-            slides: newSlides
-        }
-    } else {
-        return {
-            ...presentation
-        }
-    }
-
-}
-
-function searchSlide(presentation: Presentation, id: string): number {
-    let foundedSlideIndex = -1
-
-    presentation.slides.forEach((slide, slideIndex) => {
-        if (slide.id === id) {
-            foundedSlideIndex = slideIndex
-        }
-    })
-
-    return foundedSlideIndex
-}
-
-function searchObject(presentation: Presentation, id: string): {slideindex: number, objectIndex: number} {
-    let foundedSlideIndex = -1
-    let foundedObjectIndex = -1
-
-    presentation.slides.forEach((slide, index) => {
-        slide.objects.forEach((object, objectIndex) => {
-            if (object.id === id) {
-                foundedSlideIndex = index
-                foundedObjectIndex = objectIndex
-            }
-        })
-    })
-
-    return {
-        slideindex: foundedSlideIndex,
-        objectIndex: foundedObjectIndex
-    }
-}
-
-function generateId(): string {
-    let result = ''
-    const words = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            const position = Math.floor(Math.random() * (words.length - 1))
-            result += words.substring(position, position + 1)
-        }
-        if (i < 3) {
-            result += '-'
-        }
-    }
-    return result
-}
-
-export function addStateUndo(history: History, newState: UndoRedo): History {
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    newHistoryUndo.push(newState)
-    // console.log('newHistoryUndo = ', newHistoryUndo)
-    return {
-        ...history,
-        undo: newHistoryUndo
-    }
-}
-
-export function undo(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryRedo.splice(0, 0, newHistoryPresent)
-    // eslint-disable-next-line no-negated-condition
-    newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
-    newHistoryUndo.pop()
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
-}
-
-export function redo(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-    // eslint-disable-next-line no-negated-condition
-    newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
-    newHistoryRedo.splice(0, 1)
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
-}
-
-export function historyUpdate(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    const newHistoryPresent: UndoRedo = history.present
-    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-    newHistoryRedo.slice(0, newHistoryRedo.length)
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
-}
-
-// const obj = {
-//     a: 1,
-//     b: 'hello',
-// }
-
-// const obj2 = obj
-
-// obj2.a = 2
-
-// const obj2 = {
-//     ...obj,
-//     a: 2,
-// }

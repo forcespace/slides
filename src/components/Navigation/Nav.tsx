@@ -19,8 +19,8 @@ import {
     importEditorColor,
     addImage,
     addText,
-    deleteObject, viewShow
-} from '../../script/slide/actionCreators';
+    deleteObject, viewShow, setBackgroundImage
+} from '../../script/slide/actionCreators'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
 import {Action} from 'redux'
@@ -51,6 +51,7 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     addImage: (data: string | ArrayBuffer | null) => dispatch(addImage(data)),
     addText: () => dispatch(addText()),
     setBackgroundColor: (id: string, color: string) => dispatch(setBackgroundColor(id, color)),
+    setBackgroundImage: (data: string | ArrayBuffer | null) => dispatch(setBackgroundImage(data)),
     setBorderColor: (id: string, color: string) => dispatch(setBorderColor(id, color)),
     exportProject: () => dispatch(exportProject()),
     importPresentation: (data: string | ArrayBuffer | null) => dispatch(importPresentation(data)),
@@ -114,6 +115,23 @@ function Nav(props: Props) {
     function handleSetBackgroundColor() {
         const state = store.getState()
         props.setBackgroundColor(state.active, state.color!)
+    }
+
+    function handleSetSlideBackgroundImage(event: React.ChangeEvent<HTMLInputElement>) {
+        const input = event.target
+        const file = input?.files?.[0]
+
+        if (file) {
+            const reader = new FileReader()
+
+            reader.readAsDataURL(file)
+
+            reader.onload = function () {
+                props.setBackgroundImage(reader.result)
+            }
+
+            reader.onerror = function () {}
+        }
     }
 
     function handleSetSlideBackgroundColor() {
@@ -305,6 +323,13 @@ function Nav(props: Props) {
                     title: 'Выбрать цвет',
                     mode: 'input',
                     type: 'color'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_color_picker_background,
+                    onChange: handleSetSlideBackgroundImage,
+                    title: 'Изображение в качестве фона слайда',
+                    mode: 'input-file',
+                    type: 'file'
                 },
                 {
                     className: stylesButtonTabs.tab_add_color_picker_background,
