@@ -36,10 +36,7 @@ function ObjectContainer(props: Props) {
     }
 
     return (
-        <>
-            <div style={styleDiv}/>
-            <Objects object={props.object} scale={props.scale} key={props.object.id} />
-        </>
+        <Objects object={props.object} scale={props.scale} key={props.object.id} />
     )
 }
 
