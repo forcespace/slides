@@ -43,8 +43,7 @@ function TextArea(props: Props) {
     // console.log('value = ', value)
     // console.log('props.text.content = ', props.text.content)
 
-    function parseText(text: string | null) : string
-    {
+    function parseText(text: string | null) : string {
         return text? text.replace(/\s\S/gm,'<br>') : ''
     }
 
@@ -112,12 +111,12 @@ function TextArea(props: Props) {
                 ref={ref}
                 draggable={false}
                 style={styleDiv}
-                className={`${styles.slide_item} ${className}`}
+                className={`${styles.slide_item_text_content} ${className}`}
             >
             </div>
             <p
                 style={styleText}
-                className={`${styles.slide_item}`}
+                className={`${styles.slide_item_text}`}
                 contentEditable
                 suppressContentEditableWarning={true}
                 onBlur={changeText}
