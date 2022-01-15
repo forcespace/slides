@@ -54,7 +54,8 @@ function SlideContent(props: Props) {
         if (props.slide.background.priority === colorPriority) {
             setColor(props.slide.background.color ?? '')
             setImage('')
-        } else {
+        }
+        else {
             setImage(props.slide.background.image ?? '')
             setColor('')
         }
@@ -71,9 +72,19 @@ function SlideContent(props: Props) {
     }
 
     return (
-        <div style={styleDiv} onClick={setActive} className={styles.slide} ref={slideRef}>
-            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.slide.id}/>
-            <span className={styles.overlay}/>
+        <div
+            style={styleDiv}
+            onClick={setActive}
+            className={styles.slide}
+            ref={slideRef}>
+            <SlideView
+                slide={props.slide}
+                scale={{
+                    isMain: true,
+                    scaleIndex: width / fullWidth
+                }}
+                key={props.slide.id}
+            />
         </div>
     )
 }

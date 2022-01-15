@@ -151,13 +151,69 @@
 
 .tab_slide_redo
 {
+    transform: rotate(180deg);
     background: url('/src/upload/icon/history.png') no-repeat center center;
     background-size: cover;
-    transform: rotate(180deg);
 }
 
 .tab_del_object
 {
     background: url('/src/upload/icon/del.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_play
+{
+    background: url('/src/upload/icon/play.png') no-repeat center center;
+    background-size: cover;
+}
+
+.view_btn
+{
+    position: absolute;
+    z-index: 6;
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    transition: .15s;
+    border: 0;
+    outline: none;
+}
+
+.view_btn:focus,
+.view_btn:hover
+{
+    width: 80px;
+    height: 80px;
+    transition: .15s;
+}
+
+.view_prev_btn
+{
+    right: 0;
+    bottom: -50px;
+    left: -75px;
+    margin: auto;
+    background: red;
+    background: url('/src/upload/icon/arrow.png') no-repeat center center;
+    background-size: cover;
+}
+
+.view_next_btn
+{
+    right: 0;
+    bottom: -50px;
+    left: 75px;
+    margin: auto;
+    transform: rotate(180deg);
+    background: url('/src/upload/icon/arrow.png') no-repeat center center;
+    background-size: cover;
+}
+
+.view_close_btn
+{
+    top: -50px;
+    right: -90px;
+    background: url('/src/upload/icon/close_view.png') no-repeat center center;
     background-size: cover;
 }

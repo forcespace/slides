@@ -106,7 +106,7 @@ function TextArea(props: Props) {
     }
 
     return (
-        <div>
+        <>
             <div
                 ref={ref}
                 draggable={false}
@@ -122,7 +122,7 @@ function TextArea(props: Props) {
                 onBlur={changeText}
                 dangerouslySetInnerHTML={{__html: text}}
             />
-        </div>
+            </>
     )
 }
 

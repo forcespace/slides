@@ -1,5 +1,11 @@
 @import '/src/style/font/euclid.css';
 
+:root
+{
+    --main-color: rgba(0, 149, 255, 0.8);
+    /*--main-color: #14b855;*/
+}
+
 .presentation
 {
     background: #ececec;

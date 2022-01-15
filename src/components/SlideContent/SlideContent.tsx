@@ -50,7 +50,8 @@ function SlideContent(props: Props) {
         if (props.slide.background.priority === colorPriority) {
             setColor(props.slide.background.color ?? '')
             setImage('')
-        } else {
+        }
+        else {
             setImage(props.slide.background.image ?? '')
             setColor('')
         }
@@ -66,11 +67,13 @@ function SlideContent(props: Props) {
         height: width / slideProportion
     }
 
-    console.log('image = ', image)
-
     return (
         <div style={styleDiv} className={styles.slide} ref={slideRef}>
-            <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.slide.id} />
+            <SlideView
+                slide={props.slide}
+                scale={{isMain: true, scaleIndex: width / fullWidth}}
+                key={props.slide.id}
+            />
         </div>
     )
 }

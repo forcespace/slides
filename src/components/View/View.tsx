@@ -1,11 +1,11 @@
-import {Editor, Slide} from '../../script/slide/slide';
-import React from 'react';
-import SlideContent from '../SlideContent/SlideContent';
-import styles from './view.module.css'
-import Button from '../Button/Button';
+import {Editor, Slide} from '../../script/slide/slide'
+import React from 'react'
+import Button from '../Button/Button'
 import {connect, ConnectedProps} from 'react-redux'
-import {ExtendedAction, setEditorActive, viewClose} from '../../script/slide/actionCreators';
-import SlideContentView from '../SlideContent/SlideContentView';
+import {ExtendedAction, viewClose} from '../../script/slide/actionCreators'
+import SlideContentView from '../SlideContent/SlideContentView'
+import styles from './view.module.css'
+import stylesButtonTabs from '../Button/button.module.css'
 
 type MapState = {
     slides: Array<Slide>
@@ -13,8 +13,9 @@ type MapState = {
 
 type Props = ConnectedProps<typeof connector>
 
-const mapStateToProps = (state: Editor): MapState => ({
-    slides: state.presentation.slides
+const mapStateToProps = (state: Editor): {slides: Array<Slide>; state: Editor} => ({
+    slides: state.presentation.slides,
+    state: state
 })
 
 const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) => ({
@@ -23,35 +24,37 @@ const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) 
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 
-function View(props: Props)
-{
-    const [active, setActive] = React.useState(0);
+function View(props: Props) {
+    const [active, setActive] = React.useState(0)
 
-    function nextSlide()
-    {
-        if (active < props.slides.length - 1)
-        {
-            setActive(active + 1);
+    function nextSlide() {
+        if (active < props.slides.length - 1) {
+            setActive(active + 1)
         }
     }
 
-    function prevSlide()
-    {
-        if (active >= 1)
-        {
-            setActive(active - 1);
+    function prevSlide() {
+        if (active >= 1) {
+            setActive(active - 1)
         }
     }
 
     return (
         <div className={styles.wrapper}>
-            <span className={styles.overlay}/>
-            <SlideContentView slide={props.slides[active]}/>
-            <Button onClick={prevSlide} className={styles.prev_btn}/>
-            <Button onClick={nextSlide} className={styles.next_btn}/>
-            <Button onClick={props.viewClose} className={styles.close_btn}/>
+            <div className={styles.content}>
+                <SlideContentView slide={props.slides[active]}/>
+                <Button
+                    onClick={prevSlide}
+                    className={`${stylesButtonTabs.view_btn} ${stylesButtonTabs.view_prev_btn}`}/>
+                <Button
+                    onClick={nextSlide}
+                    className={`${stylesButtonTabs.view_btn} ${stylesButtonTabs.view_next_btn}`}/>
+                <Button
+                    onClick={props.viewClose}
+                    className={`${stylesButtonTabs.view_btn} ${stylesButtonTabs.view_close_btn}`}/>
+            </div>
         </div>
-    );
+    )
 }
 
 export default connector(View)
