@@ -44,7 +44,7 @@ function TextArea(props: Props) {
     // console.log('props.text.content = ', props.text.content)
 
     function parseText(text: string | null) : string {
-        return text? text.replace(/\s\S/gm,'<br>') : ''
+        return text ? text.replace(/(?:\r\n|\r|\n)/gm, '<br>') : ''
     }
 
     const [text, setText] = React.useState(parseText(props.text.content))
