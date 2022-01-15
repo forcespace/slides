@@ -4,7 +4,7 @@ import styles from './nav.module.css'
 type NavTabMenu = {
     id: string,
     className: string,
-    onClick: Function,
+    onClick: () => void,
     name: string
 }
 
@@ -17,8 +17,12 @@ export function NavTab(props: Props) {
     return (
         <NavTabs className={styles.menu_list}>
             {props.tabs.map(tab =>
-                <span key={Math.random()} className={`${tab.className} ${props.active === tab.id ? styles.active : ''}`}
-                    onClick={() => (tab.onClick == undefined ? null : tab.onClick())}>
+                <span
+                    key={Math.random()}
+                    className={`${tab.className} 
+                    ${props.active === tab.id ? styles.active : ''}`}
+                    onClick={() => (tab.onClick == undefined ? null : tab.onClick())}
+                >
                     {tab.name}
                 </span>)
             }

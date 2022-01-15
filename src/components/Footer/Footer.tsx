@@ -17,7 +17,7 @@ function Footer(props: PropsFromRedux) {
     return (
         <footer className={styles.footer}>
             <span className={styles.count}>
-                Slide {activeSlideNumber} of {countSlides}
+                Слайд {activeSlideNumber} из {countSlides}
             </span>
         </footer>
     )

@@ -21,13 +21,13 @@ import {
     addText,
     deleteObject, viewShow, setBackgroundImage
 } from '../../script/slide/actionCreators'
-import styles from './nav.module.css'
-import stylesButtonTabs from '../Button/button.module.css'
 import {Action} from 'redux'
 import {connect, ConnectedProps} from 'react-redux'
 import {NavTab} from './NavTab'
 import {NavTabButtons} from './NavTabButtons'
 import {store} from '../../store'
+import styles from './nav.module.css'
+import stylesButtonTabs from '../Button/button.module.css'
 
 const TABS = {
     PRESENTATION: 'presentation',
@@ -84,9 +84,11 @@ function Nav(props: Props) {
     function handleMoveSlideDown() {
         props.moveSlideDownByStep()
     }
+
     function undo() {
         props.undo()
     }
+
     function redo() {
         props.redo()
     }
@@ -130,7 +132,8 @@ function Nav(props: Props) {
                 props.setBackgroundImage(reader.result)
             }
 
-            reader.onerror = function () {}
+            reader.onerror = function () {
+            }
         }
     }
 
@@ -173,7 +176,8 @@ function Nav(props: Props) {
                 props.addImage(reader.result)
             }
 
-            reader.onerror = function () {}
+            reader.onerror = function () {
+            }
         }
     }
 
@@ -193,14 +197,15 @@ function Nav(props: Props) {
                 props.importEditorColor(reader.result)
             }
 
-            reader.onerror = function () {}
+            reader.onerror = function () {
+            }
         }
     }
 
     const [activeTab, setActiveTab] = React.useState(TABS.PRESENTATION)
 
     return (
-        <nav className={styles.nav}>
+        <nav className={styles.content}>
             <NavTab active={activeTab} tabs={[
                 {
                     id: TABS.PRESENTATION,
@@ -256,7 +261,7 @@ function Nav(props: Props) {
                     onClick: handleRemoveSlideClick,
                     title: 'Удалить активный слайд'
                 }
-            ]} hidden={activeTab !== TABS.PRESENTATION} />
+            ]} hidden={activeTab !== TABS.PRESENTATION}/>
 
             <NavTabButtons buttons={[
                 {
@@ -279,7 +284,7 @@ function Nav(props: Props) {
                     onClick: handleMoveSlideDown,
                     title: 'Переместить текущий слайд на позицию ниже'
                 }
-            ]} hidden={activeTab !== TABS.SLIDES} />
+            ]} hidden={activeTab !== TABS.SLIDES}/>
 
             <NavTabButtons buttons={[
                 {
@@ -315,7 +320,7 @@ function Nav(props: Props) {
                     onClick: handleDeleteObject,
                     title: 'Удалить активный объект'
                 }
-            ]} hidden={activeTab !== TABS.OBJECTS} />
+            ]} hidden={activeTab !== TABS.OBJECTS}/>
 
             <NavTabButtons buttons={[
                 {
@@ -346,7 +351,7 @@ function Nav(props: Props) {
                     onClick: handleSetBorderColor,
                     title: 'Цвет бордера'
                 }
-            ]} hidden={activeTab !== TABS.COLOR_PICKER} />
+            ]} hidden={activeTab !== TABS.COLOR_PICKER}/>
 
             <NavTabButtons buttons={[
                 {
@@ -362,15 +367,15 @@ function Nav(props: Props) {
                     mode: 'input-file',
                     type: 'file'
                 }
-            ]} hidden={activeTab !== TABS.SAVE_LOAD} />
+            ]} hidden={activeTab !== TABS.SAVE_LOAD}/>
 
             <NavTabButtons buttons={[
                 {
-                    className: stylesButtonTabs.tab_exp_json,
+                    className: stylesButtonTabs.tab_play,
                     onClick: props.viewShow,
-                    title: 'Просмотр'
+                    title: 'Просмотр презентации'
                 }
-            ]} hidden={activeTab !== TABS.PLAY} />
+            ]} hidden={activeTab !== TABS.PLAY}/>
         </nav>
     )
 }

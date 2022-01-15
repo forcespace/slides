@@ -1,11 +1,6 @@
-:root
-{
-    --main-color: #14b855;
-}
-
 .main
 {
-    padding: 15px 0;
+    padding: 10px 0;
     background: var(--main-color);
 }
 
