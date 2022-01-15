@@ -17,36 +17,35 @@ import {
     setActive,
     setTitle,
     setObjectPosition,
-    createPresentation,
+    createEditor,
     setBorderColor,
     createHistory,
     undo,
     redo,
-    historyUpdate,
     setPresentation,
     updateHistoryPresentAfterUndo,
     updateHistoryPresentAfterRedo,
     addStateUndo,
-    deleteObject,
+    deleteObject
 } from './functions'
-import {Presentation, History} from './slide'
+import {Editor, History} from './slide'
 
-const initPresentation: Presentation = createPresentation()
+const initEditor: Editor = createEditor()
 const initColor = ''
 const initHistory: History = createHistory()
 
-const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
+const editor = (state: Editor = initEditor, action: ExtendedAction): Editor => {
     switch (action.type) {
         case 'SET_TITLE': {
-            const newTitle = action.newTitle ?? state.title
+            const newTitle = action.newTitle ?? state.presentation.title
             return setTitle(state, newTitle)
         }
         case 'SET_ACTIVE': {
-            const activeIndex = action.index ?? state.active
+            const activeIndex = action.index ?? state.presentation.active
             return setActive(state, activeIndex)
         }
         case 'CREATE_PRESENTATION': {
-            return createPresentation()
+            return createEditor()
         }
         case 'ADD_SLIDE': {
             return addEmptySlide(state)
@@ -102,10 +101,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
             }
         }
 
-
         case 'SET_PRESENTATION': {
             // console.log('action.newPresentation', action.newPresentation)
-            return setPresentation(state, action.newPresentation!)
+            return setPresentation(state, action.newEditor!)
         }
         default: {
             return state
@@ -153,9 +151,9 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
         case 'REDO': {
             return redo(state)
         }
-        case 'HISTORY_UPDATE': {
-            return historyUpdate(state)
-        }
+        // case 'HISTORY_UPDATE': {
+        //     return historyUpdate(state)
+        // }
         case 'IMPORT_HISTORY': {
             return importHistory(action.data!)
         }
@@ -171,4 +169,4 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
     }
 }
 
-export const rootReducer = combineReducers({presentation, color, active, history})
+export const rootReducer = combineReducers({editor, color, active, history})

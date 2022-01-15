@@ -9,7 +9,7 @@ import {Action, AnyAction} from 'redux'
 import {
     undo,
     redo,
-    historyUpdate,
+    // historyUpdate,
     addStateUndo,
     updateHistoryPresentAfterUndo,
     updateHistoryPresentAfterRedo,
@@ -20,8 +20,8 @@ import {Editor, UndoRedo} from './script/slide/slide'
 const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) => ({
     addStateUndo: (obj: UndoRedo) => dispatch(addStateUndo(obj)),
     undo: () => dispatch(undo()),
-    redo: () => dispatch(redo()),
-    historyUpdate: () => dispatch(historyUpdate())
+    redo: () => dispatch(redo())
+    // historyUpdate: () => dispatch(historyUpdate())
 })
 
 ReactDOM.render(
@@ -36,12 +36,12 @@ ReactDOM.render(
 store.subscribe(() => {
     let state: Editor = store.getState()
     const newHistory: UndoRedo = {
-        presentation: state.presentation,
+        presentation: state,
         active: state.active,
         color: state.color
     }
-
-    if ((state.presentation !== state.history.present.presentation) && (state.history.flag !== 'redo') && (state.history.flag !== 'undo') &&
+    console.log(state.history.test)
+    if ((state !== state.history.present.presentation) && (state.history.flag !== 'redo') && (state.history.flag !== 'undo') &&
         state.history.undo.length < 10) {
         store.dispatch(addStateUndo(newHistory))
         state = store.getState()
@@ -55,16 +55,14 @@ document.addEventListener('keydown', function (zEvent) {
         console.log(store.getState().history.flag)
         state = store.getState()
         store.dispatch(setPresentation(state.history.undo[state.history.undo.length - 1].presentation))
-        state = store.getState()
         store.dispatch(updateHistoryPresentAfterUndo())
     }
 
-    if ((zEvent.ctrlKey && zEvent.key === 'y') || (zEvent.ctrlKey && zEvent.key === 'Y') && state.history.undo.length > 0) {
+    if ((zEvent.ctrlKey && zEvent.key === 'y') || (zEvent.ctrlKey && zEvent.key === 'Y') && state.history.redo.length > 0) {
         store.dispatch(redo())
         console.log(store.getState().history.flag)
         state = store.getState()
         store.dispatch(setPresentation(state.history.redo[0].presentation))
-        state = store.getState()
         store.dispatch(updateHistoryPresentAfterRedo())
     }
 })

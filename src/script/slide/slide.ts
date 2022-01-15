@@ -2,11 +2,12 @@ export type Editor = {
     history: History,
     presentation: Presentation,
     active: string,
-    color?: string
+    color?: string,
+    viewShown: boolean
 }
 
 export type UndoRedo = {
-    presentation: Presentation,
+    presentation: Editor,
     active: string,
     color?: string
 }
@@ -15,6 +16,7 @@ export type History = {
     undo: Array<UndoRedo>,
     present: UndoRedo,
     redo: Array<UndoRedo>,
+    test: Array <number>,
     flag: string,
 }
 
