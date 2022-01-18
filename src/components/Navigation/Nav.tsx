@@ -19,7 +19,7 @@ import {
     importEditorColor,
     addImage,
     addText,
-    deleteObject, viewShow, setBackgroundImage
+    deleteObject, viewShow, setBackgroundImage, changeFontSizeText
 } from '../../script/slide/actionCreators'
 import {Action} from 'redux'
 import {connect, ConnectedProps} from 'react-redux'
@@ -28,6 +28,8 @@ import {NavTabButtons} from './NavTabButtons'
 import {store} from '../../store'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
+import  {Text} from '../../script/slide/slide'
+import {searchObject} from '../../script/slide/functions'
 
 const TABS = {
     PRESENTATION: 'presentation',
@@ -58,7 +60,8 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     importHistory: (data: string | ArrayBuffer | null) => dispatch(importHistory(data)),
     importEditorActive: (data: string | ArrayBuffer | null) => dispatch(importEditorActive(data)),
     importEditorColor: (data: string | ArrayBuffer | null) => dispatch(importEditorColor(data)),
-    viewShow: () => dispatch(viewShow())
+    viewShow: () => dispatch(viewShow()),
+    changeFontSizeText: (id: string, fontSize: number) =>  dispatch(changeFontSizeText(id, fontSize))
 })
 
 const connector = connect(null, mapDispatchToProps)
@@ -202,6 +205,34 @@ function Nav(props: Props) {
         }
     }
 
+    function getActiveObjectFontSize() {
+        const state = store.getState()
+        const presentation = state.presentation;
+        console.log(state.active);
+        const indexObject = searchObject(presentation, state.active);
+        if (indexObject.objectIndex >= 0 && presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex].type === 'Text') {
+            const textObject: Text = presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex] as Text
+
+            return textObject.size;
+        } else return 14;
+    }
+
+
+    // Если ручной ввод или из select
+    function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
+        const newFontSize = event.target.value;
+        props.changeFontSizeText(store.getState().active, parseInt(newFontSize));
+    }
+
+    // Если кнопка
+    function handleDecreaseFontSizeText() {
+        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() - 2)
+    }
+
+    function handleIncreaseFontSizeText() {
+        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() + 2)
+    }
+
     const [activeTab, setActiveTab] = React.useState(TABS.PRESENTATION)
 
     return (
@@ -290,7 +321,23 @@ function Nav(props: Props) {
                 {
                     className: stylesButtonTabs.tab_add_text,
                     onClick: handleAddText,
-                    title: ' Добавить текст'
+                    title: 'Добавить текст'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_text,
+                    onClick: handleDecreaseFontSizeText,
+                    title: '-'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_text,
+                    onClick: handleIncreaseFontSizeText,
+                    title: '+'
+                },
+                {
+                    className: stylesButtonTabs.tab_input,
+                    onChange: handleChangeFontSize,
+                    mode: 'input',
+                    type: 'text'
                 },
                 {
                     classNameParent: stylesButtonTabs.tab_add_img_wrapper,

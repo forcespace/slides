@@ -267,7 +267,8 @@ export function deleteObject(presentation: Presentation, id: string): Presentati
             ...presentation,
             slides: newSlides
         }
-    } else {
+    }
+    else {
         return {
             ...presentation
         }
@@ -299,7 +300,8 @@ export function setText(presentation: Presentation, id: string, text: string): P
             ...presentation,
             slides: newSlides
         }
-    } else {
+    }
+    else {
         return {
             ...presentation
         }
@@ -335,7 +337,8 @@ export function setSlideBackgroundColor(presentation: Presentation, newColor: st
         ...presentation.slides[presentation.active],
         background: {
             priority: 0,
-            color: newColor}
+            color: newColor
+        }
     }
 
     return {
@@ -347,7 +350,8 @@ export function setSlideBackgroundColor(presentation: Presentation, newColor: st
 export function setBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
     if (presentation.slides[presentation.active].id === id) {
         return setSlideBackgroundColor(presentation, newColor)
-    } else {
+    }
+    else {
         return setObjectBackgroundColor(presentation, id, newColor)
     }
 }
@@ -358,7 +362,8 @@ export function setBackgroundImage(presentation: Presentation, data: string | Ar
             ...presentation.slides[presentation.active],
             background: {
                 priority: 1,
-                image: data}
+                image: data
+            }
         }
 
         return {
@@ -394,7 +399,8 @@ export function setObjectBorderColor(presentation: Presentation, id: string, new
             ...presentation,
             slides: updateSlides(presentation.slides, newSlide, presentation.active)
         }
-    } else {
+    }
+    else {
         return {
             ...presentation
         }
@@ -492,7 +498,8 @@ function setObjectBackgroundColor(presentation: Presentation, id: string, newCol
             ...presentation,
             slides: updateSlides(presentation.slides, newSlide, presentation.active)
         }
-    } else {
+    }
+    else {
         return {
             ...presentation
         }
@@ -511,7 +518,7 @@ function updateObjects(objects: ObjectType[], newObject: ObjectType, index: numb
     return newObjects
 }
 
-function searchObject(presentation: Presentation, id: string): {slideindex: number, objectIndex: number} {
+export function searchObject(presentation: Presentation, id: string): {slideindex: number, objectIndex: number} {
     let foundedSlideIndex = -1
     let foundedObjectIndex = -1
 
@@ -680,5 +687,38 @@ function createText(priority: number): Text {
         height: 50,
         active: true,
         priority: priority
+    }
+}
+
+export function changeFontSizeText(presentation: Presentation, id: string, fontSize: number): Presentation {
+    const indexObject = searchObject(presentation, id)
+
+    if (indexObject.objectIndex >= 0 && presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex].type === 'Text') {
+        const textObject: Text = presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex] as Text
+        const newObject: ObjectType = {
+            ...textObject,
+            size: fontSize
+        }
+
+        const newObjects: Array<ObjectType> = presentation.slides[indexObject.slideindex].objects.slice()
+        newObjects.splice(indexObject.objectIndex, 1, newObject)
+
+        const newSlide: Slide = {
+            ...presentation.slides[indexObject.slideindex],
+            objects: newObjects
+        }
+
+        const newSlides: Array<Slide> = presentation.slides.slice()
+        newSlides.splice(indexObject.slideindex, 1, newSlide)
+
+        return {
+            ...presentation,
+            slides: newSlides
+        }
+    }
+    else {
+        return {
+            ...presentation
+        }
     }
 }
