@@ -330,6 +330,31 @@ export function setObjectPosition(presentation: Presentation, objectId: string, 
     }
 }
 
+export function setObjectCondition(presentation: Presentation, objectId: string, width: number, height: number): Presentation {
+    let objectIndex = -1
+    const slide: Slide = presentation.slides[presentation.active]
+
+    slide.objects.forEach((object, index) => {
+        if (object.id === objectId) {
+            objectIndex = index
+        }
+    })
+
+    if (objectIndex !== -1) {
+        const newObject: ObjectType = {
+            ...presentation.slides[presentation.active].objects[objectIndex],
+            width: width,
+            height: height
+        }
+
+        return replaceActiveSlide(presentation, replaceSlideObjects(slide, objectIndex, newObject))
+    }
+
+    return {
+        ...presentation
+    }
+}
+
 export function setSlideBackgroundColor(presentation: Presentation, newColor: string): Presentation {
     const newSlide: Slide = {
         ...presentation.slides[presentation.active],

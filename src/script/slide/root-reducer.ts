@@ -18,6 +18,7 @@ import {
     setActive,
     setTitle,
     setObjectPosition,
+    setObjectCondition,
     createPresentation,
     setObjectBorderColor,
     createHistory,
@@ -86,6 +87,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         }
         case 'SET_POSITION': {
             return setObjectPosition(state, action.objectId!, action.position!)
+        }
+        case 'SET_CONDITION': {
+            return setObjectCondition(state, action.objectId!, action.width!, action.height!)
         }
         case 'SET_BACKGROUND_IMAGE': {
             return setBackgroundImage(state, action.data!)

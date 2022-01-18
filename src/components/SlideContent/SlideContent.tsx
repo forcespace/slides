@@ -66,8 +66,6 @@ function SlideContent(props: Props) {
         height: width / slideProportion
     }
 
-    console.log('image = ', image)
-
     return (
         <div style={styleDiv} className={styles.slide} ref={slideRef}>
             <SlideView slide={props.slide} scale={{isMain: true, scaleIndex: width / fullWidth}} key={props.slide.id} />

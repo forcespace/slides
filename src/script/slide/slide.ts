@@ -1,3 +1,5 @@
+import { type } from "os"
+
 export type Editor = {
     history: History,
     presentation: Presentation,
@@ -78,6 +80,11 @@ export type Background = {
 export type Position = {
     x: number,
     y: number
+}
+
+export type Dimensions = {
+    width: number,
+    height: number
 }
 
 export type ObjectType = Text | Image | Figure
