@@ -131,6 +131,39 @@
     background-size: cover;
 }
 
+.tab_font_size_decrease
+{
+    background: url('/src/upload/icon/font_size_down.png') no-repeat center center;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+}
+
+.tab_font_size_increase
+{
+    background: url('/src/upload/icon/font_size_up.png') no-repeat center center;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+}
+
+.tab_add_color
+{
+    position: relative;
+    margin-left: 30px;
+}
+
+.tab_add_color::before
+{
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 1px;
+    height: 100%;
+    content: '';
+    background: var(--main-color);
+}
+
 .tab_add_color_picker_background
 {
     background: url('/src/upload/icon/color-picker-background.png') no-repeat center center;

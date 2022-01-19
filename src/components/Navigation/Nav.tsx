@@ -28,14 +28,14 @@ import {NavTabButtons} from './NavTabButtons'
 import {store} from '../../store'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
-import  {Text} from '../../script/slide/slide'
+import {Text} from '../../script/slide/slide'
 import {searchObject} from '../../script/slide/functions'
 
 const TABS = {
     PRESENTATION: 'presentation',
     SLIDES: 'slides',
+    TEXT: 'text',
     OBJECTS: 'objects',
-    COLOR_PICKER: 'color_picker',
     SAVE_LOAD: 'save_load',
     PLAY: 'play'
 }
@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     importEditorActive: (data: string | ArrayBuffer | null) => dispatch(importEditorActive(data)),
     importEditorColor: (data: string | ArrayBuffer | null) => dispatch(importEditorColor(data)),
     viewShow: () => dispatch(viewShow()),
-    changeFontSizeText: (id: string, fontSize: number) =>  dispatch(changeFontSizeText(id, fontSize))
+    changeFontSizeText: (id: string, fontSize: number) => dispatch(changeFontSizeText(id, fontSize))
 })
 
 const connector = connect(null, mapDispatchToProps)
@@ -207,30 +207,33 @@ function Nav(props: Props) {
 
     function getActiveObjectFontSize() {
         const state = store.getState()
-        const presentation = state.presentation;
-        console.log(state.active);
-        const indexObject = searchObject(presentation, state.active);
+        const presentation = state.presentation
+        console.log(state.active)
+        const indexObject = searchObject(presentation, state.active)
         if (indexObject.objectIndex >= 0 && presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex].type === 'Text') {
             const textObject: Text = presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex] as Text
 
-            return textObject.size;
-        } else return 14;
+            return textObject.size
+        }
+        else {
+            return 14
+        }
     }
 
 
     // Если ручной ввод или из select
-    function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
-        const newFontSize = event.target.value;
-        props.changeFontSizeText(store.getState().active, parseInt(newFontSize));
-    }
+    // function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
+    //     const newFontSize = event.target.value
+    //     props.changeFontSizeText(store.getState().active, parseInt(newFontSize))
+    // }
 
     // Если кнопка
     function handleDecreaseFontSizeText() {
-        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() - 2)
+        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() - 4)
     }
 
     function handleIncreaseFontSizeText() {
-        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() + 2)
+        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() + 4)
     }
 
     const [activeTab, setActiveTab] = React.useState(TABS.PRESENTATION)
@@ -251,16 +254,16 @@ function Nav(props: Props) {
                     name: 'Слайды'
                 },
                 {
+                    id: TABS.TEXT,
+                    className: `${styles.menu_list_item}`,
+                    onClick: () => setActiveTab(TABS.TEXT),
+                    name: 'Текст'
+                },
+                {
                     id: TABS.OBJECTS,
                     className: `${styles.menu_list_item}`,
                     onClick: () => setActiveTab(TABS.OBJECTS),
                     name: 'Объекты'
-                },
-                {
-                    id: TABS.COLOR_PICKER,
-                    className: `${styles.menu_list_item}`,
-                    onClick: () => setActiveTab(TABS.COLOR_PICKER),
-                    name: 'Заливка'
                 },
                 {
                     id: TABS.SAVE_LOAD,
@@ -291,10 +294,7 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_delete_slide,
                     onClick: handleRemoveSlideClick,
                     title: 'Удалить активный слайд'
-                }
-            ]} hidden={activeTab !== TABS.PRESENTATION}/>
-
-            <NavTabButtons buttons={[
+                },
                 {
                     className: stylesButtonTabs.tab_slide_undo,
                     onClick: undo,
@@ -304,7 +304,10 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_slide_redo,
                     onClick: redo,
                     title: 'Redo'
-                },
+                }
+            ]} hidden={activeTab !== TABS.PRESENTATION}/>
+
+            <NavTabButtons buttons={[
                 {
                     className: stylesButtonTabs.tab_slide_up,
                     onClick: handleMoveSlideUp,
@@ -314,6 +317,25 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_slide_down,
                     onClick: handleMoveSlideDown,
                     title: 'Переместить текущий слайд на позицию ниже'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_color,
+                    title: 'Выбрать цвет',
+                    mode: 'input',
+                    type: 'color'
+                },
+                {
+                    className: stylesButtonTabs.tab_add_color_picker_background,
+                    onClick: handleSetSlideBackgroundColor,
+                    title: 'Заливка фона слайда'
+                },
+                {
+                    classNameParent: stylesButtonTabs.tab_add_img_wrapper,
+                    className: stylesButtonTabs.tab_add_img,
+                    onChange: handleSetSlideBackgroundImage,
+                    title: 'Изображение в качестве фона слайда',
+                    mode: 'input-file',
+                    type: 'file'
                 }
             ]} hidden={activeTab !== TABS.SLIDES}/>
 
@@ -324,21 +346,24 @@ function Nav(props: Props) {
                     title: 'Добавить текст'
                 },
                 {
-                    className: stylesButtonTabs.tab_add_text,
+                    className: stylesButtonTabs.tab_font_size_decrease,
                     onClick: handleDecreaseFontSizeText,
                     title: '-'
                 },
                 {
-                    className: stylesButtonTabs.tab_add_text,
+                    className: stylesButtonTabs.tab_font_size_increase,
                     onClick: handleIncreaseFontSizeText,
                     title: '+'
-                },
-                {
-                    className: stylesButtonTabs.tab_input,
-                    onChange: handleChangeFontSize,
-                    mode: 'input',
-                    type: 'text'
-                },
+                }
+                // {
+                //     className: stylesButtonTabs.tab_input,
+                //     onChange: handleChangeFontSize,
+                //     mode: 'input',
+                //     type: 'text'
+                // },
+            ]} hidden={activeTab !== TABS.TEXT}/>
+
+            <NavTabButtons buttons={[
                 {
                     classNameParent: stylesButtonTabs.tab_add_img_wrapper,
                     className: stylesButtonTabs.tab_add_img,
@@ -366,27 +391,12 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_del_object,
                     onClick: handleDeleteObject,
                     title: 'Удалить активный объект'
-                }
-            ]} hidden={activeTab !== TABS.OBJECTS}/>
-
-            <NavTabButtons buttons={[
+                },
                 {
                     className: stylesButtonTabs.tab_add_color,
                     title: 'Выбрать цвет',
                     mode: 'input',
                     type: 'color'
-                },
-                {
-                    className: stylesButtonTabs.tab_add_color_picker_background,
-                    onChange: handleSetSlideBackgroundImage,
-                    title: 'Изображение в качестве фона слайда',
-                    mode: 'input-file',
-                    type: 'file'
-                },
-                {
-                    className: stylesButtonTabs.tab_add_color_picker_background,
-                    onClick: handleSetSlideBackgroundColor,
-                    title: 'Заливка фона слайда'
                 },
                 {
                     className: stylesButtonTabs.tab_add_color_picker_background,
@@ -398,7 +408,7 @@ function Nav(props: Props) {
                     onClick: handleSetBorderColor,
                     title: 'Цвет бордера'
                 }
-            ]} hidden={activeTab !== TABS.COLOR_PICKER}/>
+            ]} hidden={activeTab !== TABS.OBJECTS}/>
 
             <NavTabButtons buttons={[
                 {
