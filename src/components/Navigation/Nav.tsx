@@ -208,8 +208,8 @@ function Nav(props: Props) {
     function getActiveObjectFontSize() {
         const state = store.getState()
         const presentation = state.presentation
-        console.log(state.active)
         const indexObject = searchObject(presentation, state.active)
+
         if (indexObject.objectIndex >= 0 && presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex].type === 'Text') {
             const textObject: Text = presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex] as Text
 
@@ -219,7 +219,6 @@ function Nav(props: Props) {
             return 14
         }
     }
-
 
     // Если ручной ввод или из select
     // function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
