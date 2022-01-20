@@ -3,8 +3,7 @@ import {Editor} from '../../script/slide/slide'
 import styles from './workspace.module.css'
 import {connect, ConnectedProps} from 'react-redux'
 import SlideList from '../SlidesList/SlideList'
-import View from '../View/View';
-import React from 'react';
+import View from '../View/View'
 
 const mapStateToProps = (state: Editor): {state: Editor} => ({
     state: state

@@ -56,14 +56,16 @@ export function useResize(
             const newWidth = objectParams.width + delta.x
             const newHeight = objectParams.height + delta.y
 
-            // if (newPos.x <= fullWidth * scaleIndex - objectParams.width && newPos.y <= fullWidth / slideProportion * scaleIndex - objectParams.height && newPos.x >= 0 && newPos.y >= 0) {
-            setWidth(newWidth)
-            setHeight(newHeight)
-            condition.current = {
-                width: newWidth,
-                height: newHeight
+            if (newWidth + objectParams.x <= fullWidth * scaleIndex && newHeight + objectParams.y <= fullWidth / slideProportion * scaleIndex) {
+                console.log('newWidth = ', newWidth)
+                console.log('fullWidth * scaleIndex = ', fullWidth * scaleIndex)
+                setWidth(newWidth)
+                setHeight(newHeight)
+                condition.current = {
+                    width: newWidth,
+                    height: newHeight
+                }
             }
-            // }
         }
     })
 

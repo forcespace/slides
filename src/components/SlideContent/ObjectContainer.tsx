@@ -29,25 +29,40 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type Props = ConnectedProps<typeof connector> & OwnProps
 
 function ObjectContainer(props: Props) {
-    const strokeSizeSvg = props.object.border ? props.object.border.borderSize * props.scale.scaleIndex : 0
+    const strokeSize = props.object.border ? props.object.border.borderSize * props.scale.scaleIndex : 0
 
     const [position, setPosition] = useState({
         x: props.object.leftTopPoint.x * props.scale.scaleIndex,
         y: props.object.leftTopPoint.y * props.scale.scaleIndex
     })
 
-    const [width, setWidth] = useState(props.object.width * props.scale.scaleIndex + 2 * strokeSizeSvg)
-    const [height, setHeight] = useState(props.object.height * props.scale.scaleIndex + 2 * strokeSizeSvg)
-    const [newObject, setNewObject] = useState(props.object)
+    const [width, setWidth] = useState(props.object.width * props.scale.scaleIndex + 2 * strokeSize)
+    const [height, setHeight] = useState(props.object.height * props.scale.scaleIndex + 2 * strokeSize)
+    const [classNameActive, setClassNameActive] = useState('')
+    const [classNameResizePonterSe, setClassNameResizePonterSe] = useState('')
+
+    const test = {
+        ...props.object,
+        width: width,
+        height: height
+    }
+
+    const [newObject, setNewObject] = useState(test)
 
     useEffect(() => {
+        console.log('props.state.active = ', props.state.active)
+        if (props.state.active === props.object.id) {
+            setClassNameActive(`${styles.slide_item_active}`)
+            setClassNameResizePonterSe(`${styles.se}`)
+        }
+
         const newPropsObject = {
             ...props.object,
             width: width,
             height: height
         }
         setNewObject(newPropsObject)
-    }, [width, height])
+    }, [width, height, classNameActive, classNameResizePonterSe, props.state.active])
 
     const ref: RefObject<HTMLDivElement> = useRef(null)
     const refSe: RefObject<HTMLDivElement> = useRef(null)
@@ -71,7 +86,7 @@ function ObjectContainer(props: Props) {
     }
 
     const setNewCondition = (width: number, height: number) => {
-        props.setObjectCondition(width, height)
+        props.setObjectCondition(width / props.scale.scaleIndex, height / props.scale.scaleIndex)
         props.setEditorActive(props.object.id)
     }
 
@@ -96,14 +111,6 @@ function ObjectContainer(props: Props) {
         props.scale.scaleIndex
     )
 
-    let className = ''
-    let classNameResizePonterSe = ''
-
-    if (props.state.active === props.object.id) {
-        className = `${styles.slide_item_active}`
-        classNameResizePonterSe = `${styles.se}`
-    }
-
     const styleDiv = {
         top: `${position.y}px`,
         left: `${position.x}px`,
@@ -114,7 +121,7 @@ function ObjectContainer(props: Props) {
     return (
         <div
             ref={ref}
-            className={`${styles.slide_item} ${className}`}
+            className={`${styles.slide_item} ${classNameActive}`}
             style={styleDiv}
             draggable={false}>
             <div ref={refSe} className={`${styles.slide_item_resize} ${classNameResizePonterSe}`}></div>
