@@ -5,7 +5,6 @@ import {connect, ConnectedProps} from 'react-redux'
 import SlideList from '../SlidesList/SlideList'
 import View from '../View/View'
 import Logo from '../Logo/Logo'
-import React from 'react'
 
 const mapStateToProps = (state: Editor): {state: Editor} => ({
     state: state

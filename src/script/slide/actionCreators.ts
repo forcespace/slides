@@ -8,6 +8,8 @@ export type ExtendedAction = {
     object?: ObjectType,
     objectId?: string,
     position?: Position,
+    width?: number,
+    height?: number,
     data?: string | ArrayBuffer | null,
     color?: string,
     undo?: Array<UndoRedo>,
@@ -125,6 +127,15 @@ export function setObjectPosition(objectId: string, position: Position): Extende
         type: 'SET_POSITION',
         objectId,
         position
+    }
+}
+
+export function setObjectCondition(objectId: string, width: number, height: number): ExtendedAction {
+    return {
+        type: 'SET_CONDITION',
+        objectId,
+        width,
+        height
     }
 }
 

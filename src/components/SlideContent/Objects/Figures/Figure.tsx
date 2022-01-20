@@ -6,10 +6,6 @@ import {connect, ConnectedProps} from 'react-redux'
 
 type OwnProps = {
     figure: ObjectType,
-    scale: {
-        isMain: boolean,
-        scaleIndex: number
-    }
 }
 
 const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
@@ -25,15 +21,15 @@ type Props = PropsFromRedux & OwnProps
 function Figure(props: Props) {
     if (props.ownProps.figure.type === 'Rect') {
         return (
-            <Rect figure={props.ownProps.figure} scale={props.ownProps.scale} />
+            <Rect figure={props.ownProps.figure}/>
         )
     } else if (props.ownProps.figure.type === 'Circle') {
         return (
-            <Circle figure={props.ownProps.figure} scale={props.ownProps.scale} />
+            <Circle figure={props.ownProps.figure}/>
         )
     } else {
         return (
-            <Triangle figure={props.ownProps.figure} scale={props.ownProps.scale} />
+            <Triangle figure={props.ownProps.figure}/>
         )
     }
 }

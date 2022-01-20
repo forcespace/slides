@@ -6,10 +6,6 @@ import {connect, ConnectedProps} from 'react-redux'
 
 type OwnProps = {
     object: ObjectType,
-    scale: {
-        isMain: boolean,
-        scaleIndex: number
-    },
 }
 
 const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
@@ -25,15 +21,15 @@ type Props = PropsFromRedux & OwnProps
 function Objects(props: Props) {
     if (props.ownProps.object.type === 'Image') {
         return (
-            <Img imgObject={props.ownProps.object} scale={props.ownProps.scale} />
+            <Img imgObject={props.ownProps.object}/>
         )
     } else if (props.ownProps.object.type === 'Text') {
         return (
-            <TextArea text={props.ownProps.object} scale={props.ownProps.scale} />
+            <TextArea text={props.ownProps.object}/>
         )
     } else {
         return (
-            <SvgFigure figure={props.ownProps.object} scale={props.ownProps.scale} />
+            <SvgFigure figure={props.ownProps.object}/>
         )
     }
 }

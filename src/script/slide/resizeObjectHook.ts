@@ -1,21 +1,22 @@
 import React, {RefObject, useEffect, useRef} from 'react'
 
-export function useDragAndDrop(
-    ref: RefObject<SVGSVGElement> | RefObject<HTMLImageElement> | RefObject<HTMLDivElement>,
+export function useResize(
+    ref: RefObject<HTMLDivElement>,
     objectParams: { x: number, y: number, width: number, height: number },
-    setPosition: React.Dispatch<React.SetStateAction<{ x: number, y: number }>>,
+    setWidth: React.Dispatch<React.SetStateAction<number>>,
+    setHeight: React.Dispatch<React.SetStateAction<number>>,
     setAcive: Function,
-    onDragEnd: Function,
+    onResizeEnd: Function,
     isMain: boolean,
     scaleIndex: number
 ): void {
     const slideProportion = 1.78
     const fullWidth = 1231
     const startPosition = useRef({x: 0, y: 0})
-    const position = useRef({x: objectParams.x, y: objectParams.y})
+    const condition = useRef({width: objectParams.width, height: objectParams.height})
 
     useEffect(() => {
-        const element: SVGSVGElement | HTMLImageElement | HTMLDivElement | null = ref.current
+        const element: HTMLDivElement | null = ref.current
         if (element) {
             element.addEventListener('mousedown', handleMouseDown)
         }
@@ -25,7 +26,8 @@ export function useDragAndDrop(
     }, [])
 
     const handleMouseDown = (e: Event) => {
-        if (!e.defaultPrevented) {
+        e.preventDefault()
+        if (e.defaultPrevented) {
             setAcive()
             const mouseEvent = e as MouseEvent
             startPosition.current.x = mouseEvent.pageX
@@ -36,7 +38,8 @@ export function useDragAndDrop(
     }
 
     const handleMouseMove = ((e: MouseEvent) => {
-        if (!e.defaultPrevented) {
+        e.preventDefault()
+        if (e.defaultPrevented) {
             let delta: { x: number, y: number }
             if (isMain) {
                 delta = {
@@ -50,24 +53,26 @@ export function useDragAndDrop(
                 }
             }
 
-            const newPos = {
-                x: objectParams.x + delta.x,
-                y: objectParams.y + delta.y
-            }
+            const newWidth = objectParams.width + delta.x
+            const newHeight = objectParams.height + delta.y
 
-            if (newPos.x <= fullWidth * scaleIndex - objectParams.width && newPos.y <= fullWidth / slideProportion * scaleIndex - objectParams.height && newPos.x >= 0 && newPos.y >= 0) {
-                setPosition(newPos)
-                position.current = newPos
+            if (newWidth + objectParams.x <= fullWidth * scaleIndex && newHeight + objectParams.y <= fullWidth / slideProportion * scaleIndex) {
+                console.log('newWidth = ', newWidth)
+                console.log('fullWidth * scaleIndex = ', fullWidth * scaleIndex)
+                setWidth(newWidth)
+                setHeight(newHeight)
+                condition.current = {
+                    width: newWidth,
+                    height: newHeight
+                }
             }
         }
     })
 
-    const handleMouseUp = (e: MouseEvent) => {
-        if (!e.defaultPrevented) {
-            document.removeEventListener('mousemove', handleMouseMove)
-            document.removeEventListener('mouseup', handleMouseUp)
-            onDragEnd(position.current)
-        }
+    const handleMouseUp = () => {
+        document.removeEventListener('mousemove', handleMouseMove)
+        document.removeEventListener('mouseup', handleMouseUp)
+        onResizeEnd(condition.current.width, condition.current.height)
     }
 }
 

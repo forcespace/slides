@@ -3,10 +3,6 @@ import {Editor, ObjectType, Position} from '../../../../script/slide/slide'
 
 type OwnProps = {
     figure: ObjectType,
-    scale: {
-        isMain: boolean,
-        scaleIndex: number
-    }
 }
 
 const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
@@ -20,8 +16,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 export function Triangle(props: Props) {
-    const widthSvg = Math.ceil(props.figure.width * props.scale.scaleIndex)
-    const heightSvg = Math.ceil(props.figure.height * props.scale.scaleIndex)
+    const widthSvg = Math.ceil(props.figure.width)
+    const heightSvg = Math.ceil(props.figure.height)
 
     const v1: Position = {
         x: Math.ceil(widthSvg / 2),
