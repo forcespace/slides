@@ -8,8 +8,8 @@
     align-content: center;
     align-items: center;
     justify-content: center;
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
     margin: auto;
     animation: morphing 10s infinite;
     border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -42,6 +42,8 @@
 
 .text
 {
-    font: 300 42px/1.15 'Euclid Circular B Light', sans-serif;
+    font: 300 32px/1.15 'Euclid Circular B Light', sans-serif;
+    -webkit-user-select: none;
+    user-select: none;
     color: #fff;
 }

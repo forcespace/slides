@@ -17,6 +17,8 @@
     margin: 0;
     list-style-type: none;
     cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
     color: #151824;
 }
 

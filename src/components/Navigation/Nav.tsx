@@ -221,13 +221,6 @@ function Nav(props: Props) {
         }
     }
 
-    // Если ручной ввод или из select
-    // function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
-    //     const newFontSize = event.target.value
-    //     props.changeFontSizeText(store.getState().active, parseInt(newFontSize))
-    // }
-
-    // Если кнопка
     function handleDecreaseFontSizeText() {
         props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() - 4)
     }
@@ -357,12 +350,6 @@ function Nav(props: Props) {
                     onClick: handleIncreaseFontSizeText,
                     title: '+'
                 }
-                // {
-                //     className: stylesButtonTabs.tab_input,
-                //     onChange: handleChangeFontSize,
-                //     mode: 'input',
-                //     type: 'text'
-                // },
             ]} hidden={activeTab !== TABS.TEXT}/>
 
             <NavTabButtons buttons={[
