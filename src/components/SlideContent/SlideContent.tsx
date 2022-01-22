@@ -64,6 +64,7 @@ function SlideContent(props: Props) {
     const styleDiv = {
         backgroundColor: color,
         backgroundImage: `url(${image})`,
+        backgroundSize: 'cover',
         height: width / slideProportion
     }
 

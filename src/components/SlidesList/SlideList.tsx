@@ -33,7 +33,13 @@ function SlideList(props: Props) {
         <div className={styles.slide_list}>
             {props.state.presentation.slides.map((slide: Slide, index: number) =>
                 <div key={slide.id} className={styles.slide}>
-                    <div style={{backgroundColor: slide.background.color, backgroundImage: `url(${slide.background.image})`, height: width / slideProportion}} className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`} onClick={() => setActiveSlide(index)} draggable={true}>
+                    <div
+                        style={{backgroundColor: slide.background.color,
+                        backgroundImage: `url(${slide.background.image})`,
+                        backgroundSize: 'cover',
+                        height: width / slideProportion}}
+                        className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`}
+                        onClick={() => setActiveSlide(index)} draggable={true}>
                         <SlideView slide={slide} scale={{isMain: false, scaleIndex: SCALE_INDEX}} />
                     </div>
                     <span className={styles.slide_count}>
