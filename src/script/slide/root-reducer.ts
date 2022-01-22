@@ -26,7 +26,8 @@ import {
     redo,
     historyUpdate,
     addStateUndo,
-    deleteObject
+    deleteObject,
+    changeFontSizeText
 } from './functions'
 import {Presentation, History} from './slide'
 
@@ -105,6 +106,10 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
                 ...state,
                 viewShown: false
             }
+        }
+
+        case 'CHANGE_FONT_SIZE_TEXT': {
+            return  changeFontSizeText(state, action.id!, action.fontSize!)
         }
 
         default: {

@@ -6,6 +6,17 @@
     /*--main-color: #14b855;*/
 }
 
+body
+{
+    position: relative;
+    overflow: hidden;
+}
+
+[contenteditable]:focus
+{
+    outline: 0 solid transparent;
+}
+
 .presentation
 {
     background: #ececec;

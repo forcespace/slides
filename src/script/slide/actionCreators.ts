@@ -16,7 +16,10 @@ export type ExtendedAction = {
     present?: UndoRedo,
     redo?: Array<UndoRedo>,
     obj?: UndoRedo,
-    text?: string
+    text?: string,
+    slide?: number,
+    id?: string,
+    fontSize?: number
 }
 
 export type ObjectType = {
@@ -224,5 +227,13 @@ export function viewShow() {
 export function viewClose() {
     return {
         type: 'VIEW_CLOSE'
+    }
+}
+
+export function changeFontSizeText(id: string, fontSize: number):  ExtendedAction {
+    return {
+        type: 'CHANGE_FONT_SIZE_TEXT',
+        id,
+        fontSize
     }
 }
