@@ -51,7 +51,7 @@ document.addEventListener('keydown', function (zEvent) {
     }
 
     if (((zEvent.ctrlKey && zEvent.key === 'y') || (zEvent.ctrlKey && zEvent.key === 'Y')) && state.history.undo.length > 0) {
-        store.dispatch(setPresentation(state.history.redo[0].presentation))
+        store.dispatch(setPresentation(state.history.undo[0].presentation))
         state = store.getState()
         store.dispatch(redo())
         state = store.getState()
