@@ -7,6 +7,7 @@ import {Editor} from '../../script/slide/slide'
 interface OwnProps {
     className: string,
     onClick?: React.MouseEventHandler<HTMLInputElement>,
+    // onChange?: React.ChangeEventHandler<HTMLInputElement>,
     title?: string,
     type?: string,
     value?: string
@@ -33,6 +34,7 @@ function Input(props: Props) {
 
     const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value)
+        // props.onChange?.(e);
     }
 
     return (

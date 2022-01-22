@@ -19,7 +19,7 @@ import {
     importEditorColor,
     addImage,
     addText,
-    deleteObject, viewShow, setBackgroundImage
+    deleteObject, viewShow, setBackgroundImage, changeFontSizeText
 } from '../../script/slide/actionCreators'
 import {Action} from 'redux'
 import {connect, ConnectedProps} from 'react-redux'
@@ -28,14 +28,17 @@ import {NavTabButtons} from './NavTabButtons'
 import {store} from '../../store'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
+import {Text} from '../../script/slide/slide'
+import {searchObject} from '../../script/slide/functions'
 
 const TABS = {
-    PRESENTATION: 'presentation',
-    SLIDES: 'slides',
+    FILE: 'file',
+    EDIT: 'edit',
+    TEXT: 'text',
+    PASTE: 'paste',
     OBJECTS: 'objects',
-    COLOR_PICKER: 'color_picker',
-    SAVE_LOAD: 'save_load',
-    PLAY: 'play'
+    COLOR: 'color',
+    PRESENTATION: 'presentation',
 }
 
 const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
@@ -58,7 +61,8 @@ const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
     importHistory: (data: string | ArrayBuffer | null) => dispatch(importHistory(data)),
     importEditorActive: (data: string | ArrayBuffer | null) => dispatch(importEditorActive(data)),
     importEditorColor: (data: string | ArrayBuffer | null) => dispatch(importEditorColor(data)),
-    viewShow: () => dispatch(viewShow())
+    viewShow: () => dispatch(viewShow()),
+    changeFontSizeText: (id: string, fontSize: number) => dispatch(changeFontSizeText(id, fontSize))
 })
 
 const connector = connect(null, mapDispatchToProps)
@@ -202,47 +206,77 @@ function Nav(props: Props) {
         }
     }
 
-    const [activeTab, setActiveTab] = React.useState(TABS.PRESENTATION)
+    function getActiveObjectFontSize() {
+        const state = store.getState()
+        const presentation = state.presentation
+        const indexObject = searchObject(presentation, state.active)
+
+        if (indexObject.objectIndex >= 0 && presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex].type === 'Text') {
+            const textObject: Text = presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex] as Text
+
+            return textObject.size
+        }
+        else {
+            return 14
+        }
+    }
+
+    // Если ручной ввод или из select
+    // function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
+    //     const newFontSize = event.target.value
+    //     props.changeFontSizeText(store.getState().active, parseInt(newFontSize))
+    // }
+
+    // Если кнопка
+    function handleDecreaseFontSizeText() {
+        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() - 4)
+    }
+
+    function handleIncreaseFontSizeText() {
+        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() + 4)
+    }
+
+    const [activeTab, setActiveTab] = React.useState(TABS.FILE)
 
     return (
         <nav className={styles.content}>
             <NavTab active={activeTab} tabs={[
+                {
+                    id: TABS.FILE,
+                    className: `${styles.menu_list_item}`,
+                    onClick: () => setActiveTab(TABS.FILE),
+                    name: 'Файл'
+                },
+                {
+                    id: TABS.EDIT,
+                    className: `${styles.menu_list_item}`,
+                    onClick: () => setActiveTab(TABS.EDIT),
+                    name: 'Правка'
+                },
+                {
+                    id: TABS.TEXT,
+                    className: `${styles.menu_list_item}`,
+                    onClick: () => setActiveTab(TABS.TEXT),
+                    name: 'Текст'
+                },
+                {
+                    id: TABS.PASTE,
+                    className: `${styles.menu_list_item}`,
+                    onClick: () => setActiveTab(TABS.PASTE),
+                    name: 'Вставка'
+                },
+                {
+                    id: TABS.COLOR,
+                    className: `${styles.menu_list_item}`,
+                    onClick: () => setActiveTab(TABS.COLOR),
+                    name: 'Заливка'
+                },
                 {
                     id: TABS.PRESENTATION,
                     className: `${styles.menu_list_item}`,
                     onClick: () => setActiveTab(TABS.PRESENTATION),
                     name: 'Презентация'
                 },
-                {
-                    id: TABS.SLIDES,
-                    className: `${styles.menu_list_item}`,
-                    onClick: () => setActiveTab(TABS.SLIDES),
-                    name: 'Слайды'
-                },
-                {
-                    id: TABS.OBJECTS,
-                    className: `${styles.menu_list_item}`,
-                    onClick: () => setActiveTab(TABS.OBJECTS),
-                    name: 'Объекты'
-                },
-                {
-                    id: TABS.COLOR_PICKER,
-                    className: `${styles.menu_list_item}`,
-                    onClick: () => setActiveTab(TABS.COLOR_PICKER),
-                    name: 'Заливка'
-                },
-                {
-                    id: TABS.SAVE_LOAD,
-                    className: `${styles.menu_list_item}`,
-                    onClick: () => setActiveTab(TABS.SAVE_LOAD),
-                    name: 'Сохранить / Загрузить'
-                },
-                {
-                    id: TABS.PLAY,
-                    className: `${styles.menu_list_item}`,
-                    onClick: () => setActiveTab(TABS.PLAY),
-                    name: 'Просмотр'
-                }
             ]}/>
 
             <NavTabButtons buttons={[
@@ -260,20 +294,23 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_delete_slide,
                     onClick: handleRemoveSlideClick,
                     title: 'Удалить активный слайд'
+                },
+                {
+                    className: stylesButtonTabs.tab_exp_json,
+                    onClick: exportProject,
+                    title: 'Сохранить проект в формате JSON'
+                },
+                {
+                    classNameParent: stylesButtonTabs.tab_import_json_wrapper,
+                    className: stylesButtonTabs.tab_import_json,
+                    onChange: importProject,
+                    titleLabel: 'Загрузить проект в формате JSON',
+                    mode: 'input-file',
+                    type: 'file'
                 }
-            ]} hidden={activeTab !== TABS.PRESENTATION}/>
+            ]} hidden={activeTab !== TABS.FILE}/>
 
             <NavTabButtons buttons={[
-                {
-                    className: stylesButtonTabs.tab_slide_undo,
-                    onClick: undo,
-                    title: 'Undo'
-                },
-                {
-                    className: stylesButtonTabs.tab_slide_redo,
-                    onClick: redo,
-                    title: 'Redo'
-                },
                 {
                     className: stylesButtonTabs.tab_slide_up,
                     onClick: handleMoveSlideUp,
@@ -283,15 +320,52 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_slide_down,
                     onClick: handleMoveSlideDown,
                     title: 'Переместить текущий слайд на позицию ниже'
+                },
+                {
+                    className: stylesButtonTabs.tab_slide_undo,
+                    onClick: undo,
+                    title: 'Undo'
+                },
+                {
+                    className: stylesButtonTabs.tab_slide_redo,
+                    onClick: redo,
+                    title: 'Redo'
                 }
-            ]} hidden={activeTab !== TABS.SLIDES}/>
+            ]} hidden={activeTab !== TABS.EDIT}/>
+
+            <NavTabButtons buttons={[
+                {
+                    className: stylesButtonTabs.tab_play,
+                    onClick: props.viewShow,
+                    title: 'Просмотр презентации'
+                }
+            ]} hidden={activeTab !== TABS.PRESENTATION}/>
 
             <NavTabButtons buttons={[
                 {
                     className: stylesButtonTabs.tab_add_text,
                     onClick: handleAddText,
-                    title: ' Добавить текст'
+                    title: 'Добавить текст'
                 },
+                {
+                    className: stylesButtonTabs.tab_font_size_decrease,
+                    onClick: handleDecreaseFontSizeText,
+                    title: '-'
+                },
+                {
+                    className: stylesButtonTabs.tab_font_size_increase,
+                    onClick: handleIncreaseFontSizeText,
+                    title: '+'
+                }
+                // {
+                //     className: stylesButtonTabs.tab_input,
+                //     onChange: handleChangeFontSize,
+                //     mode: 'input',
+                //     type: 'text'
+                // },
+            ]} hidden={activeTab !== TABS.TEXT}/>
+
+            <NavTabButtons buttons={[
                 {
                     classNameParent: stylesButtonTabs.tab_add_img_wrapper,
                     className: stylesButtonTabs.tab_add_img,
@@ -319,8 +393,8 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_del_object,
                     onClick: handleDeleteObject,
                     title: 'Удалить активный объект'
-                }
-            ]} hidden={activeTab !== TABS.OBJECTS}/>
+                },
+            ]} hidden={activeTab !== TABS.PASTE}/>
 
             <NavTabButtons buttons={[
                 {
@@ -331,18 +405,6 @@ function Nav(props: Props) {
                 },
                 {
                     className: stylesButtonTabs.tab_add_color_picker_background,
-                    onChange: handleSetSlideBackgroundImage,
-                    title: 'Изображение в качестве фона слайда',
-                    mode: 'input-file',
-                    type: 'file'
-                },
-                {
-                    className: stylesButtonTabs.tab_add_color_picker_background,
-                    onClick: handleSetSlideBackgroundColor,
-                    title: 'Заливка фона слайда'
-                },
-                {
-                    className: stylesButtonTabs.tab_add_color_picker_background,
                     onClick: handleSetBackgroundColor,
                     title: 'Заливка фона'
                 },
@@ -350,32 +412,21 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_add_color_picker_border,
                     onClick: handleSetBorderColor,
                     title: 'Цвет бордера'
-                }
-            ]} hidden={activeTab !== TABS.COLOR_PICKER}/>
-
-            <NavTabButtons buttons={[
-                {
-                    className: stylesButtonTabs.tab_exp_json,
-                    onClick: exportProject,
-                    title: 'Сохранить проект в формате JSON'
                 },
                 {
-                    classNameParent: stylesButtonTabs.tab_import_json_wrapper,
-                    className: stylesButtonTabs.tab_import_json,
-                    onChange: importProject,
-                    titleLabel: 'Загрузить проект в формате JSON',
+                    className: stylesButtonTabs.tab_add_color_picker_background,
+                    onClick: handleSetSlideBackgroundColor,
+                    title: 'Заливка фона слайда'
+                },
+                {
+                    classNameParent: stylesButtonTabs.tab_add_img_wrapper,
+                    className: stylesButtonTabs.tab_add_img,
+                    onChange: handleSetSlideBackgroundImage,
+                    title: 'Изображение в качестве фона слайда',
                     mode: 'input-file',
                     type: 'file'
                 }
-            ]} hidden={activeTab !== TABS.SAVE_LOAD}/>
-
-            <NavTabButtons buttons={[
-                {
-                    className: stylesButtonTabs.tab_play,
-                    onClick: props.viewShow,
-                    title: 'Просмотр презентации'
-                }
-            ]} hidden={activeTab !== TABS.PLAY}/>
+            ]} hidden={activeTab !== TABS.COLOR}/>
         </nav>
     )
 }
