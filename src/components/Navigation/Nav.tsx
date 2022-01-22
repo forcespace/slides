@@ -289,7 +289,7 @@ function Nav(props: Props) {
                     title: 'Удалить активный слайд'
                 },
                 {
-                    className: stylesButtonTabs.tab_exp_json,
+                    className: `${stylesButtonTabs.tab_exp_json} ${stylesButtonTabs.tab_border}`,
                     onClick: exportProject,
                     title: 'Сохранить проект в формате JSON'
                 },
@@ -315,7 +315,7 @@ function Nav(props: Props) {
                     title: 'Переместить текущий слайд на позицию ниже'
                 },
                 {
-                    className: stylesButtonTabs.tab_slide_undo,
+                    className: `${stylesButtonTabs.tab_slide_undo} ${stylesButtonTabs.tab_border}`,
                     onClick: undo,
                     title: 'Undo'
                 },
@@ -341,7 +341,7 @@ function Nav(props: Props) {
                     title: 'Добавить текст'
                 },
                 {
-                    className: stylesButtonTabs.tab_font_size_decrease,
+                    className: `${stylesButtonTabs.tab_font_size_decrease} ${stylesButtonTabs.tab_border}`,
                     onClick: handleDecreaseFontSizeText,
                     title: '-'
                 },
@@ -377,7 +377,7 @@ function Nav(props: Props) {
                     title: 'Добавить круг'
                 },
                 {
-                    className: stylesButtonTabs.tab_del_object,
+                    className: `${stylesButtonTabs.tab_del_object} ${stylesButtonTabs.tab_border}`,
                     onClick: handleDeleteObject,
                     title: 'Удалить активный объект'
                 },
@@ -391,9 +391,9 @@ function Nav(props: Props) {
                     type: 'color'
                 },
                 {
-                    className: stylesButtonTabs.tab_add_color_picker_background,
+                    className: `${stylesButtonTabs.tab_add_color_picker_background_object} ${stylesButtonTabs.tab_border}`,
                     onClick: handleSetBackgroundColor,
-                    title: 'Заливка фона'
+                    title: 'Заливка фона фигуры'
                 },
                 {
                     className: stylesButtonTabs.tab_add_color_picker_border,
@@ -401,7 +401,7 @@ function Nav(props: Props) {
                     title: 'Цвет бордера'
                 },
                 {
-                    className: stylesButtonTabs.tab_add_color_picker_background,
+                    className: `${stylesButtonTabs.tab_add_color_picker_background} ${stylesButtonTabs.tab_border}`,
                     onClick: handleSetSlideBackgroundColor,
                     title: 'Заливка фона слайда'
                 },
