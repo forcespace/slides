@@ -26,8 +26,8 @@ function SvgFigure(props: Props) {
     const fillColorSvg = props.figure.background ? props.figure.background.color : ''
     const strokeColorSvg = props.figure.border ? props.figure.border.borderColor : ''
     const strokeSizeSvg = props.figure.border ? props.figure.border.borderSize : 0
-    const widthSvg = Math.ceil(props.figure.width + 2 * strokeSizeSvg)
-    const heightSvg = Math.ceil(props.figure.height + 2 * strokeSizeSvg)
+    const widthSvg = props.figure.width + 2 * strokeSizeSvg
+    const heightSvg = props.figure.height + 2 * strokeSizeSvg
 
     const styleSvg = {
         width: widthSvg,

@@ -2,6 +2,7 @@ import {RefObject, useEffect, useRef, useState} from 'react'
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setEditorActive, setObjectPosition, setObjectCondition} from '../../script/slide/actionCreators'
 import {useDragAndDrop} from '../../script/slide/dragAndDropHook'
+import { getRecalculatedObject } from '../../script/slide/objectConditions'
 import {useResize} from '../../script/slide/resizeObjectHook'
 import {Editor, ObjectType, Position} from '../../script/slide/slide'
 import Objects from './Objects/Objects'
@@ -12,7 +13,7 @@ type OwnProps = {
     scale: {
         isMain: boolean,
         scaleIndex: number
-    },
+    }
 }
 
 const mapStateToProps = (state: Editor): {state: Editor} => ({
@@ -29,49 +30,19 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type Props = ConnectedProps<typeof connector> & OwnProps
 
 function ObjectContainer(props: Props) {
-    const strokeSize = props.object.border ? props.object.border.borderSize * props.scale.scaleIndex : 0
+    const [classNameDnDDiv, setClassNameActive] = useState(`${styles.slide_item}`)
+    const [classNameResizeDiv, setClassNameResizePonterSe] = useState(`${styles.slide_item_resize}`)
+    const [newObject, setNewObject] = useState(getRecalculatedObject(props.object, props.scale.scaleIndex))
 
-    const [position, setPosition] = useState({
-        x: props.object.leftTopPoint.x * props.scale.scaleIndex,
-        y: props.object.leftTopPoint.y * props.scale.scaleIndex
-    })
-
-    const [width, setWidth] = useState(props.object.width * props.scale.scaleIndex + 2 * strokeSize)
-    const [height, setHeight] = useState(props.object.height * props.scale.scaleIndex + 2 * strokeSize)
-    const [classNameActive, setClassNameActive] = useState('')
-    const [classNameResizePonterSe, setClassNameResizePonterSe] = useState('')
-
-    const test = {
-        ...props.object,
-        width: width,
-        height: height
+    const styleDiv = {
+        top: `${newObject.leftTopPoint.y - 2}px`,
+        left: `${newObject.leftTopPoint.x - 2}px`,
+        width: newObject.width + 4,
+        height: newObject.height + 4
     }
-
-    const [newObject, setNewObject] = useState(test)
-
-    useEffect(() => {
-        console.log('props.state.active = ', props.state.active)
-        if (props.state.active === props.object.id) {
-            setClassNameActive(`${styles.slide_item_active}`)
-            setClassNameResizePonterSe(`${styles.se}`)
-        }
-
-        const newPropsObject = {
-            ...props.object,
-            width: width,
-            height: height
-        }
-        setNewObject(newPropsObject)
-    }, [width, height, classNameActive, classNameResizePonterSe, props.state.active])
 
     const ref: RefObject<HTMLDivElement> = useRef(null)
     const refSe: RefObject<HTMLDivElement> = useRef(null)
-
-    const objectParameters = {
-        ...position,
-        width: width,
-        height: height
-    }
 
     const setAcive = () => {
         props.setEditorActive(props.object.id)
@@ -92,8 +63,8 @@ function ObjectContainer(props: Props) {
 
     useDragAndDrop(
         ref,
-        objectParameters,
-        setPosition,
+        newObject,
+        setNewObject,
         setAcive,
         setNewPosition,
         props.scale.isMain,
@@ -102,30 +73,29 @@ function ObjectContainer(props: Props) {
 
     useResize(
         refSe,
-        objectParameters,
-        setWidth,
-        setHeight,
+        newObject,
+        setNewObject,
         setAcive,
         setNewCondition,
         props.scale.isMain,
         props.scale.scaleIndex
     )
 
-    const styleDiv = {
-        top: `${position.y}px`,
-        left: `${position.x}px`,
-        width: width,
-        height: height
-    }
+    useEffect(() => {
+        if (props.state.active === props.object.id) {
+            setClassNameActive(`${styles.slide_item} ${styles.slide_item_active}`)
+            setClassNameResizePonterSe(`${styles.slide_item_resize} ${styles.se}`)
+        }
+    }, [props.state.active])
 
     return (
         <div
             ref={ref}
-            className={`${styles.slide_item} ${classNameActive}`}
+            className={classNameDnDDiv}
             style={styleDiv}
             draggable={false}>
-            <div ref={refSe} className={`${styles.slide_item_resize} ${classNameResizePonterSe}`}></div>
-            <Objects object={newObject} key={props.object.id} />
+            <div ref={refSe} className={classNameResizeDiv}></div>
+            <Objects object={newObject} key={props.object.id} scale={props.scale}/>
         </div>
     )
 }

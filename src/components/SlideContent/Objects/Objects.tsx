@@ -6,6 +6,10 @@ import {connect, ConnectedProps} from 'react-redux'
 
 type OwnProps = {
     object: ObjectType,
+    scale: {
+        isMain: boolean,
+        scaleIndex: number
+    }
 }
 
 const mapStateToProps = (state: Editor, ownProps: OwnProps) => ({
@@ -25,7 +29,7 @@ function Objects(props: Props) {
         )
     } else if (props.ownProps.object.type === 'Text') {
         return (
-            <TextArea text={props.ownProps.object}/>
+            <TextArea text={props.ownProps.object} scale={props.ownProps.scale}/>
         )
     } else {
         return (

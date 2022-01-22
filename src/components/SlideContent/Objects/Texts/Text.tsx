@@ -6,6 +6,10 @@ import styles from '../../slideContent.module.css'
 
 type OwnProps = {
     text: Text,
+    scale: {
+        isMain: boolean,
+        scaleIndex: number
+    }
 }
 
 const mapStateToProps = (state: Editor) => ({
@@ -24,9 +28,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & OwnProps
 
 function TextArea(props: Props) {
-    const textWidth = Math.ceil(props.text.width)
-    const textHeight = Math.ceil(props.text.height)
-
     function parseText(text: string | null) : string {
         return text ? text.replace(/(?:\r\n|\r|\n)/gm, '<br>') : ''
     }
@@ -39,12 +40,12 @@ function TextArea(props: Props) {
         props.setText(props.text.id, text)
     }
 
-    const fontSize = Math.ceil(props.text.size)
+    const fontSize = Math.round(props.text.size * props.scale.scaleIndex)
     const styleText = {
         top: `${props.text.leftTopPoint.y}px`,
         left: `${props.text.leftTopPoint.x}px`,
-        width: textWidth,
-        height: textHeight,
+        width: props.text.width,
+        height: props.text.height,
         fontSize: fontSize
     }
 
