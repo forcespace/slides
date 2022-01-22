@@ -1,5 +1,5 @@
 import {Action} from 'redux'
-import {Position, UndoRedo} from '../slide/slide'
+import {Position, Presentation, UndoRedo} from '../slide/slide'
 
 export type ExtendedAction = {
     type: string,
@@ -13,9 +13,9 @@ export type ExtendedAction = {
     data?: string | ArrayBuffer | null,
     color?: string,
     undo?: Array<UndoRedo>,
-    present?: UndoRedo,
     redo?: Array<UndoRedo>,
     obj?: UndoRedo,
+    newPresentation?: Presentation,
     text?: string
 }
 
@@ -34,6 +34,13 @@ export function setActive(index: number): ExtendedAction {
     return {
         type: 'SET_ACTIVE',
         index
+    }
+}
+
+export function setPresentation(newPresentation: Presentation): ExtendedAction {
+    return {
+        type: 'SET_PRESENTATION',
+        newPresentation
     }
 }
 
@@ -198,6 +205,18 @@ export function redo(): ExtendedAction {
 export function historyUpdate(): ExtendedAction {
     return {
         type: 'HISTORY_UPDATE'
+    }
+}
+
+export function updateHistoryPresentAfterUndo(): ExtendedAction {
+    return {
+        type: 'UPDATE_HISTORY_PRESENT_UNDO'
+    }
+}
+
+export function updateHistoryPresentBeforeRedo(): ExtendedAction {
+    return {
+        type: 'UPDATE_HISTORY_PRESENT_REDO'
     }
 }
 

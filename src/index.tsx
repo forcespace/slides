@@ -6,14 +6,13 @@ import {connect, Provider} from 'react-redux'
 import {App} from './App'
 import {store} from './store'
 import {Action, AnyAction} from 'redux'
-import {undo, redo, historyUpdate, addStateUndo} from './script/slide/actionCreators'
+import {undo, redo, addStateUndo, updateHistoryPresentAfterUndo, updateHistoryPresentBeforeRedo, setPresentation} from './script/slide/actionCreators'
 import {Editor, UndoRedo} from './script/slide/slide'
 
 const mapDispatchToProps = (dispatch: (arg0: Action) => AnyAction) => ({
     addStateUndo: (obj: UndoRedo) => dispatch(addStateUndo(obj)),
     undo: () => dispatch(undo()),
-    redo: () => dispatch(redo()),
-    historyUpdate: () => dispatch(historyUpdate())
+    redo: () => dispatch(redo())
 })
 
 ReactDOM.render(
@@ -26,20 +25,38 @@ ReactDOM.render(
 )
 
 store.subscribe(() => {
-    const state: Editor = store.getState()
+    let state: Editor = store.getState()
     const newHistory: UndoRedo = {
         presentation: state.presentation,
-        activeElem: state.active,
+        active: state.active,
         color: state.color
     }
-    // console.log('state.history.undo.length = ', state.history.undo)
-    // TODO: подписаться на нажатие клавиш функциями внутри index ctrl^s
-    // поправить условие в subscribe изменения в презентации и в полях color и active
-    // сравнивать с present состоянием
-    if (state.history.undo.length === 1) {
+
+    if ((state.presentation !== state.history.present.presentation) && (state.history.flag !== 'redo') && (state.history.flag !== 'undo') &&
+    state.history.undo.length < 400) {
         store.dispatch(addStateUndo(newHistory))
+        state = store.getState()
+
     }
-    // console.log('newHistoryUndoIndex = ', newHistory)
+})
+
+document.addEventListener('keydown', function (zEvent) {
+    let state = store.getState()
+    if (((zEvent.ctrlKey && zEvent.key === 'z') || (zEvent.ctrlKey && zEvent.key === 'Z')) && state.history.undo.length > 0) {
+        state = store.getState()
+        store.dispatch(undo())
+        state = store.getState()
+        store.dispatch(setPresentation(state.history.undo[0].presentation))
+
+    }
+
+    if (((zEvent.ctrlKey && zEvent.key === 'y') || (zEvent.ctrlKey && zEvent.key === 'Y')) && state.history.undo.length > 0) {
+        store.dispatch(setPresentation(state.history.redo[0].presentation))
+        state = store.getState()
+        store.dispatch(redo())
+        state = store.getState()
+    }
+
 })
 
 export default connect(null, mapDispatchToProps)

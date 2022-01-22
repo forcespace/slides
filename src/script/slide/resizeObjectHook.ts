@@ -57,8 +57,8 @@ export function useResize(
             const newHeight = objectParams.height + delta.y
 
             if (newWidth + objectParams.x <= fullWidth * scaleIndex && newHeight + objectParams.y <= fullWidth / slideProportion * scaleIndex) {
-                console.log('newWidth = ', newWidth)
-                console.log('fullWidth * scaleIndex = ', fullWidth * scaleIndex)
+                // console.log('newWidth = ', newWidth)
+                // console.log('fullWidth * scaleIndex = ', fullWidth * scaleIndex)
                 setWidth(newWidth)
                 setHeight(newHeight)
                 condition.current = {

@@ -1,5 +1,3 @@
-import { type } from "os"
-
 export type Editor = {
     history: History,
     presentation: Presentation,
@@ -9,14 +7,15 @@ export type Editor = {
 
 export type UndoRedo = {
     presentation: Presentation,
-    activeElem: string,
-    color?: string
+    active: string,
+    color?: string,
 }
 
 export type History = {
     undo: Array<UndoRedo>,
     present: UndoRedo,
     redo: Array<UndoRedo>
+    flag: string
 }
 
 export type Presentation = {

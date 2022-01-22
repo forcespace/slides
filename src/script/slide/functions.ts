@@ -3,14 +3,14 @@ import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo, Im
 export function createUndoRedo(): UndoRedo {
     return {
         presentation: createPresentation(),
-        activeElem: '0',
+        active: '0',
         color: '0'
     }
 }
 
 export function createEditor(): Editor {
     return {
-        history: {undo: [], present: createUndoRedo(), redo: []},
+        history: {undo: [], present: createUndoRedo(), redo: [], flag: 'empty'},
         presentation: {
             title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
             slides: [createSlide()],
@@ -34,7 +34,8 @@ export function createHistory(): History {
     return {
         undo: [createUndoRedo()],
         present: createUndoRedo(),
-        redo: [createUndoRedo()]
+        redo: [createUndoRedo()],
+        flag: 'empty'
     }
 }
 
@@ -57,10 +58,11 @@ export function importHistory(data: string | ArrayBuffer | null): History {
         undo: [],
         present: {
             presentation: createPresentation(),
-            activeElem: '',
+            active: '',
             color: ''
         },
-        redo: []
+        redo: [],
+        flag: 'empty'
     }
 }
 
@@ -426,54 +428,75 @@ export function setObjectBorderColor(presentation: Presentation, id: string, new
     }
 
 }
-
 export function addStateUndo(history: History, newState: UndoRedo): History {
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    newHistoryUndo.push(newState)
+    newHistoryUndo.splice(0, 0, newState)
+
+    const newHistory: History = {
+        ...history,
+        undo: newHistoryUndo,
+        present: newState,
+        flag: 'empty'
+    }
+
+    return newHistory
+}
+
+export function setPresentation(presentation: Presentation, newPresentation: Presentation): Presentation {
+    return {
+        ...newPresentation
+    }
+}
+
+export function updateHistoryPresentAfterUndo(history: History): History {
+    const newHistoryPresent: UndoRedo = history.undo[0]
+
     return {
         ...history,
-        undo: newHistoryUndo
+        present: newHistoryPresent
+    }
+}
+
+export function updateHistoryPresentBeforeRedo(history: History): History {
+    const newHistoryPresent: UndoRedo = history.redo[0]
+
+    return {
+        ...history,
+        present: newHistoryPresent
     }
 }
 
 export function undo(history: History): History {
     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryRedo.splice(0, 0, newHistoryPresent)
-    newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
-    newHistoryUndo.pop()
+
+    if (newHistoryUndo.length > 0) {
+        newHistoryRedo.splice(0, 0, newHistoryUndo[0])
+        newHistoryUndo.splice(0, 1)
+    }
+
     return {
         undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
+        present: updateHistoryPresentAfterUndo(history).present,
+        redo: newHistoryRedo,
+        flag: 'undo'
     }
 }
 
 export function redo(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-    newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
-    newHistoryRedo.splice(0, 1)
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
-}
+    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
 
-export function historyUpdate(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    const newHistoryPresent: UndoRedo = history.present
-    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-    newHistoryRedo.slice(0, newHistoryRedo.length)
+    if (newHistoryRedo.length > 0) {
+        newHistoryUndo.splice(0, 0, newHistoryRedo[0])
+        newHistoryRedo.splice(0, 1)
+    }
+
     return {
         undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
+        present: updateHistoryPresentBeforeRedo(history).present,
+        redo: newHistoryRedo,
+        flag: 'redo'
     }
 }
 

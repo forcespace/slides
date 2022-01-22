@@ -50,7 +50,6 @@ function ObjectContainer(props: Props) {
     const [newObject, setNewObject] = useState(test)
 
     useEffect(() => {
-        console.log('props.state.active = ', props.state.active)
         if (props.state.active === props.object.id) {
             setClassNameActive(`${styles.slide_item_active}`)
             setClassNameResizePonterSe(`${styles.se}`)

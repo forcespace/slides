@@ -24,7 +24,9 @@ import {
     createHistory,
     undo,
     redo,
-    historyUpdate,
+    setPresentation,
+    updateHistoryPresentAfterUndo,
+    updateHistoryPresentBeforeRedo,
     addStateUndo,
     deleteObject
 } from './functions'
@@ -106,6 +108,9 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
                 viewShown: false
             }
         }
+        case 'SET_PRESENTATION': {
+            return setPresentation(state, action.newPresentation!)
+        }
 
         default: {
             return state
@@ -152,11 +157,14 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
         case 'REDO': {
             return redo(state)
         }
-        case 'HISTORY_UPDATE': {
-            return historyUpdate(state)
-        }
         case 'IMPORT_HISTORY': {
             return importHistory(action.data!)
+        }
+        case 'UPDATE_HISTORY_PRESENT_UNDO': {
+            return updateHistoryPresentAfterUndo(state)
+        }
+        case 'UPDATE_HISTORY_PRESENT_REDO': {
+            return updateHistoryPresentBeforeRedo(state)
         }
         default: {
             return state
