@@ -1,6 +1,5 @@
 .tab
 {
-    position: relative;
     width: 32px;
     height: 32px;
     margin: 0 30px 0 0;
@@ -11,20 +10,34 @@
     background: transparent;
 }
 
-.tab:last-child
-{
-    margin: 0;
-}
-
 .tab:hover
 {
     transition: 0.3s;
     opacity: 1;
 }
 
+.tab_border
+{
+    position: relative;
+    margin-left: 30px;
+}
+
+.tab_border::before
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -30px;
+    width: 1px;
+    height: 100%;
+    margin: auto;
+    content: '';
+    pointer-events: none;
+    background: rgba(61, 62, 71, 0.16);
+}
+
 .tab_new_presentation
 {
-    top: 3px;
     background: url('/src/upload/icon/new.png') no-repeat center center;
     background-size: cover;
 }
@@ -120,8 +133,7 @@
 
 .tab_exp_json
 {
-    transform: rotate(180deg);
-    background: url('/src/upload/icon/json.png') no-repeat center center;
+    background: url('/src/upload/icon/json_exp.png') no-repeat center center;
     background-size: cover;
 }
 
@@ -133,29 +145,35 @@
 
 .tab_font_size_decrease
 {
-    background: url('/src/upload/icon/font_size_down.png') no-repeat center center;
-    background-size: cover;
     width: 25px;
     height: 25px;
+    background: url('/src/upload/icon/font_size_down.png') no-repeat center center;
+    background-size: cover;
 }
 
 .tab_font_size_increase
 {
-    background: url('/src/upload/icon/font_size_up.png') no-repeat center center;
-    background-size: cover;
     width: 25px;
     height: 25px;
+    background: url('/src/upload/icon/font_size_up.png') no-repeat center center;
+    background-size: cover;
 }
 
 .tab_add_color_picker_background
 {
-    background: url('/src/upload/icon/color-picker-background.png') no-repeat center center;
+    background: url('/src/upload/icon/color_picker_background.png') no-repeat center center;
+    background-size: cover;
+}
+
+.tab_add_color_picker_background_object
+{
+    background: url('/src/upload/icon/color_picker_background_object.png') no-repeat center center;
     background-size: cover;
 }
 
 .tab_add_color_picker_border
 {
-    background: url('/src/upload/icon/color-picker-border.png') no-repeat center center;
+    background: url('/src/upload/icon/color_picker_border.png') no-repeat center center;
     background-size: cover;
 }
 
@@ -174,6 +192,8 @@
 
 .tab_del_object
 {
+    width: 25px;
+    height: 25px;
     background: url('/src/upload/icon/del.png') no-repeat center center;
     background-size: cover;
 }
