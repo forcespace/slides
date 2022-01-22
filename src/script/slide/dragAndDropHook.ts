@@ -1,10 +1,11 @@
 import React, {RefObject, useEffect, useRef} from 'react'
+import {ObjectType} from './slide'
 
 export function useDragAndDrop(
-    ref: RefObject<SVGSVGElement> | RefObject<HTMLImageElement> | RefObject<HTMLDivElement>,
-    objectParams: { x: number, y: number, width: number, height: number },
-    setPosition: React.Dispatch<React.SetStateAction<{ x: number, y: number }>>,
-    setAcive: Function,
+    ref: RefObject<HTMLDivElement>,
+    object: ObjectType,
+    setNewObject: React.Dispatch<React.SetStateAction<ObjectType>>,
+    setAcive: () => void,
     onDragEnd: Function,
     isMain: boolean,
     scaleIndex: number
@@ -12,7 +13,7 @@ export function useDragAndDrop(
     const slideProportion = 1.78
     const fullWidth = 1231
     const startPosition = useRef({x: 0, y: 0})
-    const position = useRef({x: objectParams.x, y: objectParams.y})
+    const position = useRef({x: object.leftTopPoint.x, y: object.leftTopPoint.y})
 
     useEffect(() => {
         const element: SVGSVGElement | HTMLImageElement | HTMLDivElement | null = ref.current
@@ -26,7 +27,6 @@ export function useDragAndDrop(
 
     const handleMouseDown = (e: Event) => {
         if (!e.defaultPrevented) {
-            setAcive()
             const mouseEvent = e as MouseEvent
             startPosition.current.x = mouseEvent.pageX
             startPosition.current.y = mouseEvent.pageY
@@ -51,12 +51,15 @@ export function useDragAndDrop(
             }
 
             const newPos = {
-                x: objectParams.x + delta.x,
-                y: objectParams.y + delta.y
+                x: object.leftTopPoint.x + delta.x,
+                y: object.leftTopPoint.y + delta.y
             }
 
-            if (newPos.x <= fullWidth * scaleIndex - objectParams.width && newPos.y <= fullWidth / slideProportion * scaleIndex - objectParams.height && newPos.x >= 0 && newPos.y >= 0) {
-                setPosition(newPos)
+            if (newPos.x <= fullWidth * scaleIndex - object.width && newPos.y <= fullWidth / slideProportion * scaleIndex - object.height && newPos.x >= 0 && newPos.y >= 0) {
+                setNewObject({
+                    ...object,
+                    leftTopPoint: newPos
+                })
                 position.current = newPos
             }
         }
@@ -66,6 +69,7 @@ export function useDragAndDrop(
         if (!e.defaultPrevented) {
             document.removeEventListener('mousemove', handleMouseMove)
             document.removeEventListener('mouseup', handleMouseUp)
+            setAcive()
             onDragEnd(position.current)
         }
     }

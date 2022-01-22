@@ -1,11 +1,11 @@
 import React, {RefObject, useEffect, useRef} from 'react'
+import {ObjectType} from './slide'
 
 export function useResize(
     ref: RefObject<HTMLDivElement>,
-    objectParams: { x: number, y: number, width: number, height: number },
-    setWidth: React.Dispatch<React.SetStateAction<number>>,
-    setHeight: React.Dispatch<React.SetStateAction<number>>,
-    setAcive: Function,
+    object: ObjectType,
+    setNewObject: React.Dispatch<React.SetStateAction<ObjectType>>,
+    setAcive: () => void,
     onResizeEnd: Function,
     isMain: boolean,
     scaleIndex: number
@@ -13,7 +13,7 @@ export function useResize(
     const slideProportion = 1.78
     const fullWidth = 1231
     const startPosition = useRef({x: 0, y: 0})
-    const condition = useRef({width: objectParams.width, height: objectParams.height})
+    const condition = useRef({width: object.width, height: object.height})
 
     useEffect(() => {
         const element: HTMLDivElement | null = ref.current
@@ -53,14 +53,15 @@ export function useResize(
                 }
             }
 
-            const newWidth = objectParams.width + delta.x
-            const newHeight = objectParams.height + delta.y
+            const newWidth = object.width + delta.x
+            const newHeight = object.height + delta.y
 
-            if (newWidth + objectParams.x <= fullWidth * scaleIndex && newHeight + objectParams.y <= fullWidth / slideProportion * scaleIndex) {
-                console.log('newWidth = ', newWidth)
-                console.log('fullWidth * scaleIndex = ', fullWidth * scaleIndex)
-                setWidth(newWidth)
-                setHeight(newHeight)
+            if (newWidth + object.leftTopPoint.x <= fullWidth * scaleIndex && newHeight + object.leftTopPoint.y <= fullWidth / slideProportion * scaleIndex) {
+                setNewObject({
+                    ...object,
+                    width: newWidth,
+                    height: newHeight
+                })
                 condition.current = {
                     width: newWidth,
                     height: newHeight
