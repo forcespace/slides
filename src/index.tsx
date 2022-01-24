@@ -32,7 +32,7 @@ store.subscribe(() => {
         color: state.color
     }
 
-    if ((state.presentation !== state.history.present.presentation) && (state.history.flag !== 'redo') && (state.history.flag !== 'undo') &&
+    if ((state.presentation !== state.history.undo[0].presentation) && (state.history.flag !== 'redo') && (state.history.flag !== 'undo') &&
     state.history.undo.length < 400) {
         store.dispatch(addStateUndo(newHistory))
         state = store.getState()
@@ -46,12 +46,11 @@ document.addEventListener('keydown', function (zEvent) {
         state = store.getState()
         store.dispatch(undo())
         state = store.getState()
-        store.dispatch(setPresentation(state.history.undo[0].presentation))
-
+        store.dispatch(setPresentation(state.history.present.presentation))
     }
 
     if (((zEvent.ctrlKey && zEvent.key === 'y') || (zEvent.ctrlKey && zEvent.key === 'Y')) && state.history.undo.length > 0) {
-        store.dispatch(setPresentation(state.history.undo[0].presentation))
+        store.dispatch(setPresentation(state.history.presentation))
         state = store.getState()
         store.dispatch(redo())
         state = store.getState()

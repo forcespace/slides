@@ -3,8 +3,8 @@ import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo, Im
 export function createUndoRedo(): UndoRedo {
     return {
         presentation: createPresentation(),
-        active: '0',
-        color: '0'
+        active: '',
+        color: ''
     }
 }
 
