@@ -144,7 +144,6 @@ function Nav(props: Props) {
     function handleSetSlideBackgroundColor() {
         const state: Editor = store.getState()
         const activeSlideIndex = state.presentation.active.slideIndex
-        console.log('CurrentColor = ', state.presentation.color)
         props.setBackgroundColor(state.presentation.slides[activeSlideIndex].id, state.presentation.color!)
     }
 
@@ -172,6 +171,8 @@ function Nav(props: Props) {
         const input = event.target
         const file = input?.files?.[0]
 
+        input.value = ''
+
         if (file) {
             const reader = new FileReader()
 
@@ -189,6 +190,7 @@ function Nav(props: Props) {
     function importProject(event: React.ChangeEvent<HTMLInputElement>) {
         const input = event.target
         const file = input?.files?.[0]
+        input.value = ''
 
         if (file) {
             const reader = new FileReader()

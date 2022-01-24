@@ -78,8 +78,7 @@ function undoable(reducer: Function) {
                 if (presentation === newPresent) {
                     return state
                 }
-                console.log(
-                    'Не совпадают newPresent === presentation = ')
+                console.log('Новое действие обнуляет REDO')
                 // console.log('newPresent = ', newPresent.slides[newPresent.active.slideIndex].objects[newPresent.slides[newPresent.active.slideIndex].objects.length - 1])
                 // console.log('presentation = ', presentation.slides[presentation.active.slideIndex].objects[presentation.slides[presentation.active.slideIndex].objects.length - 1])
                 // console.log('newPresent = ', newPresent.slides[newPresent.active.slideIndex])

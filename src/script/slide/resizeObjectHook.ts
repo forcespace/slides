@@ -28,7 +28,6 @@ export function useResize(
     const handleMouseDown = (e: Event) => {
         e.preventDefault()
         if (e.defaultPrevented) {
-            setAcive()
             const mouseEvent = e as MouseEvent
             startPosition.current.x = mouseEvent.pageX
             startPosition.current.y = mouseEvent.pageY
@@ -74,6 +73,7 @@ export function useResize(
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
         onResizeEnd(condition.current.width, condition.current.height)
+        setAcive()
     }
 }
 

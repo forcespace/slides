@@ -15,7 +15,7 @@ type Props = ConnectedProps<typeof connector>
 
 function Workspace(props: Props) {
     const slidesCount = props.state.presentation.slides.length
-
+    console.log('state = ', props.state)
     return (
         <section className={styles.workspace}>
             <Logo/>
