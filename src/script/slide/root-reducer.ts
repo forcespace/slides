@@ -34,13 +34,14 @@ function undoable(reducer: Function) {
     }
 
     return function (state: Editor = initialState, action: ExtendedAction) {
-        // const {past, present, future} = state
         const {history, presentation} = state
         switch (action.type) {
             case 'UNDO': {
+                console.log('UNDO = ', history.past.length)
                 if (history.past.length > 0) {
                     const previous = history.past[history.past.length - 1]
                     const newPast = history.past.slice(0, history.past.length - 1)
+
                     return {
                         history: {
                             past: newPast,
@@ -49,13 +50,17 @@ function undoable(reducer: Function) {
                         presentation: previous
                     }
                 } else {
+                    console.log('UNDO = 0')
                     return state
                 }
             }
             case 'REDO': {
                 if (history.future.length > 0) {
+                    console.log('REDO = ', history.future.length)
                     const next = history.future[0]
                     const newFuture = history.future.slice(1)
+                    console.log('OldColor = ', presentation.color)
+                    console.log('NewColor = ', next.color)
                     return {
                         history: {
                             past: [...history.past, presentation],
@@ -64,18 +69,21 @@ function undoable(reducer: Function) {
                         presentation: next
                     }
                 } else {
+                    console.log('REDO = 0')
                     return state
                 }
             }
             default: {
                 const newPresent: Presentation = reducer(presentation, action)
-                console.log('state = ', state)
-                console.log('newPresent = ', newPresent)
                 if (presentation === newPresent) {
-                    console.log('Нет изменений')
                     return state
                 }
-                console.log('Заполнение undo')
+                console.log(
+                    'Не совпадают newPresent === presentation = ')
+                // console.log('newPresent = ', newPresent.slides[newPresent.active.slideIndex].objects[newPresent.slides[newPresent.active.slideIndex].objects.length - 1])
+                // console.log('presentation = ', presentation.slides[presentation.active.slideIndex].objects[presentation.slides[presentation.active.slideIndex].objects.length - 1])
+                // console.log('newPresent = ', newPresent.slides[newPresent.active.slideIndex])
+                // console.log('presentation = ', presentation.slides[presentation.active.slideIndex])
                 return {
                     history: {
                         past: [...history.past, presentation],
@@ -183,58 +191,5 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
         }
     }
 }
-
-// const color = (state: string = initColor, action: ExtendedAction): string => {
-//     switch (action.type) {
-//         case 'SET_EDITOR_COLOR': {
-//             return action.color!
-//         }
-//         case 'IMPORT_EDITOR_COLOR': {
-//             return importEditorColor(action.data!)
-//         }
-//         default: {
-//             return state
-//         }
-//     }
-// }
-
-// const active = (state = '', action: ExtendedAction): string => {
-//     switch (action.type) {
-//         case 'SET_EDITOR_ACTIVE': {
-//             return action.objectId!
-//         }
-//         case 'IMPORT_EDITOR_COLOR': {
-//             return importEditorActive(action.data!)
-//         }
-//         default: {
-//             return state
-//         }
-//     }
-// }
-
-// const history = (state: History = initHistory, action: ExtendedAction): History => {
-//     switch (action.type) {
-//         case 'ADD_STATE_UNDO': {
-//             return addStateUndo(state, action.obj!)
-//         }
-//         case 'UNDO': {
-//             return undo(state)
-//         }
-//         case 'REDO': {
-//             return redo(state)
-//         }
-//         case 'HISTORY_UPDATE': {
-//             return historyUpdate(state)
-//         }
-//         case 'IMPORT_HISTORY': {
-//             return importHistory(action.data!)
-//         }
-//         default: {
-//             return state
-//         }
-//     }
-// }
-
-// const editor = undoable(presentation)
 
 export const rootReducer = undoable(presentation)

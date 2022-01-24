@@ -10,7 +10,7 @@ export type History = {
 
 export type Presentation = {
     title: string,
-    color?: string,
+    color: string,
     active: {
         slideIndex: number,
         activeObject: string

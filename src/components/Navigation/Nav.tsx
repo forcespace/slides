@@ -25,7 +25,7 @@ import {Action} from 'redux'
 import {connect, ConnectedProps} from 'react-redux'
 import {NavTab} from './NavTab'
 import {NavTabButtons} from './NavTabButtons'
-import {store} from '../../store'
+import {store} from '../../script/slide/store'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
 import {Editor, Text} from '../../script/slide/slide'
@@ -144,6 +144,7 @@ function Nav(props: Props) {
     function handleSetSlideBackgroundColor() {
         const state: Editor = store.getState()
         const activeSlideIndex = state.presentation.active.slideIndex
+        console.log('CurrentColor = ', state.presentation.color)
         props.setBackgroundColor(state.presentation.slides[activeSlideIndex].id, state.presentation.color!)
     }
 

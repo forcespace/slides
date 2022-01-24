@@ -1,13 +1,5 @@
 import {Editor, ObjectType, Position, Presentation, Slide, Image, Text} from './slide'
 
-// export function createUndoRedo(): UndoRedo {
-//     return {
-//         presentation: createPresentation(),
-//         activeElem: '0',
-//         color: '0'
-//     }
-// }
-
 export function createEditor(): Editor {
     return {
         history: {past: [], future: []},
@@ -18,7 +10,7 @@ export function createEditor(): Editor {
                 slideIndex: 0,
                 activeObject: ''
             },
-            color: '',
+            color: '#000000',
             viewShown: false
         }
     }
@@ -31,19 +23,11 @@ export function createPresentation(): Presentation {
             slideIndex: 0,
             activeObject: ''
         },
-        color: '',
+        color: '#000000',
         slides: [createSlide()],
         viewShown: false
     }
 }
-
-// export function createHistory(): History {
-//     return {
-//         undo: [createUndoRedo()],
-//         present: createUndoRedo(),
-//         redo: [createUndoRedo()]
-//     }
-// }
 
 export function importPresentation(data: string | ArrayBuffer | null): Presentation {
     if (typeof data === 'string') {
@@ -53,41 +37,6 @@ export function importPresentation(data: string | ArrayBuffer | null): Presentat
 
     return createPresentation()
 }
-
-// export function importHistory(data: string | ArrayBuffer | null): History {
-//     if (typeof data === 'string') {
-//         const history: History = JSON.parse(data).history
-//         return history
-//     }
-
-//     return {
-//         undo: [],
-//         present: {
-//             presentation: createPresentation(),
-//             activeElem: '',
-//             color: ''
-//         },
-//         redo: []
-//     }
-// }
-
-// export function importEditorColor(data: string | ArrayBuffer | null): string {
-//     if (typeof data === 'string') {
-//         const color: string = JSON.parse(data).color
-//         return color
-//     }
-
-//     return ''
-// }
-
-// export function importEditorActive(data: string | ArrayBuffer | null): string {
-//     if (typeof data === 'string') {
-//         const active: string = JSON.parse(data).active
-//         return active
-//     }
-
-//     return ''
-// }
 
 export function setTitle(presentation: Presentation, newTitle: string): Presentation {
     return {
@@ -247,16 +196,6 @@ export function addObject(presentation: Presentation, object: {objectType: strin
 
 export function addImage(presentation: Presentation, data: string | ArrayBuffer | null | undefined): Presentation {
     if (typeof data === 'string' && presentation.slides.length != 0) {
-        // const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active.slideIndex].objects.slice()
-        // newObjectArray.push(createImage(data, presentation.slides[presentation.active.slideIndex].objects.length))
-
-        // const newSlides: Array<Slide> = presentation.slides.slice()
-        // newSlides[presentation.active.slideIndex].objects = newObjectArray
-
-        // return {
-        //     ...presentation,
-        //     slides: newSlides
-        // }
         if (presentation.slides.length === 0) {
             return {...presentation}
         }
@@ -284,16 +223,6 @@ export function addImage(presentation: Presentation, data: string | ArrayBuffer 
 }
 
 export function addText(presentation: Presentation): Presentation {
-    // const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active.slideIndex].objects.slice()
-    // newObjectArray.push(createText(presentation.slides[presentation.active.slideIndex].objects.length))
-
-    // const newSlides: Array<Slide> = presentation.slides.slice()
-    // newSlides[presentation.active.slideIndex].objects = newObjectArray
-
-    // return {
-    //     ...presentation,
-    //     slides: newSlides
-    // }
     if (presentation.slides.length === 0) {
         return {...presentation}
     }
@@ -495,56 +424,6 @@ export function setObjectBorderColor(presentation: Presentation, id: string, new
     }
 
 }
-
-// export function addStateUndo(history: History, newState: UndoRedo): History {
-//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-//     newHistoryUndo.push(newState)
-//     return {
-//         ...history,
-//         undo: newHistoryUndo
-//     }
-// }
-
-// export function undo(history: History): History {
-//     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-//     let newHistoryPresent: UndoRedo = history.present
-//     newHistoryRedo.splice(0, 0, newHistoryPresent)
-//     newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
-//     newHistoryUndo.pop()
-//     return {
-//         undo: newHistoryUndo,
-//         present: newHistoryPresent,
-//         redo: newHistoryRedo
-//     }
-// }
-
-// export function redo(history: History): History {
-//     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-//     let newHistoryPresent: UndoRedo = history.present
-//     newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-//     newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
-//     newHistoryRedo.splice(0, 1)
-//     return {
-//         undo: newHistoryUndo,
-//         present: newHistoryPresent,
-//         redo: newHistoryRedo
-//     }
-// }
-
-// export function historyUpdate(history: History): History {
-//     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-//     const newHistoryPresent: UndoRedo = history.present
-//     newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-//     newHistoryRedo.slice(0, newHistoryRedo.length)
-//     return {
-//         undo: newHistoryUndo,
-//         present: newHistoryPresent,
-//         redo: newHistoryRedo
-//     }
-// }
 
 function replaceSlideObjects(slide: Slide, objectIndex: number, newObject: ObjectType): Slide {
     const newObjects: Array<ObjectType> = slide.objects.slice()
