@@ -12,7 +12,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 
 function Footer(props: PropsFromRedux) {
     const countSlides = props.slides.length
-    const activeSlideNumber = props.activeSlide + 1
+    const activeSlideNumber = props.activeSlide.slideIndex + 1
 
     return (
         <footer className={styles.footer}>

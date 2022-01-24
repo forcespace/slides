@@ -22,7 +22,7 @@ function SlideList(props: Props) {
     const slideProportion = 1.78
 
     function isActive(index: number) {
-        return index === props.state.presentation.active
+        return index === props.state.presentation.active.slideIndex
     }
 
     function setActiveSlide(index: number) {
@@ -35,9 +35,9 @@ function SlideList(props: Props) {
                 <div key={slide.id} className={styles.slide}>
                     <div
                         style={{backgroundColor: slide.background.color,
-                        backgroundImage: `url(${slide.background.image})`,
-                        backgroundSize: 'cover',
-                        height: width / slideProportion}}
+                            backgroundImage: `url(${slide.background.image})`,
+                            backgroundSize: 'cover',
+                            height: width / slideProportion}}
                         className={`${styles.slide_content} ${isActive(index) ? styles.slide_content_active : ''}`}
                         onClick={() => setActiveSlide(index)} draggable={true}>
                         <SlideView slide={slide} scale={{isMain: false, scaleIndex: SCALE_INDEX}} />

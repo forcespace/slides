@@ -1,27 +1,20 @@
-import { type } from "os"
-
 export type Editor = {
     history: History,
-    presentation: Presentation,
-    active: string,
-    color?: string
-}
-
-export type UndoRedo = {
-    presentation: Presentation,
-    activeElem: string,
-    color?: string
+    presentation: Presentation
 }
 
 export type History = {
-    undo: Array<UndoRedo>,
-    present: UndoRedo,
-    redo: Array<UndoRedo>
+    past: Array<Presentation>,
+    future: Array<Presentation>
 }
 
 export type Presentation = {
     title: string,
-    active: number,
+    color?: string,
+    active: {
+        slideIndex: number,
+        activeObject: string
+    }
     slides: Array<Slide>,
     viewShown: boolean
 }

@@ -2,14 +2,13 @@ import {Editor} from '../../script/slide/slide'
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setTitle} from '../../script/slide/actionCreators'
 import styles from './header.module.css'
-import {AnyAction} from 'redux'
 import React from 'react'
 
 const mapStateToProps = (state: Editor): {title: string} => ({
     title: state.presentation.title
 })
 
-const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => AnyAction) => ({
+const mapDispatchToProps = (dispatch: (arg0: ExtendedAction) => ExtendedAction) => ({
     setTitle: (newTitle: string) => dispatch(setTitle(newTitle))
 })
 

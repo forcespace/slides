@@ -1,42 +1,49 @@
-import {Editor, ObjectType, Position, Presentation, Slide, History, UndoRedo, Image, Text} from './slide'
+import {Editor, ObjectType, Position, Presentation, Slide, Image, Text} from './slide'
 
-export function createUndoRedo(): UndoRedo {
-    return {
-        presentation: createPresentation(),
-        activeElem: '0',
-        color: '0'
-    }
-}
+// export function createUndoRedo(): UndoRedo {
+//     return {
+//         presentation: createPresentation(),
+//         activeElem: '0',
+//         color: '0'
+//     }
+// }
 
 export function createEditor(): Editor {
     return {
-        history: {undo: [], present: createUndoRedo(), redo: []},
+        history: {past: [], future: []},
         presentation: {
             title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
             slides: [createSlide()],
-            active: 0,
+            active: {
+                slideIndex: 0,
+                activeObject: ''
+            },
+            color: '',
             viewShown: false
-        },
-        active: '0'
+        }
     }
 }
 
 export function createPresentation(): Presentation {
     return {
         title: `Презентация от ${new Date().toLocaleString('ru-RU')}`,
-        active: 0,
+        active: {
+            slideIndex: 0,
+            activeObject: ''
+        },
+        color: '',
         slides: [createSlide()],
         viewShown: false
     }
 }
 
-export function createHistory(): History {
-    return {
-        undo: [createUndoRedo()],
-        present: createUndoRedo(),
-        redo: [createUndoRedo()]
-    }
-}
+// export function createHistory(): History {
+//     return {
+//         undo: [createUndoRedo()],
+//         present: createUndoRedo(),
+//         redo: [createUndoRedo()]
+//     }
+// }
 
 export function importPresentation(data: string | ArrayBuffer | null): Presentation {
     if (typeof data === 'string') {
@@ -47,40 +54,40 @@ export function importPresentation(data: string | ArrayBuffer | null): Presentat
     return createPresentation()
 }
 
-export function importHistory(data: string | ArrayBuffer | null): History {
-    if (typeof data === 'string') {
-        const history: History = JSON.parse(data).history
-        return history
-    }
+// export function importHistory(data: string | ArrayBuffer | null): History {
+//     if (typeof data === 'string') {
+//         const history: History = JSON.parse(data).history
+//         return history
+//     }
 
-    return {
-        undo: [],
-        present: {
-            presentation: createPresentation(),
-            activeElem: '',
-            color: ''
-        },
-        redo: []
-    }
-}
+//     return {
+//         undo: [],
+//         present: {
+//             presentation: createPresentation(),
+//             activeElem: '',
+//             color: ''
+//         },
+//         redo: []
+//     }
+// }
 
-export function importEditorColor(data: string | ArrayBuffer | null): string {
-    if (typeof data === 'string') {
-        const color: string = JSON.parse(data).color
-        return color
-    }
+// export function importEditorColor(data: string | ArrayBuffer | null): string {
+//     if (typeof data === 'string') {
+//         const color: string = JSON.parse(data).color
+//         return color
+//     }
 
-    return ''
-}
+//     return ''
+// }
 
-export function importEditorActive(data: string | ArrayBuffer | null): string {
-    if (typeof data === 'string') {
-        const active: string = JSON.parse(data).active
-        return active
-    }
+// export function importEditorActive(data: string | ArrayBuffer | null): string {
+//     if (typeof data === 'string') {
+//         const active: string = JSON.parse(data).active
+//         return active
+//     }
 
-    return ''
-}
+//     return ''
+// }
 
 export function setTitle(presentation: Presentation, newTitle: string): Presentation {
     return {
@@ -100,19 +107,22 @@ export function createSlide(): Slide {
 export function addEmptySlide(presentation: Presentation): Presentation {
     const newSlides: Array<Slide> = presentation.slides.slice()
     const slide: Slide = createSlide()
-    const active: number = presentation.active + 1
+    const active: number = presentation.active.slideIndex + 1
     newSlides.splice(active, 0, slide)
 
     return {
         ...presentation,
         slides: newSlides,
-        active
+        active: {
+            ...presentation.active,
+            slideIndex: active
+        }
     }
 }
 
 export function deleteSlide(presentation: Presentation): Presentation {
     const newSlides: Array<Slide> = presentation.slides.slice()
-    const index: number = presentation.active
+    const index: number = presentation.active.slideIndex
     const slideArrayLenght: number = newSlides.length
 
     let active: number
@@ -133,22 +143,28 @@ export function deleteSlide(presentation: Presentation): Presentation {
     return {
         ...presentation,
         slides: newSlides,
-        active
+        active: {
+            ...presentation.active,
+            slideIndex: active
+        }
     }
 }
 
 export function addSlide(editor: Editor, slide: Slide): Editor {
     const newSlides: Array<Slide> = editor.presentation.slides.slice()
-    const index: number = editor.presentation.active
-    const active: number = editor.presentation.active + 1
+    const index: number = editor.presentation.active.slideIndex
+    const active: number = editor.presentation.active.slideIndex + 1
     newSlides.splice(index, 0, slide)
 
     return {
         ...editor,
         presentation: {
             ...editor.presentation,
-            active,
-            slides: newSlides
+            slides: newSlides,
+            active: {
+                ...editor.presentation.active,
+                slideIndex: active
+            }
         }
     }
 }
@@ -158,7 +174,10 @@ export function setActive(presentation: Presentation, index: number): Presentati
 
     return {
         ...presentation,
-        active
+        active: {
+            ...presentation.active,
+            slideIndex: active
+        }
     }
 }
 
@@ -167,16 +186,19 @@ export function moveSlideTopByStep(presentation: Presentation): Presentation {
         return {...presentation}
     }
 
-    const slide: Slide = presentation.slides[presentation.active]
+    const slide: Slide = presentation.slides[presentation.active.slideIndex]
     // eslint-disable-next-line no-negated-condition
-    const active: number = presentation.active !== 0 ? presentation.active - 1 : presentation.active
-    const newSlides: Array<Slide> = presentation.slides.filter((_, index) => index != presentation.active)
-    newSlides.splice(Math.max(presentation.active - 1, 0), 0, slide)
+    const active: number = presentation.active.slideIndex !== 0 ? presentation.active.slideIndex - 1 : presentation.active.slideIndex
+    const newSlides: Array<Slide> = presentation.slides.filter((_, index) => index != presentation.active.slideIndex)
+    newSlides.splice(Math.max(presentation.active.slideIndex - 1, 0), 0, slide)
 
     return {
         ...presentation,
         slides: newSlides,
-        active
+        active: {
+            ...presentation.active,
+            slideIndex: active
+        }
     }
 }
 
@@ -185,16 +207,19 @@ export function moveSlideDownByStep(presentation: Presentation): Presentation {
         return {...presentation}
     }
 
-    const slide: Slide = presentation.slides[presentation.active]
+    const slide: Slide = presentation.slides[presentation.active.slideIndex]
     // eslint-disable-next-line no-negated-condition
-    const active: number = presentation.active !== presentation.slides.length - 1 ? presentation.active + 1 : presentation.active
-    const newSlides: Array<Slide> = presentation.slides.filter((_, index) => index != presentation.active)
-    newSlides.splice(Math.min(presentation.active + 1, presentation.slides.length - 1), 0, slide)
+    const active: number = presentation.active.slideIndex !== presentation.slides.length - 1 ? presentation.active.slideIndex + 1 : presentation.active.slideIndex
+    const newSlides: Array<Slide> = presentation.slides.filter((_, index) => index != presentation.active.slideIndex)
+    newSlides.splice(Math.min(presentation.active.slideIndex + 1, presentation.slides.length - 1), 0, slide)
 
     return {
         ...presentation,
         slides: newSlides,
-        active
+        active: {
+            ...presentation.active,
+            slideIndex: active
+        }
     }
 }
 
@@ -203,30 +228,53 @@ export function addObject(presentation: Presentation, object: {objectType: strin
         return {...presentation}
     }
 
-    const newObjectArray: Array<ObjectType> = setNonActiveObject(presentation.slides[presentation.active].objects)
+    const newObjects: ObjectType[] = updateObjects(
+        presentation.slides[presentation.active.slideIndex].objects,
+        createObject(object.objectType, presentation.slides[presentation.active.slideIndex].objects.length),
+        presentation.slides[presentation.active.slideIndex].objects.length
+    )
 
-    newObjectArray.push(createObject(object.objectType, presentation.slides[presentation.active].objects.length))
-
-    const newSlides: Array<Slide> = presentation.slides.slice()
-    newSlides[presentation.active].objects = newObjectArray
+    const newSlide: Slide = {
+        ...presentation.slides[presentation.active.slideIndex],
+        objects: newObjects
+    }
 
     return {
         ...presentation,
-        slides: newSlides
+        slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
     }
 }
 
 export function addImage(presentation: Presentation, data: string | ArrayBuffer | null | undefined): Presentation {
     if (typeof data === 'string' && presentation.slides.length != 0) {
-        const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active].objects.slice()
-        newObjectArray.push(createImage(data, presentation.slides[presentation.active].objects.length))
+        // const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active.slideIndex].objects.slice()
+        // newObjectArray.push(createImage(data, presentation.slides[presentation.active.slideIndex].objects.length))
 
-        const newSlides: Array<Slide> = presentation.slides.slice()
-        newSlides[presentation.active].objects = newObjectArray
+        // const newSlides: Array<Slide> = presentation.slides.slice()
+        // newSlides[presentation.active.slideIndex].objects = newObjectArray
+
+        // return {
+        //     ...presentation,
+        //     slides: newSlides
+        // }
+        if (presentation.slides.length === 0) {
+            return {...presentation}
+        }
+
+        const newObjects: ObjectType[] = updateObjects(
+            presentation.slides[presentation.active.slideIndex].objects,
+            createImage(data, presentation.slides[presentation.active.slideIndex].objects.length),
+            presentation.slides[presentation.active.slideIndex].objects.length
+        )
+
+        const newSlide: Slide = {
+            ...presentation.slides[presentation.active.slideIndex],
+            objects: newObjects
+        }
 
         return {
             ...presentation,
-            slides: newSlides
+            slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
         }
     }
 
@@ -236,15 +284,34 @@ export function addImage(presentation: Presentation, data: string | ArrayBuffer 
 }
 
 export function addText(presentation: Presentation): Presentation {
-    const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active].objects.slice()
-    newObjectArray.push(createText(presentation.slides[presentation.active].objects.length))
+    // const newObjectArray: Array<ObjectType> = presentation.slides[presentation.active.slideIndex].objects.slice()
+    // newObjectArray.push(createText(presentation.slides[presentation.active.slideIndex].objects.length))
 
-    const newSlides: Array<Slide> = presentation.slides.slice()
-    newSlides[presentation.active].objects = newObjectArray
+    // const newSlides: Array<Slide> = presentation.slides.slice()
+    // newSlides[presentation.active.slideIndex].objects = newObjectArray
+
+    // return {
+    //     ...presentation,
+    //     slides: newSlides
+    // }
+    if (presentation.slides.length === 0) {
+        return {...presentation}
+    }
+
+    const newObjects: ObjectType[] = updateObjects(
+        presentation.slides[presentation.active.slideIndex].objects,
+        createText(presentation.slides[presentation.active.slideIndex].objects.length),
+        presentation.slides[presentation.active.slideIndex].objects.length
+    )
+
+    const newSlide: Slide = {
+        ...presentation.slides[presentation.active.slideIndex],
+        objects: newObjects
+    }
 
     return {
         ...presentation,
-        slides: newSlides
+        slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
     }
 }
 
@@ -267,8 +334,7 @@ export function deleteObject(presentation: Presentation, id: string): Presentati
             ...presentation,
             slides: newSlides
         }
-    }
-    else {
+    } else {
         return {
             ...presentation
         }
@@ -300,8 +366,7 @@ export function setText(presentation: Presentation, id: string, text: string): P
             ...presentation,
             slides: newSlides
         }
-    }
-    else {
+    } else {
         return {
             ...presentation
         }
@@ -310,7 +375,7 @@ export function setText(presentation: Presentation, id: string, text: string): P
 
 export function setObjectPosition(presentation: Presentation, objectId: string, position: Position): Presentation {
     let objectIndex = -1
-    const slide: Slide = presentation.slides[presentation.active]
+    const slide: Slide = presentation.slides[presentation.active.slideIndex]
 
     slide.objects.forEach((object, index) => {
         if (object.id === objectId) {
@@ -320,7 +385,7 @@ export function setObjectPosition(presentation: Presentation, objectId: string, 
 
     if (objectIndex !== -1) {
         const newObject: ObjectType = {
-            ...presentation.slides[presentation.active].objects[objectIndex],
+            ...presentation.slides[presentation.active.slideIndex].objects[objectIndex],
             leftTopPoint: position
         }
 
@@ -334,7 +399,7 @@ export function setObjectPosition(presentation: Presentation, objectId: string, 
 
 export function setObjectCondition(presentation: Presentation, objectId: string, width: number, height: number): Presentation {
     let objectIndex = -1
-    const slide: Slide = presentation.slides[presentation.active]
+    const slide: Slide = presentation.slides[presentation.active.slideIndex]
 
     slide.objects.forEach((object, index) => {
         if (object.id === objectId) {
@@ -344,7 +409,7 @@ export function setObjectCondition(presentation: Presentation, objectId: string,
 
     if (objectIndex !== -1) {
         const newObject: ObjectType = {
-            ...presentation.slides[presentation.active].objects[objectIndex],
+            ...presentation.slides[presentation.active.slideIndex].objects[objectIndex],
             width: width,
             height: height
         }
@@ -359,7 +424,7 @@ export function setObjectCondition(presentation: Presentation, objectId: string,
 
 export function setSlideBackgroundColor(presentation: Presentation, newColor: string): Presentation {
     const newSlide: Slide = {
-        ...presentation.slides[presentation.active],
+        ...presentation.slides[presentation.active.slideIndex],
         background: {
             priority: 0,
             color: newColor
@@ -368,15 +433,14 @@ export function setSlideBackgroundColor(presentation: Presentation, newColor: st
 
     return {
         ...presentation,
-        slides: updateSlides(presentation.slides, newSlide, presentation.active)
+        slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
     }
 }
 
 export function setBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
-    if (presentation.slides[presentation.active].id === id) {
+    if (presentation.slides[presentation.active.slideIndex].id === id) {
         return setSlideBackgroundColor(presentation, newColor)
-    }
-    else {
+    } else {
         return setObjectBackgroundColor(presentation, id, newColor)
     }
 }
@@ -384,7 +448,7 @@ export function setBackgroundColor(presentation: Presentation, id: string, newCo
 export function setBackgroundImage(presentation: Presentation, data: string | ArrayBuffer | null): Presentation {
     if (typeof data === 'string' && presentation.slides.length != 0) {
         const newSlide: Slide = {
-            ...presentation.slides[presentation.active],
+            ...presentation.slides[presentation.active.slideIndex],
             background: {
                 priority: 1,
                 image: data
@@ -393,7 +457,7 @@ export function setBackgroundImage(presentation: Presentation, data: string | Ar
 
         return {
             ...presentation,
-            slides: updateSlides(presentation.slides, newSlide, presentation.active)
+            slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
         }
     }
 
@@ -405,7 +469,7 @@ export function setBackgroundImage(presentation: Presentation, data: string | Ar
 export function setObjectBorderColor(presentation: Presentation, id: string, newColor: string): Presentation {
     const indexObject = searchObject(presentation, id)
 
-    if (indexObject.slideindex === presentation.active && indexObject.objectIndex >= 0) {
+    if (indexObject.slideindex === presentation.active.slideIndex && indexObject.objectIndex >= 0) {
         const newObject: ObjectType = {
             ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
             border: {
@@ -422,10 +486,9 @@ export function setObjectBorderColor(presentation: Presentation, id: string, new
 
         return {
             ...presentation,
-            slides: updateSlides(presentation.slides, newSlide, presentation.active)
+            slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
         }
-    }
-    else {
+    } else {
         return {
             ...presentation
         }
@@ -433,55 +496,55 @@ export function setObjectBorderColor(presentation: Presentation, id: string, new
 
 }
 
-export function addStateUndo(history: History, newState: UndoRedo): History {
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    newHistoryUndo.push(newState)
-    return {
-        ...history,
-        undo: newHistoryUndo
-    }
-}
+// export function addStateUndo(history: History, newState: UndoRedo): History {
+//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+//     newHistoryUndo.push(newState)
+//     return {
+//         ...history,
+//         undo: newHistoryUndo
+//     }
+// }
 
-export function undo(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryRedo.splice(0, 0, newHistoryPresent)
-    newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
-    newHistoryUndo.pop()
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
-}
+// export function undo(history: History): History {
+//     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+//     let newHistoryPresent: UndoRedo = history.present
+//     newHistoryRedo.splice(0, 0, newHistoryPresent)
+//     newHistoryPresent = newHistoryUndo.length !== 0 ? newHistoryUndo[newHistoryUndo.length] : newHistoryPresent
+//     newHistoryUndo.pop()
+//     return {
+//         undo: newHistoryUndo,
+//         present: newHistoryPresent,
+//         redo: newHistoryRedo
+//     }
+// }
 
-export function redo(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    let newHistoryPresent: UndoRedo = history.present
-    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-    newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
-    newHistoryRedo.splice(0, 1)
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
-}
+// export function redo(history: History): History {
+//     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+//     let newHistoryPresent: UndoRedo = history.present
+//     newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
+//     newHistoryPresent = newHistoryRedo.length !== 0 ? newHistoryRedo[0] : newHistoryPresent
+//     newHistoryRedo.splice(0, 1)
+//     return {
+//         undo: newHistoryUndo,
+//         present: newHistoryPresent,
+//         redo: newHistoryRedo
+//     }
+// }
 
-export function historyUpdate(history: History): History {
-    const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
-    const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
-    const newHistoryPresent: UndoRedo = history.present
-    newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
-    newHistoryRedo.slice(0, newHistoryRedo.length)
-    return {
-        undo: newHistoryUndo,
-        present: newHistoryPresent,
-        redo: newHistoryRedo
-    }
-}
+// export function historyUpdate(history: History): History {
+//     const newHistoryRedo: Array<UndoRedo> = history.redo.slice()
+//     const newHistoryUndo: Array<UndoRedo> = history.undo.slice()
+//     const newHistoryPresent: UndoRedo = history.present
+//     newHistoryUndo.splice(newHistoryUndo.length, 0, newHistoryPresent)
+//     newHistoryRedo.slice(0, newHistoryRedo.length)
+//     return {
+//         undo: newHistoryUndo,
+//         present: newHistoryPresent,
+//         redo: newHistoryRedo
+//     }
+// }
 
 function replaceSlideObjects(slide: Slide, objectIndex: number, newObject: ObjectType): Slide {
     const newObjects: Array<ObjectType> = slide.objects.slice()
@@ -494,7 +557,7 @@ function replaceSlideObjects(slide: Slide, objectIndex: number, newObject: Objec
 
 function replaceActiveSlide(presentation: Presentation, newSlide: Slide): Presentation {
     const newSlides: Array<Slide> = presentation.slides.slice()
-    newSlides.splice(presentation.active, 1, newSlide)
+    newSlides.splice(presentation.active.slideIndex, 1, newSlide)
 
     return {
         ...presentation,
@@ -505,7 +568,7 @@ function replaceActiveSlide(presentation: Presentation, newSlide: Slide): Presen
 function setObjectBackgroundColor(presentation: Presentation, id: string, newColor: string): Presentation {
     const indexObject = searchObject(presentation, id)
 
-    if (indexObject.slideindex === presentation.active && indexObject.objectIndex >= 0) {
+    if (indexObject.slideindex === presentation.active.slideIndex && indexObject.objectIndex >= 0) {
         const newObject: ObjectType = {
             ...presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex],
             background: {
@@ -521,10 +584,9 @@ function setObjectBackgroundColor(presentation: Presentation, id: string, newCol
 
         return {
             ...presentation,
-            slides: updateSlides(presentation.slides, newSlide, presentation.active)
+            slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
         }
-    }
-    else {
+    } else {
         return {
             ...presentation
         }
@@ -575,14 +637,6 @@ function generateId(): string {
         }
     }
     return result
-}
-
-function setNonActiveObject(objectArray: Array<ObjectType>): Array<ObjectType> {
-    const newObjectArray: Array<ObjectType> = objectArray.slice()
-    newObjectArray.forEach(object => {
-        object.active = false
-    })
-    return newObjectArray
 }
 
 function createObject(objectType: string, priority: number): ObjectType {
@@ -740,8 +794,7 @@ export function changeFontSizeText(presentation: Presentation, id: string, fontS
             ...presentation,
             slides: newSlides
         }
-    }
-    else {
+    } else {
         return {
             ...presentation
         }

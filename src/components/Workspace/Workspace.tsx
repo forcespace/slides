@@ -21,7 +21,7 @@ function Workspace(props: Props) {
             <Logo/>
             <SlideList/>
             {
-                slidesCount ? (<SlideContent slide={props.state.presentation.slides[props.state.presentation.active]}/>) : null
+                slidesCount ? (<SlideContent slide={props.state.presentation.slides[props.state.presentation.active.slideIndex]}/>) : null
             }
             {props.state.presentation.viewShown ? (<View/>) : null}
         </section>

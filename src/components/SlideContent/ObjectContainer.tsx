@@ -2,7 +2,7 @@ import {RefObject, useEffect, useRef, useState} from 'react'
 import {connect, ConnectedProps} from 'react-redux'
 import {ExtendedAction, setEditorActive, setObjectPosition, setObjectCondition} from '../../script/slide/actionCreators'
 import {useDragAndDrop} from '../../script/slide/dragAndDropHook'
-import { getRecalculatedObject } from '../../script/slide/objectConditions'
+import {getRecalculatedObject} from '../../script/slide/objectConditions'
 import {useResize} from '../../script/slide/resizeObjectHook'
 import {Editor, ObjectType, Position} from '../../script/slide/slide'
 import Objects from './Objects/Objects'
@@ -82,11 +82,11 @@ function ObjectContainer(props: Props) {
     )
 
     useEffect(() => {
-        if (props.state.active === props.object.id) {
+        if (props.state.presentation.active.activeObject === props.object.id) {
             setClassNameActive(`${styles.slide_item} ${styles.slide_item_active}`)
             setClassNameResizePonterSe(`${styles.slide_item_resize} ${styles.se}`)
         }
-    }, [props.state.active])
+    }, [props.state.presentation.active.activeObject])
 
     return (
         <div

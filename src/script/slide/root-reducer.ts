@@ -1,4 +1,3 @@
-import {combineReducers} from 'redux'
 import {ExtendedAction} from './actionCreators'
 import {
     setBackgroundColor,
@@ -9,9 +8,6 @@ import {
     addText,
     setText,
     importPresentation,
-    importEditorActive,
-    importEditorColor,
-    importHistory,
     deleteSlide,
     moveSlideDownByStep,
     moveSlideTopByStep,
@@ -21,19 +17,76 @@ import {
     setObjectCondition,
     createPresentation,
     setObjectBorderColor,
-    createHistory,
-    undo,
-    redo,
-    historyUpdate,
-    addStateUndo,
     deleteObject,
     changeFontSizeText
 } from './functions'
-import {Presentation, History} from './slide'
+import {Editor, Presentation} from './slide'
 
 const initPresentation: Presentation = createPresentation()
-const initColor = ''
-const initHistory: History = createHistory()
+
+function undoable(reducer: Function) {
+    const initialState = {
+        history: {
+            past: [],
+            future: []
+        },
+        presentation: reducer(undefined, {})
+    }
+
+    return function (state: Editor = initialState, action: ExtendedAction) {
+        // const {past, present, future} = state
+        const {history, presentation} = state
+        switch (action.type) {
+            case 'UNDO': {
+                if (history.past.length > 0) {
+                    const previous = history.past[history.past.length - 1]
+                    const newPast = history.past.slice(0, history.past.length - 1)
+                    return {
+                        history: {
+                            past: newPast,
+                            future: [presentation, ...history.future]
+                        },
+                        presentation: previous
+                    }
+                } else {
+                    return state
+                }
+            }
+            case 'REDO': {
+                if (history.future.length > 0) {
+                    const next = history.future[0]
+                    const newFuture = history.future.slice(1)
+                    return {
+                        history: {
+                            past: [...history.past, presentation],
+                            future: newFuture
+                        },
+                        presentation: next
+                    }
+                } else {
+                    return state
+                }
+            }
+            default: {
+                const newPresent: Presentation = reducer(presentation, action)
+                console.log('state = ', state)
+                console.log('newPresent = ', newPresent)
+                if (presentation === newPresent) {
+                    console.log('Нет изменений')
+                    return state
+                }
+                console.log('Заполнение undo')
+                return {
+                    history: {
+                        past: [...history.past, presentation],
+                        future: []
+                    },
+                    presentation: newPresent
+                }
+            }
+        }
+    }
+}
 
 const presentation = (state: Presentation = initPresentation, action: ExtendedAction): Presentation => {
     switch (action.type) {
@@ -42,7 +95,7 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
             return setTitle(state, newTitle)
         }
         case 'SET_ACTIVE': {
-            const activeIndex = action.index ?? state.active
+            const activeIndex = action.index ?? state.active.slideIndex
             return setActive(state, activeIndex)
         }
         case 'CREATE_PRESENTATION': {
@@ -107,61 +160,23 @@ const presentation = (state: Presentation = initPresentation, action: ExtendedAc
                 viewShown: false
             }
         }
-
         case 'CHANGE_FONT_SIZE_TEXT': {
-            return  changeFontSizeText(state, action.id!, action.fontSize!)
+            return changeFontSizeText(state, action.id!, action.fontSize!)
         }
-
-        default: {
-            return state
-        }
-    }
-}
-
-const color = (state: string = initColor, action: ExtendedAction): string => {
-    switch (action.type) {
         case 'SET_EDITOR_COLOR': {
-            return action.color!
+            return {
+                ...state,
+                color: action.color!
+            }
         }
-        case 'IMPORT_EDITOR_COLOR': {
-            return importEditorColor(action.data!)
-        }
-        default: {
-            return state
-        }
-    }
-}
-
-const active = (state = '', action: ExtendedAction): string => {
-    switch (action.type) {
         case 'SET_EDITOR_ACTIVE': {
-            return action.objectId!
-        }
-        case 'IMPORT_EDITOR_COLOR': {
-            return importEditorActive(action.data!)
-        }
-        default: {
-            return state
-        }
-    }
-}
-
-const history = (state: History = initHistory, action: ExtendedAction): History => {
-    switch (action.type) {
-        case 'ADD_STATE_UNDO': {
-            return addStateUndo(state, action.obj!)
-        }
-        case 'UNDO': {
-            return undo(state)
-        }
-        case 'REDO': {
-            return redo(state)
-        }
-        case 'HISTORY_UPDATE': {
-            return historyUpdate(state)
-        }
-        case 'IMPORT_HISTORY': {
-            return importHistory(action.data!)
+            return {
+                ...state,
+                active: {
+                    ...state.active,
+                    activeObject: action.objectId!
+                }
+            }
         }
         default: {
             return state
@@ -169,4 +184,57 @@ const history = (state: History = initHistory, action: ExtendedAction): History 
     }
 }
 
-export const rootReducer = combineReducers({presentation, color, active, history})
+// const color = (state: string = initColor, action: ExtendedAction): string => {
+//     switch (action.type) {
+//         case 'SET_EDITOR_COLOR': {
+//             return action.color!
+//         }
+//         case 'IMPORT_EDITOR_COLOR': {
+//             return importEditorColor(action.data!)
+//         }
+//         default: {
+//             return state
+//         }
+//     }
+// }
+
+// const active = (state = '', action: ExtendedAction): string => {
+//     switch (action.type) {
+//         case 'SET_EDITOR_ACTIVE': {
+//             return action.objectId!
+//         }
+//         case 'IMPORT_EDITOR_COLOR': {
+//             return importEditorActive(action.data!)
+//         }
+//         default: {
+//             return state
+//         }
+//     }
+// }
+
+// const history = (state: History = initHistory, action: ExtendedAction): History => {
+//     switch (action.type) {
+//         case 'ADD_STATE_UNDO': {
+//             return addStateUndo(state, action.obj!)
+//         }
+//         case 'UNDO': {
+//             return undo(state)
+//         }
+//         case 'REDO': {
+//             return redo(state)
+//         }
+//         case 'HISTORY_UPDATE': {
+//             return historyUpdate(state)
+//         }
+//         case 'IMPORT_HISTORY': {
+//             return importHistory(action.data!)
+//         }
+//         default: {
+//             return state
+//         }
+//     }
+// }
+
+// const editor = undoable(presentation)
+
+export const rootReducer = undoable(presentation)

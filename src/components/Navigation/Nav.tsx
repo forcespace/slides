@@ -28,7 +28,7 @@ import {NavTabButtons} from './NavTabButtons'
 import {store} from '../../store'
 import styles from './nav.module.css'
 import stylesButtonTabs from '../Button/button.module.css'
-import {Text} from '../../script/slide/slide'
+import {Editor, Text} from '../../script/slide/slide'
 import {searchObject} from '../../script/slide/functions'
 
 const TABS = {
@@ -38,7 +38,7 @@ const TABS = {
     PASTE: 'paste',
     OBJECTS: 'objects',
     COLOR: 'color',
-    PRESENTATION: 'presentation',
+    PRESENTATION: 'presentation'
 }
 
 const mapDispatchToProps = (dispatch: (arg0: Action) => ExtendedAction) => ({
@@ -110,8 +110,8 @@ function Nav(props: Props) {
     }
 
     function handleDeleteObject() {
-        const state = store.getState()
-        props.deleteObject(state.active)
+        const state: Editor = store.getState()
+        props.deleteObject(state.presentation.active.activeObject)
     }
 
     function handleAddText() {
@@ -119,8 +119,8 @@ function Nav(props: Props) {
     }
 
     function handleSetBackgroundColor() {
-        const state = store.getState()
-        props.setBackgroundColor(state.active, state.color!)
+        const state: Editor = store.getState()
+        props.setBackgroundColor(state.presentation.active.activeObject, state.presentation.color!)
     }
 
     function handleSetSlideBackgroundImage(event: React.ChangeEvent<HTMLInputElement>) {
@@ -142,20 +142,20 @@ function Nav(props: Props) {
     }
 
     function handleSetSlideBackgroundColor() {
-        const state = store.getState()
-        const activeSlideIndex = state.presentation.active
-        props.setBackgroundColor(state.presentation.slides[activeSlideIndex].id, state.color!)
+        const state: Editor = store.getState()
+        const activeSlideIndex = state.presentation.active.slideIndex
+        props.setBackgroundColor(state.presentation.slides[activeSlideIndex].id, state.presentation.color!)
     }
 
     function handleSetBorderColor() {
-        const state = store.getState()
-        props.setBorderColor(state.active, state.color!)
+        const state: Editor = store.getState()
+        props.setBorderColor(state.presentation.active.activeObject, state.presentation.color!)
     }
 
     function exportProject() {
-        const storeState = store.getState()
+        const state: Editor = store.getState()
         const fileName = 'slides.json'
-        const content = JSON.stringify(storeState)
+        const content = JSON.stringify(state)
         download(content, fileName, 'text/plain')
     }
 
@@ -207,26 +207,25 @@ function Nav(props: Props) {
     }
 
     function getActiveObjectFontSize() {
-        const state = store.getState()
+        const state: Editor = store.getState()
         const presentation = state.presentation
-        const indexObject = searchObject(presentation, state.active)
+        const indexObject = searchObject(presentation, state.presentation.active.activeObject)
 
         if (indexObject.objectIndex >= 0 && presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex].type === 'Text') {
             const textObject: Text = presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex] as Text
 
             return textObject.size
-        }
-        else {
+        } else {
             return 14
         }
     }
 
     function handleDecreaseFontSizeText() {
-        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() - 4)
+        props.changeFontSizeText(store.getState().presentation.active.activeObject, getActiveObjectFontSize() - 4)
     }
 
     function handleIncreaseFontSizeText() {
-        props.changeFontSizeText(store.getState().active, getActiveObjectFontSize() + 4)
+        props.changeFontSizeText(store.getState().presentation.active.activeObject, getActiveObjectFontSize() + 4)
     }
 
     const [activeTab, setActiveTab] = React.useState(TABS.FILE)
@@ -269,7 +268,7 @@ function Nav(props: Props) {
                     className: `${styles.menu_list_item}`,
                     onClick: () => setActiveTab(TABS.PRESENTATION),
                     name: 'Презентация'
-                },
+                }
             ]}/>
 
             <NavTabButtons buttons={[
@@ -380,7 +379,7 @@ function Nav(props: Props) {
                     className: `${stylesButtonTabs.tab_del_object} ${stylesButtonTabs.tab_border}`,
                     onClick: handleDeleteObject,
                     title: 'Удалить активный объект'
-                },
+                }
             ]} hidden={activeTab !== TABS.PASTE}/>
 
             <NavTabButtons buttons={[

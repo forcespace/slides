@@ -1,5 +1,5 @@
 import {Action} from 'redux'
-import {Position, UndoRedo} from '../slide/slide'
+import {Position} from '../slide/slide'
 
 export type ExtendedAction = {
     type: string,
@@ -12,10 +12,10 @@ export type ExtendedAction = {
     height?: number,
     data?: string | ArrayBuffer | null,
     color?: string,
-    undo?: Array<UndoRedo>,
-    present?: UndoRedo,
-    redo?: Array<UndoRedo>,
-    obj?: UndoRedo,
+    // undo?: Array<UndoRedo>,
+    // present?: UndoRedo,
+    // redo?: Array<UndoRedo>,
+    // obj?: UndoRedo,
     text?: string,
     slide?: number,
     id?: string,
@@ -179,12 +179,12 @@ export function setEditorActive(objectId: string): ExtendedAction {
     }
 }
 
-export function addStateUndo(obj: UndoRedo): ExtendedAction {
-    return {
-        type: 'ADD_STATE_UNDO',
-        obj
-    }
-}
+// export function addStateUndo(obj: UndoRedo): ExtendedAction {
+//     return {
+//         type: 'ADD_STATE_UNDO',
+//         obj
+//     }
+// }
 
 export function undo(): ExtendedAction {
     return {
@@ -198,11 +198,11 @@ export function redo(): ExtendedAction {
     }
 }
 
-export function historyUpdate(): ExtendedAction {
-    return {
-        type: 'HISTORY_UPDATE'
-    }
-}
+// export function historyUpdate(): ExtendedAction {
+//     return {
+//         type: 'HISTORY_UPDATE'
+//     }
+// }
 
 export function addText(): ExtendedAction {
     return {
@@ -230,7 +230,7 @@ export function viewClose() {
     }
 }
 
-export function changeFontSizeText(id: string, fontSize: number):  ExtendedAction {
+export function changeFontSizeText(id: string, fontSize: number): ExtendedAction {
     return {
         type: 'CHANGE_FONT_SIZE_TEXT',
         id,
