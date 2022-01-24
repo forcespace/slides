@@ -178,9 +178,11 @@ export function addObject(presentation: Presentation, object: {objectType: strin
         return {...presentation}
     }
 
+    const newObject = createObject(object.objectType, presentation.slides[presentation.active.slideIndex].objects.length)
+
     const newObjects: ObjectType[] = updateObjects(
         presentation.slides[presentation.active.slideIndex].objects,
-        createObject(object.objectType, presentation.slides[presentation.active.slideIndex].objects.length),
+        newObject,
         presentation.slides[presentation.active.slideIndex].objects.length
     )
 
@@ -191,7 +193,11 @@ export function addObject(presentation: Presentation, object: {objectType: strin
 
     return {
         ...presentation,
-        slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
+        slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex),
+        active: {
+            ...presentation.active,
+            activeObject: newObject.id
+        }
     }
 }
 
@@ -201,9 +207,11 @@ export function addImage(presentation: Presentation, data: string | ArrayBuffer 
             return {...presentation}
         }
 
+        const newImage = createImage(data, presentation.slides[presentation.active.slideIndex].objects.length)
+
         const newObjects: ObjectType[] = updateObjects(
             presentation.slides[presentation.active.slideIndex].objects,
-            createImage(data, presentation.slides[presentation.active.slideIndex].objects.length),
+            newImage,
             presentation.slides[presentation.active.slideIndex].objects.length
         )
 
@@ -214,7 +222,11 @@ export function addImage(presentation: Presentation, data: string | ArrayBuffer 
 
         return {
             ...presentation,
-            slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
+            slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex),
+            active: {
+                ...presentation.active,
+                activeObject: newImage.id
+            }
         }
     }
 
@@ -228,9 +240,11 @@ export function addText(presentation: Presentation): Presentation {
         return {...presentation}
     }
 
+    const newText = createText(presentation.slides[presentation.active.slideIndex].objects.length)
+
     const newObjects: ObjectType[] = updateObjects(
         presentation.slides[presentation.active.slideIndex].objects,
-        createText(presentation.slides[presentation.active.slideIndex].objects.length),
+        newText,
         presentation.slides[presentation.active.slideIndex].objects.length
     )
 
@@ -241,7 +255,11 @@ export function addText(presentation: Presentation): Presentation {
 
     return {
         ...presentation,
-        slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex)
+        slides: updateSlides(presentation.slides, newSlide, presentation.active.slideIndex),
+        active: {
+            ...presentation.active,
+            activeObject: newText.id
+        }
     }
 }
 
