@@ -2,7 +2,7 @@ import React, {RefObject, useEffect, useRef} from 'react'
 import {ObjectType} from './slide'
 
 export function useDragAndDrop(
-    ref: RefObject<HTMLDivElement>,
+    ref: RefObject<HTMLDivElement> | RefObject<HTMLTextAreaElement>,
     object: ObjectType,
     setNewObject: React.Dispatch<React.SetStateAction<ObjectType>>,
     setAcive: () => void,
@@ -16,7 +16,7 @@ export function useDragAndDrop(
     const position = useRef({x: object.leftTopPoint.x, y: object.leftTopPoint.y})
 
     useEffect(() => {
-        const element: SVGSVGElement | HTMLImageElement | HTMLDivElement | null = ref.current
+        const element: HTMLTextAreaElement | HTMLDivElement | null = ref.current
         if (element) {
             element.addEventListener('mousedown', handleMouseDown)
         }

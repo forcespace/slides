@@ -30,6 +30,18 @@
     cursor: se-resize;
 }
 
+.slide_item_dnd
+{
+    position: absolute;
+    z-index: 2;
+    width: 5px;
+    height: 5px;
+    background-color: black;
+    top: -1px;
+    right: -1px;
+    cursor: grabbing;
+}
+
 .slide_item
 {
     position: absolute;
@@ -45,7 +57,8 @@
 
 .slide_item_text
 {
-    margin: 10px;
+    position: relative;
+    /* margin: 10px; */
     user-select: none;
     border: 1px dashed transparent;
 }

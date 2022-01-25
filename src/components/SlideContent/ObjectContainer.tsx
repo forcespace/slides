@@ -88,16 +88,22 @@ function ObjectContainer(props: Props) {
         }
     }, [props.state.presentation.active.activeObject])
 
-    return (
-        <div
-            ref={ref}
-            className={classNameDnDDiv}
-            style={styleDiv}
-            draggable={false}>
-            <div ref={refSe} className={classNameResizeDiv}></div>
+    if (props.object.type === 'Text') {
+        return (
             <Objects object={newObject} key={props.object.id} scale={props.scale}/>
-        </div>
-    )
+        )
+    } else {
+        return (
+            <div
+                ref={ref}
+                className={classNameDnDDiv}
+                style={styleDiv}
+                draggable={false}>
+                <div ref={refSe} className={classNameResizeDiv}></div>
+                <Objects object={newObject} key={props.object.id} scale={props.scale}/>
+            </div>
+        )
+    }
 }
 
 export default connector(ObjectContainer)
