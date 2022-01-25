@@ -22,12 +22,12 @@
 
 .slide_item_resize.se
 {
+    right: -1px;
+    bottom: -1px;
     width: 5px;
     height: 5px;
-    background-color: black;
-    bottom: -1px;
-    right: -1px;
     cursor: se-resize;
+    background-color: black;
 }
 
 .slide_item
@@ -54,16 +54,6 @@
 {
     padding: 10px;
 }
-
-/* .slide_item:hover,
-.slide_item_text_content:hover
-{
-    padding: 2px;
-    cursor: grabbing;
-    transition: .3s;
-    border: 1px dashed #3498db;
-    box-shadow: 0 10px 30px rgb(163 172 192 / 26%);
-} */
 
 .slide_item_active
 {
