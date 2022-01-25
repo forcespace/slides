@@ -26,10 +26,10 @@ import {connect, ConnectedProps} from 'react-redux'
 import {NavTab} from './NavTab'
 import {NavTabButtons} from './NavTabButtons'
 import {store} from '../../script/slide/store'
-import styles from './nav.module.css'
-import stylesButtonTabs from '../Button/button.module.css'
 import {Editor, Text} from '../../script/slide/slide'
 import {searchObject} from '../../script/slide/functions'
+import styles from './nav.module.css'
+import stylesButtonTabs from '../Button/button.module.css'
 
 const TABS = {
     FILE: 'file',
@@ -218,7 +218,8 @@ function Nav(props: Props) {
             const textObject: Text = presentation.slides[indexObject.slideindex].objects[indexObject.objectIndex] as Text
 
             return textObject.size
-        } else {
+        }
+        else {
             return 14
         }
     }
