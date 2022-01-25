@@ -21,7 +21,7 @@ function Circle(props: Props) {
     const circleHeight = Math.ceil((props.figure.height + borderWidth + 2))
     const cx = Math.ceil(circleWidth * 0.5)
     const cy = Math.ceil(circleHeight * 0.5)
-    const circleRadius = Math.min((props.figure.height) * 0.5, (props.figure.width) * 0.5)
+    const circleRadius = Math.min(Math.max((props.figure.height) * 0.5, 0), Math.max((props.figure.width) * 0.5, 0))
 
     return (
         <circle cx={cx} cy={cy} r={circleRadius} />
