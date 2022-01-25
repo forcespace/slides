@@ -30,7 +30,6 @@ export function createPresentation(): Presentation {
 }
 
 export function importPresentation(data: string | ArrayBuffer | null): Presentation {
-    console.log('data = ', data)
     if (typeof data === 'string') {
         const presentation: Presentation = JSON.parse(data).presentation
         return presentation

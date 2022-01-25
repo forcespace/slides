@@ -1,1 +1,0 @@
-export const GLOBAL_TITLE_PRESENTATION = `Презентация от ${new Date().toLocaleString('ru-RU')}`
