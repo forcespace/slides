@@ -34,12 +34,12 @@
 {
     position: absolute;
     z-index: 2;
-    width: 5px;
-    height: 5px;
-    background-color: black;
     top: -1px;
     right: -1px;
+    width: 5px;
+    height: 5px;
     cursor: grabbing;
+    background-color: black;
 }
 
 .slide_item
@@ -58,8 +58,8 @@
 .slide_item_text
 {
     position: relative;
-    /* margin: 10px; */
-    user-select: none;
+    z-index: 1;
+    /*user-select: none;*/
     border: 1px dashed transparent;
 }
 

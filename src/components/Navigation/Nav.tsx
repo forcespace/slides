@@ -326,6 +326,11 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_slide_redo,
                     onClick: redo,
                     title: 'Redo'
+                },
+                {
+                    className: `${stylesButtonTabs.tab_del_object} ${stylesButtonTabs.tab_border}`,
+                    onClick: handleDeleteObject,
+                    title: 'Удалить активный объект'
                 }
             ]} hidden={activeTab !== TABS.EDIT}/>
 
@@ -378,11 +383,6 @@ function Nav(props: Props) {
                     className: stylesButtonTabs.tab_add_circle,
                     onClick: handleAddCircleClick,
                     title: 'Добавить круг'
-                },
-                {
-                    className: `${stylesButtonTabs.tab_del_object} ${stylesButtonTabs.tab_border}`,
-                    onClick: handleDeleteObject,
-                    title: 'Удалить активный объект'
                 }
             ]} hidden={activeTab !== TABS.PASTE}/>
 
